@@ -40,6 +40,7 @@ A curated directory of awesome lists, learning guides, tutorials, and courses on
 - [综述与研究总览](#surveys)
 - [近期综述覆盖表](#survey-coverage)
 - [推荐综述阅读路线](#survey-reading-path)
+- [从综述到实践项目](#survey-project-map)
 - [指南、教材与学习路径](#guides)
 - [实践教程](#tutorials)
 - [实践项目](#practice)
@@ -144,7 +145,7 @@ A curated directory of awesome lists, learning guides, tutorials, and courses on
 | **自主性 — [The Last AI Built by Humans: Toward Genuine Recursive Self-Improvement](https://arxiv.org/html/2609.11873v3)** | 关注系统控制了哪些改进决策、哪些仍由外部决定；其自主性等级帮助在任务得分之外比较系统。 | §§2.2–2.3 概念基础与证据范围 → §3.1 的 B0 参照边界 → §3.7 跨等级综合；再从 §§3.2–3.6 选择感兴趣的等级。 |
 | **实验证据 — [Recursive Self-Improvement in AI: A Survey](https://www.preprints.org/manuscript/202609.2680)** | 按工程目标与更新对象组织方法，再区分任务收益、保留收益和改进器的贡献，适合设计对照实验时阅读。 | §3.1 定义 → §4.1 两轴总图 → §6.5 改进器修订 → §§7.4、7.6 分离改进器贡献与解释证据。 |
 
-完成所选分支后，画出一个具体闭环：**可修改组件 → 反馈 → 接受规则 → 保留状态 → 后续任务评估**。再据此选择一篇方法论文，或衔接下方实践项目。
+完成所选分支后，画出一个具体闭环：**可修改组件 → 反馈 → 接受规则 → 保留状态 → 后续任务评估**。再用[综述与项目对应表](#survey-project-map)选择实践入口。
 
 #### 可选分支：持续自改进的可靠性与安全控制
 
@@ -155,6 +156,27 @@ A curated directory of awesome lists, learning guides, tutorials, and courses on
 | **[Safety in Self-Evolving Agents: A Survey](https://arxiv.org/html/2610.00093v1)** | 跟踪经验成为可复用状态时，来源、权限和作用范围如何变化；SAVER 将状态载体、更新操作与违规、暴露、响应联系起来。 | §2.1 范围 → §§2.3–2.4 状态转移检查与 SAVER → §3.3 长期记忆或 §3.6 技能与过程。 |
 
 随后把分析接到控制机制：*Towards AI* §4.3 与 §6.6 讨论更新策略、权限和回滚；*Recursive Self-Improvement in AI: A Survey* §8.4 讨论自修改下的评估完整性。需要系统整体视角时，再读 *The Path to Recursive Self-Improving Agents* §7.4。可以选一条记忆或一个技能，从产生追踪到后续复用，指出其权限在哪里变化、控制措施应在哪里介入。
+
+<a id="survey-project-map"></a>
+
+### 从综述到实践项目
+
+本表复用已收录的教程、实践项目和评测示例，资源总数仍为 **41**。对应关系是本目录的学习建议：先围绕学习目标尝试链接中的示例，再回到对应综述章节比较机制。
+
+以下门槛针对所链接的具体示例，依据 **2026-10-22** 核验的上游文档与代码整理，本轮未运行示例。仅通过 API 调用模型的入门示例在远端完成推理，需要模型访问权限和调用预算；训练项目仍需下表列出的 GPU 环境。GPU 配置是文档给出的示例，不作为已验证的最低硬件要求。
+
+| 阅读分支／对应综述 | 项目与上手入口 | 学习目标与范围 | 所链接示例的运行门槛 |
+| --- | --- | --- | --- |
+| **共同基础** — [Prism §§2.3、5](https://github.com/Prism-Shadow/awesome-rsi/blob/main/site/public/papers/rsi-survey.pdf)；[Towards AI §§3–4](https://lee1003-lee.github.io/Awesome-RSI-Research/assets/rsi-survey.pdf#page=5) | [The RSI Book 第 2 章](https://thersibook.com/chapters/ch02.html) → [配套 Notebook](https://github.com/bhavsarpratik/rsi/blob/master/notebooks/chapter2_build_your_first_loop.ipynb)。 | 跟踪评估、提示修订与经验跨任务复用，比较初始 Agent 和更新后的 Agent；Notebook 的经验列表保留在当前 kernel 中，未写入磁盘供跨会话使用。 | Python 3.10+、LiteLLM、Notebook 环境和模型接口。使用 API，不训练权重。 |
+| **模型训练：Agent 策略** — [LLM Overview §§4、6](https://arxiv.org/html/2603.25681v3)；[Modern Agentic Systems §5](https://arxiv.org/html/2607.13104v1) | [Agent Lightning：Calc-X Local Mode](https://github.com/microsoft/agent-lightning/blob/main/docs/50-example-calc-x.md#local-mode)。 | 跟踪工具调用轨迹如何变成奖励、GRPO 更新和策略 checkpoint。示例使用预设训练器更新 Agent 策略，未演示训练器自身改进。 | Python 3.12+、Linux / WSL、NVIDIA CUDA、仓库配套的 verl / vLLM 安装，以及模型／数据下载。示例配置为 **1× A100 80GB**；Local Mode 无需 Kubernetes，模型本地运行，默认启用 W&B。 |
+| **模型训练：内层适应／外层学习** — [LLM Overview §§4.3–4.4](https://arxiv.org/html/2603.25681v3)；[The Path §5](https://www.preprints.org/manuscript/202608.0051) | [SEAL：general-knowledge 流程](https://github.com/Continual-Intelligence/SEAL/blob/main/general-knowledge/README.md)。 | 跟踪自编辑内容生成 → 临时 LoRA 适应 → 问答评估 → 编辑生成器的 ReST-EM 训练，比较内层更新和外层学习各自的作用。 | 需要微调经验；Python 3.12、Linux / CUDA、PyTorch / vLLM / PEFT、模型／数据访问，以及 SLURM 脚本和路径适配。上游示例使用 **2 张 A100/H100**；默认 TTT 评分也调用 OpenAI API。 |
+| **经验、记忆与技能** — [Frontis §§2–4](https://github.com/FrontisAI/Awesome-Self-Improving-Agents/blob/main/Self_Improving_Agents.pdf) | [Hello Generic Agent 第 4 章](https://datawhalechina.github.io/hello-generic-agent/part1/chapter4/) → [第 12 章](https://datawhalechina.github.io/hello-generic-agent/part2/chapter12/)；安装其关联的 GenericAgent 实现。 | 将已完成任务整理成可复用 SOP／脚本，再观察后续会话如何检索。学习保留什么、何时复用；验证主要依靠提示约束，可能需要用户指导。 | 推荐 Python **3.11/3.12**、模型 API，以及所选 UI 和工具依赖；按[当前安装指南](https://github.com/lsdefine/GenericAgent/blob/main/docs/installation_zh.md)操作。教程处于 Beta。 |
+| **代码：程序演化预备练习** — [Coding Agents §§3、7–8](https://arxiv.org/html/2608.03392v4) | [ShinkaEvolve 教程](https://github.com/SakanaAI/ShinkaEvolve/blob/main/examples/shinka_tutorial.ipynb)；也可选 [OpenEvolve 函数最小化](https://github.com/algorithmicsuperintelligence/openevolve/tree/main/examples/function_minimization)。 | 跟踪代码变异、评估反馈、选择和候选保存。示例演化的是任务程序，可用于理解综述中进一步要求的 Agent 组件更新边界。 | Python 3.10+；Shinka 推荐 3.11，支持本地 Python／Colab。需要模型 API 凭证和本地评估依赖；OpenEvolve 示例使用 NumPy，默认接入 Gemini 兼容接口。这两个示例无需训练 GPU。 |
+| **自主性：小型工程入口** — [The Last AI §§2.2–3](https://arxiv.org/html/2609.11873v3) | [learn-deepseek-harness L1](https://github.com/Prism-Shadow/learn-deepseek-harness/tree/main/basics/L01_agent_loop) → 按课程顺序 → [L10](https://github.com/Prism-Shadow/learn-deepseek-harness/tree/main/advanced/L10_self_modification)。 | 观察 Agent 能提出、注册哪些工具变化。L10 生成的工具只在当前进程中保留；对照综述辨认扩展为完整改进闭环所需的评估、接受与持久化机制。 | Node.js、TypeScript 基础与 DeepSeek API。使用 API，各课为独立软件包。 |
+| **代码与自主性：研究实现** — [Coding Agents §§3、7–8](https://arxiv.org/html/2608.03392v4)；[The Last AI §3](https://arxiv.org/html/2609.11873v3) | [DGM 环境搭建](https://github.com/jennyzzt/dgm#setup) → [DGM_outer.py](https://github.com/jennyzzt/dgm/blob/main/DGM_outer.py) → [self_improve_step.py](https://github.com/jennyzzt/dgm/blob/main/self_improve_step.py)。 | 跟踪编码 Agent 自身的修改、后代评估与档案复用，对比任务程序演化；记录 Agent 可以修改什么、外部评估控制什么。 | Python、Docker、模型 API，以及 SWE-bench／Polyglot 环境和数据。环境搭建与重复评估工作较多，先追踪一轮流程，再考虑完整研究复现。 |
+| **多智能体／环境协同演化** — [Co-Evolution §§2–5](https://arxiv.org/html/2608.10299v1) | 先用 [ShinkaEvolve 教程](https://github.com/SakanaAI/ShinkaEvolve/blob/main/examples/shinka_tutorial.ipynb)做预备练习。**当前已收录项目中尚无直接对应的协同演化复现入口。** | 先理解种群选择，再辨认哪些 Agent、环境或评估器需要相互适应。仅让种群针对固定评估器演化，尚未复现综述中的相互适应机制。 | 预备练习沿用上方 Shinka 的 Python／API 条件。完整协同演化实验需要额外实现，本目录尚无已核实的运行资源估计。 |
+| **实验证据／提示优化** — [Bounded Self-Refinement §5](https://arxiv.org/html/2607.07663v2)；[RSI in AI §7](https://www.preprints.org/manuscript/202609.2680) | [GEPA / DSPy AIME Notebook](https://github.com/stanfordnlp/dspy/blob/main/docs/docs/tutorials/gepa_aime/index.ipynb)；对照 [TextGrad Prompt Optimization](https://github.com/zou-group/textgrad/blob/main/examples/notebooks/Tutorial-Prompt-Optimization.ipynb)。 | 检查数据划分、文本反馈和优化前后的提示表现；TextGrad 还包含验证集表现下降时的回退。两个入门示例均保持模型权重与优化器逻辑固定。 | GEPA 示例：Python 3.10–3.14、DSPy / GEPA、datasets 与 OpenAI API。TextGrad：Python 3.9+、Jupyter／Colab 与 OpenAI API，需检查旧模型 ID 的可用性。GEPA 的 MLflow 跟踪为可选。 |
+| **可选：可靠性与安全控制** — [Safety §§2.3–2.4](https://arxiv.org/html/2610.00093v1)；[Towards AI §§4.3、6.6](https://lee1003-lee.github.io/Awesome-RSI-Research/assets/rsi-survey.pdf#page=14) | [RSI Atlas 接受规则示例](https://github.com/aniruddhaadak80/RSI/blob/main/engine/rsi_loop.py)。 | 改变传入的测试结果、质量收益和修改路径，观察接受／拒绝决策与历史记录。该练习只处理决策逻辑，不生成补丁，也不执行所传测试结果对应的测试。 | Python 3.10+ 标准库，无需模型 API 或 GPU。作为方法路线的可选延伸。 |
 
 <a id="guides"></a>
 
@@ -193,7 +215,7 @@ A curated directory of awesome lists, learning guides, tutorials, and courses on
 | [ShinkaEvolve · SakanaAI](https://github.com/SakanaAI/ShinkaEvolve) | 用引导式 Notebook 串起 LLM 代码变异、程序种群、评估器和持久化搜索记录；圆堆积任务适合学习程序进化，并比较不同父代选择策略。 | [Getting Started](https://sakanaai.github.io/ShinkaEvolve/getting_started/) → [交互教程 Notebook](https://github.com/SakanaAI/ShinkaEvolve/blob/main/examples/shinka_tutorial.ipynb) → 阅读[圆堆积评估器](https://github.com/SakanaAI/ShinkaEvolve/blob/main/examples/circle_packing/evaluate.py)。 | 英文；Python 3.10+（建议 3.11）、本地 Python 或 Colab，以及模型 API 凭据。入门示例进化的是任务程序；评估器在本地运行，不要求训练用 GPU。 |
 | [OpenEvolve](https://github.com/algorithmicsuperintelligence/openevolve) | 受 AlphaEvolve 启发的开源程序搜索框架。函数最小化小示例展示初始搜索算法、评估反馈、配置与检查点如何组成闭环。 | 阅读 [Installation & Setup](https://github.com/algorithmicsuperintelligence/openevolve#installation--setup)，取得仓库示例后跟随 [Function Minimization](https://github.com/algorithmicsuperintelligence/openevolve/tree/main/examples/function_minimization)，结合阅读 `initial_program.py`、`evaluator.py` 和 `config.yaml`。 | 英文；Python 3.10+、NumPy 和模型端点。示例默认经 OpenAI 兼容 API 使用 Gemini；Docker 可选。优化的是任务代码，不更新模型权重。 |
 | [Darwin Gödel Machine（DGM）](https://github.com/jennyzzt/dgm) | 原论文研究实现：agent 修改自身代码，在编程任务上评估后代，并保留归档供后续进化。适合准备沿源码理解完整研究循环的读者。 | 阅读 [Setup / Running the DGM](https://github.com/jennyzzt/dgm#setup)，再追踪 [DGM_outer.py](https://github.com/jennyzzt/dgm/blob/main/DGM_outer.py) → [self_improve_step.py](https://github.com/jennyzzt/dgm/blob/main/self_improve_step.py)。 | 英文；Python、Docker、模型 API，以及 SWE-bench / Polyglot 环境准备。这是需要较多环境与评估工作的研究复现入口，适合进阶学习。 |
-| [SEAL · Self-Adapting Language Models](https://github.com/Continual-Intelligence/SEAL) | **模型适应。** 作者原始实现学习生成 self-edit，在下游问答上评估临时 LoRA 更新，再用筛选出的编辑训练编辑生成器；适合研究内层适应与外层学习的关系。 | 从 [general-knowledge 流程](https://github.com/Continual-Intelligence/SEAL/blob/main/general-knowledge/README.md)依次读数据生成 → TTT server → 评估 → ReST-EM 训练，再看 [SFT 数据构建器](https://github.com/Continual-Intelligence/SEAL/blob/main/general-knowledge/src/EM/build_SFT_dataset.py)。 | 英文；进阶 Python / 微调基础、Python 3.12、PyTorch / vLLM / PEFT。上游说明使用 2 张 A100/H100；需调整 SLURM 脚本与路径。OpenAI 数据生成 / proxy 评分路径另需 API。 |
+| [SEAL · Self-Adapting Language Models](https://github.com/Continual-Intelligence/SEAL) | **模型适应。** 作者原始实现学习生成 self-edit，在下游问答上评估临时 LoRA 更新，再用筛选出的编辑训练编辑生成器；适合研究内层适应与外层学习的关系。 | 从 [general-knowledge 流程](https://github.com/Continual-Intelligence/SEAL/blob/main/general-knowledge/README.md)依次读数据生成 → TTT server → 评估 → ReST-EM 训练，再看 [SFT 数据构建器](https://github.com/Continual-Intelligence/SEAL/blob/main/general-knowledge/src/EM/build_SFT_dataset.py)。 | 英文；进阶 Python / 微调基础、Python 3.12、PyTorch / vLLM / PEFT。上游说明使用 2 张 A100/H100；需调整 SLURM 脚本与路径。默认 TTT 评分使用 OpenAI API（GPT-4.1）；生成／proxy 评分也可使用该 API。 |
 | [Microsoft Agent Lightning v1.0](https://github.com/microsoft/agent-lightning) | **Agent 策略训练。** Calc-X 将 AutoGen Agent、MCP 计算器与轨迹采集、答案奖励、GRPO 更新串起来，适合学习如何从工具调用轨迹训练并保存策略检查点。 | 先读[安装说明](https://github.com/microsoft/agent-lightning/blob/main/docs/00-installation.md)，再按 [Calc-X Local Mode](https://github.com/microsoft/agent-lightning/blob/main/docs/50-example-calc-x.md#local-mode)操作；按该示例要求从 `examples/calc_x` 启动。 | 英文；Python 3.12+、Linux / WSL、CUDA、`verl` / vLLM、数据下载，默认使用 W&B。文档中的 Calc-X 配置为 **1 张 A100 80GB**。这是 v1.0 训练入口，旧 APO 教程对应旧 API。 |
 
 <a id="courses"></a>
