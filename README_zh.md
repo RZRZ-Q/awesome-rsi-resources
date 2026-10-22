@@ -8,7 +8,7 @@ A curated directory of awesome lists, learning guides, tutorials, and courses on
 
 本项目汇集 RSI 相关的资源集合与学习入口，帮助读者了解每项资源适合谁、值得看什么、从哪里开始，以及内容更新到什么时候。
 
-**最近核验：2026-10-22。** 共收录 41 项资源，涵盖 Awesome 清单、综述、教材、教程、实践项目、课程、视频与复现材料。第三批及综述补查新增 15 项，重点补充中文学习资料与综述直接阅读路线。同一项目的网站、代码和 Notebook 合并介绍。
+**最近核验：2026-10-22。** 共收录 45 项资源，涵盖 Awesome 清单、综述、教材、教程、实践项目、课程、视频与复现材料。最新一批新增 4 个协同演化实践项目，覆盖共享经验、独立策略训练、自动出题和环境课程生成。同一项目的网站、代码和 Notebook 合并介绍。
 
 ## 从哪里开始
 
@@ -22,6 +22,7 @@ A curated directory of awesome lists, learning guides, tutorials, and courses on
 | 通过评估数据优化可复用提示词 | [GEPA / DSPy AIME Notebook](https://github.com/stanfordnlp/dspy/blob/main/docs/docs/tutorials/gepa_aime/index.ipynb) |
 | 根据评估反馈进化一个小程序 | [ShinkaEvolve 教程 Notebook](https://github.com/SakanaAI/ShinkaEvolve/blob/main/examples/shinka_tutorial.ipynb) |
 | 有 GPU，想用工具反馈训练 Agent | [Agent Lightning Calc-X Local Mode](https://github.com/microsoft/agent-lightning/blob/main/docs/50-example-calc-x.md#local-mode) |
+| 上手多智能体或 Agent—环境协同演化 | [协同演化项目](#coevolution-projects)：API 路线从 CORAL 开始，RL 路线从 JaxUED 开始 |
 | 按合理顺序阅读这 12 篇近期综述 | [推荐综述阅读路线](#survey-reading-path)：入门总览 → 方法进阶；可选分支：持续自改进的可靠性与安全控制 |
 | 开始系统读论文 | [natnew 的 Reading Paths](https://github.com/natnew/awesome-recursive-self-improvement#reading-paths) |
 | 跟着课程学自改进 Agent | [Stanford CS329A](https://cs329a.stanford.edu/)的公开课程表与阅读材料 |
@@ -44,6 +45,7 @@ A curated directory of awesome lists, learning guides, tutorials, and courses on
 - [指南、教材与学习路径](#guides)
 - [实践教程](#tutorials)
 - [实践项目](#practice)
+- [协同演化项目](#coevolution-projects)
 - [课程与工作坊](#courses)
 - [中文视频课程与研究报告](#videos)
 - [评测示例](#evaluation)
@@ -89,7 +91,7 @@ A curated directory of awesome lists, learning guides, tutorials, and courses on
 
 ### 近期综述覆盖表
 
-**核验日期：2026-10-22。** “已覆盖”指本目录已收录的至少一个仓库明确链接该论文，或托管作者 PDF。下表 12 篇均已找到对应入口。本轮检查了 17 个已收录研究索引、综述配套及阅读札记仓库的 README，并检查了 Prism 论文数据。仓库列列出该范围内确认的匹配，简称链接指向对应仓库。本表用于交叉查询，资源总数仍为 **41**。
+**核验日期：2026-10-22。** “已覆盖”指本目录已收录的至少一个仓库明确链接该论文，或托管作者 PDF。下表 12 篇均已找到对应入口。本轮检查了 17 个已收录研究索引、综述配套及阅读札记仓库的 README，并检查了 Prism 论文数据。仓库列列出该范围内确认的匹配，简称链接指向对应仓库。本表用于交叉查询，资源总数为 **45**。
 
 论文日期按行分别采用 arXiv 首次提交日期、Preprints.org 的 **Posted** 发布日期或作者标注日期。版本列记录截至本次核验能确认的最新版本；PDF 上传日期是文件历史依据，不作为论文出版日期。
 
@@ -161,7 +163,7 @@ A curated directory of awesome lists, learning guides, tutorials, and courses on
 
 ### 从综述到实践项目
 
-本表复用已收录的教程、实践项目和评测示例，资源总数仍为 **41**。对应关系是本目录的学习建议：先围绕学习目标尝试链接中的示例，再回到对应综述章节比较机制。
+本表连接已收录的教程、实践项目和评测示例，包含新增的 4 个协同演化项目；资源总数为 **45**。对应关系是本目录的学习建议：先围绕学习目标尝试链接中的示例，再回到对应综述章节比较机制。
 
 以下门槛针对所链接的具体示例，依据 **2026-10-22** 核验的上游文档与代码整理，本轮未运行示例。仅通过 API 调用模型的入门示例在远端完成推理，需要模型访问权限和调用预算；训练项目仍需下表列出的 GPU 环境。GPU 配置是文档给出的示例，不作为已验证的最低硬件要求。
 
@@ -174,7 +176,10 @@ A curated directory of awesome lists, learning guides, tutorials, and courses on
 | **代码：程序演化预备练习** — [Coding Agents §§3、7–8](https://arxiv.org/html/2608.03392v4) | [ShinkaEvolve 教程](https://github.com/SakanaAI/ShinkaEvolve/blob/main/examples/shinka_tutorial.ipynb)；也可选 [OpenEvolve 函数最小化](https://github.com/algorithmicsuperintelligence/openevolve/tree/main/examples/function_minimization)。 | 跟踪代码变异、评估反馈、选择和候选保存。示例演化的是任务程序，可用于理解综述中进一步要求的 Agent 组件更新边界。 | Python 3.10+；Shinka 推荐 3.11，支持本地 Python／Colab。需要模型 API 凭证和本地评估依赖；OpenEvolve 示例使用 NumPy，默认接入 Gemini 兼容接口。这两个示例无需训练 GPU。 |
 | **自主性：小型工程入口** — [The Last AI §§2.2–3](https://arxiv.org/html/2609.11873v3) | [learn-deepseek-harness L1](https://github.com/Prism-Shadow/learn-deepseek-harness/tree/main/basics/L01_agent_loop) → 按课程顺序 → [L10](https://github.com/Prism-Shadow/learn-deepseek-harness/tree/main/advanced/L10_self_modification)。 | 观察 Agent 能提出、注册哪些工具变化。L10 生成的工具只在当前进程中保留；对照综述辨认扩展为完整改进闭环所需的评估、接受与持久化机制。 | Node.js、TypeScript 基础与 DeepSeek API。使用 API，各课为独立软件包。 |
 | **代码与自主性：研究实现** — [Coding Agents §§3、7–8](https://arxiv.org/html/2608.03392v4)；[The Last AI §3](https://arxiv.org/html/2609.11873v3) | [DGM 环境搭建](https://github.com/jennyzzt/dgm#setup) → [DGM_outer.py](https://github.com/jennyzzt/dgm/blob/main/DGM_outer.py) → [self_improve_step.py](https://github.com/jennyzzt/dgm/blob/main/self_improve_step.py)。 | 跟踪编码 Agent 自身的修改、后代评估与档案复用，对比任务程序演化；记录 Agent 可以修改什么、外部评估控制什么。 | Python、Docker、模型 API，以及 SWE-bench／Polyglot 环境和数据。环境搭建与重复评估工作较多，先追踪一轮流程，再考虑完整研究复现。 |
-| **多智能体／环境协同演化** — [Co-Evolution §§2–5](https://arxiv.org/html/2608.10299v1) | 先用 [ShinkaEvolve 教程](https://github.com/SakanaAI/ShinkaEvolve/blob/main/examples/shinka_tutorial.ipynb)做预备练习。**当前已收录项目中尚无直接对应的协同演化复现入口。** | 先理解种群选择，再辨认哪些 Agent、环境或评估器需要相互适应。仅让种群针对固定评估器演化，尚未复现综述中的相互适应机制。 | 预备练习沿用上方 Shinka 的 Python／API 条件。完整协同演化实验需要额外实现，本目录尚无已核实的运行资源估计。 |
+| **协同演化：共享经验** — [Co-Evolution §3.2.1](https://arxiv.org/html/2608.10299v1#S3.SS2.SSS1) | [CORAL 圆堆积](https://github.com/Human-Agent-Society/CORAL/tree/main/examples/circle_packing)，配置两个 Agent；[配置见下方](#coevolution-projects)。 | 跟踪带分数的尝试怎样进入共享笔记／技能，再改变另一 Agent 的方案；对照独立搜索轨迹与经验共享。 | Python 3.11–3.13、Git、uv、Docker 和模型 API；此评估器无需训练 GPU。 |
+| **协同演化：独立 Agent 策略** — [Co-Evolution §3.2.1](https://arxiv.org/html/2608.10299v1#S3.SS2.SSS1) | [CoMAS 训练启动器](https://github.com/xxyQwQ/CoMAS/blob/main/scripts/train_comas.sh) → 交互／奖励／controller 代码；[配置见下方](#coevolution-projects)。 | 跟踪同伴方案与批评如何形成交互奖励、各自参数更新，以及后续多 Agent rollout。 | Python 3.10、本地权重与 CUDA 训练栈；上游推荐每 Agent 2× A100 80GB，默认四个 Agent。 |
+| **协同演化：任务生成** — [Co-Evolution §4.1.2](https://arxiv.org/html/2608.10299v1#S4.SS1.SSS2) | [R-Zero 交替循环](https://github.com/Chengsong-Huang/R-Zero/blob/main/scripts/main.sh)；[配置见下方](#coevolution-projects)。 | 追踪 Solver 一致性 → Challenger 奖励 → 生成任务／伪标签 → Solver 更新 → 下一轮 Challenger。这是本目录对综述任务空间分类的实践映射。 | 隔离的 Linux / CUDA 训练环境、8 GPU 脚本配置、HF／W&B，以及完整评估所需的 GPT API。 |
+| **协同演化：可执行环境** — [Co-Evolution §4.3.1](https://arxiv.org/html/2608.10299v1#S4.SS3.SSS1) | [JaxUED Maze ACCEL](https://github.com/DramaCow/jaxued/blob/main/examples/maze_plr.py)，启用 `--use_accel` → PAIRED；[配置见下方](#coevolution-projects)。 | 跟踪策略表现如何影响关卡保留／变异，形成的课程又怎样更新策略；用固定评测关卡观察迁移。 | JAX / Flax 与 examples 依赖；无需 LLM API。可在 CPU 上开发，完整默认训练需要较多 RL 计算资源。 |
 | **实验证据／提示优化** — [Bounded Self-Refinement §5](https://arxiv.org/html/2607.07663v2)；[RSI in AI §7](https://www.preprints.org/manuscript/202609.2680) | [GEPA / DSPy AIME Notebook](https://github.com/stanfordnlp/dspy/blob/main/docs/docs/tutorials/gepa_aime/index.ipynb)；对照 [TextGrad Prompt Optimization](https://github.com/zou-group/textgrad/blob/main/examples/notebooks/Tutorial-Prompt-Optimization.ipynb)。 | 检查数据划分、文本反馈和优化前后的提示表现；TextGrad 还包含验证集表现下降时的回退。两个入门示例均保持模型权重与优化器逻辑固定。 | GEPA 示例：Python 3.10–3.14、DSPy / GEPA、datasets 与 OpenAI API。TextGrad：Python 3.9+、Jupyter／Colab 与 OpenAI API，需检查旧模型 ID 的可用性。GEPA 的 MLflow 跟踪为可选。 |
 | **可选：可靠性与安全控制** — [Safety §§2.3–2.4](https://arxiv.org/html/2610.00093v1)；[Towards AI §§4.3、6.6](https://lee1003-lee.github.io/Awesome-RSI-Research/assets/rsi-survey.pdf#page=14) | [RSI Atlas 接受规则示例](https://github.com/aniruddhaadak80/RSI/blob/main/engine/rsi_loop.py)。 | 改变传入的测试结果、质量收益和修改路径，观察接受／拒绝决策与历史记录。该练习只处理决策逻辑，不生成补丁，也不执行所传测试结果对应的测试。 | Python 3.10+ 标准库，无需模型 API 或 GPU。作为方法路线的可选延伸。 |
 
@@ -218,6 +223,21 @@ A curated directory of awesome lists, learning guides, tutorials, and courses on
 | [SEAL · Self-Adapting Language Models](https://github.com/Continual-Intelligence/SEAL) | **模型适应。** 作者原始实现学习生成 self-edit，在下游问答上评估临时 LoRA 更新，再用筛选出的编辑训练编辑生成器；适合研究内层适应与外层学习的关系。 | 从 [general-knowledge 流程](https://github.com/Continual-Intelligence/SEAL/blob/main/general-knowledge/README.md)依次读数据生成 → TTT server → 评估 → ReST-EM 训练，再看 [SFT 数据构建器](https://github.com/Continual-Intelligence/SEAL/blob/main/general-knowledge/src/EM/build_SFT_dataset.py)。 | 英文；进阶 Python / 微调基础、Python 3.12、PyTorch / vLLM / PEFT。上游说明使用 2 张 A100/H100；需调整 SLURM 脚本与路径。默认 TTT 评分使用 OpenAI API（GPT-4.1）；生成／proxy 评分也可使用该 API。 |
 | [Microsoft Agent Lightning v1.0](https://github.com/microsoft/agent-lightning) | **Agent 策略训练。** Calc-X 将 AutoGen Agent、MCP 计算器与轨迹采集、答案奖励、GRPO 更新串起来，适合学习如何从工具调用轨迹训练并保存策略检查点。 | 先读[安装说明](https://github.com/microsoft/agent-lightning/blob/main/docs/00-installation.md)，再按 [Calc-X Local Mode](https://github.com/microsoft/agent-lightning/blob/main/docs/50-example-calc-x.md#local-mode)操作；按该示例要求从 `examples/calc_x` 启动。 | 英文；Python 3.12+、Linux / WSL、CUDA、`verl` / vLLM、数据下载，默认使用 W&B。文档中的 Calc-X 配置为 **1 张 A100 80GB**。这是 v1.0 训练入口，旧 APO 教程对应旧 API。 |
 
+<a id="coevolution-projects"></a>
+
+### 协同演化项目
+
+先读 [Co-Evolution §§2.2–2.3](https://arxiv.org/html/2608.10299v1)，辨认哪些组件会变化，以及它们怎样改变彼此的学习条件。用模型 API 学习经验共享可从 **CORAL** 开始；学习环境课程可选 **JaxUED**；有多 GPU 训练条件再选 **CoMAS / R-Zero**。这些是不同机制的入口，不是必须依次完成的步骤。
+
+综述 §3.2.1 直接讨论 CORAL 和 CoMAS；R-Zero 是本目录为 §4.1.2 选择的学习映射；JaxUED 实现了 §4.3.1 讨论的方法论文中的 ACCEL / PAIRED。这些实现仍采用人工设计的更新规则，本路线不将它们写成 §5 元协同演化的复现。
+
+| 资源 | 哪些部分相互适应／学习目标 | 推荐运行入口 | 此入口的运行门槛 |
+| --- | --- | --- | --- |
+| [CORAL](https://github.com/Human-Agent-Society/CORAL) | **共享经验；§3.2.1。** Agent 在独立 Git worktree 中改写方案，共享带分数的尝试、笔记和技能。跟踪一个 Agent 的发现怎样改变另一个 Agent 的下一次尝试；圆堆积评估器和模型权重保持固定。 | 按[安装指南](https://coral.compounding-intelligence.ai/docs/getting-started/installation/)取得源码，阅读[圆堆积示例](https://github.com/Human-Agent-Society/CORAL/tree/main/examples/circle_packing)与[多 Agent 指南](https://coral.compounding-intelligence.ai/docs/guides/multi-agent/)。完成 `uv sync` 和网关配置后，在仓库根目录运行 `uv run coral start -c examples/circle_packing/task.yaml agents.count=2`。用 `coral log`、notes 和 skills 检查共享记录，结束时运行 `coral stop`（源码安装均加 `uv run` 前缀）。 | 英文文档和中文 README；Python **3.11–3.13**、Git、`uv`、Docker 与模型 API。此示例的 `docker-opencode` 预设使用 OpenCode 和 LiteLLM 网关，须配置 `litellm_config.yaml` 的 API-key 占位符。NumPy / SciPy 评估器不需要训练 GPU；需预留两个 Agent 的模型调用与本地评估开销。 |
+| [CoMAS](https://github.com/xxyQwQ/CoMAS) | **独立 Agent 策略；§3.2.1。** 同伴分别求解、批评和评分，用交互奖励更新各自权重，再将新策略投入下一轮讨论。适合追踪多 Agent 交互怎样成为持久学习。 | 先读[论文 §§3.1–3.3](https://arxiv.org/html/2510.08529v2#S3)，再看[训练启动器](https://github.com/xxyQwQ/CoMAS/blob/main/scripts/train_comas.sh)。按 README 建立 Python 3.10 环境、执行 `pip install -r requirements.txt`，配置 `PRETRAIN`、GPU／batch 与 W&B，在仓库根目录运行 `bash scripts/train_comas.sh`；沿 workflow → reward → controller 追踪实现。 | 英文；RL 基础、CUDA、PyTorch / vLLM / DeepSpeed / Ray 与本地模型权重。读取仓库 `datasets/blended` 及额外评估数据。上游推荐**每 Agent 2× A100 80GB**；默认四个独立 Agent，约 **8 GPU**，不是已核实的最低需求。核心训练用本地模型，W&B 默认离线记录。 |
+| [R-Zero](https://github.com/Chengsong-Huang/R-Zero) | **自适应任务生成；§4.1.2。** 独立 Challenger 根据当前 Solver 的答案一致性学习出题；问题与多数票伪标签再用于训练 Solver，两个 checkpoint 进入后续交替轮次。跟踪任务难度与解题策略怎样相互塑造；伪标签不等于经过独立核实的答案。 | 读 [Quickstart](https://github.com/Chengsong-Huang/R-Zero/blob/main/README.md) 与 [main.sh](https://github.com/Chengsong-Huang/R-Zero/blob/main/scripts/main.sh)。安装 requirements，配置 `STORAGE_PATH`、`HUGGINGFACENAME`、`tokens.json` 和评测端点。根目录入口为 `bash scripts/main.sh Qwen/Qwen3-4B-Base qwen3-4b`；运行前读[出题者启动器](https://github.com/Chengsong-Huang/R-Zero/blob/main/scripts/questioner_train_penalty.sh)和[解题者启动器](https://github.com/Chengsong-Huang/R-Zero/blob/main/scripts/solver_train.sh)。 | 英文；进阶 Python / RL、Linux / CUDA、PyTorch **2.7.0** 与 vLLM **0.9.1**。脚本配置 **8 GPU**，未声明统一最低 Python／显存要求。需要模型／数据访问及 Hugging Face、W&B 配置；生成数据会上传到 HF 私有数据集，完整评估使用 GPT API。应在隔离训练环境中使用：Challenger 启动器含范围较宽的 `pkill python` 清理命令。 |
+| [JaxUED](https://github.com/DramaCow/jaxued) | **环境课程；§4.3.1。** ACCEL 根据策略表现给迷宫关卡打分、保留与变异，再用形成的课程训练策略。对照生成关卡和策略迁移；之后读 PAIRED 的两个学习者与可训练环境生成器。 | 取得源码并执行 `pip install -e ".[examples]"`；阅读 [Maze PLR/ACCEL](https://dramacow.github.io/jaxued/maze_plr/)，在仓库根目录运行 `WANDB_MODE=disabled python examples/maze_plr.py --use_accel`，再读 [`maze_paired.py`](https://github.com/DramaCow/jaxued/blob/main/examples/maze_paired.py)。使用当前 [`maze_plr.py`](https://github.com/DramaCow/jaxued/blob/main/examples/maze_plr.py)，避开旧 Getting Started 页已失效的 `minigid_plr.py` 路径。 | 英文；Python / PPO / JAX 基础。包声明 Python **≥3.9**；按 [JAX 安装说明](https://docs.jax.dev/en/latest/installation.html)匹配平台与 JAX / Flax、examples 依赖。无需 LLM API，命令中关闭了 W&B。可在 CPU 上开发，但默认 ACCEL 训练约 **2.46 亿环境步**，完整运行应准备适合 RL 的计算资源；未核实最低显存与耗时。 |
+
 <a id="courses"></a>
 
 ## 课程与工作坊
@@ -253,12 +273,12 @@ A curated directory of awesome lists, learning guides, tutorials, and courses on
 
 ## 时效与核验记录
 
-三批与综述补查的核验日期均为 **2026-10-22**。新增候选先按项目身份与已有条目排重，再读详情；网站、Notebook 和仓库迁移前后的名称合并处理。读取了项目 README、推荐章节或课程页面，并对涉及实践能力的条目抽查相关代码。**未运行上游教程、调用模型或复现实验，也未逐篇复核清单内的论文。** 视频核验按下表分别覆盖官方课页、主办方介绍、可用讲义与视频元数据；未观看视频或核验逐字稿。
+前三批、综述补查与协同演化项目的核验日期均为 **2026-10-22**。新增候选先按项目身份与已有条目排重，再读详情；网站、Notebook 和仓库迁移前后的名称合并处理。读取了项目 README、推荐章节或课程页面，并对涉及实践能力的条目抽查相关代码。**未运行上游教程、调用模型或复现实验，也未逐篇复核清单内的论文。** 视频核验按下表分别覆盖官方课页、主办方介绍、可用讲义与视频元数据；未观看视频或核验逐字稿。
 
 下表记录有依据的内容变化、发布或上游自报核验时间；它们与本项目的核验日期不同，也不等同于整个领域的覆盖截止日期。提交日期按 Asia/Taipei 记载，上游直接标注的日期保留原值。
 
 <details>
-<summary>展开 41 项资源的内容时间与核验范围</summary>
+<summary>展开 45 项资源的内容时间与核验范围</summary>
 
 | 资源 | 内容时间与依据 | 核验阅读范围 |
 | --- | --- | --- |
@@ -299,10 +319,14 @@ A curated directory of awesome lists, learning guides, tutorials, and courses on
 | Comprehensive Self-Evolving AI Agents / ANative-Lab | arXiv v2 **2025-08-31**。 | 摘要、PDF §3／图 3、方法与评估标题、仓库 README 及旧所有者地址跳转。 |
 | Era of Experience / FrontisAI | 作者 PDF 标注 **2026-06-25**，上传于 [16d81a6](https://github.com/FrontisAI/Awesome-Self-Improving-Agents/commit/16d81a652a75d095e67d50c8c92c61735cfccb7b)；讲座举行于 **2026-08-13**，录像上传于 **2026-08-14**。 | 作者 PDF 摘要、目录与 §2；与 Modern Agentic Systems 综述不同。已核对主办方提纲与 B 站 UP 主“青稞社区”、讲者、标题、时长（71:34）和中文语音元数据；未播放或核验逐字稿。OpenReview 返回浏览器验证页。 |
 | The Last AI Built by Humans / Theseus | arXiv v3 **2026-09-22**。 | 原始摘要、目录、引言／综述定位及配套阅读路线；未独立复现产业案例主张。 |
-| Co-Evolution in Agentic Systems | arXiv v1 **2026-08-10**。 | 原始摘要、目录、§2 定义与三阶段分类，以及附录入口。 |
+| Co-Evolution in Agentic Systems | arXiv v1 **2026-08-10**。 | 原始摘要、目录、§2 定义与三阶段分类、附录入口，以及项目映射涉及的 §§3.2.1／4.1.2／4.3.1。 |
 | Self-Evolving Coding Agents | arXiv v4 **2026-09-24**。 | 原始摘要、目录、§2.3 的持久更新边界及方法／评估章节入口。 |
 | Safety in Self-Evolving Agents | arXiv 记录显示 v1 **2026-09-08**。 | 原始摘要与 §2.3–2.4、仓库 README 和语料置信度说明；arXiv HTML 仅呈现部分正文，不宣称全篇核验。 |
 | Towards AI That Improves Itself / Lee1003-lee | PDF [首次加入于 **2026-09-07**](https://github.com/Lee1003-lee/Awesome-RSI-Research/commit/f00e049ccc0288b12c787e91ccd89f8c2d0491cf)；[当前 PDF 更新于 **2026-09-09**](https://github.com/Lee1003-lee/Awesome-RSI-Research/commit/b724036d3f9e012cd30ce22773559ea32a2b432c)。这些是文件历史日期，论文确切出版／提交日期仍未确认。 | 作者 PDF 摘要、引言、章节结构、§3–4 与 §5.2，仓库框架及文件历史。PDF 明确链接此仓库；更名前后地址合并为一项。[OpenReview](https://openreview.net/forum?id=I3fKQbRUGy) 及 API 要求浏览器验证，未能核实提交元数据和评审状态；未独立审计引文与所引实验结果。 |
+| CORAL | **2026-10-22** 对照[源码版本 0123dfb](https://github.com/Human-Agent-Society/CORAL/tree/0123dfb939b35228cf2c1fde224cd0561e727408)核验；这是审核快照，不是发布日期。 | 作者项目页、README、安装／多 Agent 文档、Python 要求、圆堆积任务／评估器、Docker 预设／网关、CLI 覆盖参数与共享状态代码；确认双 Agent 入口及 §3.2.1 对应，未调用模型或运行 Docker。 |
+| CoMAS | **2026-10-22** 对照[源码版本 0d98c97](https://github.com/xxyQwQ/CoMAS/tree/0d98c9755a9f3875888b42101e3db5278d0f9805)核验。 | 官方论文 v2、README、启动器、Agent 配置、交互奖励、按 Agent 优化及权重同步；已核文档硬件配置与 §3.2.1 对应关系，未训练。 |
+| R-Zero | [**2025-09-12** 更新 main.sh](https://github.com/Chengsong-Huang/R-Zero/commit/3fa29ff74c2b8062113635b278e7bd4ce0f258a2)；**2026-10-22** 回读当前文件。 | 官方论文摘要、README、交替循环、两类启动器、一致性奖励、Solver 服务、伪标签筛选／上传、依赖与 GPT 复核；§4.1.2 是目录学习映射，未训练、上传数据或调用 API。 |
+| JaxUED | **2026-10-22** 对照[源码版本 0f8f128](https://github.com/DramaCow/jaxued/tree/0f8f1284677375b889e4f13a32c9617cd009f8c4)核验。 | 作者论文、README、包依赖、Maze ACCEL／PAIRED 代码及参数文档、上游关闭 W&B 的设置；综述讨论方法论文，JaxUED 是本目录选择的实现。已避开旧 Getting Started 的失效路径，未安装或训练。 |
 
 </details>
 
