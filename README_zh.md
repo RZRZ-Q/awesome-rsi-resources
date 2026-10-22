@@ -22,7 +22,7 @@ A curated directory of awesome lists, learning guides, tutorials, and courses on
 | 通过评估数据优化可复用提示词 | [GEPA / DSPy AIME Notebook](https://github.com/stanfordnlp/dspy/blob/main/docs/docs/tutorials/gepa_aime/index.ipynb) |
 | 根据评估反馈进化一个小程序 | [ShinkaEvolve 教程 Notebook](https://github.com/SakanaAI/ShinkaEvolve/blob/main/examples/shinka_tutorial.ipynb) |
 | 有 GPU，想用工具反馈训练 Agent | [Agent Lightning Calc-X Local Mode](https://github.com/microsoft/agent-lightning/blob/main/docs/50-example-calc-x.md#local-mode) |
-| 按合理顺序阅读这 12 篇近期综述 | [推荐综述阅读路线](#survey-reading-path)：入门总览 → 方法进阶 → 安全方向 |
+| 按合理顺序阅读这 12 篇近期综述 | [推荐综述阅读路线](#survey-reading-path)：入门总览 → 方法进阶；可选分支：持续自改进的可靠性与安全控制 |
 | 开始系统读论文 | [natnew 的 Reading Paths](https://github.com/natnew/awesome-recursive-self-improvement#reading-paths) |
 | 跟着课程学自改进 Agent | [Stanford CS329A](https://cs329a.stanford.edu/)的公开课程表与阅读材料 |
 
@@ -117,7 +117,7 @@ A curated directory of awesome lists, learning guides, tutorials, and courses on
 
 本路线使用[覆盖表](#survey-coverage)中的 **12 篇论文及已核实版本**，适合已有基本 LLM 与 Agent 概念的读者。顺序是本目录的学习建议；各论文的定义与自主性等级属于各自作者的框架。章节号对应上述版本，PDF 页码从文件第一页起算。
 
-**核心路线：** Prism → *Self-Improvements in Modern Agentic Systems* → *Towards AI That Improves Itself* → 选一个方法分支 → *Safety in Self-Evolving Agents*。先读下列推荐章节，其余论文用于补充视角，不是额外的必修前置。
+**核心路线：** Prism → *Self-Improvements in Modern Agentic Systems* → *Towards AI That Improves Itself* → 选一个方法分支。先读下列推荐章节，其余论文用于补充视角，不是额外的必修前置。
 
 #### 1. 入门总览
 
@@ -146,9 +146,9 @@ A curated directory of awesome lists, learning guides, tutorials, and courses on
 
 完成所选分支后，画出一个具体闭环：**可修改组件 → 反馈 → 接受规则 → 保留状态 → 后续任务评估**。再据此选择一篇方法论文，或衔接下方实践项目。
 
-#### 3. 安全方向
+#### 可选分支：持续自改进的可靠性与安全控制
 
-沿着同一个闭环，追踪保留的经验如何影响后续行为。专注安全的读者可在入门核心与 *Towards AI* 之后直接进入本节。
+本节为可选分支，探讨保留的经验如何影响后续行为，以及如何让持续更新保持可靠、可控。关注这些问题的读者可在入门核心与 *Towards AI* 之后进入本节。
 
 | 论文 | 特色与用途 | 推荐先读章节 |
 | --- | --- | --- |

@@ -22,7 +22,7 @@ This project brings together RSI resource collections and learning materials to 
 | Optimize a reusable prompt against evaluation data | [GEPA / DSPy AIME notebook](https://github.com/stanfordnlp/dspy/blob/main/docs/docs/tutorials/gepa_aime/index.ipynb) |
 | Evolve a small program using evaluator feedback | [ShinkaEvolve tutorial notebook](https://github.com/SakanaAI/ShinkaEvolve/blob/main/examples/shinka_tutorial.ipynb) |
 | Train an agent from tool feedback with a GPU | [Agent Lightning Calc-X Local Mode](https://github.com/microsoft/agent-lightning/blob/main/docs/50-example-calc-x.md#local-mode) |
-| Read the 12 recent surveys in a useful order | [Recommended Survey Reading Path](#survey-reading-path): overview → methods → safety |
+| Read the 12 recent surveys in a useful order | [Recommended Survey Reading Path](#survey-reading-path): overview → methods; optional branch: reliability and safety controls for continual self-improvement |
 | Start reading research papers systematically | [natnew's Reading Paths](https://github.com/natnew/awesome-recursive-self-improvement#reading-paths) |
 | Follow a course on self-improving agents | The public schedule and readings for [Stanford CS329A](https://cs329a.stanford.edu/) |
 
@@ -117,7 +117,7 @@ Coverage does not imply that every repository links the newest version: jacky-le
 
 This route uses the **12 papers and verified versions in the [coverage table](#survey-coverage)**. It assumes basic LLM and agent knowledge. The order is our reading recommendation; each paper's definitions and autonomy levels belong to its authors' framework. Section numbers refer to those versions, and PDF page numbers are counted from the first page.
 
-**Core route:** Prism → *Self-Improvements in Modern Agentic Systems* → *Towards AI That Improves Itself* → one methods branch → *Safety in Self-Evolving Agents*. Start with the chapters below; the other papers offer complementary perspectives rather than extra prerequisites.
+**Core route:** Prism → *Self-Improvements in Modern Agentic Systems* → *Towards AI That Improves Itself* → one methods branch. Start with the chapters below; the other papers offer complementary perspectives rather than extra prerequisites.
 
 #### 1. Introductory Overviews
 
@@ -146,9 +146,9 @@ Start with *Towards AI*, then choose the branch closest to your project. Model-t
 
 After your chosen branch, sketch one improvement loop: **editable component → feedback → acceptance rule → retained state → evaluation on later tasks**. Use this to connect the surveys to a method paper or a practice project below.
 
-#### 3. Safety
+#### Optional Branch: Reliability and Safety Controls for Continual Self-Improvement
 
-Use the same loop to ask how retained experience can affect later actions. Readers focused on safety can move here after the introductory core and *Towards AI*.
+This optional branch explores how retained experience affects later actions and how to keep ongoing updates reliable and controllable. Readers interested in these questions can start here after the introductory core and *Towards AI*.
 
 | Paper | What it adds | Read first |
 | --- | --- | --- |
