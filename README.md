@@ -22,7 +22,7 @@ This project brings together RSI resource collections and learning materials to 
 | Optimize a reusable prompt against evaluation data | [GEPA / DSPy AIME notebook](https://github.com/stanfordnlp/dspy/blob/main/docs/docs/tutorials/gepa_aime/index.ipynb) |
 | Evolve a small program using evaluator feedback | [ShinkaEvolve tutorial notebook](https://github.com/SakanaAI/ShinkaEvolve/blob/main/examples/shinka_tutorial.ipynb) |
 | Train an agent from tool feedback with a GPU | [Agent Lightning Calc-X Local Mode](https://github.com/microsoft/agent-lightning/blob/main/docs/50-example-calc-x.md#local-mode) |
-| Choose a survey by research topic | [Surveys and Research Overviews](#surveys), with section-level reading paths |
+| Read the 12 recent surveys in a useful order | [Recommended Survey Reading Path](#survey-reading-path): overview → methods → safety |
 | Start reading research papers systematically | [natnew's Reading Paths](https://github.com/natnew/awesome-recursive-self-improvement#reading-paths) |
 | Follow a course on self-improving agents | The public schedule and readings for [Stanford CS329A](https://cs329a.stanford.edu/) |
 
@@ -39,6 +39,7 @@ Choose a short learning path that fits your goal:
 - [Research Indexes and Awesome Lists](#indexes)
 - [Surveys and Research Overviews](#surveys)
 - [Recent Survey Coverage](#survey-coverage)
+- [Recommended Survey Reading Path](#survey-reading-path)
 - [Guides, Books, and Learning Paths](#guides)
 - [Hands-on Tutorials](#tutorials)
 - [Practice Projects](#practice)
@@ -109,6 +110,51 @@ Paper dates use arXiv’s first-submission date, Preprints.org’s **Posted** da
 Coverage does not imply that every repository links the newest version: jacky-leng currently pins the coding-agent survey to v1, The Last AI to v2, and the LLM technical overview to v1. Use the version links above for the verified latest arXiv versions. Frontis and Towards AI are checked against their author-hosted PDFs; newer OpenReview revisions could not be verified because the platform required browser verification.
 
 † For `2610.00093`, arXiv displays **2026-09-08** in both its header and submission history despite the October identifier prefix. The table preserves that upstream date; the discrepancy is unresolved.
+
+<a id="survey-reading-path"></a>
+
+### Recommended Survey Reading Path
+
+This route uses the **12 papers and verified versions in the [coverage table](#survey-coverage)**. It assumes basic LLM and agent knowledge. The order is our reading recommendation; each paper's definitions and autonomy levels belong to its authors' framework. Section numbers refer to those versions, and PDF page numbers are counted from the first page.
+
+**Core route:** Prism → *Self-Improvements in Modern Agentic Systems* → *Towards AI That Improves Itself* → one methods branch → *Safety in Self-Evolving Agents*. Start with the chapters below; the other papers offer complementary perspectives rather than extra prerequisites.
+
+#### 1. Introductory Overviews
+
+Read the first two in order, then use the optional comparisons to broaden your view. Aim to explain **what changes, what survives into the next cycle, and how improvement is measured**.
+
+| Paper / place in the route | What it adds | Read first |
+| --- | --- | --- |
+| **1. Field map — [From Existing Methods to New Research Ideas: Two Perspectives on Recursive Self-Improvement](https://github.com/Prism-Shadow/awesome-rsi/blob/main/site/public/papers/rsi-survey.pdf)** | Nine design dimensions help compare methods; connections to established deep learning offer a starting point for research ideas. | §2.3: the RSI loop (p. 5) → §3.1: taxonomy overview (p. 6) → §5: evaluation (p. 17). Return to §4.2 for research ideas. |
+| **2. System map — [Self-Improvements in Modern Agentic Systems: A Survey](https://arxiv.org/html/2607.13104v1)** | Separates changes to model parameters from changes to prompts, memory, tools, and the surrounding scaffold. Helps choose which component to study. | §3: definitions → §4: taxonomy → §6 for scaffold engineering or §5 for model training → §8.1: measuring improvement. |
+| **Optional comparison — [Recursive Self-Improvement in AI: From Bounded Self-Refinement to Autonomous Research Loops](https://arxiv.org/html/2607.07663v2)** | Compares the improvement target with who verifies the loop, and treats the evaluator as a research object in its own right. | §2.1: definitions → §2.2: two-axis taxonomy. For an evaluation focus, continue to §§5.1–5.2 on evaluator design and verification, then §5.5 on result versus process improvement. |
+| **Optional system view — [The Path to Recursive Self-Improving Agents: Foundation, Framework, and Future Directions](https://www.preprints.org/manuscript/202608.0051)** | Connects models, harnesses, data systems, trainers, and improvement mechanisms; useful for understanding dependencies between component updates. | §§2.1–2.3: components, capability levels, and the diagnose–propose–evaluate–integrate loop → §6: joint improvement across components. |
+
+#### 2. Methods and Research Design
+
+Start with *Towards AI*, then choose the branch closest to your project. Model-training and co-evolution branches benefit from ML / RL background; the experience and coding branches connect more directly to agent engineering.
+
+| Paper / branch | What it adds | Read first |
+| --- | --- | --- |
+| **Shared foundation — [Towards AI That Improves Itself: A Survey of Recursive Self-Improvement](https://lee1003-lee.github.io/Awesome-RSI-Research/assets/rsi-survey.pdf#page=5)** | Separates inheritance of accepted improvements from gains in the improver itself. Connects this distinction to verification, update decisions, and persistent memory. | §3: definitions and claim protocol (p. 5) → §§4.2–4.3: feedback and optimization. For agent engineering, continue to §5.2 (p. 21). |
+| **Model training — [Self-Improvement of Large Language Models: A Technical Overview and Future Outlook](https://arxiv.org/html/2603.25681v3)** | Connects data acquisition and selection, model optimization, inference refinement, and autonomous evaluation across the learning lifecycle. | §4.1: optimization overview → §§4.3–4.4: self-generated versus self-evolving optimization → §6: autonomous evaluation. |
+| **Experience, memory, and skills — [Self-Improving Agents in the Era of Experience: A Survey of Self- to Meta-Evolution](https://github.com/FrontisAI/Awesome-Self-Improving-Agents/blob/main/Self_Improving_Agents.pdf)** | Follows execution experience into reusable skills, memory, and higher-level control, linking harness engineering to persistent learning. | §2: harness as experience infrastructure (p. 5) → §§3–4: skills and memory → §§7–8: meta-evolution and longitudinal evaluation. |
+| **Coding agents — [Self-Evolving Coding Agents](https://arxiv.org/html/2608.03392v4)** | Distinguishes improving the current code artifact from updating agent components for later reuse; compares assets, architecture, and parameters. | §2.3: operational boundary → §3: taxonomy → choose §4 (assets), §5 (architecture), or §6 (parameters) → §§7–8: feedback and evaluation. |
+| **Multi-agent and environment adaptation — [Co-Evolution in Agentic Systems: Toward Self-Directed Evolution Beyond Human Design](https://arxiv.org/html/2608.10299v1)** | Studies coupled changes to agents, environments, and evolution mechanisms, extending the picture beyond improvement in a fixed setting. | §§2.2–2.3: definitions and stage map → §3 (agent–agent) or §4 (agent–environment) → §5: meta co-evolution. Use Appendix A to compare adjacent concepts. |
+| **Autonomy — [The Last AI Built by Humans: Toward Genuine Recursive Self-Improvement](https://arxiv.org/html/2609.11873v3)** | Asks which improvement decisions a system controls and which remain external. Its autonomy levels help compare systems independently of their task scores. | §§2.2–2.3: foundations and evidence scope → §3.1: the B0 reference boundary → §3.7: cross-level synthesis; then choose a level in §§3.2–3.6. |
+| **Experimental evidence — [Recursive Self-Improvement in AI: A Survey](https://www.preprints.org/manuscript/202609.2680)** | Organizes methods by engineering goal and update target, then separates task gains, retained gains, and the improver's contribution. Useful when designing comparisons. | §3.1: definitions → §4.1: two-axis map → §6.5: revising the improver → §§7.4 and 7.6: isolating its contribution and interpreting evidence. |
+
+After your chosen branch, sketch one improvement loop: **editable component → feedback → acceptance rule → retained state → evaluation on later tasks**. Use this to connect the surveys to a method paper or a practice project below.
+
+#### 3. Safety
+
+Use the same loop to ask how retained experience can affect later actions. Readers focused on safety can move here after the introductory core and *Towards AI*.
+
+| Paper | What it adds | Read first |
+| --- | --- | --- |
+| **[Safety in Self-Evolving Agents: A Survey](https://arxiv.org/html/2610.00093v1)** | Tracks changes to provenance, authority, and scope as experience becomes reusable state. SAVER connects the state carrier and update operation to violations, exposure, and response. | §2.1: scope → §§2.3–2.4: transition tests and SAVER → §3.3: long-term memory or §3.6: skills and procedures. |
+
+Then connect the analysis to controls: *Towards AI* §4.3 and §6.6 cover update policies, permissions, and rollback; *Recursive Self-Improvement in AI: A Survey* §8.4 examines evaluation integrity under self-modification. For a system-wide perspective, add *The Path to Recursive Self-Improving Agents* §7.4. Try tracing one memory item or skill from creation to later reuse, identifying where its authority changes and where a control can intervene.
 
 <a id="guides"></a>
 

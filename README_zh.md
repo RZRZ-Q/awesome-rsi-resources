@@ -22,7 +22,7 @@ A curated directory of awesome lists, learning guides, tutorials, and courses on
 | 通过评估数据优化可复用提示词 | [GEPA / DSPy AIME Notebook](https://github.com/stanfordnlp/dspy/blob/main/docs/docs/tutorials/gepa_aime/index.ipynb) |
 | 根据评估反馈进化一个小程序 | [ShinkaEvolve 教程 Notebook](https://github.com/SakanaAI/ShinkaEvolve/blob/main/examples/shinka_tutorial.ipynb) |
 | 有 GPU，想用工具反馈训练 Agent | [Agent Lightning Calc-X Local Mode](https://github.com/microsoft/agent-lightning/blob/main/docs/50-example-calc-x.md#local-mode) |
-| 按研究主题选择综述 | [综述与研究总览](#surveys)，提供具体章节阅读路线 |
+| 按合理顺序阅读这 12 篇近期综述 | [推荐综述阅读路线](#survey-reading-path)：入门总览 → 方法进阶 → 安全方向 |
 | 开始系统读论文 | [natnew 的 Reading Paths](https://github.com/natnew/awesome-recursive-self-improvement#reading-paths) |
 | 跟着课程学自改进 Agent | [Stanford CS329A](https://cs329a.stanford.edu/)的公开课程表与阅读材料 |
 
@@ -39,6 +39,7 @@ A curated directory of awesome lists, learning guides, tutorials, and courses on
 - [研究索引与 Awesome 清单](#indexes)
 - [综述与研究总览](#surveys)
 - [近期综述覆盖表](#survey-coverage)
+- [推荐综述阅读路线](#survey-reading-path)
 - [指南、教材与学习路径](#guides)
 - [实践教程](#tutorials)
 - [实践项目](#practice)
@@ -109,6 +110,51 @@ A curated directory of awesome lists, learning guides, tutorials, and courses on
 论文已覆盖不代表每个仓库都链接最新版：jacky-leng 当前把代码 Agent 综述固定到 v1、The Last AI 固定到 v2、LLM 技术总览固定到 v1。阅读时可使用上表的版本链接。Frontis 与 Towards AI 核验的是作者托管 PDF；OpenReview 要求浏览器验证，未能确认平台是否另有更新版本。
 
 † 对于 `2610.00093`，arXiv 的页头与版本历史均显示 **2026-09-08**，但编号前缀指向 10 月。本表保留上游日期，差异原因未确认。
+
+<a id="survey-reading-path"></a>
+
+### 推荐综述阅读路线
+
+本路线使用[覆盖表](#survey-coverage)中的 **12 篇论文及已核实版本**，适合已有基本 LLM 与 Agent 概念的读者。顺序是本目录的学习建议；各论文的定义与自主性等级属于各自作者的框架。章节号对应上述版本，PDF 页码从文件第一页起算。
+
+**核心路线：** Prism → *Self-Improvements in Modern Agentic Systems* → *Towards AI That Improves Itself* → 选一个方法分支 → *Safety in Self-Evolving Agents*。先读下列推荐章节，其余论文用于补充视角，不是额外的必修前置。
+
+#### 1. 入门总览
+
+前两篇按顺序读，再按需选择两篇补充比较。读完应能说明：**改什么、什么会保留到下一轮、如何衡量改进**。
+
+| 论文／路线位置 | 特色与用途 | 推荐先读章节 |
+| --- | --- | --- |
+| **1. 领域总图 — [From Existing Methods to New Research Ideas: Two Perspectives on Recursive Self-Improvement](https://github.com/Prism-Shadow/awesome-rsi/blob/main/site/public/papers/rsi-survey.pdf)** | 用九个设计维度比较方法，并联系传统深度学习，为构思研究问题提供起点。 | §2.3 RSI 闭环（第 5 页）→ §3.1 分类总览（第 6 页）→ §5 评估（第 17 页）；构思研究方向时再读 §4.2。 |
+| **2. 系统总图 — [Self-Improvements in Modern Agentic Systems: A Survey](https://arxiv.org/html/2607.13104v1)** | 区分模型参数更新与提示、记忆、工具、外围控制框架的更新，帮助选择要深入研究的组件。 | §3 定义 → §4 分类 → 工程方向读 §6 scaffold，训练方向读 §5 模型 → §8.1 改进的衡量。 |
+| **选读：比较视角 — [Recursive Self-Improvement in AI: From Bounded Self-Refinement to Autonomous Research Loops](https://arxiv.org/html/2607.07663v2)** | 从改进对象与闭环由谁验证两个角度比较方法，并将评估器本身作为研究对象。 | §2.1 定义 → §2.2 两轴分类；关注评估时继续读 §§5.1–5.2 的评估器设计与验证层级，再读 §5.5 的结果改进与过程改进。 |
+| **选读：系统组成 — [The Path to Recursive Self-Improving Agents: Foundation, Framework, and Future Directions](https://www.preprints.org/manuscript/202608.0051)** | 把模型、Harness、数据系统、训练器和改进机制联系起来，适合理解各组件更新之间的依赖。 | §§2.1–2.3：组件、能力等级，以及诊断—提案—评估—集成闭环 → §6 多组件共同改进。 |
+
+#### 2. 方法进阶
+
+先读 *Towards AI*，再选与自己项目最接近的分支。模型训练、协同演化分支适合有机器学习／强化学习基础的读者；经验与代码分支更直接衔接 Agent 工程。
+
+| 论文／分支 | 特色与用途 | 推荐先读章节 |
+| --- | --- | --- |
+| **共同基础 — [Towards AI That Improves Itself: A Survey of Recursive Self-Improvement](https://lee1003-lee.github.io/Awesome-RSI-Research/assets/rsi-survey.pdf#page=5)** | 区分继承已接受的改进与改进器本身变强，并关联验证、更新决策和持久记忆。 | §3 定义与主张检验框架（第 5 页）→ §§4.2–4.3 反馈与优化；Agent 工程继续读 §5.2（第 21 页）。 |
+| **模型训练 — [Self-Improvement of Large Language Models: A Technical Overview and Future Outlook](https://arxiv.org/html/2603.25681v3)** | 串起数据获取与筛选、模型优化、推理改进和自主评估，形成完整的学习生命周期视角。 | §4.1 优化总览 → §§4.3–4.4 自生成优化与自演化优化 → §6 自主评估。 |
+| **经验、记忆与技能 — [Self-Improving Agents in the Era of Experience: A Survey of Self- to Meta-Evolution](https://github.com/FrontisAI/Awesome-Self-Improving-Agents/blob/main/Self_Improving_Agents.pdf)** | 跟踪执行经验如何进入可复用技能、记忆与更高层控制，连接 Harness 工程与持续学习。 | §2 作为经验基础设施的 Harness（第 5 页）→ §§3–4 技能与记忆 → §§7–8 元演化与纵向评估。 |
+| **代码 Agent — [Self-Evolving Coding Agents](https://arxiv.org/html/2608.03392v4)** | 区分修改当前任务的代码与更新供后续复用的 Agent 组件，比较资产、架构和参数三类对象。 | §2.3 操作边界 → §3 分类 → 选读 §4 资产、§5 架构或 §6 参数 → §§7–8 反馈与评估。 |
+| **多智能体与环境适应 — [Co-Evolution in Agentic Systems: Toward Self-Directed Evolution Beyond Human Design](https://arxiv.org/html/2608.10299v1)** | 研究 Agent、环境和演化机制之间相互关联的变化，将视角扩展到固定环境以外。 | §§2.2–2.3 定义与阶段总图 → §3 Agent 间或 §4 Agent 与环境的协同演化 → §5 元协同演化；用附录 A 对比相邻概念。 |
+| **自主性 — [The Last AI Built by Humans: Toward Genuine Recursive Self-Improvement](https://arxiv.org/html/2609.11873v3)** | 关注系统控制了哪些改进决策、哪些仍由外部决定；其自主性等级帮助在任务得分之外比较系统。 | §§2.2–2.3 概念基础与证据范围 → §3.1 的 B0 参照边界 → §3.7 跨等级综合；再从 §§3.2–3.6 选择感兴趣的等级。 |
+| **实验证据 — [Recursive Self-Improvement in AI: A Survey](https://www.preprints.org/manuscript/202609.2680)** | 按工程目标与更新对象组织方法，再区分任务收益、保留收益和改进器的贡献，适合设计对照实验时阅读。 | §3.1 定义 → §4.1 两轴总图 → §6.5 改进器修订 → §§7.4、7.6 分离改进器贡献与解释证据。 |
+
+完成所选分支后，画出一个具体闭环：**可修改组件 → 反馈 → 接受规则 → 保留状态 → 后续任务评估**。再据此选择一篇方法论文，或衔接下方实践项目。
+
+#### 3. 安全方向
+
+沿着同一个闭环，追踪保留的经验如何影响后续行为。专注安全的读者可在入门核心与 *Towards AI* 之后直接进入本节。
+
+| 论文 | 特色与用途 | 推荐先读章节 |
+| --- | --- | --- |
+| **[Safety in Self-Evolving Agents: A Survey](https://arxiv.org/html/2610.00093v1)** | 跟踪经验成为可复用状态时，来源、权限和作用范围如何变化；SAVER 将状态载体、更新操作与违规、暴露、响应联系起来。 | §2.1 范围 → §§2.3–2.4 状态转移检查与 SAVER → §3.3 长期记忆或 §3.6 技能与过程。 |
+
+随后把分析接到控制机制：*Towards AI* §4.3 与 §6.6 讨论更新策略、权限和回滚；*Recursive Self-Improvement in AI: A Survey* §8.4 讨论自修改下的评估完整性。需要系统整体视角时，再读 *The Path to Recursive Self-Improving Agents* §7.4。可以选一条记忆或一个技能，从产生追踪到后续复用，指出其权限在哪里变化、控制措施应在哪里介入。
 
 <a id="guides"></a>
 
