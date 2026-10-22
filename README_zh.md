@@ -8,7 +8,7 @@ A curated directory of awesome lists, learning guides, tutorials, and courses on
 
 本项目汇集 RSI 相关的资源集合与学习入口，帮助读者了解每项资源适合谁、值得看什么、从哪里开始，以及内容更新到什么时候。
 
-**最近核验：2026-10-22。** 首批收录 17 项资源，涵盖 Awesome 清单、教材、教程、课程、工作坊与复现材料。同一项目的网站、代码和 Notebook 合并介绍。
+**最近核验：2026-10-22。** 共收录 26 项资源，涵盖 Awesome 清单、教材、教程、实践项目、课程、工作坊与复现材料。第二批新增 9 项，重点补充教程、课程与具体实践入口。同一项目的网站、代码和 Notebook 合并介绍。
 
 ## 从哪里开始
 
@@ -17,6 +17,9 @@ A curated directory of awesome lists, learning guides, tutorials, and courses on
 | 用中文建立 RSI 概念框架 | [Prism 中文图解导读](https://github.com/Prism-Shadow/awesome-rsi/blob/main/site/src/data/blog/rsi-guide.zh.md) |
 | 用 Python 搭建第一个 Agent 改进循环 | [The RSI Book 第 2 章](https://thersibook.com/chapters/ch02.html)与配套 Notebook |
 | 从代码理解 Agent Harness | [learn-deepseek-harness 的 L1](https://github.com/Prism-Shadow/learn-deepseek-harness/tree/main/basics/L01_agent_loop)，再按课程顺序学习 |
+| 通过评估数据优化可复用提示词 | [GEPA / DSPy AIME Notebook](https://github.com/stanfordnlp/dspy/blob/main/docs/docs/tutorials/gepa_aime/index.ipynb) |
+| 根据评估反馈进化一个小程序 | [ShinkaEvolve 教程 Notebook](https://github.com/SakanaAI/ShinkaEvolve/blob/main/examples/shinka_tutorial.ipynb) |
+| 有 GPU，想用工具反馈训练 Agent | [Agent Lightning Calc-X Local Mode](https://github.com/microsoft/agent-lightning/blob/main/docs/50-example-calc-x.md#local-mode) |
 | 开始系统读论文 | [natnew 的 Reading Paths](https://github.com/natnew/awesome-recursive-self-improvement#reading-paths) |
 | 跟着课程学自改进 Agent | [Stanford CS329A](https://cs329a.stanford.edu/)的公开课程表与阅读材料 |
 
@@ -24,13 +27,15 @@ A curated directory of awesome lists, learning guides, tutorials, and courses on
 
 - **概念入门**：Prism 中文导读 → The RSI Book 第 1–2 章 → natnew 阅读路线。
 - **Agent 工程实践**：The RSI Book 的 Python 循环 → learn-deepseek-harness 的分课实现 → Self-Improving Agents 综述中的 scaffolding 与 evaluation 部分。
-- **训练与研究**：Stanford CS329A 的 verifier / RL 阅读 → Self-Improving Agents 综述中的模型改进部分 → ICLR RSI 工作坊的相关论文。
+- **优化实践**：GEPA / DSPy → ShinkaEvolve 或 OpenEvolve → 用 DGM 进阶研究 Agent 代码演化。
+- **训练与研究**：Stanford CS329A 的 verifier / RL 阅读 → Self-Improving Agents 综述中的模型改进部分 → SEAL 适应循环或 Agent Lightning 策略训练 → ICLR RSI 工作坊的相关论文。
 
 ## 目录
 
 - [研究索引与 Awesome 清单](#indexes)
 - [指南、教材与学习路径](#guides)
 - [实践教程](#tutorials)
+- [实践项目](#practice)
 - [课程与工作坊](#courses)
 - [评测与综述复现](#evaluation)
 - [时效与核验记录](#verification)
@@ -69,8 +74,24 @@ A curated directory of awesome lists, learning guides, tutorials, and courses on
 | 资源 | 特色与适合读者 | 推荐学习入口 | 语言与实践条件 |
 | --- | --- | --- | --- |
 | [Prism-Shadow/learn-deepseek-harness](https://github.com/Prism-Shadow/learn-deepseek-harness) | 分课实现 Agent 循环、插件、持久 Session Log、缓存、压缩、记忆、子 Agent 和运行时自修改；每课是独立小包，适合边读边改。 | [L1：最裸的循环](https://github.com/Prism-Shadow/learn-deepseek-harness/tree/main/basics/L01_agent_loop) → 按[网页版课程](https://prism-shadow.github.io/learn-deepseek-harness/)顺序学习 → [L10：自我修改](https://github.com/Prism-Shadow/learn-deepseek-harness/tree/main/advanced/L10_self_modification)。 | 中英；Node.js、TypeScript 基础和 DeepSeek API。L10 展示运行时生成并注册临时工具，尚未包含自动评估、晋升与持久化的完整演化循环。 |
+| [GEPA / DSPy 官方教程](https://github.com/gepa-ai/gepa) | 用完整数学示例串起基线评估、文本反馈、候选选择和优化后评估，适合学习模型权重固定时提示词如何逐步改进。 | 从 [GEPA for AIME Notebook](https://github.com/stanfordnlp/dspy/blob/main/docs/docs/tutorials/gepa_aime/index.ipynb) 开始，再读 [GEPA optimization](https://dspy.ai/current/getting-started/gepa-optimization/)，理解数据划分和优化后程序的保存。 | 英文；Python 3.10–3.14、DSPy / GEPA、datasets；示例需要 OpenAI API key，MLflow 跟踪可选。 |
+| [TextGrad 官方 Notebook](https://github.com/zou-group/textgrad) | 通过类似 PyTorch 的接口讲解文本梯度，再在物体计数问题上优化共享提示词、使用验证集评估，并在验证性能下降时回退更新，适合理解反馈驱动的文本优化。 | [Primitives](https://github.com/zou-group/textgrad/blob/main/examples/notebooks/Tutorial-Primitives.ipynb) → [Prompt Optimization](https://github.com/zou-group/textgrad/blob/main/examples/notebooks/Tutorial-Prompt-Optimization.ipynb)。 | 英文；Python 3.9+、Jupyter / Colab、OpenAI API key。Notebook 沿用较早的模型 ID，运行前需核对兼容模型的可用性；更新提示词文本而非模型权重。 |
 
-Python 路线可直接使用上面的 **The RSI Book 第 2 章与 Notebook**；两个项目分别适合学习改进循环和 Harness 工程结构。
+第一个 Python 改进循环可从上面的 **The RSI Book 第 2 章与 Notebook** 开始。GEPA 和 TextGrad 用于学习固定模型权重下的提示词优化；这些入门教程不修改优化器自身。
+
+<a id="practice"></a>
+
+## 实践项目
+
+这些项目提供程序进化、Agent 自身代码演化或模型训练的具体示例，可按改进对象与算力条件选择。
+
+| 资源 | 特色与适合读者 | 推荐学习入口 | 语言与实践条件 |
+| --- | --- | --- | --- |
+| [ShinkaEvolve · SakanaAI](https://github.com/SakanaAI/ShinkaEvolve) | 用引导式 Notebook 串起 LLM 代码变异、程序种群、评估器和持久化搜索记录；圆堆积任务适合学习程序进化，并比较不同父代选择策略。 | [Getting Started](https://sakanaai.github.io/ShinkaEvolve/getting_started/) → [交互教程 Notebook](https://github.com/SakanaAI/ShinkaEvolve/blob/main/examples/shinka_tutorial.ipynb) → 阅读[圆堆积评估器](https://github.com/SakanaAI/ShinkaEvolve/blob/main/examples/circle_packing/evaluate.py)。 | 英文；Python 3.10+（建议 3.11）、本地 Python 或 Colab，以及模型 API 凭据。入门示例进化的是任务程序；评估器在本地运行，不要求训练用 GPU。 |
+| [OpenEvolve](https://github.com/algorithmicsuperintelligence/openevolve) | 受 AlphaEvolve 启发的开源程序搜索框架。函数最小化小示例展示初始搜索算法、评估反馈、配置与检查点如何组成闭环。 | 阅读 [Installation & Setup](https://github.com/algorithmicsuperintelligence/openevolve#installation--setup)，取得仓库示例后跟随 [Function Minimization](https://github.com/algorithmicsuperintelligence/openevolve/tree/main/examples/function_minimization)，结合阅读 `initial_program.py`、`evaluator.py` 和 `config.yaml`。 | 英文；Python 3.10+、NumPy 和模型端点。示例默认经 OpenAI 兼容 API 使用 Gemini；Docker 可选。优化的是任务代码，不更新模型权重。 |
+| [Darwin Gödel Machine（DGM）](https://github.com/jennyzzt/dgm) | 原论文研究实现：agent 修改自身代码，在编程任务上评估后代，并保留归档供后续进化。适合准备沿源码理解完整研究循环的读者。 | 阅读 [Setup / Running the DGM](https://github.com/jennyzzt/dgm#setup)，再追踪 [DGM_outer.py](https://github.com/jennyzzt/dgm/blob/main/DGM_outer.py) → [self_improve_step.py](https://github.com/jennyzzt/dgm/blob/main/self_improve_step.py)。 | 英文；Python、Docker、模型 API，以及 SWE-bench / Polyglot 环境准备。这是需要较多环境与评估工作的研究复现入口，适合进阶学习。 |
+| [SEAL · Self-Adapting Language Models](https://github.com/Continual-Intelligence/SEAL) | **模型适应。** 作者原始实现学习生成 self-edit，在下游问答上评估临时 LoRA 更新，再用筛选出的编辑训练编辑生成器；适合研究内层适应与外层学习的关系。 | 从 [general-knowledge 流程](https://github.com/Continual-Intelligence/SEAL/blob/main/general-knowledge/README.md)依次读数据生成 → TTT server → 评估 → ReST-EM 训练，再看 [SFT 数据构建器](https://github.com/Continual-Intelligence/SEAL/blob/main/general-knowledge/src/EM/build_SFT_dataset.py)。 | 英文；进阶 Python / 微调基础、Python 3.12、PyTorch / vLLM / PEFT。上游说明使用 2 张 A100/H100；需调整 SLURM 脚本与路径。OpenAI 数据生成 / proxy 评分路径另需 API。 |
+| [Microsoft Agent Lightning v1.0](https://github.com/microsoft/agent-lightning) | **Agent 策略训练。** Calc-X 将 AutoGen Agent、MCP 计算器与轨迹采集、答案奖励、GRPO 更新串起来，适合学习如何从工具调用轨迹训练并保存策略检查点。 | 先读[安装说明](https://github.com/microsoft/agent-lightning/blob/main/docs/00-installation.md)，再按 [Calc-X Local Mode](https://github.com/microsoft/agent-lightning/blob/main/docs/50-example-calc-x.md#local-mode)操作；按该示例要求从 `examples/calc_x` 启动。 | 英文；Python 3.12+、Linux / WSL、CUDA、`verl` / vLLM、数据下载，默认使用 W&B。文档中的 Calc-X 配置为 **1 张 A100 80GB**。这是 v1.0 训练入口，旧 APO 教程对应旧 API。 |
 
 <a id="courses"></a>
 
@@ -81,6 +102,8 @@ Python 路线可直接使用上面的 **The RSI Book 第 2 章与 Notebook**；�
 | [Stanford CS329A：Self-Improving AI Agents](https://cs329a.stanford.edu/) | 系统串联 test-time compute、verifier、工具反馈、规划、RL、开放式演化和 Agent 评测，适合按周安排阅读。 | 官网 Schedule 的**第 2–7 讲**建立基础，再读**第 17 讲 Agentic Evaluations & Long-Horizon Tasks**。 | 英文；机器学习 / LLM 基础。当前公开页面为 **2025 秋季课程**，本批核验课程表与论文阅读清单。 |
 | [Harvard CS 2881R：AI Safety 中的 RSI 专题](https://boazbk.github.io/mltheoryseminar/) | 从 AI 研发自动化、改进速度和安全视角理解 RSI，适合补充技术实现之外的研究问题。 | [2025-10-09 归档讲](https://boazbk.github.io/mltheoryseminar/fall2025/#lecture-oct-9)有课件、总结和录影入口；再看 [2026-09-24 RSI & AI Trajectories](https://boazbk.github.io/mltheoryseminar/#lecture-sep-24)的阅读与学生实验材料。 | 英文；机器学习、概率 / 信息论与 Python 基础。属于 AI Safety 课程中的专题；2026 该讲当前未列录影。 |
 | [ICLR 2026：AI with Recursive Self-Improvement Workshop](https://recursive-workshop.github.io/) | 集中呈现自改进方法、系统与评测的研究议题，适合从议程进入具体研究工作。 | 先看官网议程与主题，再从 [Accepted Papers](https://recursive-workshop.github.io/papers.html)的 Oral / Spotlight 选论文。 | 英文；研究背景更有帮助。活动日期 **2026-04-26**；本批核验官网与论文集。 |
+| [DeepLearning.AI × Oracle：Building Adaptive AI Agents](https://www.deeplearning.ai/courses/building-adaptive-ai-agents) | 讲解三层适应：从 Agent 轨迹提炼可复用技能、代码图检索和模型适应。适合学习如何跨会话保留经验；提炼出的技能需要人工批准。 | 先看 Overview of Continual Learning，再学 [Behavior Adaptation: Trajectory-to-Skill Learning](https://learn.deeplearning.ai/courses/building-adaptive-ai-agents/lesson/9i82mn/behavior-adaptation%3A-trajectory-to-skill-learning)，然后进入代码图相关课程。 | 英语；建议具备 Python 基础。课纲列有 7 个视频和 3 个代码示例；Free 计划可看视频，动手实验与评分活动属于 Pro。 |
+| [Berkeley Advanced LLM Agents MOOC：自改进相关讲次](https://llmagents-learning.org/sp25) | 将自奖励、迭代偏好优化和元奖励与 LLM 推理相连接，适合学习模型如何生成训练信号并改进自身判断。 | 从 Jason Weston 的 **2025-02-03** 讲次 *Learning to reason with LLMs* 及[讲义第 40 页](https://rdi.berkeley.edu/llm-agents-mooc/slides/Jason-Weston-Reasoning-Alignment-Berkeley-Talk.pdf#page=40)开始，再读课纲中的迭代推理偏好优化论文。 | 英语；建议具备 LLM 与后训练基础。**Spring 2025** 课程已结束，仍有公开讲义与阅读材料，另列有录像入口。 |
 
 <a id="evaluation"></a>
 
@@ -95,14 +118,14 @@ Python 路线可直接使用上面的 **The RSI Book 第 2 章与 Notebook**；�
 
 ## 时效与核验记录
 
-本批核验日期为 **2026-10-22**：读取了项目 README、推荐章节或课程页面，并对涉及实践能力的条目抽查相关代码。**未运行上游教程、调用模型或复现实验，也未逐篇复核清单内的论文。** 视频只核对课程页提供的入口。
+两批核验日期均为 **2026-10-22**。新增候选先按项目身份与已有条目排重，再读详情；网站、Notebook 和仓库迁移前后的名称合并处理。读取了项目 README、推荐章节或课程页面，并对涉及实践能力的条目抽查相关代码。**未运行上游教程、调用模型或复现实验，也未逐篇复核清单内的论文。** 视频只核对课程页提供的入口。
 
 下表记录有依据的内容变化、发布或上游自报核验时间；它们与本项目的核验日期不同，也不等同于整个领域的覆盖截止日期。提交日期按 Asia/Taipei 记载，上游直接标注的日期保留原值。
 
 <details>
-<summary>展开 17 项资源的内容时间与核验范围</summary>
+<summary>展开 26 项资源的内容时间与核验范围</summary>
 
-| 资源 | 内容时间与依据 | 本批阅读范围 |
+| 资源 | 内容时间与依据 | 核验阅读范围 |
 | --- | --- | --- |
 | Prism Awesome RSI | [2026-10-15 新增双语文章](https://github.com/Prism-Shadow/awesome-rsi/commit/6cf55d1bbe224ca1c26c2bb5c8b66e429cce220c)；[中文导读 09-20 更新](https://github.com/Prism-Shadow/awesome-rsi/commit/775a1bdbe4dc60c55cd9d32e792d36f2ec658534)。10-19 提交仅更换二维码。 | README、导读源码、网站路由与资源配置；未验证筛选网站的全部交互。 |
 | natnew Awesome RSI | [2026-10-18 新增六项研究](https://github.com/natnew/awesome-recursive-self-improvement/commit/b30c5fd2e36fe8a1f8381444e03377bec16135a1)。 | README、Reading Paths 与新增条目的提交差异。 |
@@ -116,9 +139,18 @@ Python 路线可直接使用上面的 **The RSI Book 第 2 章与 Notebook**；�
 | Roloria/rsi-learn | [2026-09-22 加入学习站与模拟器](https://github.com/Roloria/rsi-learn/commit/64fa58065410fdc8d0c1c333f2bfc3d74019145b)。 | README、五阶段路线和模拟器引擎源码。 |
 | Ashish Kumar 三篇导读 | [系列页](https://ashishkumar.ai/series/recursive-self-improvement/)与三篇正文均标注 **2026-10-11** 发布。 | 系列目录、三篇正文与篇内学习入口。 |
 | learn-deepseek-harness | [2026-08-23 重组为基础 L1–L8 与进阶 L9–L10](https://github.com/Prism-Shadow/learn-deepseek-harness/commit/4c3b6492767f8af9d65a2a97776ed3bea8841aec)。 | 总 README、L1 文档 / 源码 / 依赖、L10 文档。 |
+| GEPA / DSPy 教程 | [2025-08-14 加入 AIME 教程](https://github.com/stanfordnlp/dspy/commit/abe6487d6e2091a5a59f901a82d7e84850025d81)；[2026-08-27 补充训练 / 验证集划分说明](https://github.com/stanfordnlp/dspy/commit/2a67bcc7a53d204ae6c85eee11b73bc898819d56)。 | 两库 README、AIME Notebook 单元、GEPA optimization 指南、Python 依赖和相关提交变更；未调用模型或复现性能。 |
+| TextGrad Notebook | 教程来自 2024 年；[2024-07-08 重命名为当前 Tutorial-* 路径](https://github.com/zou-group/textgrad/commit/d56d1c1cb50ffe184c46b6ef457bdcd6132c3ace)。 | README、Primitives 与 Prompt Optimization 单元、依赖文件及重命名历史；未向实际端点测试较早的模型 ID。 |
+| ShinkaEvolve | [2026-04-07 更新教程示例](https://github.com/SakanaAI/ShinkaEvolve/commit/9b72c250c5c0fccff6e4d5625f4eed76c183e00e)；[07-16 在 Getting Started 中补充 Azure 配置](https://github.com/SakanaAI/ShinkaEvolve/commit/018cea578f1068cadcc617ec1369ee34b3360fe7)。 | README、Getting Started、Notebook 的环境／配置／圆堆积／结果查看单元、圆堆积运行器与评估器、包依赖及相关提交差异。 |
+| OpenEvolve | [2026-10-19 修复示例评估器完整性](https://github.com/algorithmicsuperintelligence/openevolve/commit/bc366807fd05720ababd3491fbba0107bf1742e9)：函数最小化评估器从返回的坐标重新计算目标值。 | README 安装与 Quick Start；函数最小化指南、初始程序、评估器、配置及评估器修复差异。 |
+| DGM | [2025-05-30（台北时间）公开核心研究循环](https://github.com/jennyzzt/dgm/commit/682eb38a3eb232f4396924cacd0a083bf1444cf8)。 | README 环境准备、依赖、外层循环及自改进／评估步骤；未独立复现链接中的实验日志与基准结果。 |
+| SEAL | [2025-08-02 扩充 general-knowledge 实验并整理路径](https://github.com/Continual-Intelligence/SEAL/commit/6d9c9f9ee392c6cc618e771f399d436d190f6ca4)。 | 总 README、general-knowledge 流程、依赖、TTT server、SFT 数据构建器与训练启动脚本；未运行 GPU 实验。 |
+| Agent Lightning | README 宣布于 **2026 年 8 月**发布 v1.0；[2026-08-21 整理教程路径](https://github.com/microsoft/agent-lightning/commit/5415d850af20332442fdb0662458f332c7b1e894)。 | README、安装 / Quick Start / Calc-X 文档、Python 依赖、本地启动脚本、Agent 奖励代码与 GRPO 配置。Calc-X Local Mode 符合启动脚本的工作目录要求，总 Quick Start 的写法不同；未运行训练。 |
 | Stanford CS329A | 官网标为 **Autumn 2025**。 | 课程介绍、Schedule 与公开论文阅读入口。 |
 | Harvard CS 2881R RSI 专题 | **2025-10-09** 归档讲与 **2026-09-24** 新一届专题。 | 官方课程页、两个讲次的阅读 / 课件 / 代码入口；未观看视频。 |
 | ICLR 2026 RSI Workshop | 官网标明活动日期 **2026-04-26**。 | 官方主题、议程和 Accepted Papers 页面。 |
+| Building Adaptive AI Agents | [Oracle 于 2026-08-26 宣布课程上线](https://blogs.oracle.com/developers/we-just-launched-a-new-course-on-how-to-build-adaptive-ai-agents)；课页标注更新于 **2026-08-27**。 | 官方课程介绍、课纲、学习入口、访问计划与 Oracle 介绍；未观看视频或核验 Notebook。 |
+| Berkeley Advanced LLM Agents MOOC | 官方课纲标为 **Spring 2025**，Jason Weston 讲次日期为 **2025-02-03**。 | 官方课纲、阅读链接，以及讲义中自奖励、迭代优化和元奖励章节；未观看录像或核验 Lean 实验。 |
 | deepgrounding 综述材料 | **2026 年 7 月**冻结语料；[09-06 发布公开仓库](https://github.com/deepgrounding/recursive-self-improvement/commit/aceac9d8a8e46caa702b9651857380a4729202a7)。 | README 的复现流程与许可范围、综述分类和语料方法章节；未重新生成语料或图表。 |
 | RSI Atlas | [2026-10-22 修复冻结路径匹配](https://github.com/aniruddhaadak80/RSI/commit/f4246024469d7e7eadea7a59db64f8289e57eb2a)；Start 文档页标注 09-18。 | README、Start 页面、Python 引擎、依赖与代码差异。 |
 
