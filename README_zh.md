@@ -38,6 +38,7 @@ A curated directory of awesome lists, learning guides, tutorials, and courses on
 
 - [研究索引与 Awesome 清单](#indexes)
 - [综述与研究总览](#surveys)
+- [近期综述覆盖表](#survey-coverage)
 - [指南、教材与学习路径](#guides)
 - [实践教程](#tutorials)
 - [实践项目](#practice)
@@ -81,6 +82,33 @@ A curated directory of awesome lists, learning guides, tutorials, and courses on
 | [Self-Evolving Coding Agents](https://arxiv.org/abs/2608.03392) | 按资产、架构和模型参数整理代码 Agent 的持久更新，并梳理代码特有反馈与评估；有助于区分改进当前任务代码与改进未来解题 Agent。 | [§2.3 操作性边界 → §3 分类 → §7–8 反馈与评估](https://arxiv.org/html/2608.03392v4)。 | 英文；需要代码 Agent／软件工程基础。本轮核验 v4；属于阅读材料，不是可运行教程。 |
 | [Safety in Self-Evolving Agents: A Survey](https://arxiv.org/abs/2610.00093) · [作者仓库](https://github.com/xaddwell/awesome-self-evolving-agent-safety) | 研究经验成为可复用记忆、技能、工具、工作流或模型状态后，安全属性如何变化；SAVER 串起状态载体、适应操作、违规、暴露与响应。 | 先读[§2.3–2.4：状态转移检查与 SAVER](https://arxiv.org/html/2610.00093v1)，再读配套仓库的 [Overview 与 Corpus](https://github.com/xaddwell/awesome-self-evolving-agent-safety#overview)。 | 英文；需要 Agent／安全背景。配套语料含机器初始化标签与置信度分级，不能视为全部经人工核验的书目。 |
 | [Towards AI That Improves Itself: A Survey of Recursive Self-Improvement](https://lee1003-lee.github.io/Awesome-RSI-Research/) · [作者仓库](https://github.com/Lee1003-lee/Awesome-RSI-Research) | 区分“继承已有改进”与“改进机制本身变强”，并关联验证、更新策略和记忆复用。适合学习如何设计与评估持续改进闭环。 | 先读 [§3 定义与主张检验框架](https://lee1003-lee.github.io/Awesome-RSI-Research/assets/rsi-survey.pdf#page=5)，再读 §4.3（第 14 页）及 §5.2（第 21 页），了解更新与智能体系统演化。 | 英文；需智能体 / 机器学习基础。相关区分属于作者框架；文献表也包含为 RSI 提供支持的相邻方法。作者公开的综述稿件。 |
+
+<a id="survey-coverage"></a>
+
+### 近期综述覆盖表
+
+**核验日期：2026-10-22。** “已覆盖”指本目录已收录的至少一个仓库明确链接该论文，或托管作者 PDF。下表 12 篇均已找到对应入口。本轮检查了 17 个已收录研究索引、综述配套及阅读札记仓库的 README，并检查了 Prism 论文数据。仓库列列出该范围内确认的匹配，简称链接指向对应仓库。本表用于交叉查询，资源总数仍为 **41**。
+
+论文日期按行分别采用 arXiv 首次提交日期、Preprints.org 的 **Posted** 发布日期或作者标注日期。版本列记录截至本次核验能确认的最新版本；PDF 上传日期是文件历史依据，不作为论文出版日期。
+
+| 论文 | 论文日期与口径 | 最新已核实版本／日期 | 已确认包含它的已收录仓库 |
+| --- | --- | --- | --- |
+| [From Existing Methods to New Research Ideas: Two Perspectives on Recursive Self-Improvement](https://github.com/Prism-Shadow/awesome-rsi/blob/main/site/public/papers/rsi-survey.pdf) | 2026-10-09（PDF 标注） | 作者 PDF 无版本号；[2026-10-14 入库](https://github.com/Prism-Shadow/awesome-rsi/commit/b19bfb7c1ac11250d179a875f483db7089cb4458) | [Prism-Shadow](https://github.com/Prism-Shadow/awesome-rsi) |
+| [Recursive Self-Improvement in AI: A Survey](https://www.preprints.org/manuscript/202609.2680) | 2026-09-30（Preprints.org 发布） | v1 · 2026-09-30 | [lobehub](https://github.com/lobehub/awesome-rsi) |
+| [Self-Evolving Coding Agents](https://arxiv.org/abs/2608.03392) | 2026-08-04（arXiv v1） | [v4](https://arxiv.org/abs/2608.03392v4) · 2026-09-24 | [Token-Rhythm](https://github.com/Token-Rhythm/awesome-rsi), [jacky-leng](https://github.com/jacky-leng/awesome-rsi), [asimfish](https://github.com/asimfish/awesome_rsi) |
+| [The Last AI Built by Humans: Toward Genuine Recursive Self-Improvement](https://arxiv.org/abs/2609.11873) | 2026-09-10（arXiv v1） | [v3](https://arxiv.org/abs/2609.11873v3) · 2026-09-22 | [jacky-leng](https://github.com/jacky-leng/awesome-rsi), [pinkbubblebubble](https://github.com/pinkbubblebubble/awesome-rsi), [FrontisAI](https://github.com/FrontisAI/Awesome-Self-Improving-Agents), [theseus-labs-rsi](https://github.com/theseus-labs-rsi/awesome-rsi), [asimfish](https://github.com/asimfish/awesome_rsi) |
+| [Safety in Self-Evolving Agents: A Survey](https://arxiv.org/abs/2610.00093) | 2026-09-08（arXiv v1） † | [v1](https://arxiv.org/abs/2610.00093v1) · 2026-09-08 | [lobehub](https://github.com/lobehub/awesome-rsi), [xaddwell](https://github.com/xaddwell/awesome-self-evolving-agent-safety) |
+| [Self-Improvement of Large Language Models: A Technical Overview and Future Outlook](https://arxiv.org/abs/2603.25681) | 2026-03-26（arXiv v1） | [v3](https://arxiv.org/abs/2603.25681v3) · 2026-09-07 | [natnew](https://github.com/natnew/awesome-recursive-self-improvement), [jacky-leng](https://github.com/jacky-leng/awesome-rsi), [Zesearch](https://github.com/Zesearch/self-improvement-llm) |
+| [Recursive Self-Improvement in AI: From Bounded Self-Refinement to Autonomous Research Loops](https://arxiv.org/abs/2607.07663) | 2026-07-08（arXiv v1） | [v2](https://arxiv.org/abs/2607.07663v2) · 2026-09-06 | [lobehub](https://github.com/lobehub/awesome-rsi), [Persdre](https://github.com/Persdre/awesome-recursive-self-improvement), [Token-Rhythm](https://github.com/Token-Rhythm/awesome-rsi), [jacky-leng](https://github.com/jacky-leng/awesome-rsi), [pinkbubblebubble](https://github.com/pinkbubblebubble/awesome-rsi), [deepgrounding](https://github.com/deepgrounding/recursive-self-improvement), [Lee1003-lee](https://github.com/Lee1003-lee/Awesome-RSI-Research) |
+| [Co-Evolution in Agentic Systems: Toward Self-Directed Evolution Beyond Human Design](https://arxiv.org/abs/2608.10299) | 2026-08-10（arXiv v1） | [v1](https://arxiv.org/abs/2608.10299v1) · 2026-08-10 | [asimfish](https://github.com/asimfish/awesome_rsi) |
+| [The Path to Recursive Self-Improving Agents: Foundation, Framework, and Future Directions](https://www.preprints.org/manuscript/202608.0051) | 2026-08-03（Preprints.org 发布） | v1 · 2026-08-03 | [pinkbubblebubble](https://github.com/pinkbubblebubble/awesome-rsi) |
+| [Self-Improvements in Modern Agentic Systems: A Survey](https://arxiv.org/abs/2607.13104) | 2026-07-14（arXiv v1） | [v1](https://arxiv.org/abs/2607.13104v1) · 2026-07-14 | [lobehub](https://github.com/lobehub/awesome-rsi), [Persdre](https://github.com/Persdre/awesome-recursive-self-improvement), [Token-Rhythm](https://github.com/Token-Rhythm/awesome-rsi), [jacky-leng](https://github.com/jacky-leng/awesome-rsi), [pinkbubblebubble](https://github.com/pinkbubblebubble/awesome-rsi), [selfimproving-agent](https://github.com/selfimproving-agent/Awesome-Self-Improving-Agents), [theseus-labs-rsi](https://github.com/theseus-labs-rsi/awesome-rsi), [Lee1003-lee](https://github.com/Lee1003-lee/Awesome-RSI-Research) |
+| [Self-Improving Agents in the Era of Experience: A Survey of Self- to Meta-Evolution](https://github.com/FrontisAI/Awesome-Self-Improving-Agents/blob/main/Self_Improving_Agents.pdf) | 2026-06-25（作者发布公告／PDF） | 作者 PDF 无版本号；[2026-06-25 上传](https://github.com/FrontisAI/Awesome-Self-Improving-Agents/commit/16d81a652a75d095e67d50c8c92c61735cfccb7b) | [pinkbubblebubble](https://github.com/pinkbubblebubble/awesome-rsi), [FrontisAI](https://github.com/FrontisAI/Awesome-Self-Improving-Agents) |
+| [Towards AI That Improves Itself: A Survey of Recursive Self-Improvement](https://lee1003-lee.github.io/Awesome-RSI-Research/assets/rsi-survey.pdf) | 出版／提交日期未确认；PDF [2026-09-07 首次入库](https://github.com/Lee1003-lee/Awesome-RSI-Research/commit/f00e049ccc0288b12c787e91ccd89f8c2d0491cf) | 作者 PDF 无版本号；[当前文件更新于 2026-09-09](https://github.com/Lee1003-lee/Awesome-RSI-Research/commit/b724036d3f9e012cd30ce22773559ea32a2b432c) | [Lee1003-lee](https://github.com/Lee1003-lee/Awesome-RSI-Research) |
+
+论文已覆盖不代表每个仓库都链接最新版：jacky-leng 当前把代码 Agent 综述固定到 v1、The Last AI 固定到 v2、LLM 技术总览固定到 v1。阅读时可使用上表的版本链接。Frontis 与 Towards AI 核验的是作者托管 PDF；OpenReview 要求浏览器验证，未能确认平台是否另有更新版本。
+
+† 对于 `2610.00093`，arXiv 的页头与版本历史均显示 **2026-09-08**，但编号前缀指向 10 月。本表保留上游日期，差异原因未确认。
 
 <a id="guides"></a>
 
