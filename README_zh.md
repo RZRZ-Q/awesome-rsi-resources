@@ -8,7 +8,7 @@ A curated directory of awesome lists, learning guides, tutorials, and courses on
 
 本项目汇集 RSI 相关的资源集合与学习入口，帮助读者了解每项资源适合谁、值得看什么、从哪里开始，以及内容更新到什么时候。
 
-**最近核验：2026-10-22。** 共收录 45 项资源，涵盖 Awesome 清单、综述、教材、教程、实践项目、课程、视频与复现材料。最新一批新增 4 个协同演化实践项目，覆盖共享经验、独立策略训练、自动出题和环境课程生成。同一项目的网站、代码和 Notebook 合并介绍。
+**最近核验：2026-10-22。** 共收录 51 项资源，涵盖 Awesome 清单、综述、教材、教程、实践项目、课程、视频与复现材料。本轮新增 3 个对抗式自博弈项目与 3 项 RL–RSI 关系读物，并补充连接两者的学习导读。同一项目的网站、代码和 Notebook 合并介绍。
 
 ## 从哪里开始
 
@@ -23,6 +23,8 @@ A curated directory of awesome lists, learning guides, tutorials, and courses on
 | 根据评估反馈进化一个小程序 | [ShinkaEvolve 教程 Notebook](https://github.com/SakanaAI/ShinkaEvolve/blob/main/examples/shinka_tutorial.ipynb) |
 | 有 GPU，想用工具反馈训练 Agent | [Agent Lightning Calc-X Local Mode](https://github.com/microsoft/agent-lightning/blob/main/docs/50-example-calc-x.md#local-mode) |
 | 上手多智能体或 Agent—环境协同演化 | [协同演化项目](#coevolution-projects)：API 路线从 CORAL 开始，RL 路线从 JaxUED 开始 |
+| 学习对抗式自博弈 | [对抗式自博弈项目](#adversarial-self-play)：OpenSpiel 基础 → SPIRAL 游戏训练，或 SPPO 偏好博弈 |
+| 理解 RL 与 RSI 的关系 | [专题导读](#rl-and-rsi)：策略学习 → 自博弈 → 学习规则与系统改进 |
 | 按合理顺序阅读这 12 篇近期综述 | [推荐综述阅读路线](#survey-reading-path)：入门总览 → 方法进阶；可选分支：持续自改进的可靠性与安全控制 |
 | 开始系统读论文 | [natnew 的 Reading Paths](https://github.com/natnew/awesome-recursive-self-improvement#reading-paths) |
 | 跟着课程学自改进 Agent | [Stanford CS329A](https://cs329a.stanford.edu/)的公开课程表与阅读材料 |
@@ -42,10 +44,12 @@ A curated directory of awesome lists, learning guides, tutorials, and courses on
 - [近期综述覆盖表](#survey-coverage)
 - [推荐综述阅读路线](#survey-reading-path)
 - [从综述到实践项目](#survey-project-map)
+- [RL 与 RSI：关系、区别和阅读路线](#rl-and-rsi)
 - [指南、教材与学习路径](#guides)
 - [实践教程](#tutorials)
 - [实践项目](#practice)
 - [协同演化项目](#coevolution-projects)
+- [对抗式自博弈项目](#adversarial-self-play)
 - [课程与工作坊](#courses)
 - [中文视频课程与研究报告](#videos)
 - [评测示例](#evaluation)
@@ -91,7 +95,7 @@ A curated directory of awesome lists, learning guides, tutorials, and courses on
 
 ### 近期综述覆盖表
 
-**核验日期：2026-10-22。** “已覆盖”指本目录已收录的至少一个仓库明确链接该论文，或托管作者 PDF。下表 12 篇均已找到对应入口。本轮检查了 17 个已收录研究索引、综述配套及阅读札记仓库的 README，并检查了 Prism 论文数据。仓库列列出该范围内确认的匹配，简称链接指向对应仓库。本表用于交叉查询，资源总数为 **45**。
+**核验日期：2026-10-22。** “已覆盖”指本目录已收录的至少一个仓库明确链接该论文，或托管作者 PDF。下表 12 篇均已找到对应入口。本轮检查了 17 个已收录研究索引、综述配套及阅读札记仓库的 README，并检查了 Prism 论文数据。仓库列列出该范围内确认的匹配，简称链接指向对应仓库。本表用于交叉查询，资源总数为 **51**。
 
 论文日期按行分别采用 arXiv 首次提交日期、Preprints.org 的 **Posted** 发布日期或作者标注日期。版本列记录截至本次核验能确认的最新版本；PDF 上传日期是文件历史依据，不作为论文出版日期。
 
@@ -163,7 +167,7 @@ A curated directory of awesome lists, learning guides, tutorials, and courses on
 
 ### 从综述到实践项目
 
-本表连接已收录的教程、实践项目和评测示例，包含新增的 4 个协同演化项目；资源总数为 **45**。对应关系是本目录的学习建议：先围绕学习目标尝试链接中的示例，再回到对应综述章节比较机制。
+本表连接已收录的教程、实践项目和评测示例，覆盖协同演化与对抗式自博弈分支；资源总数为 **51**。对应关系是本目录的学习建议：先围绕学习目标尝试链接中的示例，再回到对应综述章节比较机制。
 
 以下门槛针对所链接的具体示例，依据 **2026-10-22** 核验的上游文档与代码整理，本轮未运行示例。仅通过 API 调用模型的入门示例在远端完成推理，需要模型访问权限和调用预算；训练项目仍需下表列出的 GPU 环境。GPU 配置是文档给出的示例，不作为已验证的最低硬件要求。
 
@@ -180,8 +184,35 @@ A curated directory of awesome lists, learning guides, tutorials, and courses on
 | **协同演化：独立 Agent 策略** — [Co-Evolution §3.2.1](https://arxiv.org/html/2608.10299v1#S3.SS2.SSS1) | [CoMAS 训练启动器](https://github.com/xxyQwQ/CoMAS/blob/main/scripts/train_comas.sh) → 交互／奖励／controller 代码；[配置见下方](#coevolution-projects)。 | 跟踪同伴方案与批评如何形成交互奖励、各自参数更新，以及后续多 Agent rollout。 | Python 3.10、本地权重与 CUDA 训练栈；上游推荐每 Agent 2× A100 80GB，默认四个 Agent。 |
 | **协同演化：任务生成** — [Co-Evolution §4.1.2](https://arxiv.org/html/2608.10299v1#S4.SS1.SSS2) | [R-Zero 交替循环](https://github.com/Chengsong-Huang/R-Zero/blob/main/scripts/main.sh)；[配置见下方](#coevolution-projects)。 | 追踪 Solver 一致性 → Challenger 奖励 → 生成任务／伪标签 → Solver 更新 → 下一轮 Challenger。这是本目录对综述任务空间分类的实践映射。 | 隔离的 Linux / CUDA 训练环境、8 GPU 脚本配置、HF／W&B，以及完整评估所需的 GPT API。 |
 | **协同演化：可执行环境** — [Co-Evolution §4.3.1](https://arxiv.org/html/2608.10299v1#S4.SS3.SSS1) | [JaxUED Maze ACCEL](https://github.com/DramaCow/jaxued/blob/main/examples/maze_plr.py)，启用 `--use_accel` → PAIRED；[配置见下方](#coevolution-projects)。 | 跟踪策略表现如何影响关卡保留／变异，形成的课程又怎样更新策略；用固定评测关卡观察迁移。 | JAX / Flax 与 examples 依赖；无需 LLM API。可在 CPU 上开发，完整默认训练需要较多 RL 计算资源。 |
+| **对抗式自博弈：最佳响应与历史策略** — [Co-Evolution §3.1](https://arxiv.org/html/2608.10299v1#S3.SS1)，由本目录选择对应实现 | [OpenSpiel Kuhn poker NFSP](https://github.com/google-deepmind/open_spiel/blob/master/open_spiel/python/examples/nfsp_kuhn_pytorch.py)，先从表格型 fictitious play 开始；[安装与启动见下文](#adversarial-self-play)。 | 比较 DQN 最佳响应与蓄水池样本训练的平均策略。跟踪平均策略的可利用度，区分针对当前对手的学习与面对最佳响应的稳健性。 | Python ≥3.11、OpenSpiel、PyTorch 与 `dm-tree`；默认 CPU，无需模型 API。源码构建需要 CMake／C++ 编译器。 |
+| **对抗式自博弈：共享 LLM 策略** — [Modern Agentic Systems §7.3](https://arxiv.org/html/2607.13104v1#S7.SS3)明确讨论 SPIRAL | [SPIRAL 游戏训练启动器](https://github.com/spiral-rl/spiral/blob/main/run.sh)；[安装与启动见下文](#adversarial-self-play)。 | 沿两方轨迹、按角色估计的优势、策略优化与权重更新追踪，观察新对手如何进入下一轮 rollout。 | Python 3.10 与 CUDA／OAT／vLLM；上游测试配置 8× H100。配置 W&B 和启动器默认的 OpenRouter 评估，或调整评估对手。 |
+| **对抗式自博弈：偏好博弈扩展** — [Co-Evolution §3.1](https://arxiv.org/html/2608.10299v1#S3.SS1)，本目录补充的相邻学习示例 | [SPPO 三轮启动器](https://github.com/uclaml/SPPO/blob/main/run_sppo_mistral.sh)；[安装与启动见下文](#adversarial-self-play)。 | 用固定 PairRM 评审比较当前策略的回答，检查 SPPO loss，再追踪新 checkpoint 进入下一轮。对照游戏 RL 与独立演化的多 Agent。 | Python ≥3.10 与 CUDA 训练栈；脚本使用 8 GPU。配置有权限的 Hugging Face 数据集上传或关闭调用；核心训练无需付费 LLM API。 |
 | **实验证据／提示优化** — [Bounded Self-Refinement §5](https://arxiv.org/html/2607.07663v2)；[RSI in AI §7](https://www.preprints.org/manuscript/202609.2680) | [GEPA / DSPy AIME Notebook](https://github.com/stanfordnlp/dspy/blob/main/docs/docs/tutorials/gepa_aime/index.ipynb)；对照 [TextGrad Prompt Optimization](https://github.com/zou-group/textgrad/blob/main/examples/notebooks/Tutorial-Prompt-Optimization.ipynb)。 | 检查数据划分、文本反馈和优化前后的提示表现；TextGrad 还包含验证集表现下降时的回退。两个入门示例均保持模型权重与优化器逻辑固定。 | GEPA 示例：Python 3.10–3.14、DSPy / GEPA、datasets 与 OpenAI API。TextGrad：Python 3.9+、Jupyter／Colab 与 OpenAI API，需检查旧模型 ID 的可用性。GEPA 的 MLflow 跟踪为可选。 |
 | **可选：可靠性与安全控制** — [Safety §§2.3–2.4](https://arxiv.org/html/2610.00093v1)；[Towards AI §§4.3、6.6](https://lee1003-lee.github.io/Awesome-RSI-Research/assets/rsi-survey.pdf#page=14) | [RSI Atlas 接受规则示例](https://github.com/aniruddhaadak80/RSI/blob/main/engine/rsi_loop.py)。 | 改变传入的测试结果、质量收益和修改路径，观察接受／拒绝决策与历史记录。该练习只处理决策逻辑，不生成补丁，也不执行所传测试结果对应的测试。 | Python 3.10+ 标准库，无需模型 API 或 GPU。作为方法路线的可选延伸。 |
+
+<a id="rl-and-rsi"></a>
+
+## RL 与 RSI：关系、区别和阅读路线
+
+**RL 是从奖励中学习行为的方法；RSI 关注保留下来的改进怎样参与后续改进。** 两者存在交集，但描述的是系统的不同方面。已有文献直接讨论这层关系：先读 [Modern Agentic Systems §§3.2–3.3](https://arxiv.org/html/2607.13104v1#S3.SS3)，再对照 [Towards AI §3](https://lee1003-lee.github.io/Awesome-RSI-Research/assets/rsi-survey.pdf#page=5) 的定义。一些框架纳入自生成训练循环，更强的主张则要求改进器自身得到改进。下表是本目录的整理，不代表统一等级体系，也不意味着所有 RL 都采用固定架构。
+
+| 机制 | 哪些部分变化 | 从示例中学习什么 |
+| --- | --- | --- |
+| 策略学习 | 在给定更新流程下改变策略参数 | [Agent Lightning](#practice)：追踪 rollout → 奖励 → checkpoint。任务奖励提高本身不能说明更新流程也变好了。 |
+| 对抗式自博弈 | 策略，以及彼此形成的对手和经验 | [OpenSpiel 与 SPIRAL](#adversarial-self-play)：观察自适应学习信号。自博弈说明经验怎样产生，本身不指定使用 RL、偏好优化，或是否改写学习规则。 |
+| 学习 RL 更新规则 | 用来训练其他 Agent 的参数化规则 | 下方 DiscoRL：对比“学到更好的策略”与“学会怎样更新策略”。学习到更新规则不等于发现规则的过程也会自行改写。 |
+| 系统联合改进 | 可复用的 Harness 流程与模型权重 | 下方 ScienceBuddy：Harness 改进影响下一轮 RL，更新后的模型又改变后续 Harness 适应。 |
+| 自修改学习机制 | 能修改自身学习行为的策略程序 | 下方 Schmidhuber 的 self-modifying policies：研究如何为影响后续修改的自修改分配信用。 |
+
+因此，RL 可以承担 RSI 循环中的一部分更新，代码搜索或保留的技能编辑也可以提供其他更新；[DGM](#practice) 可作为没有 RL 权重训练步骤的对照。读项目时辨认**哪些变化被保留、下一轮信号由谁产生、更新流程本身是否变化**。要研究改进器的收益，可在相近任务与预算下，对照保留和不保留该变化时的后续学习效果。
+
+**推荐顺序：** Modern Agentic Systems §3.3 → 已收录的 [Ashish Kumar 第二篇](https://ashishkumar.ai/blog/self-improving-ai-self-play-self-training/)（先读 self-play template，再读 Learning to learn）→ 任选一个自博弈实践项目 → 下方三项读物。这里新增 **3 项资源**，复用的两项读物和本段整理不重复计数。研究阅读本身无需运行，项目表另列实际运行条件。
+
+| 资源 | 与 RL、RSI 的关系 | 推荐阅读入口 | 日期／阅读门槛 |
+| --- | --- | --- | --- |
+| [Schmidhuber：Recursive Self-Improvement (RSI) Since 1987](https://people.idsia.ch/~juergen/recursive-self-improvement.html) | 作者回顾能修改自身学习流程的策略，让更强的“改进改进器”含义具体化；定义与历史叙述属于作者视角。 | [§2 自修改策略](https://people.idsia.ch/~juergen/recursive-self-improvement.html#secSMP) → [§7 近期工作](https://people.idsia.ch/~juergen/recursive-self-improvement.html#secLouis)，再读链接的 [1997 年章节](https://people.idsia.ch/~juergen/ssabook/ssabook.html)中的形式化概念。 | 技术笔记：**2026 年 9 月**；英文；RL 与算法基础。历史／概念阅读，不是现代环境安装教程。 |
+| [DiscoRL：Discovering state-of-the-art reinforcement learning algorithms](https://www.nature.com/articles/s41586-025-09761-x) | 通过元优化学习 RL 更新规则，再用该规则训练新 Agent，连接策略改进与训练机制改进。 | [作者图解项目页](https://google-deepmind.github.io/disco_rl/)的 Method → 论文 Figure 1、Discovery method / Meta-optimization → Generalization。 | Nature 首发 **2025-10-22**，正式版 **2025-11-26**。英文；RL、神经网络与元梯度基础。作为阅读入口，本轮未审计代码／复现配置。 |
+| [ScienceBuddy: Recursive-in-Recursive Self-Improvement for Interactive Scientific Agents](https://arxiv.org/abs/2609.17523) | 跨轮次结合 Harness 编辑与模型 RL；辅助编辑器与 GRPO 规则保持固定，便于辨认真正变化的组件。 | [§§2.3–2.5 与 Algorithm 1](https://arxiv.org/html/2609.17523v1#S2.SS3) → §4.2 的双轮次研究。 | arXiv **v1，2026-09-15**。英文；Agent 架构与 RL 基础。论文阅读，未独立复现产品、代码及实验结果。 |
 
 <a id="guides"></a>
 
@@ -238,6 +269,20 @@ A curated directory of awesome lists, learning guides, tutorials, and courses on
 | [R-Zero](https://github.com/Chengsong-Huang/R-Zero) | **自适应任务生成；§4.1.2。** 独立 Challenger 根据当前 Solver 的答案一致性学习出题；问题与多数票伪标签再用于训练 Solver，两个 checkpoint 进入后续交替轮次。跟踪任务难度与解题策略怎样相互塑造；伪标签不等于经过独立核实的答案。 | 读 [Quickstart](https://github.com/Chengsong-Huang/R-Zero/blob/main/README.md) 与 [main.sh](https://github.com/Chengsong-Huang/R-Zero/blob/main/scripts/main.sh)。安装 requirements，配置 `STORAGE_PATH`、`HUGGINGFACENAME`、`tokens.json` 和评测端点。根目录入口为 `bash scripts/main.sh Qwen/Qwen3-4B-Base qwen3-4b`；运行前读[出题者启动器](https://github.com/Chengsong-Huang/R-Zero/blob/main/scripts/questioner_train_penalty.sh)和[解题者启动器](https://github.com/Chengsong-Huang/R-Zero/blob/main/scripts/solver_train.sh)。 | 英文；进阶 Python / RL、Linux / CUDA、PyTorch **2.7.0** 与 vLLM **0.9.1**。脚本配置 **8 GPU**，未声明统一最低 Python／显存要求。需要模型／数据访问及 Hugging Face、W&B 配置；生成数据会上传到 HF 私有数据集，完整评估使用 GPT API。应在隔离训练环境中使用：Challenger 启动器含范围较宽的 `pkill python` 清理命令。 |
 | [JaxUED](https://github.com/DramaCow/jaxued) | **环境课程；§4.3.1。** ACCEL 根据策略表现给迷宫关卡打分、保留与变异，再用形成的课程训练策略。对照生成关卡和策略迁移；之后读 PAIRED 的两个学习者与可训练环境生成器。 | 取得源码并执行 `pip install -e ".[examples]"`；阅读 [Maze PLR/ACCEL](https://dramacow.github.io/jaxued/maze_plr/)，在仓库根目录运行 `WANDB_MODE=disabled python examples/maze_plr.py --use_accel`，再读 [`maze_paired.py`](https://github.com/DramaCow/jaxued/blob/main/examples/maze_paired.py)。使用当前 [`maze_plr.py`](https://github.com/DramaCow/jaxued/blob/main/examples/maze_plr.py)，避开旧 Getting Started 页已失效的 `minigid_plr.py` 路径。 | 英文；Python / PPO / JAX 基础。包声明 Python **≥3.9**；按 [JAX 安装说明](https://docs.jax.dev/en/latest/installation.html)匹配平台与 JAX / Flax、examples 依赖。无需 LLM API，命令中关闭了 W&B。可在 CPU 上开发，但默认 ACCEL 训练约 **2.46 亿环境步**，完整运行应准备适合 RL 的计算资源；未核实最低显存与耗时。 |
 
+<a id="adversarial-self-play"></a>
+
+### 对抗式自博弈项目
+
+先用 **OpenSpiel** 在 CPU 上观察最优响应和策略历史。研究语言模型游戏 RL 可选 **SPIRAL**；比较偏好博弈优化可选 **SPPO**。[Modern Agentic Systems §7.3](https://arxiv.org/html/2607.13104v1#S7.SS3) 直接讨论 SPIRAL；下列项目与 [Co-Evolution §3.1](https://arxiv.org/html/2608.10299v1#S3.SS1) 的联系是本目录的学习延伸，不表示该综述直接点名了全部三个实现。SPPO 是相邻的偏好博弈案例，并非两个独立训练的 Agent。
+
+| 资源／分支 | 学习目标 | 推荐运行入口 | 此入口的运行门槛 |
+| --- | --- | --- | --- |
+| [OpenSpiel：Kuhn poker NFSP](https://github.com/google-deepmind/open_spiel) — 经典自博弈 | 两个玩家学习 DQN 最优响应与基于 reservoir 的平均策略。观察平均策略的可利用度（面对最优响应可被利用多少），而不只看双方胜率。 | 按[安装说明](https://github.com/google-deepmind/open_spiel/blob/master/docs/install.md)配置并取得示例；先在[表格型 fictitious play](https://github.com/google-deepmind/open_spiel/blob/master/open_spiel/python/examples/fictitious_play_example.py)中设置 `--game=kuhn_poker`，再于仓库根目录运行 `python3 open_spiel/python/examples/nfsp_kuhn_pytorch.py --num_train_episodes=20000 --eval_every=1000`；对照 [NFSP 源码](https://github.com/google-deepmind/open_spiel/blob/master/open_spiel/python/examples/nfsp_kuhn_pytorch.py)。 | 英文；当前源码要求 **Python ≥3.11**，源码构建使用 CMake／C++ 编译器。NFSP 另需 PyTorch、`dm-tree`；默认 **CPU**，无需模型 API。上游默认 **300 万局**；命令中的 2 万局是本目录缩短的学习设置，不构成收敛证据。 |
+| [SPIRAL](https://github.com/spiral-rl/spiral) — 多轮零和游戏 RL | 一个共享策略扮演双方，并从两方轨迹学习。观察按角色估计的优势、策略更新，以及新对手怎样改变后续经验。 | 读[论文 §§4.1–4.3](https://arxiv.org/html/2506.24119v2#S4)，按 README 安装并检查 [run.sh](https://github.com/spiral-rl/spiral/blob/main/run.sh)，在仓库根目录运行 `bash run.sh`。沿角色轨迹 → OAT 优化 → vLLM 权重同步追踪。 | 英文；Python **3.10**、CUDA、vLLM **0.8.4**、OAT **0.2.1** 与 Qwen3-4B-Base 权重。上游测试配置 **8× H100**，不是已核实的最低要求。配置 W&B 与默认 OpenRouter 评估，或修改相关设置（例如仅使用 random 对手）。训练生成游戏轨迹，数学评估还使用随仓库数据。使用这个原始本地入口；本次核验的 Tinker 启动器引用了缺失源码。 |
+| [SPPO](https://github.com/uclaml/SPPO) — 偏好博弈自训练 | 当前策略回答由固定 PairRM 评审比较，新 checkpoint 产生下一轮回答。对照 SPPO loss 与游戏 RL；评审器和学习规则保持固定。 | 读[论文 §3.2、§§4.1–4.2](https://arxiv.org/html/2405.00675v5#S4)，按 README 安装并检查 [run_sppo_mistral.sh](https://github.com/uclaml/SPPO/blob/main/run_sppo_mistral.sh)。配置数据和上传后，在仓库根目录运行 `bash run_sppo_mistral.sh`，进入三轮流程。 | 英文；**Python ≥3.10**、vLLM、LLM-Blender / PairRM、Accelerate / DeepSpeed、Mistral 权重与 HF prompt 数据。脚本配置 **8 GPU／进程**，未给最低显存。核心训练无需付费 LLM API。数据阶段默认向 `UCLA-AGI` 上传私有 HF 数据集：应改成自己有权限的 namespace／token，或关闭这些调用；模型上传开关不会关闭数据上传。旧版／部分未锁定依赖未经过安装实测。 |
+
+这些入口保持游戏规则或偏好评审器、训练流程固定，提供具体的自博弈学习循环；可用 [RL–RSI 导读](#rl-and-rsi)辨认“改进器自身变化”还涉及哪些机制。
+
 <a id="courses"></a>
 
 ## 课程与工作坊
@@ -273,12 +318,12 @@ A curated directory of awesome lists, learning guides, tutorials, and courses on
 
 ## 时效与核验记录
 
-前三批、综述补查与协同演化项目的核验日期均为 **2026-10-22**。新增候选先按项目身份与已有条目排重，再读详情；网站、Notebook 和仓库迁移前后的名称合并处理。读取了项目 README、推荐章节或课程页面，并对涉及实践能力的条目抽查相关代码。**未运行上游教程、调用模型或复现实验，也未逐篇复核清单内的论文。** 视频核验按下表分别覆盖官方课页、主办方介绍、可用讲义与视频元数据；未观看视频或核验逐字稿。
+以下资源的核验日期为 **2026-10-22**，具体阅读范围记录在下表。新增候选先按项目身份与已有条目排重，再读详情；网站、Notebook 和仓库迁移前后的名称合并处理。读取了项目 README、推荐章节或课程页面，并对涉及实践能力的条目抽查相关代码。**未运行上游教程、调用模型或复现实验，也未逐篇复核清单内的论文。** 视频核验按下表分别覆盖官方课页、主办方介绍、可用讲义与视频元数据；未观看视频或核验逐字稿。
 
 下表记录有依据的内容变化、发布或上游自报核验时间；它们与本项目的核验日期不同，也不等同于整个领域的覆盖截止日期。提交日期按 Asia/Taipei 记载，上游直接标注的日期保留原值。
 
 <details>
-<summary>展开 45 项资源的内容时间与核验范围</summary>
+<summary>展开 51 项资源的内容时间与核验范围</summary>
 
 | 资源 | 内容时间与依据 | 核验阅读范围 |
 | --- | --- | --- |
@@ -287,7 +332,7 @@ A curated directory of awesome lists, learning guides, tutorials, and courses on
 | LobeHub Awesome RSI | [2026-10-12 更新证据分层](https://github.com/lobehub/awesome-rsi/commit/874f5c331c6d2deb70954da12ef9df4b9f255ad0)；随后排序与 CI 修改未当作资料新增。 | README 的术语、入门、目录与相关提交差异。 |
 | Persdre Awesome RSI | [2026-09-02 整理并澄清分类标签](https://github.com/Persdre/awesome-recursive-self-improvement/commit/cde30351387b4abd23373884e90d508f7368b5ef)。 | README 的定义、分类与学习资源。 |
 | Token-Rhythm Awesome RSI | 上游自报 Last verified **2026-08-13**；[同日补充代码入口](https://github.com/Token-Rhythm/awesome-rsi/commit/87681b460d6420f29f88bc3a2b848ddc6891dd1b)。 | 英文目录与维护说明、中文精选和分类入口。 |
-| Awesome Self-Improving Agents | [2026-10-19 新增 RHD 条目](https://github.com/selfimproving-agent/Awesome-Self-Improving-Agents/commit/7ffbe03841e18a21200a0384cb38f868be93bd73)。论文 v1：**2026-07-14**。 | README、README_AGENT 的分类、章节导航和评测说明，及最新条目差异。已核对原论文摘要与目录，确认章节阅读入口。 |
+| Awesome Self-Improving Agents | [2026-10-19 新增 RHD 条目](https://github.com/selfimproving-agent/Awesome-Self-Improving-Agents/commit/7ffbe03841e18a21200a0384cb38f868be93bd73)。论文 v1：**2026-07-14**。 | README、README_AGENT 的分类、章节导航和评测说明，及最新条目差异。已核对原论文摘要、目录、讨论 RL 关系的 §§3.2–3.3，以及讨论 SPIRAL 的 §7.3，确认章节阅读入口。 |
 | jacky-leng Awesome RSI | 上游核验覆盖至 **2026-10-07**；[10-08 扩充目录与六轴分类](https://github.com/jacky-leng/awesome-rsi/commit/f41e58bdf14a9a52912eefd85e10215587786c24)。 | README、TAXONOMY 与提交差异；推荐源码入口，未验证阅读网站的完整交互。 |
 | pinkbubblebubble Awesome RSI | 上游自报 Last reviewed **2026-10-21**；[台北时间 10-22 新增近期资料](https://github.com/pinkbubblebubble/awesome-rsi/commit/c91823d6ebd9969cea3b7b05e20027988ec5308b)。 | 标签、Start here、Harness 和相关集合章节，以及内容提交差异。 |
 | The RSI Book | [2026-07-16 新增第 3 章](https://github.com/bhavsarpratik/rsi/commit/7ce1c397323d442744be8d75ba584afca5d46afd)；8 月最新提交为页面设计更新。 | README、第 2 章、Agent 源码与配套 Notebook 的 setup / Agent 单元。 |
@@ -319,7 +364,7 @@ A curated directory of awesome lists, learning guides, tutorials, and courses on
 | Comprehensive Self-Evolving AI Agents / ANative-Lab | arXiv v2 **2025-08-31**。 | 摘要、PDF §3／图 3、方法与评估标题、仓库 README 及旧所有者地址跳转。 |
 | Era of Experience / FrontisAI | 作者 PDF 标注 **2026-06-25**，上传于 [16d81a6](https://github.com/FrontisAI/Awesome-Self-Improving-Agents/commit/16d81a652a75d095e67d50c8c92c61735cfccb7b)；讲座举行于 **2026-08-13**，录像上传于 **2026-08-14**。 | 作者 PDF 摘要、目录与 §2；与 Modern Agentic Systems 综述不同。已核对主办方提纲与 B 站 UP 主“青稞社区”、讲者、标题、时长（71:34）和中文语音元数据；未播放或核验逐字稿。OpenReview 返回浏览器验证页。 |
 | The Last AI Built by Humans / Theseus | arXiv v3 **2026-09-22**。 | 原始摘要、目录、引言／综述定位及配套阅读路线；未独立复现产业案例主张。 |
-| Co-Evolution in Agentic Systems | arXiv v1 **2026-08-10**。 | 原始摘要、目录、§2 定义与三阶段分类、附录入口，以及项目映射涉及的 §§3.2.1／4.1.2／4.3.1。 |
+| Co-Evolution in Agentic Systems | arXiv v1 **2026-08-10**。 | 原始摘要、目录、§2 定义与三阶段分类、附录 A，以及项目映射涉及的 §§3.1／3.2.1／4.1.2／4.3.1。 |
 | Self-Evolving Coding Agents | arXiv v4 **2026-09-24**。 | 原始摘要、目录、§2.3 的持久更新边界及方法／评估章节入口。 |
 | Safety in Self-Evolving Agents | arXiv 记录显示 v1 **2026-09-08**。 | 原始摘要与 §2.3–2.4、仓库 README 和语料置信度说明；arXiv HTML 仅呈现部分正文，不宣称全篇核验。 |
 | Towards AI That Improves Itself / Lee1003-lee | PDF [首次加入于 **2026-09-07**](https://github.com/Lee1003-lee/Awesome-RSI-Research/commit/f00e049ccc0288b12c787e91ccd89f8c2d0491cf)；[当前 PDF 更新于 **2026-09-09**](https://github.com/Lee1003-lee/Awesome-RSI-Research/commit/b724036d3f9e012cd30ce22773559ea32a2b432c)。这些是文件历史日期，论文确切出版／提交日期仍未确认。 | 作者 PDF 摘要、引言、章节结构、§3–4 与 §5.2，仓库框架及文件历史。PDF 明确链接此仓库；更名前后地址合并为一项。[OpenReview](https://openreview.net/forum?id=I3fKQbRUGy) 及 API 要求浏览器验证，未能核实提交元数据和评审状态；未独立审计引文与所引实验结果。 |
@@ -327,6 +372,12 @@ A curated directory of awesome lists, learning guides, tutorials, and courses on
 | CoMAS | **2026-10-22** 对照[源码版本 0d98c97](https://github.com/xxyQwQ/CoMAS/tree/0d98c9755a9f3875888b42101e3db5278d0f9805)核验。 | 官方论文 v2、README、启动器、Agent 配置、交互奖励、按 Agent 优化及权重同步；已核文档硬件配置与 §3.2.1 对应关系，未训练。 |
 | R-Zero | [**2025-09-12** 更新 main.sh](https://github.com/Chengsong-Huang/R-Zero/commit/3fa29ff74c2b8062113635b278e7bd4ce0f258a2)；**2026-10-22** 回读当前文件。 | 官方论文摘要、README、交替循环、两类启动器、一致性奖励、Solver 服务、伪标签筛选／上传、依赖与 GPT 复核；§4.1.2 是目录学习映射，未训练、上传数据或调用 API。 |
 | JaxUED | **2026-10-22** 对照[源码版本 0f8f128](https://github.com/DramaCow/jaxued/tree/0f8f1284677375b889e4f13a32c9617cd009f8c4)核验。 | 作者论文、README、包依赖、Maze ACCEL／PAIRED 代码及参数文档、上游关闭 W&B 的设置；综述讨论方法论文，JaxUED 是本目录选择的实现。已避开旧 Getting Started 的失效路径，未安装或训练。 |
+| OpenSpiel | **2026-10-22** 对照[源码版本 b2e0bc3](https://github.com/google-deepmind/open_spiel/tree/b2e0bc36c352b1b579a6d4403b8a60482695553c)核验。 | 安装／包依赖、fictitious play 与 PyTorch NFSP 示例、DQN／NFSP 代码、参数、默认 CPU 及可利用度评估。缩短训练局数是本目录的学习建议；未安装或训练。 |
+| SPIRAL | **2026-10-22** 对照[源码版本 068b06f](https://github.com/spiral-rl/spiral/tree/068b06f6afce2e45ae3eb5d8bf677e9d69c83642)核验。 | 官方论文 v2、README、本地启动器、双方轨迹、角色条件优势、OAT 0.2.1 优化／权重同步与默认评估。Tinker 启动器引用缺失源码，推荐原始本地入口。未训练或调用 API。 |
+| SPPO | **2026-10-22** 对照[源码版本 5e61c4e](https://github.com/uclaml/SPPO/tree/5e61c4e90822fe526d8bbe1a50a6e85a85c30911)核验。 | 官方论文 v5、README、三轮脚本、生成／固定 PairRM 评分、SPPO loss、训练配置与无条件数据上传调用。区分核心训练、模型上传开关和数据上传；未安装、训练或上传。 |
+| Schmidhuber: RSI Since 1987 | 作者页面标注 **Technical Note IDSIA-9-26，2026 年 9 月**；链接的自修改策略章节发表于 **1997 年**。 | 作者笔记 §§2／7 与原章节摘要／基本概念。未独立审计历史优先权主张，定义和历史叙述明确归于作者观点。 |
+| DiscoRL | [Nature 记录](https://www.nature.com/articles/s41586-025-09761-x)：首发 **2025-10-22**；version of record **2025-11-26**。 | 作者项目页与论文 Figure 1、Discovery method、Meta-optimization、Generalization。核对训练 Agent 与学习其更新规则的区别；未审计代码及复现配置。 |
+| ScienceBuddy | [arXiv v1](https://arxiv.org/abs/2609.17523v1)，**2026-09-15**；核验时仅列出此版本。 | 原始摘要、§§2.3–2.5／Algorithm 1 与 §4.2。核对交替 Harness 改进／模型 RL，以及保持固定的辅助编辑器／GRPO 规则；未复现产品、代码或实验。 |
 
 </details>
 
