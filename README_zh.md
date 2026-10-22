@@ -8,7 +8,7 @@ A curated directory of awesome lists, learning guides, tutorials, and courses on
 
 本项目汇集 RSI 相关的资源集合与学习入口，帮助读者了解每项资源适合谁、值得看什么、从哪里开始，以及内容更新到什么时候。
 
-**最近核验：2026-10-22。** 共收录 40 项资源，涵盖 Awesome 清单、综述、教材、教程、实践项目、课程、视频与复现材料。第三批新增 14 项，重点补充中文学习资料与综述直接阅读路线。同一项目的网站、代码和 Notebook 合并介绍。
+**最近核验：2026-10-22。** 共收录 41 项资源，涵盖 Awesome 清单、综述、教材、教程、实践项目、课程、视频与复现材料。第三批及综述补查新增 15 项，重点补充中文学习资料与综述直接阅读路线。同一项目的网站、代码和 Notebook 合并介绍。
 
 ## 从哪里开始
 
@@ -80,6 +80,7 @@ A curated directory of awesome lists, learning guides, tutorials, and courses on
 | [Co-Evolution in Agentic Systems: Toward Self-Directed Evolution Beyond Human Design](https://arxiv.org/abs/2608.10299) | 聚焦互相适应的 Agent、环境与进化机制，解释协同进化相对固定学习情境的改进闭环增加了什么。 | [§2.2–2.3 定义与三阶段地图 → §3–5](https://arxiv.org/html/2608.10299v1)，附录 A 区分协同进化与相邻概念。 | 英文；需要多 Agent／强化学习基础。综述与概念路线图；元协同进化仍作为新兴方向讨论。 |
 | [Self-Evolving Coding Agents](https://arxiv.org/abs/2608.03392) | 按资产、架构和模型参数整理代码 Agent 的持久更新，并梳理代码特有反馈与评估；有助于区分改进当前任务代码与改进未来解题 Agent。 | [§2.3 操作性边界 → §3 分类 → §7–8 反馈与评估](https://arxiv.org/html/2608.03392v4)。 | 英文；需要代码 Agent／软件工程基础。本轮核验 v4；属于阅读材料，不是可运行教程。 |
 | [Safety in Self-Evolving Agents: A Survey](https://arxiv.org/abs/2610.00093) · [作者仓库](https://github.com/xaddwell/awesome-self-evolving-agent-safety) | 研究经验成为可复用记忆、技能、工具、工作流或模型状态后，安全属性如何变化；SAVER 串起状态载体、适应操作、违规、暴露与响应。 | 先读[§2.3–2.4：状态转移检查与 SAVER](https://arxiv.org/html/2610.00093v1)，再读配套仓库的 [Overview 与 Corpus](https://github.com/xaddwell/awesome-self-evolving-agent-safety#overview)。 | 英文；需要 Agent／安全背景。配套语料含机器初始化标签与置信度分级，不能视为全部经人工核验的书目。 |
+| [Towards AI That Improves Itself: A Survey of Recursive Self-Improvement](https://lee1003-lee.github.io/Awesome-RSI-Research/) · [作者仓库](https://github.com/Lee1003-lee/Awesome-RSI-Research) | 区分“继承已有改进”与“改进机制本身变强”，并关联验证、更新策略和记忆复用。适合学习如何设计与评估持续改进闭环。 | 先读 [§3 定义与主张检验框架](https://lee1003-lee.github.io/Awesome-RSI-Research/assets/rsi-survey.pdf#page=5)，再读 §4.3（第 14 页）及 §5.2（第 21 页），了解更新与智能体系统演化。 | 英文；需智能体 / 机器学习基础。相关区分属于作者框架；文献表也包含为 RSI 提供支持的相邻方法。作者公开的综述稿件。 |
 
 <a id="guides"></a>
 
@@ -156,12 +157,12 @@ A curated directory of awesome lists, learning guides, tutorials, and courses on
 
 ## 时效与核验记录
 
-三批核验日期均为 **2026-10-22**。新增候选先按项目身份与已有条目排重，再读详情；网站、Notebook 和仓库迁移前后的名称合并处理。读取了项目 README、推荐章节或课程页面，并对涉及实践能力的条目抽查相关代码。**未运行上游教程、调用模型或复现实验，也未逐篇复核清单内的论文。** 视频核验按下表分别覆盖官方课页、主办方介绍、可用讲义与视频元数据；未观看视频或核验逐字稿。
+三批与综述补查的核验日期均为 **2026-10-22**。新增候选先按项目身份与已有条目排重，再读详情；网站、Notebook 和仓库迁移前后的名称合并处理。读取了项目 README、推荐章节或课程页面，并对涉及实践能力的条目抽查相关代码。**未运行上游教程、调用模型或复现实验，也未逐篇复核清单内的论文。** 视频核验按下表分别覆盖官方课页、主办方介绍、可用讲义与视频元数据；未观看视频或核验逐字稿。
 
 下表记录有依据的内容变化、发布或上游自报核验时间；它们与本项目的核验日期不同，也不等同于整个领域的覆盖截止日期。提交日期按 Asia/Taipei 记载，上游直接标注的日期保留原值。
 
 <details>
-<summary>展开 40 项资源的内容时间与核验范围</summary>
+<summary>展开 41 项资源的内容时间与核验范围</summary>
 
 | 资源 | 内容时间与依据 | 核验阅读范围 |
 | --- | --- | --- |
@@ -205,6 +206,7 @@ A curated directory of awesome lists, learning guides, tutorials, and courses on
 | Co-Evolution in Agentic Systems | arXiv v1 **2026-08-10**。 | 原始摘要、目录、§2 定义与三阶段分类，以及附录入口。 |
 | Self-Evolving Coding Agents | arXiv v4 **2026-09-24**。 | 原始摘要、目录、§2.3 的持久更新边界及方法／评估章节入口。 |
 | Safety in Self-Evolving Agents | arXiv 记录显示 v1 **2026-09-08**。 | 原始摘要与 §2.3–2.4、仓库 README 和语料置信度说明；arXiv HTML 仅呈现部分正文，不宣称全篇核验。 |
+| Towards AI That Improves Itself / Lee1003-lee | PDF [首次加入于 **2026-09-07**](https://github.com/Lee1003-lee/Awesome-RSI-Research/commit/f00e049ccc0288b12c787e91ccd89f8c2d0491cf)；[当前 PDF 更新于 **2026-09-09**](https://github.com/Lee1003-lee/Awesome-RSI-Research/commit/b724036d3f9e012cd30ce22773559ea32a2b432c)。这些是文件历史日期，论文确切出版／提交日期仍未确认。 | 作者 PDF 摘要、引言、章节结构、§3–4 与 §5.2，仓库框架及文件历史。PDF 明确链接此仓库；更名前后地址合并为一项。[OpenReview](https://openreview.net/forum?id=I3fKQbRUGy) 及 API 要求浏览器验证，未能核实提交元数据和评审状态；未独立审计引文与所引实验结果。 |
 
 </details>
 

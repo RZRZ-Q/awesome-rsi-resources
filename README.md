@@ -8,7 +8,7 @@ A curated directory of awesome lists, learning guides, tutorials, and courses on
 
 This project brings together RSI resource collections and learning materials to help readers understand who each resource is for, what it offers, where to start, and how current its content is.
 
-**Last reviewed: 2026-10-22.** The collection contains 40 resources spanning awesome lists, surveys, books, tutorials, practice projects, courses, videos, and reproduction materials. The third batch adds 14 resources, focusing on Chinese learning materials and direct survey reading paths. A project's website, code, and notebooks are grouped into a single entry.
+**Last reviewed: 2026-10-22.** The collection contains 41 resources spanning awesome lists, surveys, books, tutorials, practice projects, courses, videos, and reproduction materials. The third batch and a survey follow-up add 15 resources, focusing on Chinese learning materials and direct survey reading paths. A project's website, code, and notebooks are grouped into a single entry.
 
 ## Where to Start
 
@@ -80,6 +80,7 @@ This review cross-checked the README / survey sections of the eight indexes pres
 | [Co-Evolution in Agentic Systems: Toward Self-Directed Evolution Beyond Human Design](https://arxiv.org/abs/2608.10299) | Focuses on mutually adapting agents, environments, and evolution mechanisms, explaining what co-evolution adds beyond a fixed-context improvement loop. | [§2.2–2.3 definitions and three-stage map → §3–5](https://arxiv.org/html/2608.10299v1); Appendix A separates co-evolution from adjacent concepts. | English; multi-agent / RL fundamentals. A survey and conceptual roadmap; meta co-evolution is discussed as an emerging direction. |
 | [Self-Evolving Coding Agents](https://arxiv.org/abs/2608.03392) | Organizes persistent coding-agent updates into assets, architecture, and model parameters, with code-specific feedback and evaluation. Helps distinguish improving a task's code from improving the agent that will solve later tasks. | Read [§2.3 operational boundary → §3 taxonomy → §7–8 feedback and evaluation](https://arxiv.org/html/2608.03392v4). | English; coding-agent / software-engineering fundamentals. Reviewed v4; reading material, not a runnable tutorial. |
 | [Safety in Self-Evolving Agents: A Survey](https://arxiv.org/abs/2610.00093) · [author repository](https://github.com/xaddwell/awesome-self-evolving-agent-safety) | Studies how safety properties change as experience becomes reusable memory, skills, tools, workflows, or model state. The SAVER framework connects the state carrier, adaptation, violation, exposure, and response. | Start with [§2.3–2.4: transition tests and SAVER](https://arxiv.org/html/2610.00093v1), then the companion repository's [Overview and Corpus](https://github.com/xaddwell/awesome-self-evolving-agent-safety#overview). | English; agent / security background. The companion corpus includes machine-initialized labels with confidence levels; it is not an entirely manually verified bibliography. |
+| [Towards AI That Improves Itself: A Survey of Recursive Self-Improvement](https://lee1003-lee.github.io/Awesome-RSI-Research/) · [author repository](https://github.com/Lee1003-lee/Awesome-RSI-Research) | Distinguishes inherited improvements from gains in the improver itself, connecting this distinction to verification, update policies, and memory reuse. Useful for designing and evaluating persistent improvement loops. | Read [§3 definitions and claim protocol](https://lee1003-lee.github.io/Awesome-RSI-Research/assets/rsi-survey.pdf#page=5), then §4.3 (p. 14) and §5.2 (p. 21) for updates and agent-system evolution. | English; agent / ML fundamentals. The distinctions are the authors' framework; the bibliography also includes enabling methods. Author-hosted survey manuscript. |
 
 <a id="guides"></a>
 
@@ -156,12 +157,12 @@ For a Chinese author lecture on experience-driven self- to meta-evolution, see Q
 
 ## Freshness and Review Records
 
-All three batches were reviewed on **2026-10-22**. New candidates were checked against existing project identities before detailed review; websites, notebooks, and renamed repositories were grouped together. We read project READMEs, recommended chapters or course pages, and inspected relevant code for entries with practical components. **We did not run upstream tutorials, call models, reproduce experiments, or review every paper in the lists.** Video review covered official course pages, organizer descriptions, available slide decks, and video metadata as specified below; no videos were watched or transcripts reviewed.
+All three batches and the survey follow-up were reviewed on **2026-10-22**. New candidates were checked against existing project identities before detailed review; websites, notebooks, and renamed repositories were grouped together. We read project READMEs, recommended chapters or course pages, and inspected relevant code for entries with practical components. **We did not run upstream tutorials, call models, reproduce experiments, or review every paper in the lists.** Video review covered official course pages, organizer descriptions, available slide decks, and video metadata as specified below; no videos were watched or transcripts reviewed.
 
 The table records supported content changes, releases, or review dates reported by the upstream projects. These differ from this directory's review date and do not establish a cutoff for coverage of the entire field. Commit dates use Asia/Taipei; dates stated directly by upstream sources retain their original values.
 
 <details>
-<summary>Expand content dates and review scope for all 40 resources</summary>
+<summary>Expand content dates and review scope for all 41 resources</summary>
 
 | Resource | Content dates and evidence | Scope of this review |
 | --- | --- | --- |
@@ -205,6 +206,7 @@ The table records supported content changes, releases, or review dates reported 
 | Co-Evolution in Agentic Systems | arXiv v1 **2026-08-10**. | Original abstract, contents, §2 definitions and three-stage taxonomy, plus appendix entry points. |
 | Self-Evolving Coding Agents | arXiv v4 **2026-09-24**. | Original abstract, contents, and §2.3's persistent-update boundary; method / evaluation section entry points checked. |
 | Safety in Self-Evolving Agents | arXiv record reports v1 **2026-09-08**. | Original abstract and §2.3–2.4, repository README, and corpus confidence disclosures. The arXiv HTML view is partial; full-paper coverage is not claimed. |
+| Towards AI That Improves Itself / Lee1003-lee | PDF [first added on **2026-09-07**](https://github.com/Lee1003-lee/Awesome-RSI-Research/commit/f00e049ccc0288b12c787e91ccd89f8c2d0491cf); [current PDF updated on **2026-09-09**](https://github.com/Lee1003-lee/Awesome-RSI-Research/commit/b724036d3f9e012cd30ce22773559ea32a2b432c). These are file-history dates; the exact paper publication / submission date remains unconfirmed. | Author PDF abstract, introduction, section structure, §3–4 and §5.2; repository framework and file history. The PDF links to this repository; renamed repository URLs are grouped into this entry. [OpenReview](https://openreview.net/forum?id=I3fKQbRUGy) and its API required browser verification, so submission metadata and review status were not verified. References and reported results were not independently audited. |
 
 </details>
 
