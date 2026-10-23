@@ -8,7 +8,7 @@ A curated directory of awesome lists, learning guides, tutorials, and courses on
 
 本项目汇集 RSI 相关的资源集合与学习入口，帮助读者了解每项资源适合谁、值得看什么、从哪里开始，以及内容更新到什么时候。
 
-**最近核验：2026-10-23。** 共收录 56 项资源，涵盖 Awesome 清单、综述、教材、教程、实践项目、课程、视频与复现材料。本轮新增 RSI Labs 与前置 Notebook 课程，并按与 RSI 的关系标注具体实践入口。同一项目的网站、代码和 Notebook 合并介绍。
+**最近核验：2026-10-23。** 共收录 58 项资源，涵盖 Awesome 清单、综述、教材、教程、实践项目、课程、视频与复现材料。本轮新增 STOP 与 SICA 源码阅读路线，追踪改进后的实现如何成为后续改进器；实践入口区分递归改进方法、相关自改进机制和评测工具。同一项目的网站、代码和 Notebook 合并介绍。
 
 <a id="resource-scope"></a>
 
@@ -18,7 +18,7 @@ A curated directory of awesome lists, learning guides, tutorials, and courses on
 
 | 分类 | 入口所讲授的内容 | 本目录示例 |
 | --- | --- | --- |
-| **递归改进方法** | 保留对 Agent 实现或改进策略的修改，并将其用于后续改进工作。区分教学原型与研究实现；标签本身不代表已实现持续加速。 | [RSI Labs](#tutorials)：小型改进策略实验；[DGM](#practice)：继承的 Agent 代码参与后续自修改。 |
+| **递归改进方法** | 保留对 Agent 实现或改进策略的修改，并将其用于后续改进工作。区分教学原型与研究实现；标签本身不代表已实现持续加速。 | [RSI Labs](#tutorials)：小型改进策略实验；[STOP／SICA](#recursive-methods)：追踪可执行实现的继承；[DGM](#practice)：继承的 Agent 代码参与后续自修改。 |
 | **相关自改进机制** | 提示词优化、程序搜索、学习适应策略、经验复用或协同适应，也包括入门构件与模拟演示。条目说明改变什么、哪些部分保持固定。 | [GEPA / TextGrad](#tutorials)、[ShinkaEvolve / SEAL / Agent Lightning](#practice)、[ACE / Voyager](#memory-skills)、[协同演化](#coevolution-projects)与[自博弈](#adversarial-self-play)。 |
 | **评测工具** | 衡量组件表现，或演示候选修改的验收条件。 | [LongMemEval-V2 与 RSI Atlas](#evaluation)；Atlas 是验收门控教学示例。 |
 
@@ -33,6 +33,7 @@ A curated directory of awesome lists, learning guides, tutorials, and courses on
 | 跟着中文视频学习自我改进 | [李宏毅 2026 课程](https://speech.ee.ntu.edu.tw/~hylee/ml/2026-spring.php)，从 Self-Correction 和两讲 Self-Improving 开始 |
 | 用 Python 搭建第一个 Agent 改进循环 | [The RSI Book 第 2 章](https://thersibook.com/chapters/ch02.html)与配套 Notebook |
 | 看清改进从哪里开始递归 | [RSI Labs Notebook 第 4 节](https://github.com/weilinear/rsi_labs/blob/main/gemini_self_improvement.ipynb)：修改改进器的指令，并评估其后续修复选择 |
+| 追踪改进器参与后续改进的研究实现 | [STOP → SICA 源码路线](#recursive-methods)：动态函数替换 → 归档 Agent 执行 |
 | 用中文 Notebook 学习 Agent 代码搜索 | [前置课程：WalkingLabs L07](#prerequisite-courses)，固定设计器下的教学示例 |
 | 从代码理解 Agent Harness | [learn-deepseek-harness 的 L1](https://github.com/Prism-Shadow/learn-deepseek-harness/tree/main/basics/L01_agent_loop)，再按课程顺序学习 |
 | 通过评估数据优化可复用提示词 | [GEPA / DSPy AIME Notebook](https://github.com/stanfordnlp/dspy/blob/main/docs/docs/tutorials/gepa_aime/index.ipynb) |
@@ -53,7 +54,7 @@ A curated directory of awesome lists, learning guides, tutorials, and courses on
 - **概念入门**：Prism 中文导读 → The RSI Book 第 1–2 章 → natnew 阅读路线。
 - **Agent 工程实践**：The RSI Book 的 Python 循环 → learn-deepseek-harness 的分课实现 → selfimproving-agent 综述中的 scaffolding 与 evaluation 部分。
 - **优化实践**：GEPA / DSPy → ShinkaEvolve 或 OpenEvolve → 用 DGM 进阶研究 Agent 代码演化。
-- **递归改进**：RSI Labs Notebook 第 4 节 → DGM 继承 Agent 代码并继续自修改的循环，对比教学实验与研究实现；若不熟悉候选评估和归档，可先学前置 Notebook。
+- **递归改进**：RSI Labs Notebook 第 4 节 → [STOP → SICA 源码路线](#recursive-methods) → DGM。依次追踪改进器指令、动态加载的 Python 函数和归档 Agent 实现如何参与后续改进；若不熟悉候选评估和归档，可先学前置 Notebook。
 - **经验与记忆**：Hello Generic Agent → 用 ACE 学习文本经验手册，或用 Voyager 学习可执行技能 → 用 LongMemEval-V2 评估记忆组件；再回到综述学习纵向改进指标。
 - **训练与研究**：Stanford CS329A 的 verifier / RL 阅读 → selfimproving-agent 综述中的模型改进部分 → SEAL 适应循环或 Agent Lightning 策略训练 → ICLR RSI 工作坊的相关论文。
 
@@ -70,6 +71,7 @@ A curated directory of awesome lists, learning guides, tutorials, and courses on
 - [前置课程](#prerequisite-courses)
 - [实践教程](#tutorials)
 - [实践项目](#practice)
+- [递归改进方法：源码阅读路线](#recursive-methods)
 - [记忆与技能学习项目](#memory-skills)
 - [协同演化项目](#coevolution-projects)
 - [对抗式自博弈项目](#adversarial-self-play)
@@ -118,7 +120,7 @@ A curated directory of awesome lists, learning guides, tutorials, and courses on
 
 ### 近期综述覆盖表
 
-**核验日期：2026-10-22。** “已覆盖”指本目录已收录的至少一个仓库明确链接该论文，或托管作者 PDF。下表 12 篇均已找到对应入口。本轮检查了 17 个已收录研究索引、综述配套及阅读札记仓库的 README，并检查了 Prism 论文数据。仓库列列出该范围内确认的匹配，简称链接指向对应仓库。本表用于交叉查询，资源总数为 **56**。
+**核验日期：2026-10-22。** “已覆盖”指本目录已收录的至少一个仓库明确链接该论文，或托管作者 PDF。下表 12 篇均已找到对应入口。本轮检查了 17 个已收录研究索引、综述配套及阅读札记仓库的 README，并检查了 Prism 论文数据。仓库列列出该范围内确认的匹配，简称链接指向对应仓库。本表用于交叉查询，资源总数为 **58**。
 
 论文日期按行分别采用 arXiv 首次提交日期、Preprints.org 的 **Posted** 发布日期或作者标注日期。版本列记录截至本次核验能确认的最新版本；PDF 上传日期是文件历史依据，不作为论文出版日期。
 
@@ -190,7 +192,7 @@ A curated directory of awesome lists, learning guides, tutorials, and courses on
 
 ### 从综述到实践项目
 
-本表连接已收录的教程、实践项目和评测示例；资源总数为 **56**。表中横跨[三类资源](#resource-scope)，阅读分支表示主题，不代表 RSI 能力等级。对应关系是本目录的学习建议：先围绕学习目标尝试链接中的示例，再回到对应综述章节比较机制。
+本表连接已收录的教程、实践项目和评测示例；资源总数为 **58**。表中横跨[三类资源](#resource-scope)，阅读分支表示主题，不代表 RSI 能力等级。对应关系是本目录的学习建议：先围绕学习目标尝试链接中的示例，再回到对应综述章节比较机制。
 
 以下门槛针对所链接的具体示例，依据 **2026-10-22–23** 核验的上游文档与代码整理，本轮未运行示例。仅通过 API 调用模型的入门示例在远端完成推理，需要模型访问权限和调用预算；训练项目仍需下表列出的 GPU 环境。GPU 配置是文档给出的示例，不作为已验证的最低硬件要求。
 
@@ -198,6 +200,7 @@ A curated directory of awesome lists, learning guides, tutorials, and courses on
 | --- | --- | --- | --- |
 | **共同基础** — [Prism §§2.3、5](https://github.com/Prism-Shadow/awesome-rsi/blob/main/site/public/papers/rsi-survey.pdf)；[Towards AI §§3–4](https://lee1003-lee.github.io/Awesome-RSI-Research/assets/rsi-survey.pdf#page=5) | [The RSI Book 第 2 章](https://thersibook.com/chapters/ch02.html) → [配套 Notebook](https://github.com/bhavsarpratik/rsi/blob/master/notebooks/chapter2_build_your_first_loop.ipynb)。 | 跟踪评估、提示修订与经验跨任务复用，比较初始 Agent 和更新后的 Agent；Notebook 的经验列表保留在当前 kernel 中，未写入磁盘供跨会话使用。 | Python 3.10+、LiteLLM、Notebook 环境和模型接口。使用 API，不训练权重。 |
 | **递归改进：教学原型** — [The Last AI §§2.2、3.6](https://arxiv.org/html/2609.11873v3#S3.SS6)，本目录的学习对应 | [RSI Labs Notebook 第 4 节](https://github.com/weilinear/rsi_labs/blob/main/gemini_self_improvement.ipynb)；[配置见下文](#tutorials)。 | 跟踪反馈怎样变成新的改进器指令，经开发集验收后用于后续修复选择。3 个开发案例和 3 个留出诊断案例用于讲解可修改边界；未执行所选修复以衡量端到端收益。 | Colab / Jupyter、`google-genai==2.28.0` 与 Google API key；无需训练 GPU。状态保留在 Notebook 当前会话。 |
+| **递归改进：可执行的改进器** — [The Last AI §§2.2、3.6](https://arxiv.org/html/2609.11873v3#S3.SS6)；[Coding Agents §§3、7–8](https://arxiv.org/html/2608.03392v4)，本目录的学习配对 | [STOP 源码路线](#stop-source-route) → [SICA 源码路线](#sica-source-route)。 | 定位编辑后的代码交接给下一轮改进执行者的位置，对比直接替换函数与选择归档 Agent；区分接受候选和证明性能提升。 | STOP：Python、旧 SDK／模型适配、API 与隔离执行；SICA：Python、Docker／buildx、benchmark 数据及匹配配置的模型 API。建议先读源码，本目录未运行这两个研究循环。 |
 | **模型训练：Agent 策略** — [LLM Overview §§4、6](https://arxiv.org/html/2603.25681v3)；[Modern Agentic Systems §5](https://arxiv.org/html/2607.13104v1) | [Agent Lightning：Calc-X Local Mode](https://github.com/microsoft/agent-lightning/blob/main/docs/50-example-calc-x.md#local-mode)。 | 跟踪工具调用轨迹如何变成奖励、GRPO 更新和策略 checkpoint。示例使用预设训练器更新 Agent 策略，未演示训练器自身改进。 | Python 3.12+、Linux / WSL、NVIDIA CUDA、仓库配套的 verl / vLLM 安装，以及模型／数据下载。示例配置为 **1× A100 80GB**；Local Mode 无需 Kubernetes，模型本地运行，默认启用 W&B。 |
 | **模型训练：内层适应／外层学习** — [LLM Overview §§4.3–4.4](https://arxiv.org/html/2603.25681v3)；[The Path §5](https://www.preprints.org/manuscript/202608.0051) | [SEAL：general-knowledge 流程](https://github.com/Continual-Intelligence/SEAL/blob/main/general-knowledge/README.md)。 | 跟踪自编辑内容生成 → 临时 LoRA 适应 → 问答评估 → 编辑生成器的 ReST-EM 训练，比较内层更新和外层学习各自的作用。 | 需要微调经验；Python 3.12、Linux / CUDA、PyTorch / vLLM / PEFT、模型／数据访问，以及 SLURM 脚本和路径适配。上游示例使用 **2 张 A100/H100**；默认 TTT 评分也调用 OpenAI API。 |
 | **经验、记忆与技能** — [Frontis §§2–4](https://github.com/FrontisAI/Awesome-Self-Improving-Agents/blob/main/Self_Improving_Agents.pdf) | [Hello Generic Agent 第 4 章](https://datawhalechina.github.io/hello-generic-agent/part1/chapter4/) → [第 12 章](https://datawhalechina.github.io/hello-generic-agent/part2/chapter12/)；安装其关联的 GenericAgent 实现。 | 将已完成任务整理成可复用 SOP／脚本，再观察后续会话如何检索。学习保留什么、何时复用；验证主要依靠提示约束，可能需要用户指导。 | 推荐 Python **3.11/3.12**、模型 API，以及所选 UI 和工具依赖；按[当前安装指南](https://github.com/lsdefine/GenericAgent/blob/main/docs/installation_zh.md)操作。教程处于 Beta。 |
@@ -282,7 +285,7 @@ A curated directory of awesome lists, learning guides, tutorials, and courses on
 
 ## 实践项目
 
-这些项目提供程序进化、Agent 自身代码演化或模型训练的具体示例，可按改进对象、[资源分类](#resource-scope)与算力条件选择。此处 DGM 是递归改进的研究入口，其余推荐示例用于学习相关机制。
+这些项目提供程序进化、Agent 自身代码演化或模型训练的具体示例，可按改进对象、[资源分类](#resource-scope)与算力条件选择。首张表中的 DGM 是递归改进的研究入口，其余示例用于学习相关机制；[下方 STOP 与 SICA](#recursive-methods)进一步补齐递归改进分支。
 
 | 资源 | 特色与适合读者 | 推荐学习入口 | 语言与实践条件 |
 | --- | --- | --- | --- |
@@ -291,6 +294,42 @@ A curated directory of awesome lists, learning guides, tutorials, and courses on
 | [Darwin Gödel Machine（DGM）](https://github.com/jennyzzt/dgm) | **递归改进方法 · 研究实现。** 原论文研究实现：Agent 修改自身代码，在编程任务上评估后代，并保留归档；继承的 Agent 实现参与后续自修改。适合准备沿源码理解完整研究循环的读者。 | 阅读 [Setup / Running the DGM](https://github.com/jennyzzt/dgm#setup)，再追踪 [DGM_outer.py](https://github.com/jennyzzt/dgm/blob/main/DGM_outer.py) → [self_improve_step.py](https://github.com/jennyzzt/dgm/blob/main/self_improve_step.py)。 | 英文；Python、Docker、模型 API，以及 SWE-bench / Polyglot 环境准备。这是需要较多环境与评估工作的研究复现入口，适合进阶学习。 |
 | [SEAL · Self-Adapting Language Models](https://github.com/Continual-Intelligence/SEAL) | **相关自改进机制 · 学习生成 self-edit。** 作者原始实现学习生成 self-edit，在下游问答上评估临时 LoRA 更新，再用筛选出的编辑训练编辑生成器；适合研究内层适应与外层学习的关系。 | 从 [general-knowledge 流程](https://github.com/Continual-Intelligence/SEAL/blob/main/general-knowledge/README.md)依次读数据生成 → TTT server → 评估 → ReST-EM 训练，再看 [SFT 数据构建器](https://github.com/Continual-Intelligence/SEAL/blob/main/general-knowledge/src/EM/build_SFT_dataset.py)。 | 英文；进阶 Python / 微调基础、Python 3.12、PyTorch / vLLM / PEFT。上游说明使用 2 张 A100/H100；需调整 SLURM 脚本与路径。默认 TTT 评分使用 OpenAI API（GPT-4.1）；生成／proxy 评分也可使用该 API。 |
 | [Microsoft Agent Lightning v1.0](https://github.com/microsoft/agent-lightning) | **相关自改进机制。** Calc-X 将 AutoGen Agent、MCP 计算器与轨迹采集、答案奖励、GRPO 更新串起来，适合学习如何从工具调用轨迹训练并保存策略检查点。 | 先读[安装说明](https://github.com/microsoft/agent-lightning/blob/main/docs/00-installation.md)，再按 [Calc-X Local Mode](https://github.com/microsoft/agent-lightning/blob/main/docs/50-example-calc-x.md#local-mode)操作；按该示例要求从 `examples/calc_x` 启动。 | 英文；Python 3.12+、Linux / WSL、CUDA、`verl` / vLLM、数据下载，默认使用 W&B。文档中的 Calc-X 配置为 **1 张 A100 80GB**。这是 v1.0 训练入口，旧 APO 教程对应旧 API。 |
+
+<a id="recursive-methods"></a>
+
+### 递归改进方法：源码阅读路线
+
+建议在 [RSI Labs 教学原型](#tutorials)之后，按 **STOP → SICA → [DGM](#practice)** 阅读源码。STOP 用一个较小的 Python 函数展示递归交接；SICA 将它扩展到带工具、轨迹和归档的编码 Agent。下方源码链接固定到 **2026-10-23** 核验的提交。阅读本身不需要模型访问；运行研究实现则需要额外环境。
+
+| 资源 | 特色与学习目标 | 推荐学习入口 | 语言与运行门槛 |
+| --- | --- | --- | --- |
+| [STOP · Self-Taught Optimizer](https://github.com/microsoft/stop) · [论文](https://arxiv.org/abs/2310.02304) | **递归改进方法 · 研究实现。** Python 改进器编辑自身实现，选中的代码成为后续自改进的执行者。学习区分改进任务解答与改进生成解答的函数；语言模型、评分函数和外层循环保持固定。 | [种子改进器](https://github.com/microsoft/stop/blob/0d6780c54306b2486dd36e9c4ae9b49aceb27ea4/tasks/meta_optimization/secret_seed_algorithm.py#L3) → 元效用 → 候选选择 → 动态加载；按 [STOP 路线](#stop-source-route)阅读。 | 英文；Python、模型 API 与隔离执行环境，不进行本地权重训练。旧 SDK／模型配置和缺失的依赖清单需要适配，详见下文。 |
+| [SICA · Self-Improving Coding Agent](https://github.com/MaximeRobeyns/self_improving_coding_agent) · [论文](https://arxiv.org/abs/2504.15228) | **递归改进方法 · 研究实现。** 选中的归档 Agent 用自身代码与工具修改后继，学习 benchmark 反馈与归档选择如何决定后续改进器。待改父代与执行改进的 Agent 可以不同；外部评测／选择框架保持固定，不训练模型权重。 | [Runner 主循环](https://github.com/MaximeRobeyns/self_improving_coding_agent/blob/ed8275dca4d3c5dbf77229964351fe9b424797dc/runner.py#L1022-L1049) → 父代／改进器选择 → 归档模块执行 → 改进工具 → 下一轮评测；按 [SICA 路线](#sica-source-route)阅读。 | 英文；Python、Docker／buildx、benchmark 下载及实际模型配置对应的 API。需准备 Docker 环境并反复执行 benchmark 的进阶工程路线；API 路线未要求本地训练 GPU。 |
+
+<a id="stop-source-route"></a>
+
+#### STOP：修改后的函数如何成为下一轮改进器
+
+1. **识别改进器接口。** 读 [`improve_algorithm`](https://github.com/microsoft/stop/blob/0d6780c54306b2486dd36e9c4ae9b49aceb27ea4/tasks/meta_optimization/secret_seed_algorithm.py#L3-L23)：输入程序、效用函数和语言模型，生成并评分候选。种子实现从生成的候选中选择，不会自动把未修改的输入加入比较。
+2. **向下一层追踪评测。** 先读公开的[元效用接口](https://github.com/microsoft/stop/blob/0d6780c54306b2486dd36e9c4ae9b49aceb27ea4/tasks/meta_optimization/utility.py#L5)，再读 [`get_improver` 与实际元效用](https://github.com/microsoft/stop/blob/0d6780c54306b2486dd36e9c4ae9b49aceb27ea4/tasks/meta_optimization/secret_utility.py#L28-L112)。候选被加载成改进器，通过修改下游任务程序接受评测。默认是对**同一个带噪奇偶校验任务／种子重复五次**，并非五个不同任务；选择使用验证效用。
+3. **定位递归交接。** 在 [`run_improver.py`](https://github.com/microsoft/stop/blob/0d6780c54306b2486dd36e9c4ae9b49aceb27ea4/run_improver.py#L122-L179) 中，当前改进器编辑 `algorithm_to_improve`，而目标本身就是改进器代码。接受后，代码写入 `results/<run_id>/improved_algorithm_<iteration>.py`，并替换待改目标。默认 `iterative=True` 时，它还替换 `improver_str`；[`temp_override`](https://github.com/microsoft/stop/blob/0d6780c54306b2486dd36e9c4ae9b49aceb27ea4/helpers.py#L154-L192) 加载新的 `improve_algorithm`，用于下一次编辑。若设为 `iterative=False`，目标继续变化，执行者仍是种子实现。
+4. **核对接受意味着什么。** 外层门槛排除异常或零效用，**不要求分数超过父代**。默认六轮会保存并加载最后一个候选，但不会再用它执行第七次自编辑。通过这条路线辨认可执行实现的继承，不把它等同于每轮性能必然提高或整个系统都能递归改变。
+
+**运行入口与条件。** 从 [`config.py`](https://github.com/microsoft/stop/blob/0d6780c54306b2486dd36e9c4ae9b49aceb27ea4/config.py#L1) 与 [`language_model.py`](https://github.com/microsoft/stop/blob/0d6780c54306b2486dd36e9c4ae9b49aceb27ea4/language_model.py#L10) 开始；根目录入口为 `python run_improver.py`，按源码要求在 `api_key.py` 提供 `openai_key` 字典。源码使用旧 `openai.ChatCompletion.create` 接口，默认模型为 `gpt-4-0314`，运行前需适配 SDK 与可访问模型。仓库没有依赖清单，导入至少涉及 `openai`、`pebble`、`multiprocess`、`numpy`、`jsonlines`、`tqdm`。嵌套候选评测会放大 API 工作量，语言模型的调用上限不是整个实验的总预算。生成的 Python 会被执行；现有[可靠性保护](https://github.com/microsoft/stop/blob/0d6780c54306b2486dd36e9c4ae9b49aceb27ea4/helpers.py#L80)不构成安全沙箱，应使用隔离环境。
+
+<a id="sica-source-route"></a>
+
+#### SICA：选中的后代如何成为后续编辑者
+
+1. **画出外层循环。** 从 [`runner.main`](https://github.com/MaximeRobeyns/self_improving_coding_agent/blob/ed8275dca4d3c5dbf77229964351fe9b424797dc/runner.py#L1022-L1049) 开始：评测 `agent_i` → 记录分数与轨迹 → 生成 `agent_{i+1}` → 下一轮评测后继。生成后继不等于它已成为最佳 Agent。
+2. **区分父代与改进器。** [`select_base_agent`](https://github.com/MaximeRobeyns/self_improving_coding_agent/blob/ed8275dca4d3c5dbf77229964351fe9b424797dc/runner.py#L87-L145) 选择分数达到最佳代下置信界门槛的较近期父代，将[该代代码复制到后继工作目录](https://github.com/MaximeRobeyns/self_improving_coding_agent/blob/ed8275dca4d3c5dbf77229964351fe9b424797dc/runner.py#L769-L785)；另由 [`get_best_agent_iteration`](https://github.com/MaximeRobeyns/self_improving_coding_agent/blob/ed8275dca4d3c5dbf77229964351fe9b424797dc/base_agent/src/utils/archive_analysis.py#L291-L308) 选择 benchmark 平均分最高者执行改进。两次选择可以指向不同版本。
+3. **追踪继承的实现进入执行。** [Docker 挂载与命令](https://github.com/MaximeRobeyns/self_improving_coding_agent/blob/ed8275dca4d3c5dbf77229964351fe9b424797dc/runner.py#L823-L869) 将归档设为只读、后继工作目录设为可写，然后运行 `python -m archive.agent_{best_iter}.agent_code improve`。沿[相对 `Agent` 导入](https://github.com/MaximeRobeyns/self_improving_coding_agent/blob/ed8275dca4d3c5dbf77229964351fe9b424797dc/base_agent/__main__.py#L17)和[相对实现导入](https://github.com/MaximeRobeyns/self_improving_coding_agent/blob/ed8275dca4d3c5dbf77229964351fe9b424797dc/base_agent/agent.py#L17-L26)往下读，确认实际执行改进任务的是被选中版本的代码。
+4. **阅读改进流程。** 按 [`improve_agent`](https://github.com/MaximeRobeyns/self_improving_coding_agent/blob/ed8275dca4d3c5dbf77229964351fe9b424797dc/base_agent/__main__.py#L113-L214) → [`MetaImprovementReasoningStructure`](https://github.com/MaximeRobeyns/self_improving_coding_agent/blob/ed8275dca4d3c5dbf77229964351fe9b424797dc/base_agent/src/tools/reasoning_structures/meta_improvement.py#L18-L85) → [工具注册](https://github.com/MaximeRobeyns/self_improving_coding_agent/blob/ed8275dca4d3c5dbf77229964351fe9b424797dc/base_agent/src/agents/implementations/main_orchestrator.py#L77-L95) 阅读，观察归档反馈怎样进入提案、编码、要求执行的测试和变更日志。这些工具与指令本身属于可继承的 Agent 代码。
+5. **用 benchmark 证据闭合循环。** 读[候选执行](https://github.com/MaximeRobeyns/self_improving_coding_agent/blob/ed8275dca4d3c5dbf77229964351fe9b424797dc/runner.py#L469-L475)和[分数保存](https://github.com/MaximeRobeyns/self_improving_coding_agent/blob/ed8275dca4d3c5dbf77229964351fe9b424797dc/runner.py#L531-L552)。后代经过评测并被选中后，其实现才可能成为后续改进器。编辑进程成功本身不代表任务性能提升；晋升由外部 runner 与评分／选择规则控制。
+
+**运行入口与条件。** 参照固定版本的 [Quickstart](https://github.com/MaximeRobeyns/self_improving_coding_agent/blob/ed8275dca4d3c5dbf77229964351fe9b424797dc/README.md#quickstart) 与 [Makefile](https://github.com/MaximeRobeyns/self_improving_coding_agent/blob/ed8275dca4d3c5dbf77229964351fe9b424797dc/Makefile)。在仓库根目录的 Python 环境中执行 `pip install -r base_agent/requirements.txt`、`pip install swebench`。配置 [Agent 模型](https://github.com/MaximeRobeyns/self_improving_coding_agent/blob/ed8275dca4d3c5dbf77229964351fe9b424797dc/base_agent/src/config.py#L12-L19)与 runner 的[总结模型调用](https://github.com/MaximeRobeyns/self_improving_coding_agent/blob/ed8275dca4d3c5dbf77229964351fe9b424797dc/runner.py#L326-L338)：默认涉及 Sonnet 3.7、o3-mini 和 Gemini 2.0 Flash，任意一个供应商的 key 并不足够。将两处配置对齐到可访问模型，并在宿主 shell 导出对应供应商的环境变量，**之后**再用 `make image` 构建 Docker 镜像（Apple Silicon 使用 `make image-mac`）。上游构建会把 API 凭证写入镜像环境；更换凭证后需重新构建，并保留为私有镜像。
+
+启动前先读 `python runner.py --help`；完成配置后可用 `python runner.py --workers 1 --iterations 2` 限定并发和轮次。[参数解析器](https://github.com/MaximeRobeyns/self_improving_coding_agent/blob/ed8275dca4d3c5dbf77229964351fe9b424797dc/runner.py#L48-L65) 用 `--experiment-id`／`-id` 指定已有实验，README 示例中的 `--id` 不适用。默认 [benchmark 注册表](https://github.com/MaximeRobeyns/self_improving_coding_agent/blob/ed8275dca4d3c5dbf77229964351fe9b424797dc/base_agent/src/benchmarks/__init__.py#L31-L53) 启用 GSM8K；[任务队列](https://github.com/MaximeRobeyns/self_improving_coding_agent/blob/ed8275dca4d3c5dbf77229964351fe9b424797dc/runner.py#L648-L699) 仍为**每个 benchmark 选择 18 题**，不会随 worker 数减少。两轮会评测 agent 0、1，最后生成的 agent 2 留待后续评测。worker／轮次限制不等于总费用上限，元改进流程没有配置整个运行的 API 总预算；应按需要数据、Docker 资源和付费模型调用的研究运行准备。
 
 <a id="memory-skills"></a>
 
@@ -370,14 +409,14 @@ A curated directory of awesome lists, learning guides, tutorials, and courses on
 
 ## 时效与核验记录
 
-原有 51 项资源核验于 **2026-10-22**；ACE、Voyager、LongMemEval-V2、RSI Labs 与 WalkingLabs 前置 Notebook 于 **2026-10-23** 补入，同日补读相关综述段落并标注实践入口类别，具体阅读范围记录在下表。新增候选先按项目身份与已有条目排重，再读详情；网站、Notebook 和仓库迁移前后的名称合并处理。读取了项目 README、推荐章节或课程页面，并对涉及实践能力的条目抽查相关代码。**未运行上游教程、调用模型或复现实验，也未逐篇复核清单内的论文。** 视频核验按下表分别覆盖官方课页、主办方介绍、可用讲义与视频元数据；未观看视频或核验逐字稿。
+原有 51 项资源核验于 **2026-10-22**；ACE、Voyager、LongMemEval-V2、RSI Labs、WalkingLabs 前置 Notebook、STOP 与 SICA 于 **2026-10-23** 补入，同日补读相关综述段落并标注实践入口类别，具体阅读范围记录在下表。新增候选先按项目身份与已有条目排重，再读详情；网站、Notebook 和仓库迁移前后的名称合并处理。读取了项目 README、推荐章节或课程页面，并对涉及实践能力的条目抽查相关代码。**未运行上游教程、调用模型或复现实验，也未逐篇复核清单内的论文。** 视频核验按下表分别覆盖官方课页、主办方介绍、可用讲义与视频元数据；未观看视频或核验逐字稿。
 
-**两个新增学习仓库的覆盖核对：** 截至 2026-10-23，在已收录的 **17 个索引、103 份文本文件**中，未检出两者的仓库 URL、名称及作者别名。索引范围包括七个 Awesome 清单、九个综述配套仓库及 RSI 研究札记；文件范围包括 README、选定目录数据、研究解读与 Prism 结构化论文／方法数据，不含 PDF、历史提交、Issue 或外链网站。这表示新增了该范围之外的学习入口，不代表其方法是新研究。STOP、SICA、RRSI 与 AgentDescent 已有[所收录索引中的直接链接](https://github.com/pinkbubblebubble/awesome-rsi/blob/c91823d6ebd9969cea3b7b05e20027988ec5308b/README.md)。
+**RSI Labs 与 WalkingLabs 的覆盖核对：** 截至 2026-10-23，在已收录的 **17 个索引、103 份文本文件**中，未检出两者的仓库 URL、名称及作者别名。索引范围包括七个 Awesome 清单、九个综述配套仓库及 RSI 研究札记；文件范围包括 README、选定目录数据、研究解读与 Prism 结构化论文／方法数据，不含 PDF、历史提交、Issue 或外链网站。这表示新增了该范围之外的学习入口，不代表其方法是新研究。本轮将 STOP 与 SICA 整理为独立源码路线；它们与 RRSI、AgentDescent 已有[所收录索引中的直接链接](https://github.com/pinkbubblebubble/awesome-rsi/blob/c91823d6ebd9969cea3b7b05e20027988ec5308b/README.md)。
 
 下表记录有依据的内容变化、发布或上游自报核验时间；它们与本项目的核验日期不同，也不等同于整个领域的覆盖截止日期。提交日期按 Asia/Taipei 记载，上游直接标注的日期保留原值。
 
 <details>
-<summary>展开 56 项资源的内容时间与核验范围</summary>
+<summary>展开 58 项资源的内容时间与核验范围</summary>
 
 | 资源 | 内容时间与依据 | 核验阅读范围 |
 | --- | --- | --- |
@@ -437,6 +476,8 @@ A curated directory of awesome lists, learning guides, tutorials, and courses on
 | LongMemEval-V2 | 论文 v1 **2026-05-12**；[核验源码版本 2cc8c54](https://github.com/xiaowu0162/LongMemEval-V2/tree/2cc8c540bdb87fe6761629b585e727e1c4704520)日期为 **2026-08-10**（台北时间）。 | 于 **2026-10-23** 核对 README、公开数据卡／访问元数据与 Apache-2.0 许可、环境、基线脚本、参数、答案生成／评分流程及论文 §§3.3／5.2。未下载完整数据、调用模型、安装或运行评测。 |
 | RSI Labs | 作者[讲解](https://blog.weili.me/posts/recursive-self-improvement-part-1-a-simple-toy-example)标注 **2026-10-05**；[核验源码快照 f784f51](https://github.com/weilinear/rsi_labs/tree/f784f511c3a6e61551188a34eb253ef6e91090fc)日期为 **2026-10-07**（台北时间）。 | **2026-10-23** 核对 README、讲解、餐费 Notebook 的配置、工具检查、改进器自修改、验收与留出诊断单元；区分该原型与后续固定改进器实验。未调用 API 或验证 Colab 运行环境。 |
 | WalkingLabs 前置 Notebook | [核验快照 92cd3b2](https://github.com/walkinglabs/self-improving-agent-notebook/tree/92cd3b2f9850f5021e46fa9cca0438a58d353b03)日期为 **2026-10-01**；这是源码快照日期，不是课程发布日期。 | **2026-10-23** 阅读 README、依赖文件与 L07 全部单元，确认真实 API 代码生成、固定设计器、教学算术差错率及内核内 archive。requirements 文件未列 Jupyter / ipykernel。不据此宣称全课已验证；未运行 Notebook。 |
+| STOP | [论文](https://arxiv.org/abs/2310.02304)：v1 **2023-10-03**，最新 v3 **2024-08-16**；核验[源码版本 0d6780c](https://github.com/microsoft/stop/tree/0d6780c54306b2486dd36e9c4ae9b49aceb27ea4)，日期 **2023-12-22**（台北时间）。 | **2026-10-23** 核对官方 README、种子改进器、公开／实际元效用、候选接受、动态重载、配置、API 包装与执行保护；区分 scaffold 递归编辑、模型权重更新与每轮性能必升。未安装依赖、执行代码或调用 API。 |
+| SICA | [论文](https://arxiv.org/abs/2504.15228)：v1 **2025-04-21**，最新 v2 **2025-05-16**；核验原版[源码版本 ed8275d](https://github.com/MaximeRobeyns/self_improving_coding_agent/tree/ed8275dca4d3c5dbf77229964351fe9b424797dc)，日期 **2025-04-24**（台北时间）。 | **2026-10-23** 核对 README／构建配置、评测循环、父代与改进器分别选择、归档模块命令与相对导入、元改进工具、评分保存、模型配置与实际 CLI 参数。未构建 Docker、调用模型或运行 benchmark；未测试旧模型的可用性。 |
 
 </details>
 
