@@ -8,7 +8,7 @@ A curated directory of awesome lists, learning guides, tutorials, and courses on
 
 本项目汇集 RSI 相关的资源集合与学习入口，帮助读者了解每项资源适合谁、值得看什么、从哪里开始，以及内容更新到什么时候。
 
-**最近核验：2026-10-22。** 共收录 51 项资源，涵盖 Awesome 清单、综述、教材、教程、实践项目、课程、视频与复现材料。本轮新增 3 个对抗式自博弈项目与 3 项 RL–RSI 关系读物，并补充连接两者的学习导读。同一项目的网站、代码和 Notebook 合并介绍。
+**最近核验：2026-10-23。** 共收录 54 项资源，涵盖 Awesome 清单、综述、教材、教程、实践项目、课程、视频与复现材料。本轮新增 ACE、Voyager 与 LongMemEval-V2，连接经验和技能复用与记忆评测。同一项目的网站、代码和 Notebook 合并介绍。
 
 ## 从哪里开始
 
@@ -22,6 +22,8 @@ A curated directory of awesome lists, learning guides, tutorials, and courses on
 | 通过评估数据优化可复用提示词 | [GEPA / DSPy AIME Notebook](https://github.com/stanfordnlp/dspy/blob/main/docs/docs/tutorials/gepa_aime/index.ipynb) |
 | 根据评估反馈进化一个小程序 | [ShinkaEvolve 教程 Notebook](https://github.com/SakanaAI/ShinkaEvolve/blob/main/examples/shinka_tutorial.ipynb) |
 | 有 GPU，想用工具反馈训练 Agent | [Agent Lightning Calc-X Local Mode](https://github.com/microsoft/agent-lightning/blob/main/docs/50-example-calc-x.md#local-mode) |
+| 将经验变成可复用记忆或技能 | [记忆与技能学习项目](#memory-skills)：ACE 文本经验手册，或 Voyager 可执行技能 |
+| 评估 Agent 经验记忆 | [LongMemEval-V2](#evaluation)：固定读者模型和问题，对比无检索与 RAG |
 | 上手多智能体或 Agent—环境协同演化 | [协同演化项目](#coevolution-projects)：API 路线从 CORAL 开始，RL 路线从 JaxUED 开始 |
 | 学习对抗式自博弈 | [对抗式自博弈项目](#adversarial-self-play)：OpenSpiel 基础 → SPIRAL 游戏训练，或 SPPO 偏好博弈 |
 | 理解 RL 与 RSI 的关系 | [专题导读](#rl-and-rsi)：策略学习 → 自博弈 → 学习规则与系统改进 |
@@ -35,6 +37,7 @@ A curated directory of awesome lists, learning guides, tutorials, and courses on
 - **概念入门**：Prism 中文导读 → The RSI Book 第 1–2 章 → natnew 阅读路线。
 - **Agent 工程实践**：The RSI Book 的 Python 循环 → learn-deepseek-harness 的分课实现 → selfimproving-agent 综述中的 scaffolding 与 evaluation 部分。
 - **优化实践**：GEPA / DSPy → ShinkaEvolve 或 OpenEvolve → 用 DGM 进阶研究 Agent 代码演化。
+- **经验与记忆**：Hello Generic Agent → 用 ACE 学习文本经验手册，或用 Voyager 学习可执行技能 → 用 LongMemEval-V2 评估记忆组件；再回到综述学习纵向改进指标。
 - **训练与研究**：Stanford CS329A 的 verifier / RL 阅读 → selfimproving-agent 综述中的模型改进部分 → SEAL 适应循环或 Agent Lightning 策略训练 → ICLR RSI 工作坊的相关论文。
 
 ## 目录
@@ -48,6 +51,7 @@ A curated directory of awesome lists, learning guides, tutorials, and courses on
 - [指南、教材与学习路径](#guides)
 - [实践教程](#tutorials)
 - [实践项目](#practice)
+- [记忆与技能学习项目](#memory-skills)
 - [协同演化项目](#coevolution-projects)
 - [对抗式自博弈项目](#adversarial-self-play)
 - [课程与工作坊](#courses)
@@ -95,7 +99,7 @@ A curated directory of awesome lists, learning guides, tutorials, and courses on
 
 ### 近期综述覆盖表
 
-**核验日期：2026-10-22。** “已覆盖”指本目录已收录的至少一个仓库明确链接该论文，或托管作者 PDF。下表 12 篇均已找到对应入口。本轮检查了 17 个已收录研究索引、综述配套及阅读札记仓库的 README，并检查了 Prism 论文数据。仓库列列出该范围内确认的匹配，简称链接指向对应仓库。本表用于交叉查询，资源总数为 **51**。
+**核验日期：2026-10-22。** “已覆盖”指本目录已收录的至少一个仓库明确链接该论文，或托管作者 PDF。下表 12 篇均已找到对应入口。本轮检查了 17 个已收录研究索引、综述配套及阅读札记仓库的 README，并检查了 Prism 论文数据。仓库列列出该范围内确认的匹配，简称链接指向对应仓库。本表用于交叉查询，资源总数为 **54**。
 
 论文日期按行分别采用 arXiv 首次提交日期、Preprints.org 的 **Posted** 发布日期或作者标注日期。版本列记录截至本次核验能确认的最新版本；PDF 上传日期是文件历史依据，不作为论文出版日期。
 
@@ -167,9 +171,9 @@ A curated directory of awesome lists, learning guides, tutorials, and courses on
 
 ### 从综述到实践项目
 
-本表连接已收录的教程、实践项目和评测示例，覆盖协同演化与对抗式自博弈分支；资源总数为 **51**。对应关系是本目录的学习建议：先围绕学习目标尝试链接中的示例，再回到对应综述章节比较机制。
+本表连接已收录的教程、实践项目和评测示例，覆盖记忆、技能、协同演化与对抗式自博弈分支；资源总数为 **54**。对应关系是本目录的学习建议：先围绕学习目标尝试链接中的示例，再回到对应综述章节比较机制。
 
-以下门槛针对所链接的具体示例，依据 **2026-10-22** 核验的上游文档与代码整理，本轮未运行示例。仅通过 API 调用模型的入门示例在远端完成推理，需要模型访问权限和调用预算；训练项目仍需下表列出的 GPU 环境。GPU 配置是文档给出的示例，不作为已验证的最低硬件要求。
+以下门槛针对所链接的具体示例，依据 **2026-10-22–23** 核验的上游文档与代码整理，本轮未运行示例。仅通过 API 调用模型的入门示例在远端完成推理，需要模型访问权限和调用预算；训练项目仍需下表列出的 GPU 环境。GPU 配置是文档给出的示例，不作为已验证的最低硬件要求。
 
 | 阅读分支／对应综述 | 项目与上手入口 | 学习目标与范围 | 所链接示例的运行门槛 |
 | --- | --- | --- | --- |
@@ -177,6 +181,9 @@ A curated directory of awesome lists, learning guides, tutorials, and courses on
 | **模型训练：Agent 策略** — [LLM Overview §§4、6](https://arxiv.org/html/2603.25681v3)；[Modern Agentic Systems §5](https://arxiv.org/html/2607.13104v1) | [Agent Lightning：Calc-X Local Mode](https://github.com/microsoft/agent-lightning/blob/main/docs/50-example-calc-x.md#local-mode)。 | 跟踪工具调用轨迹如何变成奖励、GRPO 更新和策略 checkpoint。示例使用预设训练器更新 Agent 策略，未演示训练器自身改进。 | Python 3.12+、Linux / WSL、NVIDIA CUDA、仓库配套的 verl / vLLM 安装，以及模型／数据下载。示例配置为 **1× A100 80GB**；Local Mode 无需 Kubernetes，模型本地运行，默认启用 W&B。 |
 | **模型训练：内层适应／外层学习** — [LLM Overview §§4.3–4.4](https://arxiv.org/html/2603.25681v3)；[The Path §5](https://www.preprints.org/manuscript/202608.0051) | [SEAL：general-knowledge 流程](https://github.com/Continual-Intelligence/SEAL/blob/main/general-knowledge/README.md)。 | 跟踪自编辑内容生成 → 临时 LoRA 适应 → 问答评估 → 编辑生成器的 ReST-EM 训练，比较内层更新和外层学习各自的作用。 | 需要微调经验；Python 3.12、Linux / CUDA、PyTorch / vLLM / PEFT、模型／数据访问，以及 SLURM 脚本和路径适配。上游示例使用 **2 张 A100/H100**；默认 TTT 评分也调用 OpenAI API。 |
 | **经验、记忆与技能** — [Frontis §§2–4](https://github.com/FrontisAI/Awesome-Self-Improving-Agents/blob/main/Self_Improving_Agents.pdf) | [Hello Generic Agent 第 4 章](https://datawhalechina.github.io/hello-generic-agent/part1/chapter4/) → [第 12 章](https://datawhalechina.github.io/hello-generic-agent/part2/chapter12/)；安装其关联的 GenericAgent 实现。 | 将已完成任务整理成可复用 SOP／脚本，再观察后续会话如何检索。学习保留什么、何时复用；验证主要依靠提示约束，可能需要用户指导。 | 推荐 Python **3.11/3.12**、模型 API，以及所选 UI 和工具依赖；按[当前安装指南](https://github.com/lsdefine/GenericAgent/blob/main/docs/installation_zh.md)操作。教程处于 Beta。 |
+| **经验：可复用上下文** — [Modern Agentic Systems §6.1.2](https://arxiv.org/html/2607.13104v1#S6.SS1.SSS2)明确讨论 ACE | [ACE Formula CLI](https://github.com/ace-agent/ace/blob/main/eval/finance/run.py) → 保存／重载 `best_playbook.txt`；[安装与启动见下文](#memory-skills)。 | 跟踪反馈如何变成保留的经验条目，并进入后续样本。在模型权重固定时，对比适应前与重载选优手册后的持出集结果。 | Python ≥3.10、uv 与模型 API。自带有标签数据，该路线无需训练 GPU；默认流程使用完整切分并反复调用 API。 |
+| **经验：可执行技能** — [Modern Agentic Systems §§6.3.1–6.3.2](https://arxiv.org/html/2607.13104v1#S6.SS3.SSS2)明确讨论 Voyager | [Voyager 技能管理器](https://github.com/MineDojo/Voyager/blob/main/voyager/agents/skill.py) → README 已学习技能库示例；[安装与启动见下文](#memory-skills)。 | 跟踪 critic 验收后的代码如何落盘、跨会话重载、检索和组合。区分新增技能的 `learn()` 与复用技能的 `inference()`。 | Python ≥3.9、Node ≥16.13、Minecraft Java／Fabric／模组，以及聊天／嵌入 API。经典实现，需要处理旧依赖环境。 |
+| **经验：记忆组件评测** — [Self-Evolving Agents §7.2.1](https://arxiv.org/html/2507.21046v4#S7.SS2.SSS1)与 [§7.1.4](https://arxiv.org/html/2507.21046v4#S7.SS1.SSS4)，本目录的编辑配对 | [LongMemEval-V2 基线](https://github.com/xiaowu0162/LongMemEval-V2#reproducing-baselines)：无检索 → RAG；[配置见下文](#evaluation)。 | 固定读者模型、问题、证据预算与裁判，对比答案准确率和记忆查询延迟。这里测量记忆组件，未覆盖 Agent 持续改进的完整轨迹。 | Python ≥3.11、公开数据、读者／嵌入模型端点，以及部分题型的付费裁判。限制题目数量后仍需准备数据和索引。 |
 | **代码：程序演化预备练习** — [Coding Agents §§3、7–8](https://arxiv.org/html/2608.03392v4) | [ShinkaEvolve 教程](https://github.com/SakanaAI/ShinkaEvolve/blob/main/examples/shinka_tutorial.ipynb)；也可选 [OpenEvolve 函数最小化](https://github.com/algorithmicsuperintelligence/openevolve/tree/main/examples/function_minimization)。 | 跟踪代码变异、评估反馈、选择和候选保存。示例演化的是任务程序，可用于理解综述中进一步要求的 Agent 组件更新边界。 | Python 3.10+；Shinka 推荐 3.11，支持本地 Python／Colab。需要模型 API 凭证和本地评估依赖；OpenEvolve 示例使用 NumPy，默认接入 Gemini 兼容接口。这两个示例无需训练 GPU。 |
 | **自主性：小型工程入口** — [The Last AI §§2.2–3](https://arxiv.org/html/2609.11873v3) | [learn-deepseek-harness L1](https://github.com/Prism-Shadow/learn-deepseek-harness/tree/main/basics/L01_agent_loop) → 按课程顺序 → [L10](https://github.com/Prism-Shadow/learn-deepseek-harness/tree/main/advanced/L10_self_modification)。 | 观察 Agent 能提出、注册哪些工具变化。L10 生成的工具只在当前进程中保留；对照综述辨认扩展为完整改进闭环所需的评估、接受与持久化机制。 | Node.js、TypeScript 基础与 DeepSeek API。使用 API，各课为独立软件包。 |
 | **代码与自主性：研究实现** — [Coding Agents §§3、7–8](https://arxiv.org/html/2608.03392v4)；[The Last AI §3](https://arxiv.org/html/2609.11873v3) | [DGM 环境搭建](https://github.com/jennyzzt/dgm#setup) → [DGM_outer.py](https://github.com/jennyzzt/dgm/blob/main/DGM_outer.py) → [self_improve_step.py](https://github.com/jennyzzt/dgm/blob/main/self_improve_step.py)。 | 跟踪编码 Agent 自身的修改、后代评估与档案复用，对比任务程序演化；记录 Agent 可以修改什么、外部评估控制什么。 | Python、Docker、模型 API，以及 SWE-bench／Polyglot 环境和数据。环境搭建与重复评估工作较多，先追踪一轮流程，再考虑完整研究复现。 |
@@ -254,6 +261,19 @@ A curated directory of awesome lists, learning guides, tutorials, and courses on
 | [SEAL · Self-Adapting Language Models](https://github.com/Continual-Intelligence/SEAL) | **模型适应。** 作者原始实现学习生成 self-edit，在下游问答上评估临时 LoRA 更新，再用筛选出的编辑训练编辑生成器；适合研究内层适应与外层学习的关系。 | 从 [general-knowledge 流程](https://github.com/Continual-Intelligence/SEAL/blob/main/general-knowledge/README.md)依次读数据生成 → TTT server → 评估 → ReST-EM 训练，再看 [SFT 数据构建器](https://github.com/Continual-Intelligence/SEAL/blob/main/general-knowledge/src/EM/build_SFT_dataset.py)。 | 英文；进阶 Python / 微调基础、Python 3.12、PyTorch / vLLM / PEFT。上游说明使用 2 张 A100/H100；需调整 SLURM 脚本与路径。默认 TTT 评分使用 OpenAI API（GPT-4.1）；生成／proxy 评分也可使用该 API。 |
 | [Microsoft Agent Lightning v1.0](https://github.com/microsoft/agent-lightning) | **Agent 策略训练。** Calc-X 将 AutoGen Agent、MCP 计算器与轨迹采集、答案奖励、GRPO 更新串起来，适合学习如何从工具调用轨迹训练并保存策略检查点。 | 先读[安装说明](https://github.com/microsoft/agent-lightning/blob/main/docs/00-installation.md)，再按 [Calc-X Local Mode](https://github.com/microsoft/agent-lightning/blob/main/docs/50-example-calc-x.md#local-mode)操作；按该示例要求从 `examples/calc_x` 启动。 | 英文；Python 3.12+、Linux / WSL、CUDA、`verl` / vLLM、数据下载，默认使用 W&B。文档中的 Calc-X 配置为 **1 张 A100 80GB**。这是 v1.0 训练入口，旧 APO 教程对应旧 API。 |
 
+<a id="memory-skills"></a>
+
+### 记忆与技能学习项目
+
+先用已收录的 **Hello Generic Agent** 章节建立中文基础。选择 **ACE** 学习文本经验手册，或用 **Voyager** 学习交互环境中的可执行技能。Modern Agentic Systems 明确讨论两者，具体章节见项目映射表；它们在模型权重之外保留不同形式的经验。
+
+| 资源 | 特色与学习目标 | 推荐学习入口 | 语言与运行门槛 |
+| --- | --- | --- | --- |
+| [ACE：Agentic Context Engineering](https://github.com/ace-agent/ace) | 作者的 Generator–Reflector–Curator 实现将反馈变成可复用文本经验手册。跟踪有标签样本、有用／有害计数、增量添加、验证集选优和后续复用；默认逐样本实现将整个 playbook 放入提示。 | 先读[论文 §3](https://arxiv.org/html/2510.04618v3#S3)，再看 [finance CLI](https://github.com/ace-agent/ace/blob/main/eval/finance/run.py)。仓库根目录执行 `uv sync`，配置 `.env`／供应商模型后运行 `uv run python -m eval.finance.run --task_name formula --mode offline --save_path results --test_workers 1`。用 `--mode eval_only --initial_playbook_path ...` 重载保存的 `best_playbook.txt`。 | 英文；Python ≥3.10、uv、模型 API；该路线无需训练 GPU。默认使用 SambaNova／DeepSeek-V3.1。Formula 包含 **500/300/200** 条训练／验证／测试样本；`--test_workers 1` 限制并发，不限制样本量。如需缩小运行，在 `eval/finance/data/sample_config.json` 配置保持分离的小规模切分，并将 `--eval_steps` 设为不大于训练样本数的正整数，确保触发验证选优。当前默认操作更新计数并**新增**条目，可选 embedding 去重关闭。 |
+| [Voyager](https://github.com/MineDojo/Voyager) | 将 Minecraft 执行经验变成持久化 JavaScript 技能库，由 LLM critic 判断成功后入库，再按描述检索代码用于后续任务。对比进入提示的技能片段与用于技能组合的完整可执行库。 | 先读[论文 §§2.2–2.3](https://arxiv.org/html/2305.16291v2#S2.SS2)，再看[技能保存／检索](https://github.com/MineDojo/Voyager/blob/main/voyager/agents/skill.py)。按 [Getting Started](https://github.com/MineDojo/Voyager#getting-started) 运行 `Voyager(...).learn()`；也可用 README 的 `skill_library_dir='./skill_library/trial1'` 示例，在新任务中复用作者发布的技能。`resume=True` 可恢复持续学习。 | 英文；Python ≥3.9、Node ≥16.13、正版 Minecraft Java **1.19**、Fabric **0.14.18**／模组、构建自定义模组所需 Java **17**，以及 OpenAI 聊天／嵌入 API。不微调模型，但需在本地运行游戏。经典实现采用较旧且部分未锁版的依赖与旧模型默认值；未实测全新安装／端点兼容性。 |
+
+**学习练习：** 查看保存的手册或技能库，重启后加载它，再追踪它对持出样本或新任务的作用；保持模型与任务预算相近，与空状态运行作比较。[LongMemEval-V2](#evaluation) 提供独立的记忆组件对比，将这些项目接入其接口需要编写适配器。把组件准确率、保留经验带来的任务收益，以及改进流程自身的变化分开考察。
+
 <a id="coevolution-projects"></a>
 
 ### 协同演化项目
@@ -313,17 +333,18 @@ A curated directory of awesome lists, learning guides, tutorials, and courses on
 | 资源 | 特色与适合读者 | 推荐学习入口 | 语言与实践条件 |
 | --- | --- | --- | --- |
 | [RSI Atlas · aniruddhaadak80/RSI](https://github.com/aniruddhaadak80/RSI) | 图解改进循环、评估和修改准入，附小型 Python 示例，适合学习接受 / 拒绝候选修改与记录历史的代码结构。 | [Start With Simple Words](https://aniruddhaadak-rsi.vercel.app/docs/start) → [Python 门控示例](https://github.com/aniruddhaadak80/RSI/blob/main/engine/rsi_loop.py)。 | 英文；示例使用 Python 3.10+ 标准库。接收外部传入的测试状态、收益和路径后作判断，不包含模型生成改动或自动执行评测。 |
+| [LongMemEval-V2](https://github.com/xiaowu0162/LongMemEval-V2) · [论文](https://arxiv.org/abs/2605.12493) | 检验保存的 Web／企业环境轨迹能否支持后续关于状态、工作流程和环境陷阱的问题。**451 道题**同时衡量答案准确率和记忆查询延迟，适合比较记忆组件；单凭分数不能认定形成了 RSI 闭环。 | 先读[论文 §3.3](https://arxiv.org/html/2605.12493v1#S3.SS3)，按说明配置数据／模型端点，再对比[无检索](https://github.com/xiaowu0162/LongMemEval-V2/blob/main/evaluation/scripts/run_no_retrieval.sh)与 [RAG](https://github.com/xiaowu0162/LongMemEval-V2/blob/main/evaluation/scripts/run_rag_query_to_slice.sh)。从仓库根目录运行 `TIER=small bash evaluation/scripts/run_no_retrieval.sh --limit 5`，再以相同 limit 运行 RAG 脚本。这会选择**每个领域前 5 题**，仍需完成数据／索引准备。 | 英文；Python ≥3.11、[公开 Apache-2.0 数据](https://huggingface.co/datasets/xiaowu0162/longmemeval-v2)（解压前约 **7.12 GB**）及模型端点。默认读者／RAG controller 为 Qwen3.5-9B；RAG 另需 Qwen3-Embedding-8B。部分题型调用付费 GPT-5.2 裁判。服务硬件取决于模型和上下文，未给最低显存。V2 评测会生成答案，没有单独导入预测文件评分的 CLI。 |
 
 <a id="verification"></a>
 
 ## 时效与核验记录
 
-以下资源的核验日期为 **2026-10-22**，具体阅读范围记录在下表。新增候选先按项目身份与已有条目排重，再读详情；网站、Notebook 和仓库迁移前后的名称合并处理。读取了项目 README、推荐章节或课程页面，并对涉及实践能力的条目抽查相关代码。**未运行上游教程、调用模型或复现实验，也未逐篇复核清单内的论文。** 视频核验按下表分别覆盖官方课页、主办方介绍、可用讲义与视频元数据；未观看视频或核验逐字稿。
+原有 51 项资源核验于 **2026-10-22**；ACE、Voyager 与 LongMemEval-V2 于 **2026-10-23** 补入，同日补读用于连接它们的综述段落，具体阅读范围记录在下表。新增候选先按项目身份与已有条目排重，再读详情；网站、Notebook 和仓库迁移前后的名称合并处理。读取了项目 README、推荐章节或课程页面，并对涉及实践能力的条目抽查相关代码。**未运行上游教程、调用模型或复现实验，也未逐篇复核清单内的论文。** 视频核验按下表分别覆盖官方课页、主办方介绍、可用讲义与视频元数据；未观看视频或核验逐字稿。
 
 下表记录有依据的内容变化、发布或上游自报核验时间；它们与本项目的核验日期不同，也不等同于整个领域的覆盖截止日期。提交日期按 Asia/Taipei 记载，上游直接标注的日期保留原值。
 
 <details>
-<summary>展开 51 项资源的内容时间与核验范围</summary>
+<summary>展开 54 项资源的内容时间与核验范围</summary>
 
 | 资源 | 内容时间与依据 | 核验阅读范围 |
 | --- | --- | --- |
@@ -332,7 +353,7 @@ A curated directory of awesome lists, learning guides, tutorials, and courses on
 | LobeHub Awesome RSI | [2026-10-12 更新证据分层](https://github.com/lobehub/awesome-rsi/commit/874f5c331c6d2deb70954da12ef9df4b9f255ad0)；随后排序与 CI 修改未当作资料新增。 | README 的术语、入门、目录与相关提交差异。 |
 | Persdre Awesome RSI | [2026-09-02 整理并澄清分类标签](https://github.com/Persdre/awesome-recursive-self-improvement/commit/cde30351387b4abd23373884e90d508f7368b5ef)。 | README 的定义、分类与学习资源。 |
 | Token-Rhythm Awesome RSI | 上游自报 Last verified **2026-08-13**；[同日补充代码入口](https://github.com/Token-Rhythm/awesome-rsi/commit/87681b460d6420f29f88bc3a2b848ddc6891dd1b)。 | 英文目录与维护说明、中文精选和分类入口。 |
-| Awesome Self-Improving Agents | [2026-10-19 新增 RHD 条目](https://github.com/selfimproving-agent/Awesome-Self-Improving-Agents/commit/7ffbe03841e18a21200a0384cb38f868be93bd73)。论文 v1：**2026-07-14**。 | README、README_AGENT 的分类、章节导航和评测说明，及最新条目差异。已核对原论文摘要、目录、讨论 RL 关系的 §§3.2–3.3，以及讨论 SPIRAL 的 §7.3，确认章节阅读入口。 |
+| Awesome Self-Improving Agents | [2026-10-19 新增 RHD 条目](https://github.com/selfimproving-agent/Awesome-Self-Improving-Agents/commit/7ffbe03841e18a21200a0384cb38f868be93bd73)。论文 v1：**2026-07-14**。 | README、README_AGENT 的分类、章节导航和评测说明，及最新条目差异。已核对原论文摘要、目录、讨论 RL 关系的 §§3.2–3.3，以及讨论 SPIRAL 的 §7.3，确认章节阅读入口。**2026-10-23** 补读讨论 ACE 的 §6.1.2 与讨论 Voyager 的 §§6.3.1–6.3.2。 |
 | jacky-leng Awesome RSI | 上游核验覆盖至 **2026-10-07**；[10-08 扩充目录与六轴分类](https://github.com/jacky-leng/awesome-rsi/commit/f41e58bdf14a9a52912eefd85e10215587786c24)。 | README、TAXONOMY 与提交差异；推荐源码入口，未验证阅读网站的完整交互。 |
 | pinkbubblebubble Awesome RSI | 上游自报 Last reviewed **2026-10-21**；[台北时间 10-22 新增近期资料](https://github.com/pinkbubblebubble/awesome-rsi/commit/c91823d6ebd9969cea3b7b05e20027988ec5308b)。 | 标签、Start here、Harness 和相关集合章节，以及内容提交差异。 |
 | The RSI Book | [2026-07-16 新增第 3 章](https://github.com/bhavsarpratik/rsi/commit/7ce1c397323d442744be8d75ba584afca5d46afd)；8 月最新提交为页面设计更新。 | README、第 2 章、Agent 源码与配套 Notebook 的 setup / Agent 单元。 |
@@ -360,7 +381,7 @@ A curated directory of awesome lists, learning guides, tutorials, and courses on
 | deepgrounding 综述材料 | **2026 年 7 月**冻结语料；[09-06 发布公开仓库](https://github.com/deepgrounding/recursive-self-improvement/commit/aceac9d8a8e46caa702b9651857380a4729202a7)。arXiv v2：**2026-09-06**。 | README 的复现流程与许可范围、综述分类和语料方法章节；未重新生成语料或图表。仓库稿件自述对应 v1，arXiv 则已有 v2；两者分开标注。 |
 | RSI Atlas | [2026-10-22 修复冻结路径匹配](https://github.com/aniruddhaadak80/RSI/commit/f4246024469d7e7eadea7a59db64f8289e57eb2a)；Start 文档页标注 09-18。 | README、Start 页面、Python 引擎、依赖与代码差异。 |
 | LLM Technical Overview / Zesearch | arXiv v3 **2026-09-07**。 | 原始摘要、目录、§4.4 与配套仓库按章节组织的阅读表。 |
-| Self-Evolving Agents / CharlesQ9 | arXiv v4 **2026-01-16**。 | 原始摘要、定义、目录、评估章节导航及配套 README。 |
+| Self-Evolving Agents / CharlesQ9 | arXiv v4 **2026-01-16**。 | 原始摘要、定义、目录、评估章节导航及配套 README。**2026-10-23** 补读 §§7.1.2–7.1.4 与 §7.2.1，区分保留能力、效率与组件评测。 |
 | Comprehensive Self-Evolving AI Agents / ANative-Lab | arXiv v2 **2025-08-31**。 | 摘要、PDF §3／图 3、方法与评估标题、仓库 README 及旧所有者地址跳转。 |
 | Era of Experience / FrontisAI | 作者 PDF 标注 **2026-06-25**，上传于 [16d81a6](https://github.com/FrontisAI/Awesome-Self-Improving-Agents/commit/16d81a652a75d095e67d50c8c92c61735cfccb7b)；讲座举行于 **2026-08-13**，录像上传于 **2026-08-14**。 | 作者 PDF 摘要、目录与 §2；与 Modern Agentic Systems 综述不同。已核对主办方提纲与 B 站 UP 主“青稞社区”、讲者、标题、时长（71:34）和中文语音元数据；未播放或核验逐字稿。OpenReview 返回浏览器验证页。 |
 | The Last AI Built by Humans / Theseus | arXiv v3 **2026-09-22**。 | 原始摘要、目录、引言／综述定位及配套阅读路线；未独立复现产业案例主张。 |
@@ -378,6 +399,9 @@ A curated directory of awesome lists, learning guides, tutorials, and courses on
 | Schmidhuber: RSI Since 1987 | 作者页面标注 **Technical Note IDSIA-9-26，2026 年 9 月**；链接的自修改策略章节发表于 **1997 年**。 | 作者笔记 §§2／7 与原章节摘要／基本概念。未独立审计历史优先权主张，定义和历史叙述明确归于作者观点。 |
 | DiscoRL | [Nature 记录](https://www.nature.com/articles/s41586-025-09761-x)：首发 **2025-10-22**；version of record **2025-11-26**。 | 作者项目页与论文 Figure 1、Discovery method、Meta-optimization、Generalization。核对训练 Agent 与学习其更新规则的区别；未审计代码及复现配置。 |
 | ScienceBuddy | [arXiv v1](https://arxiv.org/abs/2609.17523v1)，**2026-09-15**；核验时仅列出此版本。 | 原始摘要、§§2.3–2.5／Algorithm 1 与 §4.2。核对交替 Harness 改进／模型 RL，以及保持固定的辅助编辑器／GRPO 规则；未复现产品、代码或实验。 |
+| ACE | **2026-10-23** 核验[源码版本 82709de](https://github.com/ace-agent/ace/tree/82709de050e1db6e6ef2f07bcb0393560b94992a)；arXiv v3 **2026-03-29**。 | 作者仓库／论文对应、Apache-2.0 许可、依赖、Formula CLI／数据、逐样本更新、计数／ADD 行为、按验证集选优保存及只评测重载。未安装、调用模型或复现性能；未运行可选去重与 AppWorld。 |
+| Voyager | **2026-10-23** 核验[源码版本 55e45a8](https://github.com/MineDojo/Voyager/tree/55e45a880755d0c8c66ca7fb5fe7962ac8974f89)（**2023-07-27**）；论文 v2 **2023-10-19**。 | 作者论文／仓库、MIT 许可、安装与随库技能示例、Python／Node／游戏／模组依赖、技能管理器、critic、学习／推理流程、持久化和检索。未实测旧依赖／模型兼容性；未调用 API 或运行游戏。 |
+| LongMemEval-V2 | 论文 v1 **2026-05-12**；[核验源码版本 2cc8c54](https://github.com/xiaowu0162/LongMemEval-V2/tree/2cc8c540bdb87fe6761629b585e727e1c4704520)日期为 **2026-08-10**（台北时间）。 | 于 **2026-10-23** 核对 README、公开数据卡／访问元数据与 Apache-2.0 许可、环境、基线脚本、参数、答案生成／评分流程及论文 §§3.3／5.2。未下载完整数据、调用模型、安装或运行评测。 |
 
 </details>
 
