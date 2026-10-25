@@ -8,7 +8,7 @@ A curated directory of awesome lists, learning guides, tutorials, and courses on
 
 本项目汇集 RSI 相关的资源集合与学习入口，帮助读者了解每项资源适合谁、值得看什么、从哪里开始，以及内容更新到什么时候。
 
-**最近核验：2026-10-23。** 共收录 58 项资源，涵盖 Awesome 清单、综述、教材、教程、实践项目、课程、视频与复现材料。本轮新增 STOP 与 SICA 源码阅读路线，追踪改进后的实现如何成为后续改进器；实践入口区分递归改进方法、相关自改进机制和评测工具。同一项目的网站、代码和 Notebook 合并介绍。
+**最近核验：2026-10-25。** 共收录 62 项资源，涵盖 Awesome 清单、综述、教材、教程、实践项目、课程、视频与复现材料。本轮补入 Harness²、HyperAgents、Meta-Harness 与 Airbnb AHO，并补出已收录仓库中的中文阅读入口；实践入口区分递归改进方法、相关自改进机制和评测工具。同一项目的网站、代码和 Notebook 合并介绍。
 
 <a id="resource-scope"></a>
 
@@ -18,8 +18,8 @@ A curated directory of awesome lists, learning guides, tutorials, and courses on
 
 | 分类 | 入口所讲授的内容 | 本目录示例 |
 | --- | --- | --- |
-| **递归改进方法** | 保留对 Agent 实现或改进策略的修改，并将其用于后续改进工作。区分教学原型与研究实现；标签本身不代表已实现持续加速。 | [RSI Labs](#tutorials)：小型改进策略实验；[STOP／SICA](#recursive-methods)：追踪可执行实现的继承；[DGM](#practice)：继承的 Agent 代码参与后续自修改。 |
-| **相关自改进机制** | 提示词优化、程序搜索、学习适应策略、经验复用或协同适应，也包括入门构件与模拟演示。条目说明改变什么、哪些部分保持固定。 | [GEPA / TextGrad](#tutorials)、[ShinkaEvolve / SEAL / Agent Lightning](#practice)、[ACE / Voyager](#memory-skills)、[协同演化](#coevolution-projects)与[自博弈](#adversarial-self-play)。 |
+| **递归改进方法** | 保留对 Agent 实现或改进策略的修改，并将其用于后续改进工作。区分教学原型与研究实现；标签本身不代表已实现持续加速。 | [RSI Labs](#tutorials)：小型改进策略实验；[STOP／SICA](#recursive-methods)：追踪可执行实现的继承；[Harness²／HyperAgents](#harness-optimization)：改进器经验或元 Agent 代码；[DGM](#practice)：继承的 Agent 代码参与后续自修改。 |
+| **相关自改进机制** | 提示词优化、程序搜索、学习适应策略、经验复用或协同适应，也包括入门构件与模拟演示。条目说明改变什么、哪些部分保持固定。 | [Meta-Harness／AHO](#harness-optimization)、[GEPA / TextGrad](#tutorials)、[ShinkaEvolve / SEAL / Agent Lightning](#practice)、[ACE / Voyager](#memory-skills)、[协同演化](#coevolution-projects)与[自博弈](#adversarial-self-play)。 |
 | **评测工具** | 衡量组件表现，或演示候选修改的验收条件。 | [LongMemEval-V2 与 RSI Atlas](#evaluation)；Atlas 是验收门控教学示例。 |
 
 索引、综述、教材与综合课程仍作为阅读资源，可以横跨多类。记忆评测或固定优化器教程可以为 RSI 学习提供准备，其本身未必展示递归改进循环。需要基础时可先学[前置课程](#prerequisite-courses)，再比较下文的具体机制。
@@ -34,6 +34,8 @@ A curated directory of awesome lists, learning guides, tutorials, and courses on
 | 用 Python 搭建第一个 Agent 改进循环 | [The RSI Book 第 2 章](https://thersibook.com/chapters/ch02.html)与配套 Notebook |
 | 看清改进从哪里开始递归 | [RSI Labs Notebook 第 4 节](https://github.com/weilinear/rsi_labs/blob/main/gemini_self_improvement.ipynb)：修改改进器的指令，并评估其后续修复选择 |
 | 追踪改进器参与后续改进的研究实现 | [STOP → SICA 源码路线](#recursive-methods)：动态函数替换 → 归档 Agent 执行 |
+| 不用模型凭证观察 Harness 改进流程 | [Harness² 本地 Demo](#harness-optimization)：固定编辑、真实执行与持久产物 |
+| 对比外部 Harness 优化与改进器演化 | [Harness 与元改进项目](#harness-optimization)：Meta-Harness／AHO 对照 Harness²／HyperAgents |
 | 用中文 Notebook 学习 Agent 代码搜索 | [前置课程：WalkingLabs L07](#prerequisite-courses)，固定设计器下的教学示例 |
 | 从代码理解 Agent Harness | [learn-deepseek-harness 的 L1](https://github.com/Prism-Shadow/learn-deepseek-harness/tree/main/basics/L01_agent_loop)，再按课程顺序学习 |
 | 通过评估数据优化可复用提示词 | [GEPA / DSPy AIME Notebook](https://github.com/stanfordnlp/dspy/blob/main/docs/docs/tutorials/gepa_aime/index.ipynb) |
@@ -52,7 +54,7 @@ A curated directory of awesome lists, learning guides, tutorials, and courses on
 
 - **中文学习路线**：Prism 导读 → Hello-Agents Reflection → 可选的 [WalkingLabs 前置 Notebook](#prerequisite-courses) → 李宏毅自我成长讲次 → RSI 研究札记与原始综述。
 - **概念入门**：Prism 中文导读 → The RSI Book 第 1–2 章 → natnew 阅读路线。
-- **Agent 工程实践**：The RSI Book 的 Python 循环 → learn-deepseek-harness 的分课实现 → selfimproving-agent 综述中的 scaffolding 与 evaluation 部分。
+- **Agent 工程**：The RSI Book 的 Python 循环 → learn-deepseek-harness → [Harness² 流程演示，再选 Meta-Harness 或 AHO](#harness-optimization) → selfimproving-agent 综述中的 scaffold 与评估章节。
 - **优化实践**：GEPA / DSPy → ShinkaEvolve 或 OpenEvolve → 用 DGM 进阶研究 Agent 代码演化。
 - **递归改进**：RSI Labs Notebook 第 4 节 → [STOP → SICA 源码路线](#recursive-methods) → DGM。依次追踪改进器指令、动态加载的 Python 函数和归档 Agent 实现如何参与后续改进；若不熟悉候选评估和归档，可先学前置 Notebook。
 - **经验与记忆**：Hello Generic Agent → 用 ACE 学习文本经验手册，或用 Voyager 学习可执行技能 → 用 LongMemEval-V2 评估记忆组件；再回到综述学习纵向改进指标。
@@ -71,6 +73,7 @@ A curated directory of awesome lists, learning guides, tutorials, and courses on
 - [前置课程](#prerequisite-courses)
 - [实践教程](#tutorials)
 - [实践项目](#practice)
+- [Harness 优化与元改进项目](#harness-optimization)
 - [递归改进方法：源码阅读路线](#recursive-methods)
 - [记忆与技能学习项目](#memory-skills)
 - [协同演化项目](#coevolution-projects)
@@ -120,7 +123,7 @@ A curated directory of awesome lists, learning guides, tutorials, and courses on
 
 ### 近期综述覆盖表
 
-**核验日期：2026-10-22。** “已覆盖”指本目录已收录的至少一个仓库明确链接该论文，或托管作者 PDF。下表 12 篇均已找到对应入口。本轮检查了 17 个已收录研究索引、综述配套及阅读札记仓库的 README，并检查了 Prism 论文数据。仓库列列出该范围内确认的匹配，简称链接指向对应仓库。本表用于交叉查询，资源总数为 **58**。
+**核验日期：2026-10-22。** “已覆盖”指本目录已收录的至少一个仓库明确链接该论文，或托管作者 PDF。下表 12 篇均已找到对应入口。本轮检查了 17 个已收录研究索引、综述配套及阅读札记仓库的 README，并检查了 Prism 论文数据。仓库列列出该范围内确认的匹配，简称链接指向对应仓库。本表用于交叉查询，资源总数为 **62**。
 
 论文日期按行分别采用 arXiv 首次提交日期、Preprints.org 的 **Posted** 发布日期或作者标注日期。版本列记录截至本次核验能确认的最新版本；PDF 上传日期是文件历史依据，不作为论文出版日期。
 
@@ -192,15 +195,17 @@ A curated directory of awesome lists, learning guides, tutorials, and courses on
 
 ### 从综述到实践项目
 
-本表连接已收录的教程、实践项目和评测示例；资源总数为 **58**。表中横跨[三类资源](#resource-scope)，阅读分支表示主题，不代表 RSI 能力等级。对应关系是本目录的学习建议：先围绕学习目标尝试链接中的示例，再回到对应综述章节比较机制。
+本表连接已收录的教程、实践项目和评测示例；资源总数为 **62**。表中横跨[三类资源](#resource-scope)，阅读分支表示主题，不代表 RSI 能力等级。对应关系是本目录的学习建议：先围绕学习目标尝试链接中的示例，再回到对应综述章节比较机制。
 
-以下门槛针对所链接的具体示例，依据 **2026-10-22–23** 核验的上游文档与代码整理，本轮未运行示例。仅通过 API 调用模型的入门示例在远端完成推理，需要模型访问权限和调用预算；训练项目仍需下表列出的 GPU 环境。GPU 配置是文档给出的示例，不作为已验证的最低硬件要求。
+以下门槛针对所链接的具体示例，依据 **2026-10-22–25** 核验的上游文档与代码整理，本轮未运行示例。仅通过 API 调用模型的入门示例在远端完成推理，需要模型访问权限和调用预算；训练项目仍需下表列出的 GPU 环境。GPU 配置是文档给出的示例，不作为已验证的最低硬件要求。
 
 | 阅读分支／对应综述 | 项目与上手入口 | 学习目标与范围 | 所链接示例的运行门槛 |
 | --- | --- | --- | --- |
 | **共同基础** — [Prism §§2.3、5](https://github.com/Prism-Shadow/awesome-rsi/blob/main/site/public/papers/rsi-survey.pdf)；[Towards AI §§3–4](https://lee1003-lee.github.io/Awesome-RSI-Research/assets/rsi-survey.pdf#page=5) | [The RSI Book 第 2 章](https://thersibook.com/chapters/ch02.html) → [配套 Notebook](https://github.com/bhavsarpratik/rsi/blob/master/notebooks/chapter2_build_your_first_loop.ipynb)。 | 跟踪评估、提示修订与经验跨任务复用，比较初始 Agent 和更新后的 Agent；Notebook 的经验列表保留在当前 kernel 中，未写入磁盘供跨会话使用。 | Python 3.10+、LiteLLM、Notebook 环境和模型接口。使用 API，不训练权重。 |
 | **递归改进：教学原型** — [The Last AI §§2.2、3.6](https://arxiv.org/html/2609.11873v3#S3.SS6)，本目录的学习对应 | [RSI Labs Notebook 第 4 节](https://github.com/weilinear/rsi_labs/blob/main/gemini_self_improvement.ipynb)；[配置见下文](#tutorials)。 | 跟踪反馈怎样变成新的改进器指令，经开发集验收后用于后续修复选择。3 个开发案例和 3 个留出诊断案例用于讲解可修改边界；未执行所选修复以衡量端到端收益。 | Colab / Jupyter、`google-genai==2.28.0` 与 Google API key；无需训练 GPU。状态保留在 Notebook 当前会话。 |
 | **递归改进：可执行的改进器** — [The Last AI §§2.2、3.6](https://arxiv.org/html/2609.11873v3#S3.SS6)；[Coding Agents §§3、7–8](https://arxiv.org/html/2608.03392v4)，本目录的学习配对 | [STOP 源码路线](#stop-source-route) → [SICA 源码路线](#sica-source-route)。 | 定位编辑后的代码交接给下一轮改进执行者的位置，对比直接替换函数与选择归档 Agent；区分接受候选和证明性能提升。 | STOP：Python、旧 SDK／模型适配、API 与隔离执行；SICA：Python、Docker／buildx、benchmark 数据及匹配配置的模型 API。建议先读源码，本目录未运行这两个研究循环。 |
+| **反馈驱动的 Harness 优化** — [Modern Agentic Systems §6](https://arxiv.org/html/2607.13104v1#S6)；[Coding Agents §§7–8](https://arxiv.org/html/2608.03392v4)，本目录的学习配对 | [Meta-Harness 文本分类或 AHO BFCL](#harness-optimization)。 | 对比修改 Harness 程序与修改提示／工具中间件，识别固定提案器，并区分选择数据和最终评测。 | Python、提案器／任务模型访问与示例数据；AHO 数据需另行下载。先按示例操作并检查候选差异。 |
+| **改进经验与元 Agent 代码** — [The Last AI §3.6](https://arxiv.org/html/2609.11873v3#S3.SS6)，本目录的学习配对 | [Harness² → HyperAgents](#harness-optimization)。 | 对比保留经验库指导后续编辑，与继承元 Agent 代码执行后续编辑；先用 Harness² 固定演示观察状态，再追踪真实实现的复用边界。 | Harness² Demo：Python 3.12/3.13 与 uv，无需模型凭证；HyperAgents：Python 3.12、Docker／构建环境、领域数据与模型 API。 |
 | **模型训练：Agent 策略** — [LLM Overview §§4、6](https://arxiv.org/html/2603.25681v3)；[Modern Agentic Systems §5](https://arxiv.org/html/2607.13104v1) | [Agent Lightning：Calc-X Local Mode](https://github.com/microsoft/agent-lightning/blob/main/docs/50-example-calc-x.md#local-mode)。 | 跟踪工具调用轨迹如何变成奖励、GRPO 更新和策略 checkpoint。示例使用预设训练器更新 Agent 策略，未演示训练器自身改进。 | Python 3.12+、Linux / WSL、NVIDIA CUDA、仓库配套的 verl / vLLM 安装，以及模型／数据下载。示例配置为 **1× A100 80GB**；Local Mode 无需 Kubernetes，模型本地运行，默认启用 W&B。 |
 | **模型训练：内层适应／外层学习** — [LLM Overview §§4.3–4.4](https://arxiv.org/html/2603.25681v3)；[The Path §5](https://www.preprints.org/manuscript/202608.0051) | [SEAL：general-knowledge 流程](https://github.com/Continual-Intelligence/SEAL/blob/main/general-knowledge/README.md)。 | 跟踪自编辑内容生成 → 临时 LoRA 适应 → 问答评估 → 编辑生成器的 ReST-EM 训练，比较内层更新和外层学习各自的作用。 | 需要微调经验；Python 3.12、Linux / CUDA、PyTorch / vLLM / PEFT、模型／数据访问，以及 SLURM 脚本和路径适配。上游示例使用 **2 张 A100/H100**；默认 TTT 评分也调用 OpenAI API。 |
 | **经验、记忆与技能** — [Frontis §§2–4](https://github.com/FrontisAI/Awesome-Self-Improving-Agents/blob/main/Self_Improving_Agents.pdf) | [Hello Generic Agent 第 4 章](https://datawhalechina.github.io/hello-generic-agent/part1/chapter4/) → [第 12 章](https://datawhalechina.github.io/hello-generic-agent/part2/chapter12/)；安装其关联的 GenericAgent 实现。 | 将已完成任务整理成可复用 SOP／脚本，再观察后续会话如何检索。学习保留什么、何时复用；验证主要依靠提示约束，可能需要用户指导。 | 推荐 Python **3.11/3.12**、模型 API，以及所选 UI 和工具依赖；按[当前安装指南](https://github.com/lsdefine/GenericAgent/blob/main/docs/installation_zh.md)操作。教程处于 Beta。 |
@@ -253,7 +258,7 @@ A curated directory of awesome lists, learning guides, tutorials, and courses on
 | [The RSI Book · bhavsarpratik/rsi](https://github.com/bhavsarpratik/rsi) | **相关自改进机制。** 通过同一个仓储库存问答任务逐步讲解工具调用、确定性评估、prompt 改进、跨任务记忆和成本记录，适合第一个 Python 实验。 | [第 2 章：Build Your First Agent Improvement Loop](https://thersibook.com/chapters/ch02.html) + [配套 Notebook](https://github.com/bhavsarpratik/rsi/blob/master/notebooks/chapter2_build_your_first_loop.ipynb)。 | 英文；Python 3.10+、LiteLLM 与模型接口。示例主要更新 prompt 和记忆，模型权重不变。 |
 | [Roloria/rsi-learn](https://github.com/Roloria/rsi-learn) | **相关自改进机制 · 模拟演示。** 中文知识库、五阶段学习路线、架构图与进化搜索实验场，适合直观理解“生成—评估—选择—整合”。 | [页面导航与启动说明](https://github.com/Roloria/rsi-learn#页面导航)，先看[学习路线内容](https://github.com/Roloria/rsi-learn/blob/main/src/data/path.ts)，启动后进入 `/#/path` 和 `/#/lab`。 | 中文；交互站需 Node.js / Vite。实验场是**规则驱动的前端模拟**，不调用真实 LLM。 |
 | [Ashish Kumar：Recursive self-improvement 三篇导读](https://ashishkumar.ai/series/recursive-self-improvement/) | 从理论基础讲到 self-play / self-training，再到自修改代码；包含 text-to-SQL 自训练循环示意与评估 Harness 讨论。 | 按顺序读 [Part 1：概念与理论](https://ashishkumar.ai/blog/recursive-self-improvement-explained/)、[Part 2：自博弈与自训练](https://ashishkumar.ai/blog/self-improving-ai-self-play-self-training/)、[Part 3：自修改代码](https://ashishkumar.ai/blog/self-improving-code-alphaevolve-to-aide/)。 | 英文；适合有 LLM / 机器学习基础的读者。**2026-10-11** 发布的解释性文章，代码段用于讲解。 |
-| [RSI 研究札记 · asimfish/awesome_rsi](https://github.com/asimfish/awesome_rsi) | 中文论文精读与综合分析，对照模型权重、Harness 代码和文本技能等改进方式，重点讨论评估；适合从领域概览进入单篇论文。 | 按 [Start Here](https://github.com/asimfish/awesome_rsi#1-start-here) 选择路线，先读[报告 10：汇总洞察](https://github.com/asimfish/awesome_rsi/blob/main/reports/10_synthesis_insights.md)，再读[报告 12：自进化 Agent 综述](https://github.com/asimfish/awesome_rsi/blob/main/reports/12_self_evolving_agents_survey.md)。 | 中文；LLM / Agent 基础；纯阅读。报告包含整理者的分析；配套论文中译为机器翻译，引用与技术细节应回到论文原文。 |
+| [RSI 研究札记 · asimfish/awesome_rsi](https://github.com/asimfish/awesome_rsi) | 中文论文精读与综合分析，对照模型权重、Harness 代码和文本技能等改进方式，重点讨论评估；适合从领域概览进入单篇论文。 | 按 [Start Here](https://github.com/asimfish/awesome_rsi#1-start-here) 选择路线，先读[报告 10：汇总洞察](https://github.com/asimfish/awesome_rsi/blob/main/reports/10_synthesis_insights.md)，再读[报告 12：自进化 Agent 综述](https://github.com/asimfish/awesome_rsi/blob/main/reports/12_self_evolving_agents_survey.md)。本批可先读[报告 13 第 4 节：Meta-Harness](https://github.com/asimfish/awesome_rsi/blob/63f83e581ff3161932b62ab5fbe845fdf03cf84b/reports/13_meta_harness.md)，再进入[官方代码入口](#harness-optimization)。 | 中文；LLM / Agent 基础；纯阅读。报告包含整理者的分析；配套论文中译为机器翻译，引用与技术细节应回到论文原文。 |
 | [Lilian Weng：Harness Engineering for Self-Improvement](https://lilianweng.github.io/posts/2026-07-04-harness/) | 串联上下文管理、工作流搜索、自修改 Harness、进化搜索及 Harness／权重联合更新的研究长文，适合对照本目录实践项目背后的机制。 | 从 [Harness Optimization](https://lilianweng.github.io/posts/2026-07-04-harness/#harness-optimization) 开始，重点读 Self-Improving Harness 与 Evolutionary Search，再读 Future Challenges。 | 英文；Agent 与评估基础；纯阅读。属于综述性技术博客，与经过同行评审的综述论文分开标注。 |
 
 <a id="prerequisite-courses"></a>
@@ -294,6 +299,23 @@ A curated directory of awesome lists, learning guides, tutorials, and courses on
 | [Darwin Gödel Machine（DGM）](https://github.com/jennyzzt/dgm) | **递归改进方法 · 研究实现。** 原论文研究实现：Agent 修改自身代码，在编程任务上评估后代，并保留归档；继承的 Agent 实现参与后续自修改。适合准备沿源码理解完整研究循环的读者。 | 阅读 [Setup / Running the DGM](https://github.com/jennyzzt/dgm#setup)，再追踪 [DGM_outer.py](https://github.com/jennyzzt/dgm/blob/main/DGM_outer.py) → [self_improve_step.py](https://github.com/jennyzzt/dgm/blob/main/self_improve_step.py)。 | 英文；Python、Docker、模型 API，以及 SWE-bench / Polyglot 环境准备。这是需要较多环境与评估工作的研究复现入口，适合进阶学习。 |
 | [SEAL · Self-Adapting Language Models](https://github.com/Continual-Intelligence/SEAL) | **相关自改进机制 · 学习生成 self-edit。** 作者原始实现学习生成 self-edit，在下游问答上评估临时 LoRA 更新，再用筛选出的编辑训练编辑生成器；适合研究内层适应与外层学习的关系。 | 从 [general-knowledge 流程](https://github.com/Continual-Intelligence/SEAL/blob/main/general-knowledge/README.md)依次读数据生成 → TTT server → 评估 → ReST-EM 训练，再看 [SFT 数据构建器](https://github.com/Continual-Intelligence/SEAL/blob/main/general-knowledge/src/EM/build_SFT_dataset.py)。 | 英文；进阶 Python / 微调基础、Python 3.12、PyTorch / vLLM / PEFT。上游说明使用 2 张 A100/H100；需调整 SLURM 脚本与路径。默认 TTT 评分使用 OpenAI API（GPT-4.1）；生成／proxy 评分也可使用该 API。 |
 | [Microsoft Agent Lightning v1.0](https://github.com/microsoft/agent-lightning) | **相关自改进机制。** Calc-X 将 AutoGen Agent、MCP 计算器与轨迹采集、答案奖励、GRPO 更新串起来，适合学习如何从工具调用轨迹训练并保存策略检查点。 | 先读[安装说明](https://github.com/microsoft/agent-lightning/blob/main/docs/00-installation.md)，再按 [Calc-X Local Mode](https://github.com/microsoft/agent-lightning/blob/main/docs/50-example-calc-x.md#local-mode)操作；按该示例要求从 `examples/calc_x` 启动。 | 英文；Python 3.12+、Linux / WSL、CUDA、`verl` / vLLM、数据下载，默认使用 W&B。文档中的 Calc-X 配置为 **1 张 A100 80GB**。这是 v1.0 训练入口，旧 APO 教程对应旧 API。 |
+
+<a id="harness-optimization"></a>
+
+### Harness 优化与元改进项目
+
+这四项可用于比较**固定模型周围究竟改变了什么**：改进器经验库（Harness²）、任务 Agent 与元 Agent 代码（HyperAgents）、任务专用 Harness 代码（Meta-Harness），或提示与工具中间件（AHO）。先用 Harness² 本地流程演示熟悉产物，再按目标选择源码路线。演示采用预写好的编辑逻辑，理解其产物与复现模型驱动的改进是两件事。各条目核验于 **2026-10-25**，本目录未实际运行。
+
+| 资源 | 特色与学习目标 | 推荐学习入口 | 语言与运行门槛 |
+| --- | --- | --- | --- |
+| [Harness² · Google Cloud AI Research／Northwestern](https://github.com/google-research/harness2) · [论文](https://arxiv.org/abs/2610.14224) | **递归改进方法 · 改进器经验库。** 对当前任务执行“提案—试跑—组合”，再将采纳的 Harness 与有证据支持的经验保留下来，供后续改进会话使用。学习任务内适应与跨任务改进经验如何连接；模型权重、阶段指令与决策规则固定。 | 读[论文 §2 与 Figure 3](https://arxiv.org/html/2610.14224v1#S2) → [Install](https://github.com/google-research/harness2/blob/1cfe254e8d25b15f37048c3730134686abe60335/README.md#install) → `harness2-demo --output runs/demo --k 2`。查看 `demo.json`、`INDEX.md`、`EXPERIENCE.md`，沿[经验库上下文与采纳流程](https://github.com/google-research/harness2/blob/1cfe254e8d25b15f37048c3730134686abe60335/harness2/core/schedule.py#L499-L563)追到后续任务。 | 英文；Python **3.12/3.13**、uv。Demo 使用固定编辑器与真实 Python 执行，无需模型凭证或 Docker。真实模型运行需 Linux、Node.js 20+、模型访问与 benchmark 依赖，按 [Setup](https://github.com/google-research/harness2/blob/1cfe254e8d25b15f37048c3730134686abe60335/docs/SETUP.md) 配置。核验提交未附文档提到的 `.env.example`，需手工设置所列变量。 |
+| [HyperAgents · Meta 与合作团队](https://github.com/facebookresearch/HyperAgents) · [论文](https://arxiv.org/abs/2603.19461) | **递归改进方法 · 可修改的元 Agent。** 任务 Agent 与负责修改它的元 Agent 都可编辑；先应用所选父代的补丁，再由继承的元 Agent 生成下一候选。学习改进流程自身的修改怎样跨代传递，外部领域评测保持固定。 | 读[论文框架与 DGM-H 实现](https://arxiv.org/html/2603.19461v1) → [Setup](https://github.com/facebookresearch/HyperAgents/blob/59a68f672dfb92c74aeb7e61535d776fb36e172d/README.md#setup) → [`generate_loop.py`](https://github.com/facebookresearch/HyperAgents/blob/59a68f672dfb92c74aeb7e61535d776fb36e172d/generate_loop.py) → [`run_meta_agent.py`](https://github.com/facebookresearch/HyperAgents/blob/59a68f672dfb92c74aeb7e61535d776fb36e172d/run_meta_agent.py) → [`meta_agent.py`](https://github.com/facebookresearch/HyperAgents/blob/59a68f672dfb92c74aeb7e61535d776fb36e172d/meta_agent.py)。追踪继承的补丁进入执行，再看新候选的评分。 | 英文；Python **3.12**、Docker、构建依赖、模型 API 与领域数据。`bash ./setup_initial.sh` 准备默认论文评审路线；之后可用 `python generate_loop.py --domains paper_review --max_generation 1 --eval_workers 1` 限定代数／并发，仍需完成相应评测。上游 Docker 构建辅助脚本含内网代理设置，需按环境调整。公开研究代码采用 **CC BY-NC-SA 4.0**。 |
+| [Meta-Harness · Stanford IRIS 与合作团队](https://github.com/stanford-iris-lab/meta-harness) · [论文](https://arxiv.org/abs/2603.28052) | **相关自改进机制 · 外部 Harness 搜索。** 编码 Agent 提案器读取历史候选源码、分数与原始轨迹，再修改任务专用 Harness。学习反馈怎样支持记忆、检索与编排变化；提案器与搜索驱动本身不参与演化。框架与其 [Terminal-Bench 产物仓库](https://github.com/stanford-iris-lab/meta-harness-tbench2-artifact)合为一项。 | 从[文本分类示例](https://github.com/stanford-iris-lab/meta-harness/blob/8123ccabe2b19fa1123090b2e5f1bacc20963ce8/reference_examples/text_classification/README.md)开始：`cd reference_examples/text_classification`、`uv sync`，再运行 `uv run python meta_harness.py --iterations 1`。按 [`meta_harness.py`](https://github.com/stanford-iris-lab/meta-harness/blob/8123ccabe2b19fa1123090b2e5f1bacc20963ce8/reference_examples/text_classification/meta_harness.py) → `benchmark.py` → `inner_loop.py` 阅读；中文预习可选 [RSI 研究札记报告 13 第 4 节](https://github.com/asimfish/awesome_rsi/blob/63f83e581ff3161932b62ab5fbe845fdf03cf84b/reports/13_meta_harness.md)。 | 英文代码／文档；Python **≥3.11**、uv、已认证的 Claude Code CLI 提案器与任务模型访问。示例默认用 OpenRouter；包装器会从提案器环境移除 `ANTHROPIC_API_KEY`。数据已附带，一轮仍包含多个候选／数据集的评测。API 路线无需训练 GPU；迁移到新领域前读 [ONBOARDING](https://github.com/stanford-iris-lab/meta-harness/blob/8123ccabe2b19fa1123090b2e5f1bacc20963ce8/ONBOARDING.md)。 |
+| [Agent Harness Optimizer（AHO）· Airbnb](https://github.com/airbnb/agent-harness-optimizer) · [论文](https://arxiv.org/abs/2609.05736) | **相关自改进机制 · 提示与中间件优化。** BetterHarness、PRISM、GEPA、MIPROv2 在固定模型周围搜索修改。学习区分指令失败与工具边界失败，再连接评测、验收和已保存的差异；优化器自身保持固定。 | 读[论文 §3](https://arxiv.org/html/2609.05736v2#S3)与 [§4.3](https://arxiv.org/html/2609.05736v2#S4.SS3) → [Quick Start](https://github.com/airbnb/agent-harness-optimizer/blob/0d7652b42296c8df07532fa3787fc956250741e7/README.md#quick-start) → [BFCL 数据配置](https://github.com/airbnb/agent-harness-optimizer/blob/0d7652b42296c8df07532fa3787fc956250741e7/data/bfcl/README.md)。沿 [BetterHarness 循环](https://github.com/airbnb/agent-harness-optimizer/blob/0d7652b42296c8df07532fa3787fc956250741e7/agent_harness_optimizer/optimizers/better_harness/loop.py)追到 `decision.json`、`report.json`、`final_diff.md`，再对照 PRISM。 | 英文；Python **≥3.12**、源码安装（`pip install -e .`）、内外模型 API，以及单独下载的 BFCL v4 题目与答案文件。根目录 CLI 为 `python -m agent_harness_optimizer.cli`，需补齐 Quick Start 的 benchmark／optimizer／model／output 必填参数。学习时限制样本与轮次；API 路线无需训练 GPU。 |
+
+**Harness²：跟踪被保留的状态。** 每个新任务从共同基础执行 Harness 开始；之前采纳的 Harness 与经验提供给改进器选择复用。对照[经验库持久化](https://github.com/google-research/harness2/blob/1cfe254e8d25b15f37048c3730134686abe60335/harness2/core/library.py#L106-L151)与[传给改进器的上下文](https://github.com/google-research/harness2/blob/1cfe254e8d25b15f37048c3730134686abe60335/harness2/core/context.py#L161-L164)。Demo 的[固定提案器](https://github.com/google-research/harness2/blob/1cfe254e8d25b15f37048c3730134686abe60335/harness2/demo.py#L120-L163)展示流程连接，不会从经验库学习其编辑。真实运行的默认路线使用 Google Cloud／Vertex AI 凭证；LAB 另需 Pandoc／Poppler，WorkBuddy-Bench 另需 Docker。
+
+**AHO：区分选择与最终评测。** `train`／`holdout` 分别承担修复／验证作用，反复使用的验收数据不属于未触碰的最终测试。在核验的 BetterHarness 路径中，`--split-seed` 还会启用**完整 600 题 BFCL scorecard**，即使 train／holdout 样本较少也一样。应有意识地设置 `--train-cases`、`--holdout-cases`、`--max-iterations`。[实际默认验收规则](https://github.com/airbnb/agent-harness-optimizer/blob/0d7652b42296c8df07532fa3787fc956250741e7/agent_harness_optimizer/framework/acceptance.py#L58-L82)要求通过验收题数严格增加，README 中较旧的错误率／成本回退伪代码不描述该默认行为。每题时间／token 限制也不等于整个运行的费用上限。
 
 <a id="recursive-methods"></a>
 
@@ -409,14 +431,16 @@ A curated directory of awesome lists, learning guides, tutorials, and courses on
 
 ## 时效与核验记录
 
-原有 51 项资源核验于 **2026-10-22**；ACE、Voyager、LongMemEval-V2、RSI Labs、WalkingLabs 前置 Notebook、STOP 与 SICA 于 **2026-10-23** 补入，同日补读相关综述段落并标注实践入口类别，具体阅读范围记录在下表。新增候选先按项目身份与已有条目排重，再读详情；网站、Notebook 和仓库迁移前后的名称合并处理。读取了项目 README、推荐章节或课程页面，并对涉及实践能力的条目抽查相关代码。**未运行上游教程、调用模型或复现实验，也未逐篇复核清单内的论文。** 视频核验按下表分别覆盖官方课页、主办方介绍、可用讲义与视频元数据；未观看视频或核验逐字稿。
+原有 51 项资源核验于 **2026-10-22**；ACE、Voyager、LongMemEval-V2、RSI Labs、WalkingLabs 前置 Notebook、STOP 与 SICA 于 **2026-10-23** 补入，同日补读相关综述段落并标注实践入口类别；**2026-10-25** 再补 Harness²、HyperAgents、Meta-Harness 与 Airbnb AHO，现共 **62** 项。具体阅读范围记录在下表。新增候选先按项目身份与已有条目排重，再读详情；网站、Notebook 和仓库迁移前后的名称合并处理。读取了项目 README、推荐章节或课程页面，并对涉及实践能力的条目抽查相关代码。**未运行上游教程、调用模型或复现实验，也未逐篇复核清单内的论文。** 视频核验按下表分别覆盖官方课页、主办方介绍、可用讲义与视频元数据；未观看视频或核验逐字稿。
 
 **RSI Labs 与 WalkingLabs 的覆盖核对：** 截至 2026-10-23，在已收录的 **17 个索引、103 份文本文件**中，未检出两者的仓库 URL、名称及作者别名。索引范围包括七个 Awesome 清单、九个综述配套仓库及 RSI 研究札记；文件范围包括 README、选定目录数据、研究解读与 Prism 结构化论文／方法数据，不含 PDF、历史提交、Issue 或外链网站。这表示新增了该范围之外的学习入口，不代表其方法是新研究。本轮将 STOP 与 SICA 整理为独立源码路线；它们与 RRSI、AgentDescent 已有[所收录索引中的直接链接](https://github.com/pinkbubblebubble/awesome-rsi/blob/c91823d6ebd9969cea3b7b05e20027988ec5308b/README.md)。
 
 下表记录有依据的内容变化、发布或上游自报核验时间；它们与本项目的核验日期不同，也不等同于整个领域的覆盖截止日期。提交日期按 Asia/Taipei 记载，上游直接标注的日期保留原值。
 
+**2026-10-25 扩展排漏：** 读取了已收录 17 个索引／综述／札记仓库的当前 README，加上 Prism 的方法、论文、资源三份结构数据，共 **20 份文本**。Meta-Harness 与 HyperAgents 已被其中的索引链接，例如 [Token-Rhythm](https://github.com/Token-Rhythm/awesome-rsi/blob/87681b460d6420f29f88bc3a2b848ddc6891dd1b/README.md#L260-L261)，但本目录缺少独立实践入口；Harness² 与 Airbnb AHO 的项目 URL、标题或论文 ID 在这些文件中未检出。这是限定范围核对，不含其他子文档、PDF、历史、Issue 或外部网站。新增条目采用原始实现；Meta-Harness 框架与 TB2 产物合并计数，新增中文报告入口仍归入 RSI 研究札记。
+
 <details>
-<summary>展开 58 项资源的内容时间与核验范围</summary>
+<summary>展开 62 项资源的内容时间与核验范围</summary>
 
 | 资源 | 内容时间与依据 | 核验阅读范围 |
 | --- | --- | --- |
@@ -432,7 +456,7 @@ A curated directory of awesome lists, learning guides, tutorials, and courses on
 | Roloria/rsi-learn | [2026-09-22 加入学习站与模拟器](https://github.com/Roloria/rsi-learn/commit/64fa58065410fdc8d0c1c333f2bfc3d74019145b)。 | README、五阶段路线和模拟器引擎源码。 |
 | Ashish Kumar 三篇导读 | [系列页](https://ashishkumar.ai/series/recursive-self-improvement/)与三篇正文均标注 **2026-10-11** 发布。 | 系列目录、三篇正文与篇内学习入口。 |
 | learn-deepseek-harness | [2026-08-23 重组为基础 L1–L8 与进阶 L9–L10](https://github.com/Prism-Shadow/learn-deepseek-harness/commit/4c3b6492767f8af9d65a2a97776ed3bea8841aec)。 | 总 README、L1 文档 / 源码 / 依赖、L10 文档。 |
-| RSI 研究札记 | [2026-09-08 为汇总报告补充与外部资源的对照](https://github.com/asimfish/awesome_rsi/commit/0dfe9b2bc99663829ca20f3c3481878d795e1865)。 | README 学习路线与综述目录、报告 10／12／32、汇总报告提交差异。报告 32 明确仅基于原论文摘要；未审校翻译或逐项复核所引实验结论。 |
+| RSI 研究札记 | [2026-09-08 为汇总报告补充与外部资源的对照](https://github.com/asimfish/awesome_rsi/commit/0dfe9b2bc99663829ca20f3c3481878d795e1865)。 | README 学习路线与综述目录、报告 10／12／32、汇总报告提交差异。报告 32 明确仅基于原论文摘要；未审校翻译或逐项复核所引实验结论。 **2026-10-25** 补读报告 13，重点为第 4 节，用作 Meta-Harness 中文衔接；作者解读与报告数值不等于独立复现。 |
 | Lilian Weng Harness 研究长文 | 作者页面标注 **2026-07-04**。 | 设计模式、Harness 优化、未来挑战、基准附录与来源链接；未独立复现所引性能结果。 |
 | Datawhale Hello-Agents | 第四章更新于 **2026-05-02**；Extra10 新增于 **2026-05-07**（[章节修复](https://github.com/datawhalechina/hello-agents/commit/3badb16842045cab344bcfe9e6332fb3a39b3653)、[自进化章节](https://github.com/datawhalechina/hello-agents/commit/df79520dbc5bcf62446817fdc2a3ecf67596baa2)）。 | 已读中文 Reflection 章节、配套 Python 代码、API 封装和 Extra10 四类闭环概览。示例保留内存内轨迹并依赖模型评审；未运行代码执行或持久学习实验。 |
 | Datawhale Hello Generic Agent | 记忆章节更新于 **2026-04-20**，自进化章节更新于 **2026-04-22**（[记忆章节](https://github.com/datawhalechina/hello-generic-agent/commit/12f085e82f5cee337cc1c033712a7ae9f7c5eb67)、[机制章节](https://github.com/datawhalechina/hello-generic-agent/commit/33d68d2bcef6fd612270402780cc77370f5f87f7)）。 | 已读第 1/4/12 章，并对照[实现版本](https://github.com/lsdefine/GenericAgent/commit/b70079dce7d7768338a17c693f67b9d8dac541b5)核对记忆更新及索引加载代码。两个推荐章节均有实质内容，仍标为 Beta。教程依赖与现实现存在变化，安装应看实现仓库指南；未复现性能主张。 |
@@ -478,6 +502,10 @@ A curated directory of awesome lists, learning guides, tutorials, and courses on
 | WalkingLabs 前置 Notebook | [核验快照 92cd3b2](https://github.com/walkinglabs/self-improving-agent-notebook/tree/92cd3b2f9850f5021e46fa9cca0438a58d353b03)日期为 **2026-10-01**；这是源码快照日期，不是课程发布日期。 | **2026-10-23** 阅读 README、依赖文件与 L07 全部单元，确认真实 API 代码生成、固定设计器、教学算术差错率及内核内 archive。requirements 文件未列 Jupyter / ipykernel。不据此宣称全课已验证；未运行 Notebook。 |
 | STOP | [论文](https://arxiv.org/abs/2310.02304)：v1 **2023-10-03**，最新 v3 **2024-08-16**；核验[源码版本 0d6780c](https://github.com/microsoft/stop/tree/0d6780c54306b2486dd36e9c4ae9b49aceb27ea4)，日期 **2023-12-22**（台北时间）。 | **2026-10-23** 核对官方 README、种子改进器、公开／实际元效用、候选接受、动态重载、配置、API 包装与执行保护；区分 scaffold 递归编辑、模型权重更新与每轮性能必升。未安装依赖、执行代码或调用 API。 |
 | SICA | [论文](https://arxiv.org/abs/2504.15228)：v1 **2025-04-21**，最新 v2 **2025-05-16**；核验原版[源码版本 ed8275d](https://github.com/MaximeRobeyns/self_improving_coding_agent/tree/ed8275dca4d3c5dbf77229964351fe9b424797dc)，日期 **2025-04-24**（台北时间）。 | **2026-10-23** 核对 README／构建配置、评测循环、父代与改进器分别选择、归档模块命令与相对导入、元改进工具、评分保存、模型配置与实际 CLI 参数。未构建 Docker、调用模型或运行 benchmark；未测试旧模型的可用性。 |
+| Harness² | [论文](https://arxiv.org/abs/2610.14224) v1 **2026-10-09**，为当前唯一版本；核验[源码 1cfe254](https://github.com/google-research/harness2/tree/1cfe254e8d25b15f37048c3730134686abe60335)，**2026-10-14**（台北时间）。 | **2026-10-25** 核对官方论文／代码对应、论文 §2、依赖、Setup／Experiments、Demo、调度器、经验库、上下文与递归代码。区分固定演示与模型驱动的经验库复用，确认缺少 `.env.example`；未运行演示、benchmark 或模型。 |
+| HyperAgents | [论文](https://arxiv.org/abs/2603.19461) v1 **2026-03-19**，为当前唯一版本；核验[源码 59a68f6](https://github.com/facebookresearch/HyperAgents/tree/59a68f672dfb92c74aeb7e61535d776fb36e172d)，**2026-04-15**（台北时间）。 | **2026-10-25** 核对 README／许可、环境与领域数据、生成循环、父代补丁应用、元 Agent 调用、受保护领域代码恢复、Docker 配置和 CLI 参数。未安装、构建容器、调用模型或运行评测。 |
+| Meta-Harness | [论文](https://arxiv.org/abs/2603.28052) v1 **2026-03-30**，为当前唯一版本；核验主框架[源码 8123cca](https://github.com/stanford-iris-lab/meta-harness/tree/8123ccabe2b19fa1123090b2e5f1bacc20963ce8)，**2026-10-02**（台北时间）。 | **2026-10-25** 核对作者论文／框架／产物仓库链接、文本分类 README、依赖、模型配置、提案器包装、内外循环、评测与最终封存。独立 TB2 产物合并计数，未审计其完整运行环境；未调用模型或复现实验。 |
+| Airbnb AHO | [论文](https://arxiv.org/abs/2609.05736)：v1 **2026-09-04**，最新 v2 **2026-09-09**；[首个公开源码 0d7652b](https://github.com/airbnb/agent-harness-optimizer/tree/0d7652b42296c8df07532fa3787fc956250741e7)，**2026-08-31**（台北时间）。 | **2026-10-25** 核对论文／官方仓库对应、§§3–4、README、依赖、BFCL 数据布局、CLI、BetterHarness 提案／验收／保存、中间件范围与 scorecard 启用条件。未安装、调用模型或运行 benchmark。 |
 
 </details>
 
