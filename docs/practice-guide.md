@@ -6,7 +6,7 @@
 
 This guide collects learning goals, source entry points, and running requirements for specific examples. Choose a project by topic; use the [learning guide](learning-guide.md#survey-project-map) to connect it to survey chapters. The [three resource labels](../README.md#resource-scope) describe the recommended entry point; topic groups are not RSI capability levels.
 
-These notes come from upstream documentation and selected source reviews on **2026-10-22–25**. **No tutorials, model calls, or experiments were run.** See the [verification records](verification.md#verification) for individual scopes. API examples require model access and a call budget; training configurations are upstream examples, not minimum hardware requirements tested by this directory.
+These notes come from upstream documentation and selected source reviews on **2026-10-22–26**. **No tutorials, model calls, or experiments were run.** See the [verification records](verification.md#verification) for each resource's review date and scope. API examples require model access and a call budget; training configurations are upstream examples, not minimum hardware requirements tested by this directory.
 
 ## Contents
 
@@ -218,6 +218,22 @@ Read `python runner.py --help` before launching. A bounded starting configuratio
 
 **Language and running requirements.** English; Python **3.12**, Docker, build dependencies, model APIs, and domain data. `bash ./setup_initial.sh` prepares the default paper-review route; then `python generate_loop.py --domains paper_review --max_generation 1 --eval_workers 1` bounds generations / concurrency, not all evaluation work. Adapt the Docker build helper's internal proxy settings. Public research code under **CC BY-NC-SA 4.0**.
 
+<a id="dream-rsi"></a>
+
+### [Dream-RSI · Google Research](https://github.com/google-research/dream-rsi) · [paper](https://arxiv.org/abs/2609.14858)
+
+**Recursive improvement method · exploration-policy code.** Online exploration builds a discovery tree; offline replay compares rewritten policies that allocate the search budget. The selected policy is saved as `policy/method.py` and directs the next online round. Learn how changing the search policy changes later improvement attempts while the coding agent, task, and evaluator stay fixed. Selection may retain the incumbent policy.
+
+**Recommended entry.** Read [Quick start](https://github.com/google-research/dream-rsi/blob/8ec35bd2538220517ce1bfca4282db21b8c518db/README.md#quick-start), then trace explore → learn → promote in [`orchestrate.py`](https://github.com/google-research/dream-rsi/blob/8ec35bd2538220517ce1bfca4282db21b8c518db/dream_rsi/orchestrate.py#L439-L479). After setup, check the circle-packing configuration before trying the upstream short run:
+
+```bash
+DRY_RUN=1 bash scripts/run_dream_rsi.sh circle_packing_26
+WORKSPACE=workspace/smoke ROUNDS=2 BRANCHES=3 REFINE=1 MAX_WORKERS=3 \
+  bash scripts/run_dream_rsi.sh circle_packing_26
+```
+
+**Language and running requirements.** English; Python ≥3.10, editable task-dependency installation, Gemini CLI/API access, and downloaded Math/Lasso task files. The dry run still checks task files, dependencies, the agent, and API keys; the second command makes real model calls. Lasso additionally needs `g++` / Eigen; KernelBench needs a GPU evaluation server. The published package omits the paper's harness-optimization experiment and Current History Only ablation.
+
 <a id="harness-optimization"></a>
 
 ## Harness Optimization
@@ -269,6 +285,24 @@ uv run python meta_harness.py --iterations 1
 
 **AHO: separate selection from final evaluation.** Its `train` / `holdout` splits act as repair / validation data; repeatedly consulting the gate is not untouched final testing. In the audited BetterHarness path, `--split-seed` also enables a **full 600-case BFCL scorecard**, even with small train / holdout counts. Use `--train-cases`, `--holdout-cases`, and `--max-iterations` deliberately. The [actual default acceptance rule](https://github.com/airbnb/agent-harness-optimizer/blob/0d7652b42296c8df07532fa3787fc956250741e7/agent_harness_optimizer/framework/acceptance.py#L58-L82) requires strictly more passed gate cases; the README's older error-rate / cost fallback pseudocode does not describe this default. Per-case time / token limits are not a whole-run spending cap.
 
+<a id="beagle"></a>
+
+### [Beagle / DarwinX · Salesforce AI Research](https://github.com/SalesforceAIResearch/Beagle)
+
+**Related self-improvement mechanism · harness-evolution framework.** DarwinX evaluates a baseline, asks an evolver to edit an evolvee harness, checks candidates, and records surviving versions and their genealogy. Study the distinction between the editable harness, the proposing agent, and the fixed selection algorithm. The documented entry evolves the harness; it does not establish that the evolver itself evolves.
+
+**Recommended entry.** Follow [Quick Start](https://github.com/SalesforceAIResearch/Beagle/blob/73e112f892aefe6226e4ee7723f23ae849eeb13f/README.md#quick-start) → [evolution example](https://github.com/SalesforceAIResearch/Beagle/blob/73e112f892aefe6226e4ee7723f23ae849eeb13f/examples/evolution/README.md). After preparing the benchmark cache, harness checkout, and generated configuration, preview the two-task experiment:
+
+```bash
+.venv/bin/beagle evolve \
+  --config tests/smoke/terminal_bench_2_1/opencode-1.18.16_darwinx_evolution_smoke2.yaml \
+  --dry-run
+```
+
+Inspect `evolvee`, `evolver`, and `algorithm` in the YAML, then trace real-run artifacts to `state.db`, candidate evidence, and proposal/evaluation logs. The dry run resolves the plan without model calls or containers; it does not validate credentials or the local checkout.
+
+**Language and running requirements.** English; Python ≥3.12, uv, Docker, benchmark data, an onboarded harness repository, and model access. The current public evolver integration uses an installed, authenticated Cursor Agent. Onboarding creates experiment repositories under your GitHub account; real evolution uses model credits and pushes kept candidates to those copies. Use an experiment repository you control. The small example checks the pipeline, not benchmark performance.
+
 <a id="model-training"></a>
 
 ## Model Training
@@ -292,6 +326,32 @@ uv run python meta_harness.py --iterations 1
 **Recommended entry.** Follow [Installation](https://github.com/microsoft/agent-lightning/blob/main/docs/00-installation.md), then [Calc-X Local Mode](https://github.com/microsoft/agent-lightning/blob/main/docs/50-example-calc-x.md#local-mode); launch from `examples/calc_x` as that example specifies.
 
 **Language and running requirements.** English; Python 3.12+, Linux / WSL, NVIDIA CUDA, the repository's matching `verl` / vLLM setup, model / dataset downloads, and W&B by default. Local Mode runs the model locally without Kubernetes. The documented Calc-X setup uses **1 A100 80GB**. This is the v1.0 training path; older APO tutorials target the legacy API.
+
+<a id="mass"></a>
+
+### [MASS · Sakana AI](https://github.com/SakanaAI/mass) · [paper](https://arxiv.org/abs/2610.12176)
+
+**Recursive improvement method · shared-model updates.** The current model acts as workflow executor, optimizer, and in-loop evaluator. Search and trajectory selection produce supervision; SFT and export produce the model used in all three roles in the next cycle. Learn to follow that handoff from `L0` to `L1` to `L2`.
+
+**Recommended entry.** From the cloned repository, preview the pipeline without a GPU or model server:
+
+```bash
+python3 -m mass plan --config configs/paper.json
+```
+
+Then follow [Try one task](https://github.com/SakanaAI/mass/blob/fb403581bed2c974b3f99e7236224169da643079/docs/running.md#try-one-task), which makes a one-update local configuration before `search --tasks 51`. Read the [paper-to-code map](https://github.com/SakanaAI/mass/blob/fb403581bed2c974b3f99e7236224169da643079/docs/paper_to_code.md) and [`configs/cycle2.json`](https://github.com/SakanaAI/mass/blob/fb403581bed2c974b3f99e7236224169da643079/configs/cycle2.json) to connect search → collect → rank → select → render → train → export to the next cycle. `plan` only prints the configuration and training command.
+
+**Language and running requirements.** English; actual experiments require Linux, Python 3.12, Node.js 22, uv, vLLM, model weights, and GPU resources. The first-cycle paper SFT example used **6×H100 for about 19 hours**, excluding search and trajectory collection. Synthetic tasks execute generated commands on the host, so use an isolated research environment. The packaged MLR configuration covers an earlier **12-task subset**; the full 107-task configuration and several benchmark adapters are absent. The repository also documents differences between its RHI reference/champion logic and paper Algorithm 1.
+
+<a id="self-hpo"></a>
+
+### [Self-HPO · MSR Orchard](https://github.com/MSR-Orchard/Self-HPO) · [paper](https://arxiv.org/abs/2610.22791)
+
+**Recursive improvement method · harness–policy alternation.** In the H-step, the current policy analyzes failures and proposes harness revisions. The P-step trains that policy with RL under the selected harness; the exported policy proposes revisions in the next H-step. Trace both inherited objects—the harness and the model—and how previously unsolved tasks form the next search set.
+
+**Recommended entry.** Read [Running Self-HPO](https://github.com/MSR-Orchard/Self-HPO/blob/3c3d0bd93a8a5a72399c855783460b141ea27d49/README.md#running-self-hpo) → [`scripts/h_step/proposer.sh`](https://github.com/MSR-Orchard/Self-HPO/blob/3c3d0bd93a8a5a72399c855783460b141ea27d49/scripts/h_step/proposer.sh) → [`scripts/p_step/run_p_step.sh`](https://github.com/MSR-Orchard/Self-HPO/blob/3c3d0bd93a8a5a72399c855783460b141ea27d49/scripts/p_step/run_p_step.sh), then follow `export_policy.sh` back to serving `work/p_step_<round>/policy`. Compare the published `harnesses/seed` and `harnesses/self-hpo` before preparing a training run. Default `PROPOSER=self` uses the current policy; `PROPOSER=api` selects the separate fixed-external-proposer HPO setting.
+
+**Language and running requirements.** English; Python 3.12, uv, SGLang, Docker/slime, benchmark data, model weights, and the configured Orchard Agentic sandbox endpoint/key. Upstream training and evaluation use **8×B200**; this is a source-reading and research-reproduction route, not a small local tutorial. H-step model serving, candidate evaluation, and P-step RL must all be configured before a complete cycle can run.
 
 <a id="memory-skills"></a>
 
@@ -428,3 +488,34 @@ These entries retain fixed game rules or preference judges and fixed training pr
 **Recommended entry.** Read [paper §3.3](https://arxiv.org/html/2605.12493v1#S3.SS3), follow data / endpoint setup, then compare [no retrieval](https://github.com/xiaowu0162/LongMemEval-V2/blob/main/evaluation/scripts/run_no_retrieval.sh) with [RAG](https://github.com/xiaowu0162/LongMemEval-V2/blob/main/evaluation/scripts/run_rag_query_to_slice.sh). From the repo root, start with `TIER=small bash evaluation/scripts/run_no_retrieval.sh --limit 5`, then use the RAG wrapper with the same limit. This selects **5 questions per domain**, while retaining data / index setup.
 
 **Language and running requirements.** English; Python ≥3.11, [public Apache-2.0 data](https://huggingface.co/datasets/xiaowu0162/longmemeval-v2) (about **7.12 GB** before extraction), and model endpoints. Defaults: Qwen3.5-9B reader / RAG controller; RAG also needs Qwen3-Embedding-8B. Some categories call a paid GPT-5.2 judge. Serving hardware depends on the models and context; no minimum VRAM is documented. V2 generates answers as part of evaluation; it has no standalone imported-prediction scoring CLI.
+
+<a id="past-bench"></a>
+
+### [PAST-Bench · Gen-Verse](https://github.com/Gen-Verse/PAST-Bench) · [paper](https://arxiv.org/abs/2608.04003)
+
+**Evaluation tool · cross-session improvement.** Ordered task families compare persistence on/off in fresh sessions, with traces and artifacts showing how earlier experience affects later behavior. Learn to distinguish retaining preferences, reusing procedures, gathering prior context, and updating stale knowledge. This complements component-level memory evaluation with a longitudinal comparison.
+
+**Recommended entry.** Follow the [README setup and Smoke Test](https://github.com/Gen-Verse/PAST-Bench/blob/f8223517ae7491e776b69793d9f11e9d074ab42e/README.md). After installing Hermes/Hermes+, building the sandbox image, and configuring the agent/judge profile, run the single preference-adoption family:
+
+```bash
+HERMES_PLUS_MECHANISMS=all past-bench evolve \
+  --family memory_ability/SM01_preference_adoption \
+  --agent hermes-plus --agent-profile minimax \
+  --runtime local --sandbox --sandbox-tools \
+  --compare-no-persistence --judge-model MiniMax-M2.7 \
+  --trace-dir traces/smoke/hermes_plus_minimax_sm01
+```
+
+Read `sequence_comparison.json` alongside per-episode results and traces; the persistence comparison helps attribute a gain to retained experience instead of an isolated task score.
+
+**Language and running requirements.** English; Python ≥3.11, uv, Docker, the chosen agent integration, and agent/judge model API access. The example uses `MINIMAX_API_KEY`; other profiles require corresponding configuration. It performs real model calls even though upstream calls it a smoke test. PAST-Bench measures improvement behavior; its name alone does not establish that an evaluated agent recursively improves its improver.
+
+<a id="scale-rsi-bench"></a>
+
+### [Scale RSI Bench · scaleapi/rsi-benchmark](https://github.com/scaleapi/rsi-benchmark) · [website](https://www.rsi-benchmark.com)
+
+**Evaluation tool · AI R&D tasks.** The README's four public sample types cover self-distillation, jailbreak robustness, agent-swarm optimization, and nanoGPT data curation. Start by learning how a research task specifies editable artifacts, compute limits, and verification. These are task examples, not evidence that an agent has completed a recursive self-improvement cycle.
+
+**Recommended entry.** Read [`samples/nano-gpt-data-curation/README.md`](https://github.com/scaleapi/rsi-benchmark/blob/d9f7dcba7412ccc99dc0d97ad92f26e40f1b2354/samples/nano-gpt-data-curation/README.md): select a 12M-token subset for a fixed 30M-parameter model, then verify through training and held-out perplexity. Continue to the task's `instruction.md` and `task.toml`, then follow [Running the Benchmark](https://github.com/scaleapi/rsi-benchmark/blob/d9f7dcba7412ccc99dc0d97ad92f26e40f1b2354/README.md#running-the-benchmark) for the `harbor run` entry with that task path, agent/model arguments, and Modal runtime.
+
+**Language and running requirements.** English; Python ≥3.12, `pip install -e ".[runner]"`, Harbor, model API access, and configured Modal GPU sandboxes. The reviewed README requires GPUs for its tasks; hardware and timeouts are specified per task. Reading the task contract needs no compute service. Use the Scale repository/website linked above; `recursive-self-improvement-bench.com` and RSIBench-Data are different resources with different task counts.

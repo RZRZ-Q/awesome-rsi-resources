@@ -4,7 +4,7 @@
 
 A learning and research directory for Recursive Self-Improvement (RSI), with distinctive features, recommended entry points, and prerequisites for each resource.
 
-**62 resources; latest source review: 2026-10-25.** A project’s website, code, and notebooks count as one resource. See the [verification archive](docs/verification.md) for individual dates and the scope of each review.
+**68 resources; latest source review: 2026-10-26.** A project’s website, code, and notebooks count as one resource. See the [verification archive](docs/verification.md) for individual dates and the scope of each review.
 
 <a id="resource-scope"></a>
 
@@ -16,7 +16,7 @@ This directory covers both recursive improvement and the mechanisms and tools ne
 | --- | --- | --- |
 | **Recursive improvement method** | Changes to an agent implementation or improvement policy are retained and used in subsequent improvement work. We distinguish teaching prototypes from research implementations; neither label promises sustained acceleration. | [RSI Labs](#rsi-labs): a small improvement-policy experiment; [STOP / SICA](#recursive-methods): source routes through executable inheritance; [Harness²](#harness2) / [HyperAgents](#hyperagents): improver experience or meta-agent code; [DGM](#dgm): inherited agent code participates in later self-modification. |
 | **Related self-improvement mechanism** | Prompt optimization, program search, learned adaptation, reusable experience, or co-adaptation; also introductory components and simulations. The entry explains what changes and what remains fixed. | [Meta-Harness / AHO](#harness-optimization), [GEPA / TextGrad](#tutorials), [ShinkaEvolve / SEAL / Agent Lightning](#practice), [ACE / Voyager](#memory-skills), [co-evolution](#coevolution-projects), and [self-play](#adversarial-self-play). |
-| **Evaluation tool** | Measures a component or illustrates acceptance criteria for a candidate change. | [LongMemEval-V2 and RSI Atlas](#evaluation); Atlas is an acceptance-gate teaching example. |
+| **Evaluation tool** | Measures components, retained gains across sessions, or AI research tasks; also includes acceptance-gate teaching examples. | [LongMemEval-V2](#longmemeval-v2), [PAST-Bench](#past-bench), [Scale RSI Bench](#scale-rsi-bench), and [RSI Atlas](#rsi-atlas). |
 
 Indexes, surveys, books, and comprehensive courses remain reading resources and may span several categories. A memory benchmark or a fixed-optimizer tutorial can be useful preparation for RSI without demonstrating a recursive improvement loop. Start with the [prerequisite course](#prerequisite-courses) if needed, then compare the concrete mechanisms below.
 
@@ -31,7 +31,7 @@ Indexes, surveys, books, and comprehensive courses remain reading resources and 
 | Understand recursive improvement | [RSI Labs §4](#rsi-labs) → [STOP / SICA source routes](#recursive-methods) → [DGM](#dgm) or [HyperAgents](#hyperagents) |
 | Build and optimize agents | [Harness component lessons](#learn-deepseek-harness) → [Harness² workflow demo](#harness2), then choose [harness optimization](#harness-optimization) or [program search](#program-search) |
 | Study training and research | [Stanford CS329A](#cs329a) → [model training projects](#model-training); choose [co-evolution](#coevolution-projects) or [self-play](#adversarial-self-play) for your research goal |
-| Study experience reuse and evaluation | [ACE / Voyager](#memory-skills) → [LongMemEval-V2](#longmemeval-v2); start with [RSI Atlas](#rsi-atlas) for acceptance gates |
+| Study experience reuse and evaluation | [ACE / Voyager](#memory-skills) → [LongMemEval-V2](#longmemeval-v2) → [PAST-Bench](#past-bench) for cross-session evaluation; start with [RSI Atlas](#rsi-atlas) for acceptance gates |
 
 Read further: [Learning guide](docs/learning-guide.md) for routes and project mappings · [Practice guide](docs/practice-guide.md) for source walkthroughs, runnable entries, and full requirements · [Verification archive](docs/verification.md) for dates, coverage, and source evidence.
 
@@ -210,7 +210,7 @@ Grouped by the main learning topic; each entry’s label describes its relations
 
 ### Agent and Improver Code
 
-After RSI Labs, follow **STOP → SICA → DGM** to trace inherited implementations into later improvement, then compare meta-agent code inheritance in HyperAgents.
+After RSI Labs, follow **STOP → SICA → DGM** to trace inherited implementations into later improvement, then compare meta-agent code inheritance in HyperAgents and exploration-policy updates in Dream-RSI.
 
 | Resource | Features and learning goals | Recommended entry | Language and requirements |
 | --- | --- | --- | --- |
@@ -218,6 +218,7 @@ After RSI Labs, follow **STOP → SICA → DGM** to trace inherited implementati
 | <a id="sica"></a> <a id="sica-source-route"></a> [SICA · Self-Improving Coding Agent](https://github.com/MaximeRobeyns/self_improving_coding_agent) · [paper](https://arxiv.org/abs/2504.15228) | **Recursive improvement method.** Distinguish the edited parent, the agent performing improvement, and successor selection. | [Five-step source route](docs/practice-guide.md#sica) | English; reading needs no API; execution needs Python, Docker/buildx, benchmark data and model APIs. |
 | <a id="dgm"></a> [Darwin Gödel Machine (DGM)](https://github.com/jennyzzt/dgm) | **Recursive improvement method.** Archived agent implementations participate in later self-modification and offspring evaluation. | [Outer loop → self-improvement step](docs/practice-guide.md#dgm) | English; Python, Docker, model API and benchmark environments/data. |
 | <a id="hyperagents"></a> [HyperAgents · Meta and collaborators](https://github.com/facebookresearch/HyperAgents) · [paper](https://arxiv.org/abs/2603.19461) | **Recursive improvement method.** Inherited meta-agent code edits later candidates alongside an editable task agent. | [DGM-Hyperagent loop and source route](docs/practice-guide.md#hyperagents) | English; Python 3.12, Docker/build environment, domain data and model API. |
+| <a id="dream-rsi"></a> [Dream-RSI · Google Research](https://github.com/google-research/dream-rsi) · [paper](https://arxiv.org/abs/2609.14858) | **Recursive improvement method.** Offline replay refines an exploration policy; the selected policy guides the next online search round. | [Quick start → explore / learn / promote loop](docs/practice-guide.md#dream-rsi) | English; Python 3.10+, Gemini CLI/API and task dependencies; some tasks need a GPU server. |
 
 <a id="harness-optimization"></a>
 
@@ -230,6 +231,7 @@ Compare reusable improvement experience with harness search under a fixed optimi
 | <a id="harness2"></a> [Harness² · Google Cloud AI Research / Northwestern](https://github.com/google-research/harness2) · [paper](https://arxiv.org/abs/2610.14224) | **Recursive improvement method.** Retained improvement experience informs later harness edits; start with the scripted workflow demo. | [Local demo → experience-library source](docs/practice-guide.md#harness2) | English; demo: Python 3.12/3.13 and uv, no model credentials; real improvement requires model access. |
 | <a id="meta-harness"></a> [Meta-Harness · Stanford IRIS and collaborators](https://github.com/stanford-iris-lab/meta-harness) · [paper](https://arxiv.org/abs/2603.28052) | **Related self-improvement mechanism.** A fixed coding proposer uses source, scores, and traces to search task-specific harness programs. | [Text-classification example](docs/practice-guide.md#meta-harness) | English; Python, proposer/task-model access and datasets; setup differs by model provider. |
 | <a id="aho"></a> [Agent Harness Optimizer (AHO) · Airbnb](https://github.com/airbnb/agent-harness-optimizer) · [paper](https://arxiv.org/abs/2609.05736) | **Related self-improvement mechanism.** Optimize prompts and tool middleware; distinguish candidate acceptance from final evaluation. | [BetterHarness BFCL example](docs/practice-guide.md#aho) | English; Python, model API and separately downloaded BFCL data; check scorecard settings. |
+| <a id="beagle"></a> [Beagle / DarwinX · Salesforce AI Research](https://github.com/SalesforceAIResearch/Beagle) | **Related self-improvement mechanism.** Study harness evaluation, candidate selection, and lineage through separate evolver/evolvee roles under a fixed algorithm. | [Evaluation and evolution configuration previews](docs/practice-guide.md#beagle) | English; Python, uv, Docker, harness checkout and benchmark cache; real runs need model access. |
 
 <a id="model-training"></a>
 
@@ -239,6 +241,8 @@ Compare reusable improvement experience with harness search under a fixed optimi
 | --- | --- | --- | --- |
 | <a id="seal"></a> [SEAL · Self-Adapting Language Models](https://github.com/Continual-Intelligence/SEAL) | **Related self-improvement mechanism.** Compare temporary LoRA adaptation with outer-loop learning to generate self-edits. | [General-knowledge workflow](docs/practice-guide.md#seal) | English; Python 3.12, Linux/CUDA; example uses 2 A100/H100 GPUs plus API and script adaptation. |
 | <a id="agent-lightning"></a> [Microsoft Agent Lightning v1.0](https://github.com/microsoft/agent-lightning) | **Related self-improvement mechanism.** Trace tool-use rollouts, rewards, GRPO updates, and policy checkpoints under a fixed trainer. | [Calc-X Local Mode](docs/practice-guide.md#agent-lightning) | English; Python 3.12+, Linux/WSL, CUDA; example uses 1 A100 80GB. |
+| <a id="mass"></a> [MASS · Sakana AI](https://github.com/SakanaAI/mass) · [paper](https://arxiv.org/abs/2610.12176) | **Recursive improvement method.** A shared model executes, optimizes, and reviews workflows; selected traces train the model used in the next cycle. | [Plan preview → single-task search → two-cycle configuration](docs/practice-guide.md#mass) | English; plan preview needs no GPU/model calls; search and training need Linux, model serving and GPUs. |
+| <a id="self-hpo"></a> [Self-HPO · MSR Orchard](https://github.com/MSR-Orchard/Self-HPO) · [paper](https://arxiv.org/abs/2610.22791) | **Recursive improvement method.** Alternate harness proposals and policy RL updates; the updated policy proposes the next harness. | [H-step → P-step → exported policy](docs/practice-guide.md#self-hpo) | English; start with source and published harnesses; upstream training/evaluation configuration uses 8 B200 GPUs. |
 
 <a id="memory-skills"></a>
 
@@ -278,6 +282,8 @@ Compare reusable improvement experience with harness search under a fixed optimi
 | --- | --- | --- | --- |
 | <a id="rsi-atlas"></a> [RSI Atlas · aniruddhaadak80/RSI](https://github.com/aniruddhaadak80/RSI) | **Evaluation tool.** A teaching example for acceptance gates and change history. | [Simple explanations → Python example](docs/practice-guide.md#rsi-atlas) | English; Python for the example; demonstrates gates rather than full RSI. |
 | <a id="longmemeval-v2"></a> [LongMemEval-V2](https://github.com/xiaowu0162/LongMemEval-V2) · [paper](https://arxiv.org/abs/2605.12493) | **Evaluation tool.** Evaluate memory accuracy and query latency using retained agent traces. | [No-retrieval and RAG baselines](docs/practice-guide.md#longmemeval-v2) | English; Python ≥3.11, data, reader/embedding endpoints and paid judges for some tasks. |
+| <a id="past-bench"></a> [PAST-Bench · Gen-Verse](https://github.com/Gen-Verse/PAST-Bench) · [paper](https://arxiv.org/abs/2608.04003) | **Evaluation tool.** Compare task sequences with and without persisted experience across fresh sessions. | [Preference-adoption family → persistence comparison](docs/practice-guide.md#past-bench) | English; Python 3.11+, uv, Docker, agent integration and agent/judge APIs. |
+| <a id="scale-rsi-bench"></a> [Scale RSI Bench](https://github.com/scaleapi/rsi-benchmark) · [website](https://www.rsi-benchmark.com) | **Evaluation tool.** Read executable AI R&D task contracts for data curation, self-distillation, robustness, and agent swarms. | [nanoGPT data-curation task → other public samples](docs/practice-guide.md#scale-rsi-bench) | English; Python 3.12+, Harbor, Modal GPU sandboxes and agent model API. |
 
 <a id="verification"></a>
 

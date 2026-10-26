@@ -4,7 +4,7 @@
 
 递归自我改进（Recursive Self-Improvement, RSI）学习与研究资源导航。每项资源说明特色、推荐入口与学习条件。
 
-**收录 62 项资源；最近一次来源核验：2026-10-25。** 同一项目的网站、代码和 Notebook 合并计数；各项日期与实际核验范围见[核验档案](docs/verification_zh.md)。
+**收录 68 项资源；最近一次来源核验：2026-10-26。** 同一项目的网站、代码和 Notebook 合并计数；各项日期与实际核验范围见[核验档案](docs/verification_zh.md)。
 
 <a id="resource-scope"></a>
 
@@ -16,7 +16,7 @@
 | --- | --- | --- |
 | **递归改进方法** | 保留对 Agent 实现或改进策略的修改，并将其用于后续改进工作。区分教学原型与研究实现；标签本身不代表已实现持续加速。 | [RSI Labs](#rsi-labs)：小型改进策略实验；[STOP／SICA](#recursive-methods)：追踪可执行实现的继承；[Harness²](#harness2)／[HyperAgents](#hyperagents)：改进器经验或元 Agent 代码；[DGM](#dgm)：继承的 Agent 代码参与后续自修改。 |
 | **相关自改进机制** | 提示词优化、程序搜索、学习适应策略、经验复用或协同适应，也包括入门构件与模拟演示。条目说明改变什么、哪些部分保持固定。 | [Meta-Harness／AHO](#harness-optimization)、[GEPA / TextGrad](#tutorials)、[ShinkaEvolve / SEAL / Agent Lightning](#practice)、[ACE / Voyager](#memory-skills)、[协同演化](#coevolution-projects)与[自博弈](#adversarial-self-play)。 |
-| **评测工具** | 衡量组件表现，或演示候选修改的验收条件。 | [LongMemEval-V2 与 RSI Atlas](#evaluation)；Atlas 是验收门控教学示例。 |
+| **评测工具** | 衡量组件表现、跨会话保留的收益或 AI 研究任务表现，也包括验收门控教学示例。 | [LongMemEval-V2](#longmemeval-v2)、[PAST-Bench](#past-bench)、[Scale RSI Bench](#scale-rsi-bench) 与 [RSI Atlas](#rsi-atlas)。 |
 
 索引、综述、教材与综合课程仍作为阅读资源，可以横跨多类。记忆评测或固定优化器教程可以为 RSI 学习提供准备，其本身未必展示递归改进循环。需要基础时可先学[前置课程](#prerequisite-courses)，再比较下文的具体机制。
 
@@ -31,7 +31,7 @@
 | 理解递归改进 | [RSI Labs 第 4 节](#rsi-labs) → [STOP / SICA 源码路线](#recursive-methods) → [DGM](#dgm) 或 [HyperAgents](#hyperagents) |
 | 做 Agent 工程与优化 | [Harness 构件教程](#learn-deepseek-harness) → [Harness² 流程演示](#harness2)，再按目标选择 [Harness 优化](#harness-optimization)或[程序搜索](#program-search) |
 | 进入训练与研究 | [Stanford CS329A](#cs329a) → [模型训练项目](#model-training)；按研究目标选[协同演化](#coevolution-projects)或[自博弈](#adversarial-self-play) |
-| 学习经验复用与评测 | [ACE / Voyager](#memory-skills) → [LongMemEval-V2](#longmemeval-v2)；验收门控入门可看 [RSI Atlas](#rsi-atlas) |
+| 学习经验复用与评测 | [ACE / Voyager](#memory-skills) → [LongMemEval-V2](#longmemeval-v2) → [PAST-Bench](#past-bench) 跨会话评测；验收门控入门可看 [RSI Atlas](#rsi-atlas) |
 
 深入阅读：[学习指南](docs/learning-guide_zh.md)（阅读路线与项目映射） · [实践指南](docs/practice-guide_zh.md)（源码、运行入口与完整条件） · [核验档案](docs/verification_zh.md)（日期、覆盖与来源依据）。
 
@@ -210,7 +210,7 @@
 
 ### Agent 与改进器代码
 
-建议从 RSI Labs 之后按 **STOP → SICA → DGM** 追踪实现如何参与下一轮改进，再用 HyperAgents 比较元 Agent 代码的继承。
+建议从 RSI Labs 之后按 **STOP → SICA → DGM** 追踪实现如何参与下一轮改进，再比较 HyperAgents 的元 Agent 代码继承与 Dream-RSI 的探索策略更新。
 
 | 资源 | 特色与学习目标 | 推荐学习入口 | 语言与条件 |
 | --- | --- | --- | --- |
@@ -218,6 +218,7 @@
 | <a id="sica"></a> <a id="sica-source-route"></a> [SICA · Self-Improving Coding Agent](https://github.com/MaximeRobeyns/self_improving_coding_agent) · [论文](https://arxiv.org/abs/2504.15228) | **递归改进方法。** 区分待改父代、执行改进的 Agent 与后继选优。 | [五步源码阅读路线](docs/practice-guide_zh.md#sica) | 英文；阅读无需 API；运行需 Python、Docker/buildx、benchmark 数据与模型 API。 |
 | <a id="dgm"></a> [Darwin Gödel Machine（DGM）](https://github.com/jennyzzt/dgm) | **递归改进方法。** 归档的 Agent 实现参与后续自修改与后代评估。 | [外层循环 → 自改进步骤](docs/practice-guide_zh.md#dgm) | 英文；Python、Docker、模型 API 与 benchmark 环境／数据。 |
 | <a id="hyperagents"></a> [HyperAgents · Meta 与合作团队](https://github.com/facebookresearch/HyperAgents) · [论文](https://arxiv.org/abs/2603.19461) | **递归改进方法。** 任务 Agent 与元 Agent 均可编辑，继承的元 Agent 代码执行后续修改。 | [DGM-Hyperagent 循环与源码入口](docs/practice-guide_zh.md#hyperagents) | 英文；Python 3.12、Docker／构建环境、领域数据与模型 API。 |
+| <a id="dream-rsi"></a> [Dream-RSI · Google Research](https://github.com/google-research/dream-rsi) · [论文](https://arxiv.org/abs/2609.14858) | **递归改进方法。** 用离线重放改进探索策略，选中的策略指导下一轮在线搜索。 | [Quick start → explore / learn / promote 循环](docs/practice-guide_zh.md#dream-rsi) | 英文；Python 3.10+、Gemini CLI/API 与任务依赖；部分任务需要 GPU 服务。 |
 
 <a id="harness-optimization"></a>
 
@@ -230,6 +231,7 @@
 | <a id="harness2"></a> [Harness² · Google Cloud AI Research／Northwestern](https://github.com/google-research/harness2) · [论文](https://arxiv.org/abs/2610.14224) | **递归改进方法。** 保留的改进经验指导后续 Harness 编辑；先看固定编辑逻辑的流程演示。 | [本地 Demo → 经验库源码](docs/practice-guide_zh.md#harness2) | 英文；Demo 需 Python 3.12/3.13 与 uv、无需模型凭证；真实改进需模型访问。 |
 | <a id="meta-harness"></a> [Meta-Harness · Stanford IRIS 与合作团队](https://github.com/stanford-iris-lab/meta-harness) · [论文](https://arxiv.org/abs/2603.28052) | **相关自改进机制。** 固定编码提案器利用源码、分数和轨迹搜索任务专用 Harness。 | [文本分类示例](docs/practice-guide_zh.md#meta-harness) | 英文；Python、提案器／任务模型访问与数据；按供应商配置环境。 |
 | <a id="aho"></a> [Agent Harness Optimizer（AHO）· Airbnb](https://github.com/airbnb/agent-harness-optimizer) · [论文](https://arxiv.org/abs/2609.05736) | **相关自改进机制。** 优化提示与工具中间件，区分候选验收和最终评测。 | [BetterHarness BFCL 示例](docs/practice-guide_zh.md#aho) | 英文；Python、模型 API 与另行下载的 BFCL 数据；注意 scorecard 配置。 |
+| <a id="beagle"></a> [Beagle / DarwinX · Salesforce AI Research](https://github.com/SalesforceAIResearch/Beagle) | **相关自改进机制。** 在固定算法下区分 evolver/evolvee，学习 Harness 评估、候选选优与谱系记录。 | [评估与演化配置预览](docs/practice-guide_zh.md#beagle) | 英文；Python、uv、Docker、Harness checkout 与 benchmark 缓存；真实运行需模型访问。 |
 
 <a id="model-training"></a>
 
@@ -239,6 +241,8 @@
 | --- | --- | --- | --- |
 | <a id="seal"></a> [SEAL · Self-Adapting Language Models](https://github.com/Continual-Intelligence/SEAL) | **相关自改进机制。** 比较临时 LoRA 适应与外层 self-edit 生成器学习。 | [General-knowledge 流程](docs/practice-guide_zh.md#seal) | 英文；Python 3.12、Linux/CUDA；示例用 2 张 A100/H100，另需 API 与脚本适配。 |
 | <a id="agent-lightning"></a> [Microsoft Agent Lightning v1.0](https://github.com/microsoft/agent-lightning) | **相关自改进机制。** 在固定训练器下追踪工具轨迹、奖励、GRPO 更新与策略检查点。 | [Calc-X Local Mode](docs/practice-guide_zh.md#agent-lightning) | 英文；Python 3.12+、Linux/WSL、CUDA；示例用 1 张 A100 80GB。 |
+| <a id="mass"></a> [MASS · Sakana AI](https://github.com/SakanaAI/mass) · [论文](https://arxiv.org/abs/2610.12176) | **递归改进方法。** 共享模型执行、优化并评审工作流，筛选出的轨迹用于训练下一轮模型。 | [计划预览 → 单任务搜索 → 两轮配置](docs/practice-guide_zh.md#mass) | 英文；计划预览无需 GPU／模型调用；搜索与训练需 Linux、模型服务和 GPU。 |
+| <a id="self-hpo"></a> [Self-HPO · MSR Orchard](https://github.com/MSR-Orchard/Self-HPO) · [论文](https://arxiv.org/abs/2610.22791) | **递归改进方法。** 交替进行 Harness 提案和策略 RL 更新，更新后的策略继续提议下一轮 Harness。 | [H-step → P-step → 导出策略](docs/practice-guide_zh.md#self-hpo) | 英文；先读源码与已发布 Harness；上游训练／评测配置使用 8 张 B200。 |
 
 <a id="memory-skills"></a>
 
@@ -278,6 +282,8 @@
 | --- | --- | --- | --- |
 | <a id="rsi-atlas"></a> [RSI Atlas · aniruddhaadak80/RSI](https://github.com/aniruddhaadak80/RSI) | **评测工具。** 通过教学示例理解候选修改的验收门控与历史记录。 | [通俗说明 → Python 示例](docs/practice-guide_zh.md#rsi-atlas) | 英文；示例需 Python；讲解门控而非完整 RSI。 |
 | <a id="longmemeval-v2"></a> [LongMemEval-V2](https://github.com/xiaowu0162/LongMemEval-V2) · [论文](https://arxiv.org/abs/2605.12493) | **评测工具。** 用保留的 Agent 轨迹评测记忆准确率与查询延迟。 | [无检索与 RAG 基线](docs/practice-guide_zh.md#longmemeval-v2) | 英文；Python ≥3.11、数据、读者／嵌入接口及部分题型的付费裁判。 |
+| <a id="past-bench"></a> [PAST-Bench · Gen-Verse](https://github.com/Gen-Verse/PAST-Bench) · [论文](https://arxiv.org/abs/2608.04003) | **评测工具。** 在新会话组成的任务序列中，对比保留与不保留经验的表现。 | [偏好采纳任务族 → 持久化对照](docs/practice-guide_zh.md#past-bench) | 英文；Python 3.11+、uv、Docker、Agent 集成及 Agent／裁判 API。 |
+| <a id="scale-rsi-bench"></a> [Scale RSI Bench](https://github.com/scaleapi/rsi-benchmark) · [官网](https://www.rsi-benchmark.com) | **评测工具。** 阅读数据筛选、自蒸馏、鲁棒性与 Agent 群体优化等可执行 AI 研发任务的约束和评分规则。 | [nanoGPT 数据筛选任务 → 其他公开样例](docs/practice-guide_zh.md#scale-rsi-bench) | 英文；Python 3.12+、Harbor、Modal GPU 沙盒与 Agent 模型 API。 |
 
 <a id="verification"></a>
 

@@ -6,7 +6,7 @@
 
 这里集中记录具体示例的学习目标、源码入口和运行条件。先按主题选择项目；综述章节与项目的对应关系见[学习指南](learning-guide_zh.md#survey-project-map)。条目的[三类标签](../README_zh.md#resource-scope)描述所推荐入口的范围，主题分组不表示 RSI 能力等级。
 
-以下说明来自 **2026-10-22–25** 对上游文档与部分源码的核验，**未运行教程、调用模型或复现实验**；逐项范围见[核验档案](verification_zh.md#verification)。API 示例需要相应模型权限与调用预算，训练配置是上游示例而非本目录实测的最低硬件要求。
+以下说明来自 **2026-10-22–26** 对上游文档与部分源码的核验，**未运行教程、调用模型或复现实验**；逐项日期与范围见[核验档案](verification_zh.md#verification)。API 示例需要相应模型权限与调用预算，训练配置是上游示例而非本目录实测的最低硬件要求。
 
 ## 目录
 
@@ -218,6 +218,22 @@
 
 **语言与运行条件。** 英文；Python **3.12**、Docker、构建依赖、模型 API 与领域数据。`bash ./setup_initial.sh` 准备默认论文评审路线；之后可用 `python generate_loop.py --domains paper_review --max_generation 1 --eval_workers 1` 限定代数／并发，仍需完成相应评测。上游 Docker 构建辅助脚本含内网代理设置，需按环境调整。公开研究代码采用 **CC BY-NC-SA 4.0**。
 
+<a id="dream-rsi"></a>
+
+### [Dream-RSI · Google Research](https://github.com/google-research/dream-rsi) · [论文](https://arxiv.org/abs/2609.14858)
+
+**递归改进方法 · 探索策略代码。** 在线探索形成发现树，离线回放比较改写后的搜索预算分配策略。选中的策略保存为 `policy/method.py`，用于下一轮在线探索。学习搜索策略的变化如何影响后续改进尝试；编码 Agent、任务与评估器固定，选优也可能保留原策略。
+
+**推荐入口。** 读 [Quick start](https://github.com/google-research/dream-rsi/blob/8ec35bd2538220517ce1bfca4282db21b8c518db/README.md#quick-start)，再沿 [`orchestrate.py`](https://github.com/google-research/dream-rsi/blob/8ec35bd2538220517ce1bfca4282db21b8c518db/dream_rsi/orchestrate.py#L439-L479) 跟踪 explore → learn → promote。完成配置后，先检查圆堆积任务配置，再尝试上游的短运行：
+
+```bash
+DRY_RUN=1 bash scripts/run_dream_rsi.sh circle_packing_26
+WORKSPACE=workspace/smoke ROUNDS=2 BRANCHES=3 REFINE=1 MAX_WORKERS=3 \
+  bash scripts/run_dream_rsi.sh circle_packing_26
+```
+
+**语言与运行条件。** 英文；Python ≥3.10、以 editable 模式安装任务依赖、Gemini CLI/API 访问，以及下载的 Math/Lasso 任务文件。Dry run 仍检查任务文件、依赖、Agent 与 API key；第二条命令会真实调用模型。Lasso 另需 `g++`／Eigen，KernelBench 另需 GPU 评估服务。已发布工程不包含论文中的 Harness 优化实验与 Current History Only 消融。
+
 <a id="harness-optimization"></a>
 
 ## Harness 优化
@@ -270,6 +286,24 @@ uv run python meta_harness.py --iterations 1
 
 **AHO：区分选择与最终评测。** `train`／`holdout` 分别承担修复／验证作用，反复使用的验收数据不属于未触碰的最终测试。在核验的 BetterHarness 路径中，`--split-seed` 还会启用**完整 600 题 BFCL scorecard**，即使 train／holdout 样本较少也一样。应有意识地设置 `--train-cases`、`--holdout-cases`、`--max-iterations`。[实际默认验收规则](https://github.com/airbnb/agent-harness-optimizer/blob/0d7652b42296c8df07532fa3787fc956250741e7/agent_harness_optimizer/framework/acceptance.py#L58-L82)要求通过验收题数严格增加，README 中较旧的错误率／成本回退伪代码不描述该默认行为。每题时间／token 限制也不等于整个运行的费用上限。
 
+<a id="beagle"></a>
+
+### [Beagle / DarwinX · Salesforce AI Research](https://github.com/SalesforceAIResearch/Beagle)
+
+**相关自改进机制 · Harness 演化框架。** DarwinX 先评估基线，再由 evolver 修改 evolvee Harness、检查候选，并记录保留版本与谱系。学习区分可修改的 Harness、提案 Agent 与固定选优算法。文档中的入口演化的是 Harness，尚不能据此认定 evolver 自身也在演化。
+
+**推荐入口。** 按 [Quick Start](https://github.com/SalesforceAIResearch/Beagle/blob/73e112f892aefe6226e4ee7723f23ae849eeb13f/README.md#quick-start) → [演化示例](https://github.com/SalesforceAIResearch/Beagle/blob/73e112f892aefe6226e4ee7723f23ae849eeb13f/examples/evolution/README.md) 阅读。准备 benchmark 缓存、Harness checkout 并生成配置后，预览两任务实验：
+
+```bash
+.venv/bin/beagle evolve \
+  --config tests/smoke/terminal_bench_2_1/opencode-1.18.16_darwinx_evolution_smoke2.yaml \
+  --dry-run
+```
+
+查看 YAML 中的 `evolvee`、`evolver`、`algorithm`，再追踪真实运行产物中的 `state.db`、候选证据与提案／评估日志。Dry run 解析运行计划，不调用模型或启动容器，也不验证凭证与本地 checkout。
+
+**语言与运行条件。** 英文；Python ≥3.12、uv、Docker、benchmark 数据、已接入的 Harness 仓库与模型访问。当前公开的 evolver 集成使用已安装并认证的 Cursor Agent。Onboarding 会在你的 GitHub 账户下建立实验仓库；真实演化会消耗模型额度，并将保留候选推送到这些副本，需使用自己有权限的实验仓库。小规模示例用于检查流程，不代表 benchmark 性能。
+
 <a id="model-training"></a>
 
 ## 模型训练
@@ -293,6 +327,32 @@ uv run python meta_harness.py --iterations 1
 **推荐入口。** 先读[安装说明](https://github.com/microsoft/agent-lightning/blob/main/docs/00-installation.md)，再按 [Calc-X Local Mode](https://github.com/microsoft/agent-lightning/blob/main/docs/50-example-calc-x.md#local-mode)操作；按该示例要求从 `examples/calc_x` 启动。
 
 **语言与运行条件。** 英文；Python 3.12+、Linux / WSL、NVIDIA CUDA、仓库配套的 `verl` / vLLM 安装、模型／数据下载，默认使用 W&B。Local Mode 无需 Kubernetes，模型本地运行。文档中的 Calc-X 配置为 **1 张 A100 80GB**。这是 v1.0 训练入口，旧 APO 教程对应旧 API。
+
+<a id="mass"></a>
+
+### [MASS · Sakana AI](https://github.com/SakanaAI/mass) · [论文](https://arxiv.org/abs/2610.12176)
+
+**递归改进方法 · 共享模型更新。** 当前模型同时担任工作流执行者、优化者与环内评审。搜索与轨迹筛选产生监督数据，SFT 和导出产生下一轮三个角色共同使用的模型。沿 `L0` → `L1` → `L2` 学习更新后的模型如何继续参与改进。
+
+**推荐入口。** 在克隆的仓库中先预览流水线，无需 GPU 或模型服务：
+
+```bash
+python3 -m mass plan --config configs/paper.json
+```
+
+再按 [Try one task](https://github.com/SakanaAI/mass/blob/fb403581bed2c974b3f99e7236224169da643079/docs/running.md#try-one-task) 创建只更新一次的本地配置，然后执行 `search --tasks 51`。结合[论文与代码对照](https://github.com/SakanaAI/mass/blob/fb403581bed2c974b3f99e7236224169da643079/docs/paper_to_code.md)与 [`configs/cycle2.json`](https://github.com/SakanaAI/mass/blob/fb403581bed2c974b3f99e7236224169da643079/configs/cycle2.json)，将 search → collect → rank → select → render → train → export 连接到下一轮。`plan` 只打印配置和训练命令。
+
+**语言与运行条件。** 英文；真实实验需 Linux、Python 3.12、Node.js 22、uv、vLLM、模型权重与 GPU 资源。论文第一轮 SFT 示例使用 **6×H100，约 19 小时**，不含搜索与轨迹采集。合成任务会在宿主环境执行生成的命令，应使用隔离的研究环境。打包的 MLR 配置覆盖较早的 **12 任务子集**，未包含完整 107 任务配置及若干 benchmark adapter；仓库还说明了当前 RHI 参照／champion 逻辑与论文 Algorithm 1 的差异。
+
+<a id="self-hpo"></a>
+
+### [Self-HPO · MSR Orchard](https://github.com/MSR-Orchard/Self-HPO) · [论文](https://arxiv.org/abs/2610.22791)
+
+**递归改进方法 · Harness 与策略交替更新。** H-step 由当前策略分析失败、提议 Harness 修改；P-step 在选定 Harness 下用 RL 训练该策略，导出的新策略再参与下一轮 H-step 提案。跟踪 Harness 与模型这两个继承对象，以及之前未解出的任务如何形成新的搜索集。
+
+**推荐入口。** 读 [Running Self-HPO](https://github.com/MSR-Orchard/Self-HPO/blob/3c3d0bd93a8a5a72399c855783460b141ea27d49/README.md#running-self-hpo) → [`scripts/h_step/proposer.sh`](https://github.com/MSR-Orchard/Self-HPO/blob/3c3d0bd93a8a5a72399c855783460b141ea27d49/scripts/h_step/proposer.sh) → [`scripts/p_step/run_p_step.sh`](https://github.com/MSR-Orchard/Self-HPO/blob/3c3d0bd93a8a5a72399c855783460b141ea27d49/scripts/p_step/run_p_step.sh)，再沿 `export_policy.sh` 回到加载 `work/p_step_<round>/policy` 的模型服务。准备训练前可先比较已发布的 `harnesses/seed` 与 `harnesses/self-hpo`。默认 `PROPOSER=self` 使用当前策略；`PROPOSER=api` 对应固定外部提案器的另一种 HPO 设定。
+
+**语言与运行条件。** 英文；Python 3.12、uv、SGLang、Docker/slime、benchmark 数据、模型权重，以及已配置的 Orchard Agentic sandbox 地址与 key。上游训练和评测使用 **8×B200**，适合作为源码阅读与研究复现路线，不是轻量本地教程。完整一轮需要配置 H-step 模型服务、候选评估与 P-step RL。
 
 <a id="memory-skills"></a>
 
@@ -429,3 +489,34 @@ uv run python meta_harness.py --iterations 1
 **推荐入口。** 先读[论文 §3.3](https://arxiv.org/html/2605.12493v1#S3.SS3)，按说明配置数据／模型端点，再对比[无检索](https://github.com/xiaowu0162/LongMemEval-V2/blob/main/evaluation/scripts/run_no_retrieval.sh)与 [RAG](https://github.com/xiaowu0162/LongMemEval-V2/blob/main/evaluation/scripts/run_rag_query_to_slice.sh)。从仓库根目录运行 `TIER=small bash evaluation/scripts/run_no_retrieval.sh --limit 5`，再以相同 limit 运行 RAG 脚本。这会选择**每个领域前 5 题**，仍需完成数据／索引准备。
 
 **语言与运行条件。** 英文；Python ≥3.11、[公开 Apache-2.0 数据](https://huggingface.co/datasets/xiaowu0162/longmemeval-v2)（解压前约 **7.12 GB**）及模型端点。默认读者／RAG controller 为 Qwen3.5-9B；RAG 另需 Qwen3-Embedding-8B。部分题型调用付费 GPT-5.2 裁判。服务硬件取决于模型和上下文，未给最低显存。V2 评测会生成答案，没有单独导入预测文件评分的 CLI。
+
+<a id="past-bench"></a>
+
+### [PAST-Bench · Gen-Verse](https://github.com/Gen-Verse/PAST-Bench) · [论文](https://arxiv.org/abs/2608.04003)
+
+**评测工具 · 跨会话改进。** 有序任务族在新会话中对照持久化开／关，结合轨迹和产物观察早期经验如何影响后续行为。学习区分偏好保留、流程复用、主动查找历史上下文与过期知识更新，为记忆组件评测补上纵向比较。
+
+**推荐入口。** 按 [README 安装与 Smoke Test](https://github.com/Gen-Verse/PAST-Bench/blob/f8223517ae7491e776b69793d9f11e9d074ab42e/README.md)操作。安装 Hermes/Hermes+、构建 sandbox 镜像并配置 Agent／裁判 profile 后，运行一个偏好采纳任务族：
+
+```bash
+HERMES_PLUS_MECHANISMS=all past-bench evolve \
+  --family memory_ability/SM01_preference_adoption \
+  --agent hermes-plus --agent-profile minimax \
+  --runtime local --sandbox --sandbox-tools \
+  --compare-no-persistence --judge-model MiniMax-M2.7 \
+  --trace-dir traces/smoke/hermes_plus_minimax_sm01
+```
+
+将 `sequence_comparison.json` 与逐任务结果、轨迹一起阅读；持久化对照有助于判断收益是否来自保留的经验，而不只看单题分数。
+
+**语言与运行条件。** 英文；Python ≥3.11、uv、Docker、所选 Agent 集成，以及 Agent／裁判模型 API 访问。示例使用 `MINIMAX_API_KEY`，其他 profile 需相应配置。虽然上游称为 smoke test，它仍会真实调用模型。PAST-Bench 评估改进行为，不能仅凭名称认定被测 Agent 已递归改进其改进器。
+
+<a id="scale-rsi-bench"></a>
+
+### [Scale RSI Bench · scaleapi/rsi-benchmark](https://github.com/scaleapi/rsi-benchmark) · [官网](https://www.rsi-benchmark.com)
+
+**评测工具 · AI 研发任务。** README 的四类公开样例覆盖自蒸馏、越狱鲁棒性、Agent swarm 优化与 nanoGPT 数据筛选。先学习研究任务如何规定可编辑产物、算力限制与验证方式；这些是任务样例，不能据此认定 Agent 已完成递归自改进循环。
+
+**推荐入口。** 先读 [`samples/nano-gpt-data-curation/README.md`](https://github.com/scaleapi/rsi-benchmark/blob/d9f7dcba7412ccc99dc0d97ad92f26e40f1b2354/samples/nano-gpt-data-curation/README.md)：为固定的 30M 参数模型筛选 12M token 子集，再通过训练与留出集困惑度验证。接着读该任务的 `instruction.md` 与 `task.toml`，最后按 [Running the Benchmark](https://github.com/scaleapi/rsi-benchmark/blob/d9f7dcba7412ccc99dc0d97ad92f26e40f1b2354/README.md#running-the-benchmark) 使用 `harbor run`，填入该任务路径、Agent／模型参数与 Modal runtime。
+
+**语言与运行条件。** 英文；Python ≥3.12、`pip install -e ".[runner]"`、Harbor、模型 API 访问与已配置的 Modal GPU sandbox。核验 README 中的任务需要 GPU，具体硬件与超时由各任务规定。只读任务合同无需算力服务。使用上面链接的 Scale 仓库／官网；`recursive-self-improvement-bench.com` 与 RSIBench-Data 是不同资源，任务数量也不同。

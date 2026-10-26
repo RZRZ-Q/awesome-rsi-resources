@@ -4,7 +4,7 @@
 
 [资源目录](../README_zh.md) · [学习指南](learning-guide_zh.md) · [实践指南](practice-guide_zh.md)
 
-本档案保留 **2026-10-22、2026-10-23 和 2026-10-25** 的来源核验记录。下文的日期、版本、仓库覆盖与运行边界均以各次记录为准；迁移到独立文档不代表重新核验上游内容。
+本档案保留 **2026-10-22、2026-10-23、2026-10-25 和 2026-10-26** 的来源核验记录。下文的日期、版本、仓库覆盖与运行边界均以各次记录为准；迁移到独立文档不代表重新核验上游内容。
 
 - [近期综述覆盖表](#survey-coverage)
 - [核验历史与扩展排漏](#review-log)
@@ -50,6 +50,10 @@
 ### 2026-10-25：扩展排漏
 
 读取了已收录 17 个索引／综述／札记仓库截至当日的 README，加上 Prism 的方法、论文、资源三份结构数据，共 **20 份文本**。Meta-Harness 与 HyperAgents 已被其中的索引链接，例如 [Token-Rhythm](https://github.com/Token-Rhythm/awesome-rsi/blob/87681b460d6420f29f88bc3a2b848ddc6891dd1b/README.md#L260-L261)，但本目录缺少独立实践入口；Harness² 与 Airbnb AHO 的项目 URL、标题或论文 ID 在这些文件中未检出。这是限定范围核对，不含其他子文档、PDF、历史、Issue 或外部网站。新增条目采用原始实现；Meta-Harness 框架与 TB2 产物合并计数，新增中文报告入口仍归入 RSI 研究札记。
+
+### 2026-10-26：实践入口与评测排漏
+
+刷新已收录的 **17 个研究索引／综述配套／札记仓库、94 份文本**：17 份 README 与 77 份目录、结构数据、参考文献及研究札记；不含 PDF、历史提交、Issue 或外链网站。按项目名称、论文 ID 和仓库 URL 排重后，补入 Dream-RSI、MASS、Self-HPO、PAST-Bench、Scale RSI Bench 与 Beagle 六个直接实践入口。下方记录区分论文覆盖与实现入口覆盖；“未检出”仅适用于这次文本范围。固定来源与核验范围见[本轮六项记录](#verification-2026-10-26)。
 
 <a id="verification"></a>
 
@@ -123,3 +127,18 @@
 | HyperAgents | [论文](https://arxiv.org/abs/2603.19461) v1 **2026-03-19**，为当前唯一版本；核验[源码 59a68f6](https://github.com/facebookresearch/HyperAgents/tree/59a68f672dfb92c74aeb7e61535d776fb36e172d)，**2026-04-15**（台北时间）。 | **2026-10-25** 核对 README／许可、环境与领域数据、生成循环、父代补丁应用、元 Agent 调用、受保护领域代码恢复、Docker 配置和 CLI 参数。未安装、构建容器、调用模型或运行评测。 |
 | Meta-Harness | [论文](https://arxiv.org/abs/2603.28052) v1 **2026-03-30**，为当前唯一版本；核验主框架[源码 8123cca](https://github.com/stanford-iris-lab/meta-harness/tree/8123ccabe2b19fa1123090b2e5f1bacc20963ce8)，**2026-10-02**（台北时间）。 | **2026-10-25** 核对作者论文／框架／产物仓库链接、文本分类 README、依赖、模型配置、提案器包装、内外循环、评测与最终封存。独立 TB2 产物合并计数，未审计其完整运行环境；未调用模型或复现实验。 |
 | Airbnb AHO | [论文](https://arxiv.org/abs/2609.05736)：v1 **2026-09-04**，最新 v2 **2026-09-09**；[首个公开源码 0d7652b](https://github.com/airbnb/agent-harness-optimizer/tree/0d7652b42296c8df07532fa3787fc956250741e7)，**2026-08-31**（台北时间）。 | **2026-10-25** 核对论文／官方仓库对应、§§3–4、README、依赖、BFCL 数据布局、CLI、BetterHarness 提案／验收／保存、中间件范围与 scorecard 启用条件。未安装、调用模型或运行 benchmark。 |
+
+<a id="verification-2026-10-26"></a>
+
+### 2026-10-26：新增实践入口
+
+以下六项按 **2026-10-26** 的上游来源核验；新增记录不改变上方 2026-10-25 历史快照。“最新版本”指本次核验时列出的版本。已读文档与所列源码，**未安装这些项目、调用模型、训练或复现实验**；完整运行条件集中在[实践指南](practice-guide_zh.md)。
+
+| 资源 | 日期与固定来源 | 核验阅读范围 | 已收录索引中的覆盖情况 |
+| --- | --- | --- | --- |
+| [Dream-RSI](practice-guide_zh.md#dream-rsi) | [论文](https://arxiv.org/abs/2609.14858)：v1 **2026-09-14**，最新 [v2](https://arxiv.org/abs/2609.14858v2) **2026-10-06**；官方[源码 8ec35bd](https://github.com/google-research/dream-rsi/tree/8ec35bd2538220517ce1bfca4282db21b8c518db)。 | README、任务配置、启动脚本，以及 `orchestrate.py` 的探索／回放／策略选优。核对保留的探索策略如何进入下一轮；基础 coding agent 与评测器保持固定。dry-run 检查配置和凭证，不运行改进。 | 名称／论文命中 4 个仓库：[Prism-Shadow](https://github.com/Prism-Shadow/awesome-rsi/blob/2b2ddc085be7d62613140ac74964b2f00997b6f1/README.md#L125), [jacky-leng](https://github.com/jacky-leng/awesome-rsi/blob/f1888cd25e2dc6150e5c300046598d789b03ceda/README.md#L259), [pinkbubblebubble](https://github.com/pinkbubblebubble/awesome-rsi/blob/6785f5e3037be374504039e0a6e582026f90e5c2/README.md#L149), [theseus-labs-rsi](https://github.com/theseus-labs-rsi/awesome-rsi/blob/74ee83ec39ae5653d1ff3a151f78042a7774c9a4/README.md#L70)。所查文本未出现新的 `google-research/dream-rsi` URL；旧作者页面现已指向新实现。 |
+| [MASS](practice-guide_zh.md#mass) | [论文](https://arxiv.org/abs/2610.12176)：v1 **2026-10-08**，当时唯一列出版本；[官方博文](https://sakana.ai/mass/) **2026-10-12**；[源码 fb40358](https://github.com/SakanaAI/mass/tree/fb403581bed2c974b3f99e7236224169da643079)。 | README、运行／论文代码对应文档与两轮配置：共享模型的三角色及搜索到训练的交接。`plan` 无需 GPU，也不调用模型。打包 MLR 配置覆盖旧 12 任务子集；RHI 参照与选优实现和论文 Algorithm 1 有差异。 | 命中 2 个仓库：[natnew](https://github.com/natnew/awesome-recursive-self-improvement/blob/be444d5e019290f5f1c552a6a405e9be10450f78/README.md#L160), [pinkbubblebubble](https://github.com/pinkbubblebubble/awesome-rsi/blob/6785f5e3037be374504039e0a6e582026f90e5c2/README.md#L177)。 |
+| [Self-HPO](practice-guide_zh.md#self-hpo) | [论文](https://arxiv.org/abs/2610.22791)：v1 **2026-10-16**，当时唯一列出版本；[源码 3c3d0bd](https://github.com/MSR-Orchard/Self-HPO/tree/3c3d0bd93a8a5a72399c855783460b141ea27d49)。 | README、H-step 提案器、P-step 与策略导出脚本：更新后的策略参与下一轮 Harness 提案。区分 `PROPOSER=self` 与固定外部模型的 `PROPOSER=api`。文档中的 8×B200 是实验配置，不是已确认的最低门槛。 | 命中 1 个仓库：[pinkbubblebubble](https://github.com/pinkbubblebubble/awesome-rsi/blob/6785f5e3037be374504039e0a6e582026f90e5c2/README.md#L226)。 |
+| [PAST-Bench](practice-guide_zh.md#past-bench) | [论文](https://arxiv.org/abs/2608.04003)：v1 **2026-08-04**，当时唯一列出版本；[源码 f822351](https://github.com/Gen-Verse/PAST-Bench/tree/f8223517ae7491e776b69793d9f11e9d074ab42e)。本目录新增入口，并非 10 月新论文。 | README 的 smoke test／序列比较说明与 `pyproject.toml` CLI 入口。核对新会话中保留／不保留经验的对照、`sequence_comparison.json` 及 Docker／Agent／裁判前置条件。 | 名称／论文命中 7 个仓库：[Lee1003-lee](https://github.com/Lee1003-lee/Awesome-RSI-Research/blob/c218a38901f9a6fde720e0d4cf9772b677d63876/README.md#L143), [Prism-Shadow](https://github.com/Prism-Shadow/awesome-rsi/blob/2b2ddc085be7d62613140ac74964b2f00997b6f1/README.md#L424), [Token-Rhythm](https://github.com/Token-Rhythm/awesome-rsi/blob/87681b460d6420f29f88bc3a2b848ddc6891dd1b/README.md#L465), [asimfish](https://github.com/asimfish/awesome_rsi/blob/06f599b6b8a4cb57558380b68a23ea729479d98a/reports/29_prism_awesome_rsi.md#L79), [jacky-leng](https://github.com/jacky-leng/awesome-rsi/blob/f1888cd25e2dc6150e5c300046598d789b03ceda/README.md#L398), [pinkbubblebubble](https://github.com/pinkbubblebubble/awesome-rsi/blob/6785f5e3037be374504039e0a6e582026f90e5c2/README.md#L416), [selfimproving-agent](https://github.com/selfimproving-agent/Awesome-Self-Improving-Agents/blob/d89d1adec7ef20553ca137a9eecee8d624ecd8c4/README.md#L700)。asimfish 的匹配为报告中的名称提及，不是直接项目链接。 |
+| [Scale RSI Bench](practice-guide_zh.md#scale-rsi-bench) | 未确认正式发布日期及独立论文。[GitHub 元数据](https://api.github.com/repos/scaleapi/rsi-benchmark)记录创建于 **2026-07-30 UTC**，不等同于发表日期。已读[源码 d9f7dcb](https://github.com/scaleapi/rsi-benchmark/tree/d9f7dcba7412ccc99dc0d97ad92f26e40f1b2354)。 | README 任务说明、nanoGPT 样例约束、运行器配置、GPU sandbox 要求及[官方网站](https://www.rsi-benchmark.com)。README 的四类公开样例用于选择学习入口，不作为当前任务总数；与其他同名评测保持区分。 | 94 份所查文本未检出对应项目名称／URL；不代表 17 个仓库的所有文件均未覆盖。 |
+| [Beagle / DarwinX](practice-guide_zh.md#beagle) | README News：Beagle 于 **2026-09-02** 开源，**2026-10-14** 更新 DarwinX 结果；[源码 73e112f](https://github.com/SalesforceAIResearch/Beagle/tree/73e112f892aefe6226e4ee7723f23ae849eeb13f)。结果更新日不是发布日期。 | README Quick Start、演化示例、接入实验仓库／推送候选的行为、dry-run 参数及配置角色。区分 evolvee、evolver 与固定算法，归为相关机制／实验框架。dry-run 只预览计划，不代表演化成功或 evolver 自身改进。 | 未命中 Beagle 名称／URL，但 DarwinX 论文已有入口，例如 [Prism-Shadow](https://github.com/Prism-Shadow/awesome-rsi/blob/2b2ddc085be7d62613140ac74964b2f00997b6f1/README.md#L134)；缺少的是配套平台入口。 |
