@@ -1,8 +1,28 @@
-# Awesome RSI Resources
+<h1 align="center" id="awesome-rsi-resources">
+  <img src="assets/readme-hero.png" alt="Awesome RSI Resources — Learn. Build. Evaluate." width="100%">
+</h1>
 
-**English** | [简体中文](README_zh.md)
+<p align="center">
+  <strong>From research papers to working improvement loops.</strong><br>
+  Surveys, tutorials, and projects for learning recursive self-improvement — with clear starting points and requirements.
+</p>
 
-A learning and research directory for Recursive Self-Improvement (RSI), with distinctive features, recommended entry points, and prerequisites for each resource.
+<p align="center">
+  <strong>English</strong> · <a href="README_zh.md">简体中文</a>
+</p>
+
+<p align="center">
+  <a href="#resource-scope"><img src="https://img.shields.io/badge/resources-70-69D8AD?style=flat-square&amp;labelColor=182522" alt="70 resources"></a>
+  <a href="README_zh.md"><img src="https://img.shields.io/badge/languages-EN%20%2F%20%E4%B8%AD%E6%96%87-69D8AD?style=flat-square&amp;labelColor=182522" alt="English and Chinese"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-69D8AD?style=flat-square&amp;labelColor=182522" alt="MIT license"></a>
+</p>
+
+<p align="center">
+  <a href="#start-here"><strong>Start here</strong></a> &nbsp;·&nbsp;
+  <a href="docs/learning-guide.md">Learning guide</a> &nbsp;·&nbsp;
+  <a href="docs/practice-guide.md">Practice guide</a> &nbsp;·&nbsp;
+  <a href="docs/verification.md">Source records</a>
+</p>
 
 **70 resources; latest source review: 2026-10-27.** A project’s website, code, and notebooks count as one resource. See the [verification archive](docs/verification.md) for individual dates and the scope of each review.
 

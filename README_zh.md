@@ -1,8 +1,28 @@
-# Awesome RSI Resources
+<h1 align="center" id="awesome-rsi-resources">
+  <img src="assets/readme-hero.png" alt="Awesome RSI Resources — 学习、实践与评估递归自我改进" width="100%">
+</h1>
 
-[English](README.md) | **简体中文**
+<p align="center">
+  <strong>从研究论文到可运行的改进循环。</strong><br>
+  递归自我改进的综述、教程与实践项目，附推荐学习入口和运行条件。
+</p>
 
-递归自我改进（Recursive Self-Improvement, RSI）学习与研究资源导航。每项资源说明特色、推荐入口与学习条件。
+<p align="center">
+  <a href="README.md">English</a> · <strong>简体中文</strong>
+</p>
+
+<p align="center">
+  <a href="#resource-scope"><img src="https://img.shields.io/badge/resources-70-69D8AD?style=flat-square&amp;labelColor=182522" alt="70 项资源"></a>
+  <a href="README.md"><img src="https://img.shields.io/badge/languages-EN%20%2F%20%E4%B8%AD%E6%96%87-69D8AD?style=flat-square&amp;labelColor=182522" alt="中文与英文"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-69D8AD?style=flat-square&amp;labelColor=182522" alt="MIT 许可"></a>
+</p>
+
+<p align="center">
+  <a href="#start-here"><strong>快速开始</strong></a> &nbsp;·&nbsp;
+  <a href="docs/learning-guide_zh.md">学习指南</a> &nbsp;·&nbsp;
+  <a href="docs/practice-guide_zh.md">实践指南</a> &nbsp;·&nbsp;
+  <a href="docs/verification_zh.md">核验档案</a>
+</p>
 
 **收录 70 项资源；最近一次来源核验：2026-10-27。** 同一项目的网站、代码和 Notebook 合并计数；各项日期与实际核验范围见[核验档案](docs/verification_zh.md)。
 
