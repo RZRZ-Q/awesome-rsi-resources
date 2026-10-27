@@ -156,3 +156,15 @@
 | 资源 | 日期与固定来源 | 核验范围 | 已收录索引中的覆盖 |
 | --- | --- | --- | --- |
 | [HarnessPro](practice-guide_zh.md#harnesspro) | [HarnessPro: Recursive Harness Self-Improvement with Pareto Optimization for Performance-Cost Trade-offs](https://arxiv.org/abs/2610.26770)：v1 **2026-10-19**，最新 [v2](https://arxiv.org/abs/2610.26770v2) **2026-10-20**；官方[源码 8ae622e](https://github.com/pzs19/HarnessPro/tree/8ae622eb4a4923dbb4b515be7ded614f88fd4f38)。属于方法论文，不是综述。 | 论文 §§3–4 与产物说明；README、评测指南、发布目录、TB2 策略／hook、runner 参数与数据检查。确认公开内容为九套已选 Harness 及评测代码，未发布端到端演化 runner。核对单任务参数与前置条件；GLM-5.2 演化快照未包含。 | 2026-10-26 对 17 个仓库、94 份文本的扫描中，[pinkbubblebubble](https://github.com/pinkbubblebubble/awesome-rsi/blob/6785f5e3037be374504039e0a6e582026f90e5c2/README.md#L221)已链接该工作。该限定范围不含 PDF、历史、Issue 与外链网站；本次补入未重新执行完整扫描。 |
+
+<a id="verification-follow-rsi"></a>
+
+### 2026-10-27：Follow RSI
+
+按名称、仓库和网站 URL 与本目录排重后，补入研究索引与阅读资源。本次核对网站内容与发布状态，未重新审读其收录的全部论文。
+
+| 资源 | 核验日期与固定来源 | 范围与发布状态 |
+| --- | --- | --- |
+| [Follow RSI](../README_zh.md#follow-rsi) | 核验于 **2026-10-27**；[README 6c36c53](https://github.com/adongwanai/follow-rsi/blob/6c36c535702b8af3f58db90091c0031d74742654/README.md)及[验收记录](https://github.com/adongwanai/follow-rsi/blob/6c36c535702b8af3f58db90091c0031d74742654/docs/acceptance.md)。 | 阅读[网站](https://adongwanai.github.io/follow-rsi/index.html)、[中英导读](https://adongwanai.github.io/follow-rsi/guide.html)、阅读路线，以及 [Harness²](https://github.com/adongwanai/follow-rsi/blob/6c36c535702b8af3f58db90091c0031d74742654/papers/harness2.md)／[HarnessPro](https://github.com/adongwanai/follow-rsi/blob/6c36c535702b8af3f58db90091c0031d74742654/papers/harnesspro.md)证据卡。网站自报收录 98 篇、8 项证据核查已审 43/784（5.5%）；`unknown` 表示未审，不表示论文没有相关实验。两张卡片的精读笔记与视频仍为占位内容，可安装订阅 Skill 尚未实现。代码为 MIT，文字为 CC BY 4.0。 |
+
+**发布状态核对。** [线上日报](https://adongwanai.github.io/follow-rsi/daily/index.html)与[公开 JSON 源](https://adongwanai.github.io/follow-rsi/feed/latest.json)已包含 25 条记录，与[固定版本的 feed](https://github.com/adongwanai/follow-rsi/blob/6c36c535702b8af3f58db90091c0031d74742654/site/feed/latest.json)一致，更新时间为 **2026-10-27 11:28:44 UTC**。页面标记本期经维护者审核，记录为 `review_decision: accept`，但证据速判仍标注 `Automated, unverified`；发布审核和全文证据审读是两件事。验收文档中“公开 feed 为空”的描述早于此次观察到的发布结果。未安装 Skill、为账户订阅、运行其发现流程，或逐篇核验底层论文。

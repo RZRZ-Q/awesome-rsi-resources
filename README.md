@@ -4,7 +4,7 @@
 
 A learning and research directory for Recursive Self-Improvement (RSI), with distinctive features, recommended entry points, and prerequisites for each resource.
 
-**69 resources; latest source review: 2026-10-27.** A project’s website, code, and notebooks count as one resource. See the [verification archive](docs/verification.md) for individual dates and the scope of each review.
+**70 resources; latest source review: 2026-10-27.** A project’s website, code, and notebooks count as one resource. See the [verification archive](docs/verification.md) for individual dates and the scope of each review.
 
 <a id="resource-scope"></a>
 
@@ -72,6 +72,7 @@ These resources help you find related work, compare research directions, and pla
 | <a id="token-rhythm"></a> [Token-Rhythm/awesome-rsi](https://github.com/Token-Rhythm/awesome-rsi) | A bilingual literature table with dates, topic labels, summaries, and paper / code links. Useful for browsing by research direction. | [Featured readings in Chinese](https://github.com/Token-Rhythm/awesome-rsi/blob/main/README_zh.md#featured-rsi-readings) → [Category overview](https://github.com/Token-Rhythm/awesome-rsi/blob/main/README_zh.md#category-overview). | Chinese and English; reading only. The upstream last-verification date is **2026-08-13**; consult other indexes for September–October work. |
 | <a id="jacky-leng"></a> [jacky-leng/awesome-rsi](https://github.com/jacky-leng/awesome-rsi) | Compares improvement loops across six axes: loop locus, feedback, search, persistent state, human role, and evidence type. Useful for comparing methods. | [TAXONOMY.md](https://github.com/jacky-leng/awesome-rsi/blob/main/TAXONOMY.md) → [Landscape](https://github.com/jacky-leng/awesome-rsi#landscape). | English; reading only. The upstream review covers work through **2026-10-07**. |
 | <a id="pinkbubblebubble"></a> [pinkbubblebubble/awesome-rsi](https://github.com/pinkbubblebubble/awesome-rsi) | Uses RSI / Self-improvement / Enabler labels to explain how resources relate to recursive improvement. Includes harnesses, evaluations, and engineering reports for exploring recent practical directions. | [Scope and labels](https://github.com/pinkbubblebubble/awesome-rsi#scope-and-labels) → [Start here](https://github.com/pinkbubblebubble/awesome-rsi#start-here); explore the [harness list](https://github.com/pinkbubblebubble/awesome-rsi#self-improvement-harnesses) for implementation ideas. | English; reading only. The upstream last-review date is **2026-10-21**; linked implementations have their own requirements. |
+| <a id="follow-rsi"></a> [Follow RSI](https://adongwanai.github.io/follow-rsi/index.html) · [repository](https://github.com/adongwanai/follow-rsi) | A Harness-focused paper index with daily briefs, reading routes, and evidence cards covering held-out evaluation, matched budgets, transfer, and cost. Useful for examining what supports an improvement claim. | [Bilingual Harness guide](https://adongwanai.github.io/follow-rsi/guide.html) → [reading routes](https://adongwanai.github.io/follow-rsi/index.html#routes) → [daily updates](https://adongwanai.github.io/follow-rsi/daily/index.html). | Chinese and English; reading only. Many evidence fields remain `unknown` (not yet reviewed). The subscription Skill is announced but not implemented at this check. |
 
 <a id="surveys"></a>
 
