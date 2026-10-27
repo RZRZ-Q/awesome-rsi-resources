@@ -6,7 +6,7 @@
 
 这里集中记录具体示例的学习目标、源码入口和运行条件。先按主题选择项目；综述章节与项目的对应关系见[学习指南](learning-guide_zh.md#survey-project-map)。条目的[三类标签](../README_zh.md#resource-scope)描述所推荐入口的范围，主题分组不表示 RSI 能力等级。
 
-以下说明来自 **2026-10-22–26** 对上游文档与部分源码的核验，**未运行教程、调用模型或复现实验**；逐项日期与范围见[核验档案](verification_zh.md#verification)。API 示例需要相应模型权限与调用预算，训练配置是上游示例而非本目录实测的最低硬件要求。
+以下说明来自 **2026-10-22–27** 对上游文档与部分源码的核验，**未运行教程、调用模型或复现实验**；逐项日期与范围见[核验档案](verification_zh.md#verification)。API 示例需要相应模型权限与调用预算，训练配置是上游示例而非本目录实测的最低硬件要求。
 
 ## 目录
 
@@ -303,6 +303,31 @@ uv run python meta_harness.py --iterations 1
 查看 YAML 中的 `evolvee`、`evolver`、`algorithm`，再追踪真实运行产物中的 `state.db`、候选证据与提案／评估日志。Dry run 解析运行计划，不调用模型或启动容器，也不验证凭证与本地 checkout。
 
 **语言与运行条件。** 英文；Python ≥3.12、uv、Docker、benchmark 数据、已接入的 Harness 仓库与模型访问。当前公开的 evolver 集成使用已安装并认证的 Cursor Agent。Onboarding 会在你的 GitHub 账户下建立实验仓库；真实演化会消耗模型额度，并将保留候选推送到这些副本，需使用自己有权限的实验仓库。小规模示例用于检查流程，不代表 benchmark 性能。
+
+<a id="harnesspro"></a>
+
+### [HarnessPro](https://github.com/pzs19/HarnessPro) · [论文](https://arxiv.org/abs/2610.26770)
+
+**相关自改进机制 · 效果与成本权衡。** 论文通过轨迹诊断、Harness 编辑、生成测试与 Pareto 选优，保留 Lite／Medium／Heavy 三条谱系供后续轮次使用，提案与选择框架保持固定。公开包提供 Terminal-Bench 2、SWE-bench Pro、ProgramBench 的九套已选 Harness 及评测脚本；实践入口是阅读和对比这些产物，不是重跑完整演化流程。
+
+**推荐入口。** 读[论文 §§3–4](https://arxiv.org/html/2610.26770v2#S3)，理解优化目标与选择循环 → [评测说明](https://github.com/pzs19/HarnessPro/blob/8ae622eb4a4923dbb4b515be7ded614f88fd4f38/docs/evaluation.md) → 对比 [TB2 三种模式](https://github.com/pzs19/HarnessPro/tree/8ae622eb4a4923dbb4b515be7ded614f88fd4f38/harnesses/terminal-bench-2)下的 `runtime/policy.json` → [Medium hook](https://github.com/pzs19/HarnessPro/blob/8ae622eb4a4923dbb4b515be7ded614f88fd4f38/harnesses/terminal-bench-2/medium/runtime/hook.py) → [TB2 runner](https://github.com/pzs19/HarnessPro/blob/8ae622eb4a4923dbb4b515be7ded614f88fd4f38/scripts/run_tb2_harness_eval.py)。跟踪 profile 选择、推理强度、工具预算和输出压缩。例如，三种模式的 `standard` profile 分别设定 38／44／60 次工具上限，hook 会拒绝超过配置上限的调用。
+
+按上游说明准备环境后，在其仓库根目录运行。将 `TB2_TASKS` 设为已准备的数据集目录，`CODEX_CONFIG` 设为 Codex Responses 供应商 TOML，`CODEX_BIN` 设为 Codex 可执行文件：
+
+```bash
+uv sync --frozen
+uv run python scripts/prepare_runtime.py
+uv run python scripts/run_tb2_harness_eval.py \
+  --dataset "$TB2_TASKS" --heldout-ids splits/terminal-bench-2-test.txt \
+  --run-dir runs/tb2-medium-one-task --harness-label medium \
+  --harness-dir harnesses/terminal-bench-2/medium \
+  --codex-config "$CODEX_CONFIG" --codex-binary "$CODEX_BIN" \
+  --model gpt-5.5 --concurrency 1 --max-tasks 1
+```
+
+Runner 会先核对完整 held-out 清单与数据集验证划分，再选取一个任务；只准备一个任意任务的目录不够。先用该命令检查流程，再在相同任务集、相同模型下对比模式；每次使用新的 `--run-dir`，并同步修改 `--harness-label`／`--harness-dir`。同时记录通过率与成本；单任务运行不能建立 Pareto 前沿。
+
+**语言与运行条件。** 英文；Linux、Python 3.12/3.13、uv、Docker + Compose、Codex CLI（上游使用 0.147.0）、具备相应模型权限与凭据的 Responses 兼容端点，以及另行获取的 TB2 数据和任务／评分镜像。该命令会真实调用模型，入口属于 API 评测而非参数训练。附带的 RTK 工具面向 Linux x86-64，其他架构需通过 `--rtk-binary` 提供兼容版本。代码为 MIT，附带评测器保留各自许可。公开包未包含论文中 GLM-5.2 演化后的 Harness 快照。
 
 <a id="model-training"></a>
 

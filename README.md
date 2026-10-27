@@ -4,7 +4,7 @@
 
 A learning and research directory for Recursive Self-Improvement (RSI), with distinctive features, recommended entry points, and prerequisites for each resource.
 
-**68 resources; latest source review: 2026-10-26.** A project’s website, code, and notebooks count as one resource. See the [verification archive](docs/verification.md) for individual dates and the scope of each review.
+**69 resources; latest source review: 2026-10-27.** A project’s website, code, and notebooks count as one resource. See the [verification archive](docs/verification.md) for individual dates and the scope of each review.
 
 <a id="resource-scope"></a>
 
@@ -232,6 +232,7 @@ Compare reusable improvement experience with harness search under a fixed optimi
 | <a id="meta-harness"></a> [Meta-Harness · Stanford IRIS and collaborators](https://github.com/stanford-iris-lab/meta-harness) · [paper](https://arxiv.org/abs/2603.28052) | **Related self-improvement mechanism.** A fixed coding proposer uses source, scores, and traces to search task-specific harness programs. | [Text-classification example](docs/practice-guide.md#meta-harness) | English; Python, proposer/task-model access and datasets; setup differs by model provider. |
 | <a id="aho"></a> [Agent Harness Optimizer (AHO) · Airbnb](https://github.com/airbnb/agent-harness-optimizer) · [paper](https://arxiv.org/abs/2609.05736) | **Related self-improvement mechanism.** Optimize prompts and tool middleware; distinguish candidate acceptance from final evaluation. | [BetterHarness BFCL example](docs/practice-guide.md#aho) | English; Python, model API and separately downloaded BFCL data; check scorecard settings. |
 | <a id="beagle"></a> [Beagle / DarwinX · Salesforce AI Research](https://github.com/SalesforceAIResearch/Beagle) | **Related self-improvement mechanism.** Study harness evaluation, candidate selection, and lineage through separate evolver/evolvee roles under a fixed algorithm. | [Evaluation and evolution configuration previews](docs/practice-guide.md#beagle) | English; Python, uv, Docker, harness checkout and benchmark cache; real runs need model access. |
+| <a id="harnesspro"></a> [HarnessPro](https://github.com/pzs19/HarnessPro) · [paper](https://arxiv.org/abs/2610.26770) | **Related self-improvement mechanism.** Study performance–cost trade-offs through Pareto selection and released Lite / Medium / Heavy harnesses. | [Paper → runtime policies → one-task TB2 evaluation](docs/practice-guide.md#harnesspro) | English; Linux, Python 3.12/3.13, uv, Docker, Codex CLI, model API and benchmark data. Public entry evaluates released harnesses. |
 
 <a id="model-training"></a>
 

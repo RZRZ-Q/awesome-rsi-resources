@@ -4,7 +4,7 @@
 
 [资源目录](../README_zh.md) · [学习指南](learning-guide_zh.md) · [实践指南](practice-guide_zh.md)
 
-本档案保留 **2026-10-22、2026-10-23、2026-10-25 和 2026-10-26** 的来源核验记录。下文的日期、版本、仓库覆盖与运行边界均以各次记录为准；迁移到独立文档不代表重新核验上游内容。
+本档案保留 **2026-10-22、2026-10-23、2026-10-25、2026-10-26 和 2026-10-27** 的来源核验记录。下文的日期、版本、仓库覆盖与运行边界均以各次记录为准；迁移到独立文档不代表重新核验上游内容。
 
 - [近期综述覆盖表](#survey-coverage)
 - [核验历史与扩展排漏](#review-log)
@@ -54,6 +54,10 @@
 ### 2026-10-26：实践入口与评测排漏
 
 刷新已收录的 **17 个研究索引／综述配套／札记仓库、94 份文本**：17 份 README 与 77 份目录、结构数据、参考文献及研究札记；不含 PDF、历史提交、Issue 或外链网站。按项目名称、论文 ID 和仓库 URL 排重后，补入 Dream-RSI、MASS、Self-HPO、PAST-Bench、Scale RSI Bench 与 Beagle 六个直接实践入口。下方记录区分论文覆盖与实现入口覆盖；“未检出”仅适用于这次文本范围。固定来源与核验范围见[本轮六项记录](#verification-2026-10-26)。
+
+### 2026-10-27：HarnessPro 实践入口
+
+按名称、论文 ID 和仓库 URL 与本目录排重后，将 HarnessPro 补入现有 Harness 优化分支。它已出现在一个已收录索引中，本次补充直接学习与评测路线。[新增记录](#verification-2026-10-27)区分论文的演化方法与已发布的 Harness 产物、评测代码。
 
 <a id="verification"></a>
 
@@ -142,3 +146,13 @@
 | [PAST-Bench](practice-guide_zh.md#past-bench) | [论文](https://arxiv.org/abs/2608.04003)：v1 **2026-08-04**，当时唯一列出版本；[源码 f822351](https://github.com/Gen-Verse/PAST-Bench/tree/f8223517ae7491e776b69793d9f11e9d074ab42e)。本目录新增入口，并非 10 月新论文。 | README 的 smoke test／序列比较说明与 `pyproject.toml` CLI 入口。核对新会话中保留／不保留经验的对照、`sequence_comparison.json` 及 Docker／Agent／裁判前置条件。 | 名称／论文命中 7 个仓库：[Lee1003-lee](https://github.com/Lee1003-lee/Awesome-RSI-Research/blob/c218a38901f9a6fde720e0d4cf9772b677d63876/README.md#L143), [Prism-Shadow](https://github.com/Prism-Shadow/awesome-rsi/blob/2b2ddc085be7d62613140ac74964b2f00997b6f1/README.md#L424), [Token-Rhythm](https://github.com/Token-Rhythm/awesome-rsi/blob/87681b460d6420f29f88bc3a2b848ddc6891dd1b/README.md#L465), [asimfish](https://github.com/asimfish/awesome_rsi/blob/06f599b6b8a4cb57558380b68a23ea729479d98a/reports/29_prism_awesome_rsi.md#L79), [jacky-leng](https://github.com/jacky-leng/awesome-rsi/blob/f1888cd25e2dc6150e5c300046598d789b03ceda/README.md#L398), [pinkbubblebubble](https://github.com/pinkbubblebubble/awesome-rsi/blob/6785f5e3037be374504039e0a6e582026f90e5c2/README.md#L416), [selfimproving-agent](https://github.com/selfimproving-agent/Awesome-Self-Improving-Agents/blob/d89d1adec7ef20553ca137a9eecee8d624ecd8c4/README.md#L700)。asimfish 的匹配为报告中的名称提及，不是直接项目链接。 |
 | [Scale RSI Bench](practice-guide_zh.md#scale-rsi-bench) | 未确认正式发布日期及独立论文。[GitHub 元数据](https://api.github.com/repos/scaleapi/rsi-benchmark)记录创建于 **2026-07-30 UTC**，不等同于发表日期。已读[源码 d9f7dcb](https://github.com/scaleapi/rsi-benchmark/tree/d9f7dcba7412ccc99dc0d97ad92f26e40f1b2354)。 | README 任务说明、nanoGPT 样例约束、运行器配置、GPU sandbox 要求及[官方网站](https://www.rsi-benchmark.com)。README 的四类公开样例用于选择学习入口，不作为当前任务总数；与其他同名评测保持区分。 | 94 份所查文本未检出对应项目名称／URL；不代表 17 个仓库的所有文件均未覆盖。 |
 | [Beagle / DarwinX](practice-guide_zh.md#beagle) | README News：Beagle 于 **2026-09-02** 开源，**2026-10-14** 更新 DarwinX 结果；[源码 73e112f](https://github.com/SalesforceAIResearch/Beagle/tree/73e112f892aefe6226e4ee7723f23ae849eeb13f)。结果更新日不是发布日期。 | README Quick Start、演化示例、接入实验仓库／推送候选的行为、dry-run 参数及配置角色。区分 evolvee、evolver 与固定算法，归为相关机制／实验框架。dry-run 只预览计划，不代表演化成功或 evolver 自身改进。 | 未命中 Beagle 名称／URL，但 DarwinX 论文已有入口，例如 [Prism-Shadow](https://github.com/Prism-Shadow/awesome-rsi/blob/2b2ddc085be7d62613140ac74964b2f00997b6f1/README.md#L134)；缺少的是配套平台入口。 |
+
+<a id="verification-2026-10-27"></a>
+
+### 2026-10-27：HarnessPro
+
+于 **2026-10-27** 核对论文与官方源码，本次新增一项记录，不刷新前面的历史快照。**未安装项目、调用模型、运行 benchmark 或演化实验。** 完整运行条件见[实践指南](practice-guide_zh.md#harnesspro)。
+
+| 资源 | 日期与固定来源 | 核验范围 | 已收录索引中的覆盖 |
+| --- | --- | --- | --- |
+| [HarnessPro](practice-guide_zh.md#harnesspro) | [HarnessPro: Recursive Harness Self-Improvement with Pareto Optimization for Performance-Cost Trade-offs](https://arxiv.org/abs/2610.26770)：v1 **2026-10-19**，最新 [v2](https://arxiv.org/abs/2610.26770v2) **2026-10-20**；官方[源码 8ae622e](https://github.com/pzs19/HarnessPro/tree/8ae622eb4a4923dbb4b515be7ded614f88fd4f38)。属于方法论文，不是综述。 | 论文 §§3–4 与产物说明；README、评测指南、发布目录、TB2 策略／hook、runner 参数与数据检查。确认公开内容为九套已选 Harness 及评测代码，未发布端到端演化 runner。核对单任务参数与前置条件；GLM-5.2 演化快照未包含。 | 2026-10-26 对 17 个仓库、94 份文本的扫描中，[pinkbubblebubble](https://github.com/pinkbubblebubble/awesome-rsi/blob/6785f5e3037be374504039e0a6e582026f90e5c2/README.md#L221)已链接该工作。该限定范围不含 PDF、历史、Issue 与外链网站；本次补入未重新执行完整扫描。 |

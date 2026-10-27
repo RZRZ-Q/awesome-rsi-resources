@@ -84,7 +84,7 @@
 
 本表连接已收录的教程、实践项目和评测示例。表中横跨[三类资源](../README_zh.md#resource-scope)，阅读分支表示主题，不代表 RSI 能力等级。对应关系是本目录的学习建议；除非明确说明，不表示综述已引用该项目，部分项目晚于综述发布。先围绕学习目标尝试链接中的示例，再回到对应综述章节比较机制。
 
-项目入口依据 **2026-10-22–26** 阅读的上游文档与代码整理，未运行示例。每行的实践说明集中记录环境、模型访问、运行门槛和具体命令；各资源的核验日期与范围见[核验档案](verification_zh.md#verification)。
+项目入口依据 **2026-10-22–27** 阅读的上游文档与代码整理，未运行示例。每行的实践说明集中记录环境、模型访问、运行门槛和具体命令；各资源的核验日期与范围见[核验档案](verification_zh.md#verification)。
 
 | 阅读分支／对应综述 | 项目与上手入口 | 学习目标与范围 |
 | --- | --- | --- |
@@ -94,6 +94,7 @@
 | **递归改进：探索策略** — [The Last AI §3.6](https://arxiv.org/html/2609.11873v3#S3.SS6)；[Coding Agents §§7–8](https://arxiv.org/html/2608.03392v4) | [Dream-RSI：Quick start → `orchestrate.py`](practice-guide_zh.md#dream-rsi)。 | 跟踪在线发现树如何进入离线回放、策略选择与下一轮探索。保留的 `policy/method.py` 改变搜索方式；基础编码 Agent、任务与评估器保持固定。 |
 | **反馈驱动的 Harness 优化** — [Modern Agentic Systems §6](https://arxiv.org/html/2607.13104v1#S6)；[Coding Agents §§7–8](https://arxiv.org/html/2608.03392v4)，本目录的学习配对 | [Meta-Harness 文本分类](practice-guide_zh.md#meta-harness)或 [AHO BFCL](practice-guide_zh.md#aho)。 | 对比修改 Harness 程序与修改提示／工具中间件，识别固定提案器，并区分选择数据和最终评测。 |
 | **Harness 演化：统一实验入口** — [Modern Agentic Systems §6](https://arxiv.org/html/2607.13104v1#S6)；[Coding Agents §§7–8](https://arxiv.org/html/2608.03392v4) | [Beagle：演化示例 → evaluate／evolve 计划预览](practice-guide_zh.md#beagle)。 | 跟踪基线评估、候选编辑、选优与谱系记录。在预设算法下区分 evolver 和 evolvee；统一接口本身不代表 evolver 也在演化。 |
+| **Harness 优化：效果与成本** — [Modern Agentic Systems §6](https://arxiv.org/html/2607.13104v1#S6)；[Coding Agents §§7–8](https://arxiv.org/html/2608.03392v4) | [HarnessPro：论文 §§3–4 → 运行策略 → 单任务 TB2 评测](practice-guide_zh.md#harnesspro)。 | 对比 Lite／Medium／Heavy 怎样分配推理与工具调用，再将通过率、实测成本与 Pareto 选优联系起来。区分评测已发布的 Harness 与运行论文的演化流程。 |
 | **改进经验与元 Agent 代码** — [The Last AI §3.6](https://arxiv.org/html/2609.11873v3#S3.SS6)，本目录的学习配对 | [Harness²](practice-guide_zh.md#harness2) → [HyperAgents](practice-guide_zh.md#hyperagents)。 | 对比保留经验库指导后续编辑，与继承元 Agent 代码执行后续编辑；先用 Harness² 固定演示观察状态，再追踪真实实现的复用边界。 |
 | **模型训练：Agent 策略** — [LLM Overview §§4、6](https://arxiv.org/html/2603.25681v3)；[Modern Agentic Systems §5](https://arxiv.org/html/2607.13104v1) | [Agent Lightning：Calc-X Local Mode](https://github.com/microsoft/agent-lightning/blob/main/docs/50-example-calc-x.md#local-mode)。 [实践说明](practice-guide_zh.md#agent-lightning)。 | 跟踪工具调用轨迹如何变成奖励、GRPO 更新和策略 checkpoint。示例使用预设训练器更新 Agent 策略，未演示训练器自身改进。 |
 | **模型训练：内层适应／外层学习** — [LLM Overview §§4.3–4.4](https://arxiv.org/html/2603.25681v3)；[The Path §5](https://www.preprints.org/manuscript/202608.0051) | [SEAL：general-knowledge 流程](https://github.com/Continual-Intelligence/SEAL/blob/main/general-knowledge/README.md)。 [实践说明](practice-guide_zh.md#seal)。 | 跟踪自编辑内容生成 → 临时 LoRA 适应 → 问答评估 → 编辑生成器的 ReST-EM 训练，比较内层更新和外层学习各自的作用。 |

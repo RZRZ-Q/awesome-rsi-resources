@@ -6,7 +6,7 @@
 
 This guide collects learning goals, source entry points, and running requirements for specific examples. Choose a project by topic; use the [learning guide](learning-guide.md#survey-project-map) to connect it to survey chapters. The [three resource labels](../README.md#resource-scope) describe the recommended entry point; topic groups are not RSI capability levels.
 
-These notes come from upstream documentation and selected source reviews on **2026-10-22–26**. **No tutorials, model calls, or experiments were run.** See the [verification records](verification.md#verification) for each resource's review date and scope. API examples require model access and a call budget; training configurations are upstream examples, not minimum hardware requirements tested by this directory.
+These notes come from upstream documentation and selected source reviews on **2026-10-22–27**. **No tutorials, model calls, or experiments were run.** See the [verification records](verification.md#verification) for each resource's review date and scope. API examples require model access and a call budget; training configurations are upstream examples, not minimum hardware requirements tested by this directory.
 
 ## Contents
 
@@ -302,6 +302,31 @@ uv run python meta_harness.py --iterations 1
 Inspect `evolvee`, `evolver`, and `algorithm` in the YAML, then trace real-run artifacts to `state.db`, candidate evidence, and proposal/evaluation logs. The dry run resolves the plan without model calls or containers; it does not validate credentials or the local checkout.
 
 **Language and running requirements.** English; Python ≥3.12, uv, Docker, benchmark data, an onboarded harness repository, and model access. The current public evolver integration uses an installed, authenticated Cursor Agent. Onboarding creates experiment repositories under your GitHub account; real evolution uses model credits and pushes kept candidates to those copies. Use an experiment repository you control. The small example checks the pipeline, not benchmark performance.
+
+<a id="harnesspro"></a>
+
+### [HarnessPro](https://github.com/pzs19/HarnessPro) · [paper](https://arxiv.org/abs/2610.26770)
+
+**Related self-improvement mechanism · performance–cost trade-offs.** The paper uses trajectory diagnosis, harness edits, generated tests, and Pareto selection to retain Lite / Medium / Heavy lineages for subsequent rounds. The proposal and selection framework stays fixed. The public package provides nine selected harnesses for Terminal-Bench 2, SWE-bench Pro, and ProgramBench, plus evaluation runners; the practical entry is to inspect and compare these artifacts, not to rerun the full evolution procedure.
+
+**Recommended entry.** Read [paper §§3–4](https://arxiv.org/html/2610.26770v2#S3) for the objective and selection loop → [evaluation guide](https://github.com/pzs19/HarnessPro/blob/8ae622eb4a4923dbb4b515be7ded614f88fd4f38/docs/evaluation.md) → compare `runtime/policy.json` under [the three TB2 modes](https://github.com/pzs19/HarnessPro/tree/8ae622eb4a4923dbb4b515be7ded614f88fd4f38/harnesses/terminal-bench-2) → [Medium hook](https://github.com/pzs19/HarnessPro/blob/8ae622eb4a4923dbb4b515be7ded614f88fd4f38/harnesses/terminal-bench-2/medium/runtime/hook.py) → [TB2 runner](https://github.com/pzs19/HarnessPro/blob/8ae622eb4a4923dbb4b515be7ded614f88fd4f38/scripts/run_tb2_harness_eval.py). Trace profile selection, reasoning effort, tool budgets, and output compaction. For example, the modes' `standard` profiles set tool ceilings of 38 / 44 / 60; the hook rejects calls beyond the configured ceiling.
+
+After following the upstream setup, run from its repository root. Set `TB2_TASKS` to the prepared dataset directory, `CODEX_CONFIG` to the Codex Responses-provider TOML, and `CODEX_BIN` to the Codex executable:
+
+```bash
+uv sync --frozen
+uv run python scripts/prepare_runtime.py
+uv run python scripts/run_tb2_harness_eval.py \
+  --dataset "$TB2_TASKS" --heldout-ids splits/terminal-bench-2-test.txt \
+  --run-dir runs/tb2-medium-one-task --harness-label medium \
+  --harness-dir harnesses/terminal-bench-2/medium \
+  --codex-config "$CODEX_CONFIG" --codex-binary "$CODEX_BIN" \
+  --model gpt-5.5 --concurrency 1 --max-tasks 1
+```
+
+The runner validates the full held-out manifest against the dataset's validation split before selecting one task; a directory containing one arbitrary task is insufficient. Start with this pipeline check, then compare modes on the same task set and model, using a fresh `--run-dir` and matching `--harness-label` / `--harness-dir` each time. Record both pass rate and cost; a one-task run does not establish a Pareto frontier.
+
+**Language and running requirements.** English; Linux, Python 3.12/3.13, uv, Docker + Compose, Codex CLI (upstream used 0.147.0), a Responses-compatible endpoint with model access and credentials, and separately obtained TB2 data and task / grader images. The command makes real model calls; this entry uses API-backed evaluation rather than parameter training. The bundled RTK helper targets Linux x86-64; other architectures need a compatible `--rtk-binary`. Code is MIT; bundled evaluators retain their own licenses. The release omits the paper's GLM-5.2 evolved harness snapshots.
 
 <a id="model-training"></a>
 

@@ -4,7 +4,7 @@
 
 递归自我改进（Recursive Self-Improvement, RSI）学习与研究资源导航。每项资源说明特色、推荐入口与学习条件。
 
-**收录 68 项资源；最近一次来源核验：2026-10-26。** 同一项目的网站、代码和 Notebook 合并计数；各项日期与实际核验范围见[核验档案](docs/verification_zh.md)。
+**收录 69 项资源；最近一次来源核验：2026-10-27。** 同一项目的网站、代码和 Notebook 合并计数；各项日期与实际核验范围见[核验档案](docs/verification_zh.md)。
 
 <a id="resource-scope"></a>
 
@@ -232,6 +232,7 @@
 | <a id="meta-harness"></a> [Meta-Harness · Stanford IRIS 与合作团队](https://github.com/stanford-iris-lab/meta-harness) · [论文](https://arxiv.org/abs/2603.28052) | **相关自改进机制。** 固定编码提案器利用源码、分数和轨迹搜索任务专用 Harness。 | [文本分类示例](docs/practice-guide_zh.md#meta-harness) | 英文；Python、提案器／任务模型访问与数据；按供应商配置环境。 |
 | <a id="aho"></a> [Agent Harness Optimizer（AHO）· Airbnb](https://github.com/airbnb/agent-harness-optimizer) · [论文](https://arxiv.org/abs/2609.05736) | **相关自改进机制。** 优化提示与工具中间件，区分候选验收和最终评测。 | [BetterHarness BFCL 示例](docs/practice-guide_zh.md#aho) | 英文；Python、模型 API 与另行下载的 BFCL 数据；注意 scorecard 配置。 |
 | <a id="beagle"></a> [Beagle / DarwinX · Salesforce AI Research](https://github.com/SalesforceAIResearch/Beagle) | **相关自改进机制。** 在固定算法下区分 evolver/evolvee，学习 Harness 评估、候选选优与谱系记录。 | [评估与演化配置预览](docs/practice-guide_zh.md#beagle) | 英文；Python、uv、Docker、Harness checkout 与 benchmark 缓存；真实运行需模型访问。 |
+| <a id="harnesspro"></a> [HarnessPro](https://github.com/pzs19/HarnessPro) · [论文](https://arxiv.org/abs/2610.26770) | **相关自改进机制。** 结合 Pareto 选优与已发布的 Lite／Medium／Heavy Harness，学习效果与成本的权衡。 | [论文 → 运行策略 → 单任务 TB2 评测](docs/practice-guide_zh.md#harnesspro) | 英文；Linux、Python 3.12/3.13、uv、Docker、Codex CLI、模型 API 与 benchmark 数据；公开入口评测已发布的 Harness。 |
 
 <a id="model-training"></a>
 
