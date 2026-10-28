@@ -4,7 +4,7 @@
 
 [资源目录](../README_zh.md) · [学习指南](learning-guide_zh.md) · [实践指南](practice-guide_zh.md)
 
-本档案保留 **2026-10-22、2026-10-23、2026-10-25、2026-10-26 和 2026-10-27** 的来源核验记录。下文的日期、版本、仓库覆盖与运行边界均以各次记录为准；迁移到独立文档不代表重新核验上游内容。
+本档案保留 **2026-10-22、2026-10-23、2026-10-25、2026-10-26、2026-10-27 和 2026-10-28** 的来源核验记录。下文的日期、版本、仓库覆盖与运行边界均以各次记录为准；迁移到独立文档不代表重新核验上游内容。
 
 - [近期综述覆盖表](#survey-coverage)
 - [核验历史与扩展排漏](#review-log)
@@ -36,6 +36,16 @@
 论文已覆盖不代表每个仓库都链接最新版：在 2026-10-22 核验时，jacky-leng 把代码 Agent 综述固定到 v1、The Last AI 固定到 v2、LLM 技术总览固定到 v1。阅读时可使用上表的版本链接。Frontis 与 Towards AI 核验的是作者托管 PDF；OpenReview 要求浏览器验证，未能确认平台是否另有更新版本。
 
 † 对于 `2610.00093`，arXiv 的页头与版本历史均显示 **2026-09-08**，但编号前缀指向 10 月。本表保留上游日期，差异原因未确认。
+
+<a id="survey-additions-2026-10-28"></a>
+
+### 2026-10-28：Harness 专题综述补充
+
+以下是本次新增的日期与覆盖记录；上方 12 篇的历史核验保持原范围。
+
+| 论文 | 论文日期与依据 | 最新核验版本／日期 | 已确认收录的仓库 |
+| --- | --- | --- | --- |
+| [From Harness Optimization to Recursive Self-Improvement: A Survey of Language Model Agents](https://lucasxinyu.github.io/harness-rsi/paper/) | [Preprints.org v1](https://www.preprints.org/manuscript/202610.2293) 发布于 **2026-10-23**；作者亦保留更早的阅读稿 | [作者修订 PDF](https://github.com/LucasXinYu/harness-rsi/blob/7f846c52fe70338ee97584c33c06f7ec99f67ed5/docs/paper/Harness_RSI_Preprint_2026-10-27.pdf) 标注 **2026-10-27**，[台北时间 10-28 入库](https://github.com/LucasXinYu/harness-rsi/commit/7f846c52fe70338ee97584c33c06f7ec99f67ed5)。Preprints.org 仍为 v1，其 DOI 不标识这份修订 PDF | 本次同时收录的[作者配套仓库](https://github.com/LucasXinYu/harness-rsi)；未重新核验此前 17 个索引对该综述的覆盖 |
 
 <a id="review-log"></a>
 
@@ -168,3 +178,19 @@
 | [Follow RSI](../README_zh.md#follow-rsi) | 核验于 **2026-10-27**；[README 6c36c53](https://github.com/adongwanai/follow-rsi/blob/6c36c535702b8af3f58db90091c0031d74742654/README.md)及[验收记录](https://github.com/adongwanai/follow-rsi/blob/6c36c535702b8af3f58db90091c0031d74742654/docs/acceptance.md)。 | 阅读[网站](https://adongwanai.github.io/follow-rsi/index.html)、[中英导读](https://adongwanai.github.io/follow-rsi/guide.html)、阅读路线，以及 [Harness²](https://github.com/adongwanai/follow-rsi/blob/6c36c535702b8af3f58db90091c0031d74742654/papers/harness2.md)／[HarnessPro](https://github.com/adongwanai/follow-rsi/blob/6c36c535702b8af3f58db90091c0031d74742654/papers/harnesspro.md)证据卡。网站自报收录 98 篇、8 项证据核查已审 43/784（5.5%）；`unknown` 表示未审，不表示论文没有相关实验。两张卡片的精读笔记与视频仍为占位内容，可安装订阅 Skill 尚未实现。代码为 MIT，文字为 CC BY 4.0。 |
 
 **发布状态核对。** [线上日报](https://adongwanai.github.io/follow-rsi/daily/index.html)与[公开 JSON 源](https://adongwanai.github.io/follow-rsi/feed/latest.json)已包含 25 条记录，与[固定版本的 feed](https://github.com/adongwanai/follow-rsi/blob/6c36c535702b8af3f58db90091c0031d74742654/site/feed/latest.json)一致，更新时间为 **2026-10-27 11:28:44 UTC**。页面标记本期经维护者审核，记录为 `review_decision: accept`，但证据速判仍标注 `Automated, unverified`；发布审核和全文证据审读是两件事。验收文档中“公开 feed 为空”的描述早于此次观察到的发布结果。未安装 Skill、为账户订阅、运行其发现流程，或逐篇核验底层论文。
+
+<a id="verification-2026-10-28"></a>
+
+### 2026-10-28：Harness 学习入口与来源状态
+
+按项目名称、论文标识和仓库 URL 与现有目录排重，新增一项综述及两项实践入口。首页维持既有分类，详细命令集中在实践指南。以下是文档、论文相关章节与源码核验，**未安装上游项目、运行示例、调用模型或复现实验**。索引覆盖记录只说明已检出的匹配，不代表对所有 Awesome 仓库的全面扫描。
+
+| 资源 | 日期与固定来源 | 核验范围 | 已收录索引中的覆盖 |
+| --- | --- | --- | --- |
+| [Harness 专题综述](../README_zh.md#harness-rsi-survey) | [来源 7f846c5](https://github.com/LucasXinYu/harness-rsi/tree/7f846c52fe70338ee97584c33c06f7ec99f67ed5)于 **2026-10-28**（台北时间）发布作者 10-27 修订版；平台版本另见[覆盖记录](#survey-additions-2026-10-28)。 | 作者 README、论文／引用页、10-27 文献补充，以及修订 PDF 的摘要、§§2.1、3.2、4.5–5；确认推荐章节与页码。区分新增文献与冻结于 10-01 的 95 条领域记录，未独立核验全部底层研究。 | 论文与作者配套索引合并为一项；仅确认作者仓库托管，不作索引之外首发的主张。 |
+| [HarnessMM](practice-guide_zh.md#harnessmm) | [论文](https://arxiv.org/abs/2610.32813)：v1 **2026-10-23**，核验时唯一列出版本；[源码 9c2ed7b](https://github.com/YuhuaJiang2002/HarnessMM/tree/9c2ed7b38aec25b137106c7d1276ed589efb0661)更新于 **2026-10-26**。 | README、依赖与许可、两项本地示例、集成／复现／代码映射文档、`ExecutableSubdag` 的回调替代与回执绑定，以及 `CodexChiselController` 的流程约定。区分合成示例与真实回调集成；部署占位符和历史源码签封需要新的实验配置。未安装、运行示例、调用模型或复现 benchmark。 | 已在 [pinkbubblebubble](https://github.com/pinkbubblebubble/awesome-rsi/blob/6785f5e3037be374504039e0a6e582026f90e5c2/README.md#L233)检出。本次补充直接学习入口；该记录未重跑完整索引扫描。 |
+| [Elicitation or Expansion?](practice-guide_zh.md#elicitation-or-expansion) | [论文](https://arxiv.org/abs/2610.27889)：v1 **2026-10-20**，为当前唯一列出版本；[源码 aa5de85](https://github.com/furiosa-ai/elicitation-or-expansion/tree/aa5de8564688c63640b22e42374a7df6cc41ed2d)。 | 阅读论文 §§3–5、README、HotpotQA 数据／配置、包依赖、启动／preflight／最终评测脚本，以及搜索循环的选优与输出代码。区分后台启动、优化完成与最终评测完成；源码核验不等于复现 pass@k 分析。公开包提供优化代码与候选，轨迹另有链接；不含 AppWorld 候选快照。未安装、调用模型或执行实验。 | [pinkbubblebubble](https://github.com/pinkbubblebubble/awesome-rsi/blob/6785f5e3037be374504039e0a6e582026f90e5c2/README.md#L448) 已链接该工作；本次补入直接学习入口。 |
+
+**Follow RSI 状态更正。** [10-27 撤回记录](https://github.com/adongwanai/follow-rsi/blob/1930ef8690dca98701da494296d24866a7fcfcba/data/feed/withdrawn-editions.json)说明，当期历史回填被误作当日动态，Harness RSI 分类需要逐篇复核。**2026-10-28** 复核[线上日报](https://adongwanai.github.io/follow-rsi/daily/index.html)与[公开 feed](https://adongwanai.github.io/follow-rsi/feed/latest.json)，前者标为已撤下，后者 `items: []`、`updated_at: null`，与[固定版本](https://github.com/adongwanai/follow-rsi/blob/1930ef8690dca98701da494296d24866a7fcfcba/site/feed/latest.json)一致。上方 10-27 的 25 条记录保留为当时快照，不能作为当前发布状态；导读和论文索引仍可作为阅读入口。
+
+**pinkbubblebubble 日期刷新。** [当前核验版本](https://github.com/pinkbubblebubble/awesome-rsi/blob/6785f5e3037be374504039e0a6e582026f90e5c2/README.md#L14)自报 Last reviewed **2026-10-26**，本次更新首页显示；上方 10-25 历史表中的 10-21 状态保持原记录。

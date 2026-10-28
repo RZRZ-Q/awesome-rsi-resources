@@ -12,7 +12,7 @@
 </p>
 
 <p align="center">
-  <a href="#resource-scope"><img src="https://img.shields.io/badge/resources-70-69D8AD?style=flat-square&amp;labelColor=182522" alt="70 项资源"></a>
+  <a href="#resource-scope"><img src="https://img.shields.io/badge/resources-73-69D8AD?style=flat-square&amp;labelColor=182522" alt="73 项资源"></a>
   <a href="README.md"><img src="https://img.shields.io/badge/languages-EN%20%2F%20%E4%B8%AD%E6%96%87-69D8AD?style=flat-square&amp;labelColor=182522" alt="中文与英文"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-69D8AD?style=flat-square&amp;labelColor=182522" alt="MIT 许可"></a>
 </p>
@@ -24,7 +24,7 @@
   <a href="docs/verification_zh.md">核验档案</a>
 </p>
 
-**收录 70 项资源；最近一次来源核验：2026-10-27。** 同一项目的网站、代码和 Notebook 合并计数；各项日期与实际核验范围见[核验档案](docs/verification_zh.md)。
+**收录 73 项资源；最近一次来源核验：2026-10-28。** 同一项目的网站、代码和 Notebook 合并计数；各项日期与实际核验范围见[核验档案](docs/verification_zh.md)。
 
 <a id="resource-scope"></a>
 
@@ -91,8 +91,8 @@
 | <a id="persdre"></a> [Persdre/awesome-recursive-self-improvement](https://github.com/Persdre/awesome-recursive-self-improvement) | 以“修改对象 × 闭环程度”整理研究，适合辨析不同工作所说的 RSI。 | [What Counts as RSI?](https://github.com/Persdre/awesome-recursive-self-improvement#what-counts-as-rsi)，再按修改对象查论文。 | 英文；机器学习 / Agent 背景；其中层级标签是作者的整理框架。 |
 | <a id="token-rhythm"></a> [Token-Rhythm/awesome-rsi](https://github.com/Token-Rhythm/awesome-rsi) | 双语文献表带日期、主题标签、摘要和论文 / 代码入口，适合按方向查阅。 | [中文精选读物](https://github.com/Token-Rhythm/awesome-rsi/blob/main/README_zh.md#featured-rsi-readings) → [分类概览](https://github.com/Token-Rhythm/awesome-rsi/blob/main/README_zh.md#category-overview)。 | 中英；纯阅读。上游最近核验标为 **2026-08-13**，9–10 月资料宜结合其他目录查阅。 |
 | <a id="jacky-leng"></a> [jacky-leng/awesome-rsi](https://github.com/jacky-leng/awesome-rsi) | 用闭环位置、反馈、搜索、持久状态、人的角色和证据类型六个轴比较改进循环，适合做方法对照。 | [TAXONOMY.md](https://github.com/jacky-leng/awesome-rsi/blob/main/TAXONOMY.md) → [Landscape](https://github.com/jacky-leng/awesome-rsi#landscape)。 | 英文；纯阅读。上游标注核验覆盖至 **2026-10-07**。 |
-| <a id="pinkbubblebubble"></a> [pinkbubblebubble/awesome-rsi](https://github.com/pinkbubblebubble/awesome-rsi) | 用 RSI / Self-improvement / Enabler 标签解释资源与递归改进的关系，兼收 Harness、评测和工程报告，适合寻找近期实践方向。 | [Scope and labels](https://github.com/pinkbubblebubble/awesome-rsi#scope-and-labels) → [Start here](https://github.com/pinkbubblebubble/awesome-rsi#start-here)；实践可看 [Harness 清单](https://github.com/pinkbubblebubble/awesome-rsi#self-improvement-harnesses)。 | 英文；纯阅读。上游自报最近核验 **2026-10-21**；第三方实现各有运行条件。 |
-| <a id="follow-rsi"></a> [Follow RSI](https://adongwanai.github.io/follow-rsi/index.html) · [仓库](https://github.com/adongwanai/follow-rsi) | 聚焦 Harness 自进化的论文索引，提供每日动态、阅读路线，以及留出评测、同预算对照、迁移和成本等证据卡片，适合学习怎样判断改进主张的依据。 | [中英 Harness 导读](https://adongwanai.github.io/follow-rsi/guide.html) → [阅读路线](https://adongwanai.github.io/follow-rsi/index.html#routes) → [每日动态](https://adongwanai.github.io/follow-rsi/daily/index.html)。 | 中文与英文；只读学习。多数证据字段仍为 `unknown`（尚未审定）；核验时订阅 Skill 已预告但尚未实现。 |
+| <a id="pinkbubblebubble"></a> [pinkbubblebubble/awesome-rsi](https://github.com/pinkbubblebubble/awesome-rsi) | 用 RSI / Self-improvement / Enabler 标签解释资源与递归改进的关系，兼收 Harness、评测和工程报告，适合寻找近期实践方向。 | [Scope and labels](https://github.com/pinkbubblebubble/awesome-rsi#scope-and-labels) → [Start here](https://github.com/pinkbubblebubble/awesome-rsi#start-here)；实践可看 [Harness 清单](https://github.com/pinkbubblebubble/awesome-rsi#self-improvement-harnesses)。 | 英文；纯阅读。上游自报最近核验 **2026-10-26**；第三方实现各有运行条件。 |
+| <a id="follow-rsi"></a> [Follow RSI](https://adongwanai.github.io/follow-rsi/index.html) · [仓库](https://github.com/adongwanai/follow-rsi) | 聚焦 Harness 自进化的论文索引，提供阅读路线，以及留出评测、同预算对照、迁移和成本等证据卡片，适合学习怎样判断改进主张的依据。 | [中英 Harness 导读](https://adongwanai.github.io/follow-rsi/guide.html) → [阅读路线](https://adongwanai.github.io/follow-rsi/index.html#routes) → [日报状态](https://adongwanai.github.io/follow-rsi/daily/index.html)。 | 中文与英文；只读学习。多数证据字段仍为 `unknown`（尚未审定）；核验时订阅 Skill 已预告但尚未实现。10-27 日报已撤回，[10-28 复核](docs/verification_zh.md#verification-2026-10-28)时 feed 为空。 |
 
 <a id="surveys"></a>
 
@@ -113,6 +113,7 @@
 | <a id="coding-agents-survey"></a> [Self-Evolving Coding Agents](https://arxiv.org/abs/2608.03392) | 按资产、架构和模型参数整理代码 Agent 的持久更新，并梳理代码特有反馈与评估；有助于区分改进当前任务代码与改进未来解题 Agent。 | [§2.3 操作性边界 → §3 分类 → §7–8 反馈与评估](https://arxiv.org/html/2608.03392v4)。 | 英文；需要代码 Agent／软件工程基础。已核验 v4；属于阅读材料，不是可运行教程。 |
 | <a id="safety-survey"></a> [Safety in Self-Evolving Agents: A Survey](https://arxiv.org/abs/2610.00093) · [作者仓库](https://github.com/xaddwell/awesome-self-evolving-agent-safety) | 研究经验成为可复用记忆、技能、工具、工作流或模型状态后，安全属性如何变化；SAVER 串起状态载体、适应操作、违规、暴露与响应。 | 先读[§2.3–2.4：状态转移检查与 SAVER](https://arxiv.org/html/2610.00093v1)，再读配套仓库的 [Overview 与 Corpus](https://github.com/xaddwell/awesome-self-evolving-agent-safety#overview)。 | 英文；需要 Agent／安全背景。配套语料含机器初始化标签与置信度分级，不能视为全部经人工核验的书目。 |
 | <a id="towards-ai"></a> [Towards AI That Improves Itself: A Survey of Recursive Self-Improvement](https://lee1003-lee.github.io/Awesome-RSI-Research/) · [作者仓库](https://github.com/Lee1003-lee/Awesome-RSI-Research) | 区分“继承已有改进”与“改进机制本身变强”，并关联验证、更新策略和记忆复用。适合学习如何设计与评估持续改进闭环。 | 先读 [§3 定义与主张检验框架](https://lee1003-lee.github.io/Awesome-RSI-Research/assets/rsi-survey.pdf#page=5)，再读 §4.3（第 14 页）及 §5.2（第 21 页），了解更新与智能体系统演化。 | 英文；需智能体 / 机器学习基础。相关区分属于作者框架；文献表也包含为 RSI 提供支持的相邻方法。作者公开的综述稿件。 |
+| <a id="harness-rsi-survey"></a> [From Harness Optimization to Recursive Self-Improvement: A Survey of Language Model Agents](https://lucasxinyu.github.io/harness-rsi/paper/) · [作者仓库](https://github.com/LucasXinYu/harness-rsi) | 将改进流程、递归范围与代码、推理、交互和视觉任务中的具体 Harness 修改相连接；配套图谱追踪初始行为、实际改动、结果与复用条件。 | 读 [10 月 27 日作者 PDF](https://github.com/LucasXinYu/harness-rsi/blob/7f846c52fe70338ee97584c33c06f7ec99f67ed5/docs/paper/Harness_RSI_Preprint_2026-10-27.pdf)：§2.1（第 3 页）→ §3.2（第 6 页）→ §§4.5–5（第 10 页）；再看[机制对照](https://github.com/LucasXinYu/harness-rsi#compare-the-mechanisms)。 | 英文；Agent 工程基础；纯阅读。作者修订版 **2026-10-27**，与 **10-23** 发布的 Preprints.org v1 分开；尚未经同行评审。 |
 
 <a id="survey-reading-path"></a>
 
@@ -254,6 +255,8 @@
 | <a id="aho"></a> [Agent Harness Optimizer（AHO）· Airbnb](https://github.com/airbnb/agent-harness-optimizer) · [论文](https://arxiv.org/abs/2609.05736) | **相关自改进机制。** 优化提示与工具中间件，区分候选验收和最终评测。 | [BetterHarness BFCL 示例](docs/practice-guide_zh.md#aho) | 英文；Python、模型 API 与另行下载的 BFCL 数据；注意 scorecard 配置。 |
 | <a id="beagle"></a> [Beagle / DarwinX · Salesforce AI Research](https://github.com/SalesforceAIResearch/Beagle) | **相关自改进机制。** 在固定算法下区分 evolver/evolvee，学习 Harness 评估、候选选优与谱系记录。 | [评估与演化配置预览](docs/practice-guide_zh.md#beagle) | 英文；Python、uv、Docker、Harness checkout 与 benchmark 缓存；真实运行需模型访问。 |
 | <a id="harnesspro"></a> [HarnessPro](https://github.com/pzs19/HarnessPro) · [论文](https://arxiv.org/abs/2610.26770) | **相关自改进机制。** 结合 Pareto 选优与已发布的 Lite／Medium／Heavy Harness，学习效果与成本的权衡。 | [论文 → 运行策略 → 单任务 TB2 评测](docs/practice-guide_zh.md#harnesspro) | 英文；Linux、Python 3.12/3.13、uv、Docker、Codex CLI、模型 API 与 benchmark 数据；公开入口评测已发布的 Harness。 |
+| <a id="harnessmm"></a> [HarnessMM](https://github.com/YuhuaJiang2002/HarnessMM) · [论文](https://arxiv.org/abs/2610.32813) | **相关自改进机制。** 复用执行回执支持的工具动作，追踪被替代的推理回调，并将运行时节省与独立的 Harness 配置优化联系起来。 | [本地决策复用演示 → 控制器 → 训练与选优流程](docs/practice-guide_zh.md#harnessmm) | 英文；Python 3.10–3.14、Node.js 22+。本地示例不需模型凭证或 GPU；benchmark 集成另需上游运行环境、数据与模型访问。 |
+| <a id="elicitation-or-expansion"></a> [Elicitation or Expansion?](https://github.com/furiosa-ai/elicitation-or-expansion) · [论文](https://arxiv.org/abs/2610.27889) | **相关自改进机制。** 比较不同尝试预算下的成功频率与已观察到的任务覆盖率，配有 Harness 优化代码和已生成候选。 | [收益诊断 → HotpotQA 搜索与留出评测](docs/practice-guide_zh.md#elicitation-or-expansion) | 英文；阅读无需 API。运行需 Linux、Python 3.12、uv、Docker、Claude Code 访问、solver 服务与数据／检索环境。 |
 
 <a id="model-training"></a>
 

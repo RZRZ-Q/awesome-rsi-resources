@@ -6,7 +6,7 @@
 
 This guide collects learning goals, source entry points, and running requirements for specific examples. Choose a project by topic; use the [learning guide](learning-guide.md#survey-project-map) to connect it to survey chapters. The [three resource labels](../README.md#resource-scope) describe the recommended entry point; topic groups are not RSI capability levels.
 
-These notes come from upstream documentation and selected source reviews on **2026-10-22–27**. **No tutorials, model calls, or experiments were run.** See the [verification records](verification.md#verification) for each resource's review date and scope. API examples require model access and a call budget; training configurations are upstream examples, not minimum hardware requirements tested by this directory.
+These notes come from upstream documentation and selected source reviews on **2026-10-22–28**. **No tutorials, model calls, or experiments were run.** See the [verification records](verification.md#verification) for each resource's review date and scope. API examples require model access and a call budget; training configurations are upstream examples, not minimum hardware requirements tested by this directory.
 
 ## Contents
 
@@ -327,6 +327,46 @@ uv run python scripts/run_tb2_harness_eval.py \
 The runner validates the full held-out manifest against the dataset's validation split before selecting one task; a directory containing one arbitrary task is insufficient. Start with this pipeline check, then compare modes on the same task set and model, using a fresh `--run-dir` and matching `--harness-label` / `--harness-dir` each time. Record both pass rate and cost; a one-task run does not establish a Pareto frontier.
 
 **Language and running requirements.** English; Linux, Python 3.12/3.13, uv, Docker + Compose, Codex CLI (upstream used 0.147.0), a Responses-compatible endpoint with model access and credentials, and separately obtained TB2 data and task / grader images. The command makes real model calls; this entry uses API-backed evaluation rather than parameter training. The bundled RTK helper targets Linux x86-64; other architectures need a compatible `--rtk-binary`. Code is MIT; bundled evaluators retain their own licenses. The release omits the paper's GLM-5.2 evolved harness snapshots.
+
+<a id="harnessmm"></a>
+
+### [HarnessMM](https://github.com/YuhuaJiang2002/HarnessMM) · [paper](https://arxiv.org/abs/2610.32813)
+
+**Related self-improvement mechanism · decision reuse and token accounting.** An Executable Decision Graph stores literal actions already resolved by the actor. Observed tool receipts activate eligible actions, which replace registered reasoning callbacks; new decisions return to the actor. Separate companion optimization revises prompts, context settings and adapter rules from training feedback, selects on validation, and freezes the configuration before testing. Actor weights and the update procedure stay fixed.
+
+**Recommended entry.** Read [paper §4](https://arxiv.org/html/2610.32813v1#S4) → [local example](https://github.com/YuhuaJiang2002/HarnessMM/blob/9c2ed7b38aec25b137106c7d1276ed589efb0661/examples/guarded_reuse.mjs) → [`ExecutableSubdag.stream` / `observeTool`](https://github.com/YuhuaJiang2002/HarnessMM/blob/9c2ed7b38aec25b137106c7d1276ed589efb0661/integrations/deepseek_harness/sar_v2.mjs#L206) → [integration guide](https://github.com/YuhuaJiang2002/HarnessMM/blob/9c2ed7b38aec25b137106c7d1276ed589efb0661/docs/INTEGRATION.md). After cloning the upstream repository, run from its root:
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install -e '.[dev,analysis]'
+node examples/guarded_reuse.mjs
+python examples/partition.py
+```
+
+The first example uses three predefined actions, synthetic receipts and an in-memory dispatcher. Its assertions check three substitution certificates and a return to the slow callback after graph exhaustion; no model or shell command is executed. The partition example only divides ten synthetic tasks into 20% training, 20% validation and 60% test. These teach the mechanism and data split, not autonomous evolution or measured token savings.
+
+For the improvement lifecycle, read the [`CodexChiselController` contract](https://github.com/YuhuaJiang2002/HarnessMM/blob/9c2ed7b38aec25b137106c7d1276ed589efb0661/phiagent/harness/codex_chisel.py#L1): `train` → `select_validation` → `freeze` → `evaluate_test`. Connect real executor/optimizer callbacks only after preparing a new experiment configuration. Compare complete-task quality and input-plus-output tokens, including retries and fallback; account for development and selection costs separately when evaluating all-in improvement.
+
+**Language and running requirements.** English; Python **3.10–3.14**, Node.js **22+**. Both local examples require no model credentials or GPU. Full experiments need the selected upstream harness, benchmark data/native scorer, model access or serving, and benchmark-specific execution environments; coding evaluation needs an isolated verifier. The [reproduction guide](https://github.com/YuhuaJiang2002/HarnessMM/blob/9c2ed7b38aec25b137106c7d1276ed589efb0661/docs/REPRODUCIBILITY.md) explains deployment placeholders and source/configuration freezes. Reference configurations are historical protocols, not ready-to-launch jobs. Code is Apache-2.0; external components retain their own terms.
+
+<a id="elicitation-or-expansion"></a>
+
+### [Elicitation or Expansion?](https://github.com/furiosa-ai/elicitation-or-expansion) · [paper](https://arxiv.org/abs/2610.27889)
+
+**Related self-improvement mechanism · harness search and gain diagnosis.** The study compares a base harness with validation-selected Meta-Harness candidates while keeping solver weights fixed. Learn to distinguish more frequent success from broader observed task coverage: inspect pass@k curves, task difficulty, and stronger-model / higher-compute references. Finite-attempt coverage describes the tested setting, not an intrinsic capability ceiling. The public code runs harness optimization; repeated-sampling analysis from the paper is a separate experimental step.
+
+**Recommended entry.** Read [paper §§3.1–3.2 and §§5.1–5.3](https://arxiv.org/html/2610.27889v1#S3) → compare the [HotpotQA configuration](https://github.com/furiosa-ai/elicitation-or-expansion/blob/aa5de8564688c63640b22e42374a7df6cc41ed2d/agentic/configs/hotpotqa-8b.yaml) with its released candidates in [harnesses/hotpotqa](https://github.com/furiosa-ai/elicitation-or-expansion/tree/aa5de8564688c63640b22e42374a7df6cc41ed2d/harnesses/hotpotqa) → trace [the search loop and finalization](https://github.com/furiosa-ai/elicitation-or-expansion/blob/aa5de8564688c63640b22e42374a7df6cc41ed2d/agentic/core/meta_harness.py). This configuration limits each task to four solver calls, two retrievals, and at most seven passages per retrieval; the separate relaxed configuration uses different limits.
+
+After completing the upstream [setup](https://github.com/furiosa-ai/elicitation-or-expansion/blob/aa5de8564688c63640b22e42374a7df6cc41ed2d/README.md#hotpotqa-and-appworld) and [data instructions](https://github.com/furiosa-ai/elicitation-or-expansion/blob/aa5de8564688c63640b22e42374a7df6cc41ed2d/agentic/data/hotpotqa/DATA.md), run from `agentic/`:
+
+```bash
+scripts/run_one.sh configs/hotpotqa-8b.yaml
+```
+
+The launcher runs in the background. Follow `runs/hotpotqa-8b-seed0/run.log` until optimization finishes, then run `scripts/finalize.sh hotpotqa-8b-seed0`. Inspect `results/selection.json`, `results/test_table.txt`, and `results/finalized.json` under that run; the last file records `complete` or `incomplete`. Candidates are selected on a separate selection split, then scored on held-out tests. These results do not by themselves reproduce the paper's pass@k curves. For those comparisons, preserve the task set and scorer, distinguish attempt count from per-attempt resource limits, and track execution cost alongside coverage.
+
+**Language and running requirements.** English; Linux launch scripts use `setsid`, and the agentic package requires Python 3.12, uv and Docker. Provide Claude Code OAuth access to the configured proposer model, a matching CLI version in the proposer image (host CLI or `PREFLIGHT_CLAUDE_VERSION`), and an OpenAI-compatible solver service. The HotpotQA example serves Qwen3-8B and a BM25 retriever; both must be reachable from Docker. Obtain HotpotQA questions and Wikipedia abstracts separately; upstream estimates about 10 GB RAM to build the index. GPU requirements depend on how the solver is hosted. Runs make real model calls. MIT code; dependencies and datasets retain their own terms. AppWorld candidate snapshots are excluded from the release, although its optimization framework is included.
 
 <a id="model-training"></a>
 

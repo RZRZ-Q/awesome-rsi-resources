@@ -22,6 +22,7 @@
 - **中文学习路线**：[Prism 导读](../README_zh.md#prism) → [Hello-Agents Reflection](practice-guide_zh.md#hello-agents) → 可选的 [WalkingLabs 前置 Notebook](practice-guide_zh.md#walkinglabs) → [李宏毅自我成长讲次](../README_zh.md#hung-yi-lee) → [RSI 研究札记](../README_zh.md#rsi-research-notes)与[原始综述](../README_zh.md#surveys)。
 - **概念入门**：[Prism 中文导读](../README_zh.md#prism) → [The RSI Book 第 1–2 章](practice-guide_zh.md#rsi-book) → [natnew 阅读路线](../README_zh.md#natnew)。
 - **Agent 工程**：[The RSI Book 的 Python 循环](practice-guide_zh.md#rsi-book) → [learn-deepseek-harness](practice-guide_zh.md#learn-deepseek-harness) → [Harness² 流程演示](practice-guide_zh.md#harness2)，再选 [Meta-Harness](practice-guide_zh.md#meta-harness) 或 [AHO](practice-guide_zh.md#aho) → selfimproving-agent 综述中的 scaffold 与评估章节。
+- **Harness 收益与成本**：[Harness 专题综述](../README_zh.md#harness-rsi-survey) → [HarnessMM 本地机制演示](practice-guide_zh.md#harnessmm) → [Elicitation or Expansion 收益诊断](practice-guide_zh.md#elicitation-or-expansion)。区分减少重复推理、提高单次成功率与扩大可解任务范围。
 - **优化实践**：[GEPA / DSPy](practice-guide_zh.md#gepa) → [ShinkaEvolve](practice-guide_zh.md#shinkaevolve) 或 [OpenEvolve](practice-guide_zh.md#openevolve) → 用 [DGM](practice-guide_zh.md#dgm) 进阶研究 Agent 代码演化。
 - **递归改进**：[RSI Labs Notebook 第 4 节](practice-guide_zh.md#rsi-labs) → [STOP](practice-guide_zh.md#stop-source-route) → [SICA](practice-guide_zh.md#sica-source-route) → [DGM](practice-guide_zh.md#dgm)。依次追踪改进器指令、动态加载的 Python 函数和归档 Agent 实现如何参与后续改进，再用 [Dream-RSI](practice-guide_zh.md#dream-rsi) 对比通过回放更新探索策略；若不熟悉候选评估和归档，可先学[前置 Notebook](practice-guide_zh.md#walkinglabs)。
 - **经验与记忆**：[Hello Generic Agent](practice-guide_zh.md#hello-generic-agent) → 用 [ACE](practice-guide_zh.md#ace) 学习文本经验手册，或用 [Voyager](practice-guide_zh.md#voyager) 学习可执行技能 → 用 [LongMemEval-V2](practice-guide_zh.md#longmemeval-v2) 评估记忆组件 → 用 [PAST-Bench](practice-guide_zh.md#past-bench) 对比任务序列中保留与不保留经验的结果。
@@ -31,7 +32,7 @@
 
 ## 推荐综述阅读路线
 
-本路线使用[覆盖表](verification_zh.md#survey-coverage)中的 **12 篇论文及已核实版本**，适合已有基本 LLM 与 Agent 概念的读者。顺序是本目录的学习建议；各论文的定义与自主性等级属于各自作者的框架。章节号对应上述版本，PDF 页码从文件第一页起算。
+本路线使用[覆盖表](verification_zh.md#survey-coverage)中的**论文及对应日期核实的版本**，适合已有基本 LLM 与 Agent 概念的读者。顺序是本目录的学习建议；各论文的定义与自主性等级属于各自作者的框架。章节号对应上述版本，PDF 页码从文件第一页起算。
 
 **核心路线：** Prism → *Self-Improvements in Modern Agentic Systems* → *Towards AI That Improves Itself* → 选一个方法分支。先读下列推荐章节，其余论文用于补充视角，不是额外的必修前置。
 
@@ -57,6 +58,7 @@
 | 论文／分支 | 特色与用途 | 推荐先读章节 |
 | --- | --- | --- |
 | **共同基础 — [Towards AI That Improves Itself: A Survey of Recursive Self-Improvement](https://lee1003-lee.github.io/Awesome-RSI-Research/assets/rsi-survey.pdf#page=5)** | 区分继承已接受的改进与改进器本身变强，并关联验证、更新决策和持久记忆。 | §3 定义与主张检验框架（第 5 页）→ §§4.2–4.3 反馈与优化；Agent 工程继续读 §5.2（第 21 页）。 |
+| **Harness 修改与复用 — [From Harness Optimization to Recursive Self-Improvement](https://github.com/LucasXinYu/harness-rsi/blob/7f846c52fe70338ee97584c33c06f7ec99f67ed5/docs/paper/Harness_RSI_Preprint_2026-10-27.pdf)** | 将改进流程与具体接口、记忆和控制流变化对应起来，比较哪些修改能在后续任务复用。 | §2.1 工作流（第 3 页）→ §3.2 递归机制与证据（第 6 页）→ §§4.5–5 跨领域对照与评估（第 10 页）。使用 2026-10-27 作者修订版；附录 K 收录该次文献补充，领域证据仍冻结于 10-01。 |
 | **模型训练 — [Self-Improvement of Large Language Models: A Technical Overview and Future Outlook](https://arxiv.org/html/2603.25681v3)** | 串起数据获取与筛选、模型优化、推理改进和自主评估，形成完整的学习生命周期视角。 | §4.1 优化总览 → §§4.3–4.4 自生成优化与自演化优化 → §6 自主评估。 |
 | **经验、记忆与技能 — [Self-Improving Agents in the Era of Experience: A Survey of Self- to Meta-Evolution](https://github.com/FrontisAI/Awesome-Self-Improving-Agents/blob/main/Self_Improving_Agents.pdf)** | 跟踪执行经验如何进入可复用技能、记忆与更高层控制，连接 Harness 工程与持续学习。 | §2 作为经验基础设施的 Harness（第 5 页）→ §§3–4 技能与记忆 → §§7–8 元演化与纵向评估。 |
 | **代码 Agent — [Self-Evolving Coding Agents](https://arxiv.org/html/2608.03392v4)** | 区分修改当前任务的代码与更新供后续复用的 Agent 组件，比较资产、架构和参数三类对象。 | §2.3 操作边界 → §3 分类 → 选读 §4 资产、§5 架构或 §6 参数 → §§7–8 反馈与评估。 |
@@ -84,7 +86,7 @@
 
 本表连接已收录的教程、实践项目和评测示例。表中横跨[三类资源](../README_zh.md#resource-scope)，阅读分支表示主题，不代表 RSI 能力等级。对应关系是本目录的学习建议；除非明确说明，不表示综述已引用该项目，部分项目晚于综述发布。先围绕学习目标尝试链接中的示例，再回到对应综述章节比较机制。
 
-项目入口依据 **2026-10-22–27** 阅读的上游文档与代码整理，未运行示例。每行的实践说明集中记录环境、模型访问、运行门槛和具体命令；各资源的核验日期与范围见[核验档案](verification_zh.md#verification)。
+项目入口依据 **2026-10-22–28** 阅读的上游文档与代码整理，未运行示例。每行的实践说明集中记录环境、模型访问、运行门槛和具体命令；各资源的核验日期与范围见[核验档案](verification_zh.md#verification)。
 
 | 阅读分支／对应综述 | 项目与上手入口 | 学习目标与范围 |
 | --- | --- | --- |
@@ -95,6 +97,8 @@
 | **反馈驱动的 Harness 优化** — [Modern Agentic Systems §6](https://arxiv.org/html/2607.13104v1#S6)；[Coding Agents §§7–8](https://arxiv.org/html/2608.03392v4)，本目录的学习配对 | [Meta-Harness 文本分类](practice-guide_zh.md#meta-harness)或 [AHO BFCL](practice-guide_zh.md#aho)。 | 对比修改 Harness 程序与修改提示／工具中间件，识别固定提案器，并区分选择数据和最终评测。 |
 | **Harness 演化：统一实验入口** — [Modern Agentic Systems §6](https://arxiv.org/html/2607.13104v1#S6)；[Coding Agents §§7–8](https://arxiv.org/html/2608.03392v4) | [Beagle：演化示例 → evaluate／evolve 计划预览](practice-guide_zh.md#beagle)。 | 跟踪基线评估、候选编辑、选优与谱系记录。在预设算法下区分 evolver 和 evolvee；统一接口本身不代表 evolver 也在演化。 |
 | **Harness 优化：效果与成本** — [Modern Agentic Systems §6](https://arxiv.org/html/2607.13104v1#S6)；[Coding Agents §§7–8](https://arxiv.org/html/2608.03392v4) | [HarnessPro：论文 §§3–4 → 运行策略 → 单任务 TB2 评测](practice-guide_zh.md#harnesspro)。 | 对比 Lite／Medium／Heavy 怎样分配推理与工具调用，再将通过率、实测成本与 Pareto 选优联系起来。区分评测已发布的 Harness 与运行论文的演化流程。 |
+| **Harness 成本：复用已确定的决策** — [Harness 专题综述 §§2.1、4.5–5](https://github.com/LucasXinYu/harness-rsi/blob/7f846c52fe70338ee97584c33c06f7ec99f67ed5/docs/paper/Harness_RSI_Preprint_2026-10-27.pdf)，本目录的学习配对 | [HarnessMM：控制器示例 → 集成说明](practice-guide_zh.md#harnessmm)。 | 追踪回执、动作守卫与回退条件，观察哪些慢模型回调可被替代。本地示例没有模型或真实 shell 执行；省 Token 和保持质量需完整任务测量。 |
+| **Harness 收益：成功率与任务覆盖** — [Harness 专题综述 §§4.5–5](https://github.com/LucasXinYu/harness-rsi/blob/7f846c52fe70338ee97584c33c06f7ec99f67ed5/docs/paper/Harness_RSI_Preprint_2026-10-27.pdf)，本目录的学习配对 | [Elicitation or Expansion：论文分析 → 已发布候选 → HotpotQA 优化入口](practice-guide_zh.md#elicitation-or-expansion)。 | 用相同采样预算下的 pass@k 和可解任务覆盖比较单次成功率与任务范围；有限 k 不能证明能力上限，运行一次候选选优也不能替代这项分析。 |
 | **改进经验与元 Agent 代码** — [The Last AI §3.6](https://arxiv.org/html/2609.11873v3#S3.SS6)，本目录的学习配对 | [Harness²](practice-guide_zh.md#harness2) → [HyperAgents](practice-guide_zh.md#hyperagents)。 | 对比保留经验库指导后续编辑，与继承元 Agent 代码执行后续编辑；先用 Harness² 固定演示观察状态，再追踪真实实现的复用边界。 |
 | **模型训练：Agent 策略** — [LLM Overview §§4、6](https://arxiv.org/html/2603.25681v3)；[Modern Agentic Systems §5](https://arxiv.org/html/2607.13104v1) | [Agent Lightning：Calc-X Local Mode](https://github.com/microsoft/agent-lightning/blob/main/docs/50-example-calc-x.md#local-mode)。 [实践说明](practice-guide_zh.md#agent-lightning)。 | 跟踪工具调用轨迹如何变成奖励、GRPO 更新和策略 checkpoint。示例使用预设训练器更新 Agent 策略，未演示训练器自身改进。 |
 | **模型训练：内层适应／外层学习** — [LLM Overview §§4.3–4.4](https://arxiv.org/html/2603.25681v3)；[The Path §5](https://www.preprints.org/manuscript/202608.0051) | [SEAL：general-knowledge 流程](https://github.com/Continual-Intelligence/SEAL/blob/main/general-knowledge/README.md)。 [实践说明](practice-guide_zh.md#seal)。 | 跟踪自编辑内容生成 → 临时 LoRA 适应 → 问答评估 → 编辑生成器的 ReST-EM 训练，比较内层更新和外层学习各自的作用。 |

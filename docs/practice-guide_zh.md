@@ -6,7 +6,7 @@
 
 这里集中记录具体示例的学习目标、源码入口和运行条件。先按主题选择项目；综述章节与项目的对应关系见[学习指南](learning-guide_zh.md#survey-project-map)。条目的[三类标签](../README_zh.md#resource-scope)描述所推荐入口的范围，主题分组不表示 RSI 能力等级。
 
-以下说明来自 **2026-10-22–27** 对上游文档与部分源码的核验，**未运行教程、调用模型或复现实验**；逐项日期与范围见[核验档案](verification_zh.md#verification)。API 示例需要相应模型权限与调用预算，训练配置是上游示例而非本目录实测的最低硬件要求。
+以下说明来自 **2026-10-22–28** 对上游文档与部分源码的核验，**未运行教程、调用模型或复现实验**；逐项日期与范围见[核验档案](verification_zh.md#verification)。API 示例需要相应模型权限与调用预算，训练配置是上游示例而非本目录实测的最低硬件要求。
 
 ## 目录
 
@@ -328,6 +328,46 @@ uv run python scripts/run_tb2_harness_eval.py \
 Runner 会先核对完整 held-out 清单与数据集验证划分，再选取一个任务；只准备一个任意任务的目录不够。先用该命令检查流程，再在相同任务集、相同模型下对比模式；每次使用新的 `--run-dir`，并同步修改 `--harness-label`／`--harness-dir`。同时记录通过率与成本；单任务运行不能建立 Pareto 前沿。
 
 **语言与运行条件。** 英文；Linux、Python 3.12/3.13、uv、Docker + Compose、Codex CLI（上游使用 0.147.0）、具备相应模型权限与凭据的 Responses 兼容端点，以及另行获取的 TB2 数据和任务／评分镜像。该命令会真实调用模型，入口属于 API 评测而非参数训练。附带的 RTK 工具面向 Linux x86-64，其他架构需通过 `--rtk-binary` 提供兼容版本。代码为 MIT，附带评测器保留各自许可。公开包未包含论文中 GLM-5.2 演化后的 Harness 快照。
+
+<a id="harnessmm"></a>
+
+### [HarnessMM](https://github.com/YuhuaJiang2002/HarnessMM) · [论文](https://arxiv.org/abs/2610.32813)
+
+**相关自改进机制 · 决策复用与 Token 核算。** Executable Decision Graph 保存 Agent 已确定的动作及其具体参数。工具回执使满足条件的动作可执行，并替代已注册的推理回调；需要新决策时交回原 Agent。独立的配套优化流程依据训练反馈修改提示词、上下文设置和适配规则，经验证集选优后冻结，再进入测试；Agent 权重与更新流程保持固定。
+
+**推荐入口。** 读[论文 §4](https://arxiv.org/html/2610.32813v1#S4) → [本地示例](https://github.com/YuhuaJiang2002/HarnessMM/blob/9c2ed7b38aec25b137106c7d1276ed589efb0661/examples/guarded_reuse.mjs) → [`ExecutableSubdag.stream`／`observeTool`](https://github.com/YuhuaJiang2002/HarnessMM/blob/9c2ed7b38aec25b137106c7d1276ed589efb0661/integrations/deepseek_harness/sar_v2.mjs#L206) → [集成指南](https://github.com/YuhuaJiang2002/HarnessMM/blob/9c2ed7b38aec25b137106c7d1276ed589efb0661/docs/INTEGRATION.md)。克隆上游仓库后，在其根目录运行：
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install -e '.[dev,analysis]'
+node examples/guarded_reuse.mjs
+python examples/partition.py
+```
+
+第一个示例使用三个预定义动作、合成回执和内存中的 dispatcher，断言检查三份替代记录，以及图耗尽后返回慢回调的行为；不调用模型，也不执行实际 shell 命令。划分示例仅将十个合成任务按 20% 训练、20% 验证、60% 测试分组。这两例用于学习机制和数据划分，不展示自主演化或实测 Token 节省。
+
+继续读 [`CodexChiselController` 的接口约定](https://github.com/YuhuaJiang2002/HarnessMM/blob/9c2ed7b38aec25b137106c7d1276ed589efb0661/phiagent/harness/codex_chisel.py#L1)，追踪 `train` → `select_validation` → `freeze` → `evaluate_test`；准备新的实验配置后，才能接入真实执行器与优化器回调。对比完整任务的质量和输入加输出 Token，计入重试与回退；评估改进总成本时，另外核算开发与选优开销。
+
+**语言与运行条件。** 英文；Python **3.10–3.14**、Node.js **22+**。两项本地示例不需模型凭证或 GPU。完整实验需要选定的上游 Harness、benchmark 数据与原生评分器、模型访问或服务，以及任务对应的执行环境；代码评测需要隔离的验证环境。[复现指南](https://github.com/YuhuaJiang2002/HarnessMM/blob/9c2ed7b38aec25b137106c7d1276ed589efb0661/docs/REPRODUCIBILITY.md)说明了部署占位符、源码与配置冻结要求。参考配置描述历史协议，不能直接作为启动任务。代码为 Apache-2.0，外部组件保留各自条款。
+
+<a id="elicitation-or-expansion"></a>
+
+### [Elicitation or Expansion?](https://github.com/furiosa-ai/elicitation-or-expansion) · [论文](https://arxiv.org/abs/2610.27889)
+
+**相关自改进机制 · Harness 搜索与收益诊断。** 研究在 solver 权重固定时，比较基础 Harness 与经验证选择的 Meta-Harness 候选。学习区分“成功更频繁”和“已观察到的可解任务更多”：对照 pass@k 曲线、任务难度，以及更大模型／更多推理计算的参照。有限尝试下的覆盖率描述的是被测条件，不能当作模型固有能力上限。公开代码运行 Harness 优化；论文的重复采样分析属于另一项实验步骤。
+
+**推荐学习入口。** 先读[论文 §§3.1–3.2 与 §§5.1–5.3](https://arxiv.org/html/2610.27889v1#S3) → 对照 [HotpotQA 配置](https://github.com/furiosa-ai/elicitation-or-expansion/blob/aa5de8564688c63640b22e42374a7df6cc41ed2d/agentic/configs/hotpotqa-8b.yaml)与 [harnesses/hotpotqa](https://github.com/furiosa-ai/elicitation-or-expansion/tree/aa5de8564688c63640b22e42374a7df6cc41ed2d/harnesses/hotpotqa) 中的已发布候选 → 追踪[搜索循环与最终评测](https://github.com/furiosa-ai/elicitation-or-expansion/blob/aa5de8564688c63640b22e42374a7df6cc41ed2d/agentic/core/meta_harness.py)。该配置将每题限制为四次 solver 调用、两次检索、每次最多七个段落；单独的 relaxed 配置采用不同限制。
+
+完成上游[环境准备](https://github.com/furiosa-ai/elicitation-or-expansion/blob/aa5de8564688c63640b22e42374a7df6cc41ed2d/README.md#hotpotqa-and-appworld)与[数据准备](https://github.com/furiosa-ai/elicitation-or-expansion/blob/aa5de8564688c63640b22e42374a7df6cc41ed2d/agentic/data/hotpotqa/DATA.md)后，从 `agentic/` 运行：
+
+```bash
+scripts/run_one.sh configs/hotpotqa-8b.yaml
+```
+
+启动器在后台运行。查看 `runs/hotpotqa-8b-seed0/run.log`，待优化结束后再运行 `scripts/finalize.sh hotpotqa-8b-seed0`。检查该 run 下的 `results/selection.json`、`results/test_table.txt` 与 `results/finalized.json`；最后一个文件记录 `complete` 或 `incomplete`。候选先在独立 selection 集上选优，再于留出测试集计分。这些结果本身不等于复现论文的 pass@k 曲线；进行后续比较时，保持任务与评分规则一致，区分尝试次数和单次资源上限，并同时记录执行成本与覆盖率。
+
+**语言与运行门槛。** 英文；Linux 启动脚本使用 `setsid`，agentic 包要求 Python 3.12、uv 与 Docker。需有配置中 proposer 模型的 Claude Code OAuth 访问、与容器匹配的 CLI 版本（本机 CLI 或 `PREFLIGHT_CLAUDE_VERSION`），以及兼容 OpenAI 的 solver 服务。HotpotQA 示例使用 Qwen3-8B 和 BM25 检索服务，两者均须能从 Docker 访问。HotpotQA 问题与 Wikipedia 摘要需单独获取；上游估计构建索引需约 10 GB 内存。GPU 条件取决于 solver 的部署方式；真实运行会调用模型。代码为 MIT，依赖和数据保留各自条款。公开包不含 AppWorld 候选快照，但保留其优化框架。
 
 <a id="model-training"></a>
 
