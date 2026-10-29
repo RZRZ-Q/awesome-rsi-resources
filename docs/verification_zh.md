@@ -213,3 +213,13 @@
 | [VERSE](practice-guide_zh.md#verse) | [论文](https://arxiv.org/abs/2610.02616)：v1 **2026-10-02**，当前唯一列出版本；作者[源码 d8ff0ad](https://github.com/wzekai/VERSE/tree/d8ff0adab0cf82e13d7878f84ff84f823cb2f6c9)于 **10-06** 发布。本次补入旧研究的学习入口，不是 10 月 29 日新论文。 | 论文 §§2.1–2.3 与 §3.1；README、配置、演化 driver 和 meta-teacher 源码。确认 `teacher_ws/` 的修改会在后续改进轮次载入。优化器自改动通过机械检查，不以验证集成绩提升为准入条件；执行器选优是另一条流程。核对数据准备、本地模型服务、演化与已发布结果入口。文档中的优化器 4 GPU 加执行器 1 GPU 配置不是已验证的最低门槛。 | [pinkbubblebubble](https://github.com/pinkbubblebubble/awesome-rsi/blob/6785f5e3037be374504039e0a6e582026f90e5c2/README.md#L165)和所查 Prism 目录均已有入口；本次补齐直接源码阅读／实践路线。 |
 | [GEPA-Curator](practice-guide_zh.md#gepa-curator) | [论文](https://arxiv.org/abs/2610.37651)：v1 **2026-10-27 17:58 UTC**（**台北时间 10-28 01:58**），当前唯一列出版本；[固定版本全文](https://arxiv.org/html/2610.37651v1)。 | 阅读 §3、§5.3 和 Appendix B.2，核对任务筛选、历史成功轨迹检索及 Meta-Harness 扩展，确认推荐章节和提示模板入口。论文链接与定向搜索均未确认专属作者实现，不能把基线仓库当作该方法代码。作为相关机制阅读条目收录，尚无已核验的运行命令或最低硬件条件。 | 两份所查文件均未检出对应标题或论文 ID；本次新增直接阅读入口。 |
 | [DGM／ADAS 教科书式基线对照研究](practice-guide_zh.md#textbook-baselines) | [aiXiv 论文](https://aixiv.online/abs/2610.02812)：v1 与最新 **v2 均为 2026-10-28**；aiXiv 与 arXiv 是不同平台。作者[代码／数据归档 ee6419a](https://github.com/tejasvi/self-improving-agents-textbook-baselines/tree/ee6419a25590578197e9acf1565cbb8bfda4661f)日期为 **10-28**，其 `v4` 归档标签不是论文 v4。 | 作者发布记录与论文源码、README、`replay.sh`、分析输入和完整实验条件。公开入口从已存结果重算表格／汇总；依赖未公开日志的三份汇总作为输入随包提供。完整轨迹及 LiveCodeBench 题面／测试未包含。研究在指定模型与任务上比较 DGM 移植版及已发布 DGM／ADAS Agent，未复现 DGM 原模型条件，也不构成对整个 RSI 领域的结论。 | 两份所查文件均未检出对应标题、论文 URL 或仓库 URL；作为评测阅读和离线重算入口收录。 |
+
+<a id="verification-hermit"></a>
+
+### 2026-10-29：Hermit 外置适配器
+
+按名称与仓库 URL 和现有目录排重后，将 Hermit 加入 Harness 优化分支。[实践指南](practice-guide_zh.md#hermit)区分离线教学流程、小规模 API 训练与部署。本次为文档与源码核验，**未安装、运行示例、调用模型、训练或部署**。
+
+| 资源 | 日期与固定来源 | 核验范围 | 已收录索引中的覆盖 |
+| --- | --- | --- | --- |
+| [Hermit](practice-guide_zh.md#hermit) | CMU InfiniAI Lab 的[官方仓库](https://github.com/Infini-AI-Lab/hermit)与[文档](https://infini-ai-lab.github.io/hermit/docs/)。[GitHub v0.1.0 Release](https://github.com/Infini-AI-Lab/hermit/releases/tag/v0.1.0)发布于 **2026-10-26**，其 changelog 标注 **10-25**。核验[源码 2056e43](https://github.com/Infini-AI-Lab/hermit/tree/2056e435d4be138358872208c3b233890cecf74c)，更新于 **10-29**；未确认独立的 Hermit 论文。 | README、包依赖、changelog、离线 learner 与配置、首个真实模型教程、Trainer／Evolver 契约、OfficeQA 配方及部署指南。确认固定模型／宿主、版本化外部适配器，以及结构检查和具体方法选优的区别。当前源码要求 Python 3.12+，适配器布局相较 0.1.0 已变更；命令固定版本，避免发布包与新示例混用。归为相关机制／框架，递归程度取决于 Evolver。 | 两份所查文件均未检出名称或仓库 URL：[pinkbubblebubble README](https://github.com/pinkbubblebubble/awesome-rsi/blob/6785f5e3037be374504039e0a6e582026f90e5c2/README.md)与 [Prism 方法目录](https://github.com/Prism-Shadow/awesome-rsi/blob/378ae2cb678a70d18ac19d5c7ec8b5d3709ecb4c/site/src/data/methods.js)。这只是限定文本核对，不代表所有已收录索引都未覆盖。 |

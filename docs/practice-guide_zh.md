@@ -272,6 +272,33 @@ harness2-demo --output runs/demo --k 2
 
 **Harness²：跟踪被保留的状态。** 每个新任务从共同基础执行 Harness 开始；之前采纳的 Harness 与经验提供给改进器选择复用。对照[经验库持久化](https://github.com/google-research/harness2/blob/1cfe254e8d25b15f37048c3730134686abe60335/harness2/core/library.py#L106-L151)与[传给改进器的上下文](https://github.com/google-research/harness2/blob/1cfe254e8d25b15f37048c3730134686abe60335/harness2/core/context.py#L161-L164)。Demo 的[固定提案器](https://github.com/google-research/harness2/blob/1cfe254e8d25b15f37048c3730134686abe60335/harness2/demo.py#L120-L163)展示流程连接，不会从经验库学习其编辑。真实运行的默认路线使用 Google Cloud／Vertex AI 凭证；LAB 另需 Pandoc／Poppler，WorkBuddy-Bench 另需 Docker。
 
+<a id="hermit"></a>
+
+### [Hermit · CMU InfiniAI Lab](https://github.com/Infini-AI-Lab/hermit)
+
+**相关自改进机制 · 外置 adapter 训练。** Hermit 固定模型和原有 Harness，演化独立 adapter 中的指令、技能、记忆或工具代码。Trainer 记录反馈、检查文件结构并保存 adapter 版本，Evolver 提供更新方法。是否形成递归改进取决于所选方法，不能由框架名称直接判断。
+
+**推荐入口。** 读[离线教程](https://github.com/Infini-AI-Lab/hermit/blob/2056e435d4be138358872208c3b233890cecf74c/docs/get-started/quickstart.md) → [Trainer](https://github.com/Infini-AI-Lab/hermit/blob/2056e435d4be138358872208c3b233890cecf74c/docs/framework/trainer.md) → [Evolver](https://github.com/Infini-AI-Lab/hermit/blob/2056e435d4be138358872208c3b233890cecf74c/docs/framework/evolver.md)。准备 **Python 3.12+** 与 Git，在虚拟环境中安装以下固定版本源码：
+
+```bash
+git clone https://github.com/Infini-AI-Lab/hermit.git
+cd hermit
+git checkout 2056e435d4be138358872208c3b233890cecf74c
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install -e .
+hermit check --config docs/_examples/first_training/run.yaml
+hermit eval --config docs/_examples/first_training/run.yaml --adapter none
+hermit train --config docs/_examples/first_training/run.yaml
+hermit eval --config docs/_examples/first_training/run.yaml --adapter final
+```
+
+查看生成的 `ADAPTER.md` 与评测汇总。脚本化 learner 从预设反馈写入大写输出规则，构造的分数增长用于演示训练契约，不代表真实模型改进。这个可信本地例子关闭了 learner sandbox，无需凭证、GPU 或外部数据。
+
+**语言与运行条件。** 英文。[首个真实模型教程](https://github.com/Infini-AI-Lab/hermit/blob/2056e435d4be138358872208c3b233890cecf74c/docs/get-started/first-model.md)使用九个内置情感任务（训练、验证、测试各三个）、chat-completions API，以及 `python -m pip install -e . --group gepa`；依赖组要求 **pip ≥25.1**。应配套使用固定源码版本的依赖与例子，其布局和 Python 要求不同于最初的 PyPI 0.1.0 发布。[OfficeQA](https://github.com/Infini-AI-Lab/hermit/blob/2056e435d4be138358872208c3b233890cecf74c/docs/recipes/officeqa.md)另需数据集权限与模型配置；沙箱中的 learner 程序需 Linux／bubblewrap，其 Codex 执行路线还需 Docker／npm。
+
+规格检查通过不等于分数提升，应在相同测试划分比较 no-adapter、root 与 final。Evolver 决定 `final`，它并不统一代表最高分检查点。[部署与转换](https://github.com/Infini-AI-Lab/hermit/blob/2056e435d4be138358872208c3b233890cecf74c/docs/tutorials/deploy-an-adapter.md)生成宿主工作区或受支持的插件文件，不会启动 Codex／Claude Code，也不会执行训练。
+
 <a id="meta-harness"></a>
 
 ### [Meta-Harness · Stanford IRIS 与合作团队](https://github.com/stanford-iris-lab/meta-harness) · [论文](https://arxiv.org/abs/2603.28052)

@@ -272,6 +272,33 @@ Inspect `demo.json`, `INDEX.md`, and `EXPERIENCE.md`; trace [library context and
 
 **Harness²: follow the retained state.** Each new task starts from a common base execution harness; earlier adopted harnesses and lessons are available to the improver for selective reuse. Compare [library persistence](https://github.com/google-research/harness2/blob/1cfe254e8d25b15f37048c3730134686abe60335/harness2/core/library.py#L106-L151) with [the context supplied to the improver](https://github.com/google-research/harness2/blob/1cfe254e8d25b15f37048c3730134686abe60335/harness2/core/context.py#L161-L164). The demo's [scripted proposer](https://github.com/google-research/harness2/blob/1cfe254e8d25b15f37048c3730134686abe60335/harness2/demo.py#L120-L163) demonstrates the plumbing but does not learn its edits from that library. For real runs, the default route uses Google Cloud / Vertex AI credentials; LAB additionally needs Pandoc / Poppler, and WorkBuddy-Bench needs Docker.
 
+<a id="hermit"></a>
+
+### [Hermit · CMU InfiniAI Lab](https://github.com/Infini-AI-Lab/hermit)
+
+**Related self-improvement mechanism · external adapter training.** Hermit keeps the model and original harness fixed while evolving a separate adapter containing instructions, skills, memory or tool code. The Trainer records feedback, checks file structure and versions adapters; an Evolver supplies the update method. Recursive behavior depends on the selected method, rather than the framework name.
+
+**Recommended entry.** Follow the [offline walkthrough](https://github.com/Infini-AI-Lab/hermit/blob/2056e435d4be138358872208c3b233890cecf74c/docs/get-started/quickstart.md) → [Trainer](https://github.com/Infini-AI-Lab/hermit/blob/2056e435d4be138358872208c3b233890cecf74c/docs/framework/trainer.md) → [Evolver](https://github.com/Infini-AI-Lab/hermit/blob/2056e435d4be138358872208c3b233890cecf74c/docs/framework/evolver.md). With Python **3.12+** and Git, install this pinned source revision in a virtual environment:
+
+```bash
+git clone https://github.com/Infini-AI-Lab/hermit.git
+cd hermit
+git checkout 2056e435d4be138358872208c3b233890cecf74c
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install -e .
+hermit check --config docs/_examples/first_training/run.yaml
+hermit eval --config docs/_examples/first_training/run.yaml --adapter none
+hermit train --config docs/_examples/first_training/run.yaml
+hermit eval --config docs/_examples/first_training/run.yaml --adapter final
+```
+
+Inspect the generated `ADAPTER.md` and evaluation summaries. The scripted learner writes an uppercase-output rule from predefined feedback; the constructed score gain demonstrates the training contract, not real-model improvement. This trusted local example disables the learner sandbox and needs no credentials, GPU or external data.
+
+**Language and running requirements.** English. The [first real-model tutorial](https://github.com/Infini-AI-Lab/hermit/blob/2056e435d4be138358872208c3b233890cecf74c/docs/get-started/first-model.md) uses nine included sentiment tasks (three each for training, validation and testing), a chat-completions API and `python -m pip install -e . --group gepa`; dependency groups require **pip ≥25.1**. Keep the pinned checkout's dependencies and examples together; its layout and Python requirement differ from the initial PyPI 0.1.0 release. [OfficeQA](https://github.com/Infini-AI-Lab/hermit/blob/2056e435d4be138358872208c3b233890cecf74c/docs/recipes/officeqa.md) adds dataset access and model configuration; sandboxed learner programs need Linux / bubblewrap, and its Codex acting route adds Docker / npm.
+
+Specification validity does not establish a score gain; compare no-adapter, root and final on the same test split. The Evolver selects `final`, which is not universally the highest-scoring checkpoint. [Deployment and conversion](https://github.com/Infini-AI-Lab/hermit/blob/2056e435d4be138358872208c3b233890cecf74c/docs/tutorials/deploy-an-adapter.md) generate host workspaces or supported plugin files; they do not start Codex / Claude Code or run training.
+
 <a id="meta-harness"></a>
 
 ### [Meta-Harness · Stanford IRIS and collaborators](https://github.com/stanford-iris-lab/meta-harness) · [paper](https://arxiv.org/abs/2603.28052)

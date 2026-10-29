@@ -12,7 +12,7 @@
 </p>
 
 <p align="center">
-  <a href="#resource-scope"><img src="https://img.shields.io/badge/resources-77-69D8AD?style=flat-square&amp;labelColor=182522" alt="77 项资源"></a>
+  <a href="#resource-scope"><img src="https://img.shields.io/badge/resources-78-69D8AD?style=flat-square&amp;labelColor=182522" alt="78 项资源"></a>
   <a href="README.md"><img src="https://img.shields.io/badge/languages-EN%20%2F%20%E4%B8%AD%E6%96%87-69D8AD?style=flat-square&amp;labelColor=182522" alt="中文与英文"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-69D8AD?style=flat-square&amp;labelColor=182522" alt="MIT 许可"></a>
 </p>
@@ -24,7 +24,7 @@
   <a href="docs/verification_zh.md">核验档案</a>
 </p>
 
-**收录 77 项资源；最近一次来源核验：2026-10-29。** 同一项目的网站、代码和 Notebook 合并计数；各项日期与实际核验范围见[核验档案](docs/verification_zh.md)。
+**收录 78 项资源；最近一次来源核验：2026-10-29。** 同一项目的网站、代码和 Notebook 合并计数；各项日期与实际核验范围见[核验档案](docs/verification_zh.md)。
 
 <a id="resource-scope"></a>
 
@@ -252,6 +252,7 @@
 | 资源 | 特色与学习目标 | 推荐学习入口 | 语言与条件 |
 | --- | --- | --- | --- |
 | <a id="harness2"></a> [Harness² · Google Cloud AI Research／Northwestern](https://github.com/google-research/harness2) · [论文](https://arxiv.org/abs/2610.14224) | **递归改进方法。** 保留的改进经验指导后续 Harness 编辑；先看固定编辑逻辑的流程演示。 | [本地 Demo → 经验库源码](docs/practice-guide_zh.md#harness2) | 英文；Demo 需 Python 3.12/3.13 与 uv、无需模型凭证；真实改进需模型访问。 |
+| <a id="hermit"></a> [Hermit · CMU InfiniAI Lab](https://github.com/Infini-AI-Lab/hermit) · [文档](https://infini-ai-lab.github.io/hermit/docs/) | **相关自改进机制。** 保持基础模型和原 Harness 固定，训练并记录外置 adapter 的版本，通过统一训练与部署接口比较不同更新方法。 | [离线训练流程 → 小型 API 示例 → adapter 部署](docs/practice-guide_zh.md#hermit) | 英文；当前源码需 Python 3.12+ 与 Git。离线教学例子无需模型账号或 GPU；真实训练需方法依赖、模型访问和任务数据。 |
 | <a id="meta-harness"></a> [Meta-Harness · Stanford IRIS 与合作团队](https://github.com/stanford-iris-lab/meta-harness) · [论文](https://arxiv.org/abs/2603.28052) | **相关自改进机制。** 固定编码提案器利用源码、分数和轨迹搜索任务专用 Harness。 | [文本分类示例](docs/practice-guide_zh.md#meta-harness) | 英文；Python、提案器／任务模型访问与数据；按供应商配置环境。 |
 | <a id="gepa-curator"></a> [GEPA-Curator](https://arxiv.org/abs/2610.37651) | **相关自改进机制。** 在提示优化前筛选有学习价值的失败、检索有用的历史成功轨迹，并比较其扩展到 Meta-Harness 代码修改的方式。 | [§3 → §5.3 → Curator 提示](docs/practice-guide_zh.md#gepa-curator) | 英文；GEPA／Agent 基础；本次仅推荐论文阅读，尚未确认专属官方实现与运行入口。 |
 | <a id="aho"></a> [Agent Harness Optimizer（AHO）· Airbnb](https://github.com/airbnb/agent-harness-optimizer) · [论文](https://arxiv.org/abs/2609.05736) | **相关自改进机制。** 优化提示与工具中间件，区分候选验收和最终评测。 | [BetterHarness BFCL 示例](docs/practice-guide_zh.md#aho) | 英文；Python、模型 API 与另行下载的 BFCL 数据；注意 scorecard 配置。 |

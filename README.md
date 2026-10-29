@@ -12,7 +12,7 @@
 </p>
 
 <p align="center">
-  <a href="#resource-scope"><img src="https://img.shields.io/badge/resources-77-69D8AD?style=flat-square&amp;labelColor=182522" alt="77 resources"></a>
+  <a href="#resource-scope"><img src="https://img.shields.io/badge/resources-78-69D8AD?style=flat-square&amp;labelColor=182522" alt="78 resources"></a>
   <a href="README_zh.md"><img src="https://img.shields.io/badge/languages-EN%20%2F%20%E4%B8%AD%E6%96%87-69D8AD?style=flat-square&amp;labelColor=182522" alt="English and Chinese"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-69D8AD?style=flat-square&amp;labelColor=182522" alt="MIT license"></a>
 </p>
@@ -24,7 +24,7 @@
   <a href="docs/verification.md">Source records</a>
 </p>
 
-**77 resources; latest source review: 2026-10-29.** A project’s website, code, and notebooks count as one resource. See the [verification archive](docs/verification.md) for individual dates and the scope of each review.
+**78 resources; latest source review: 2026-10-29.** A project’s website, code, and notebooks count as one resource. See the [verification archive](docs/verification.md) for individual dates and the scope of each review.
 
 <a id="resource-scope"></a>
 
@@ -252,6 +252,7 @@ Compare reusable improvement experience with harness search under a fixed optimi
 | Resource | Features and learning goals | Recommended entry | Language and requirements |
 | --- | --- | --- | --- |
 | <a id="harness2"></a> [Harness² · Google Cloud AI Research / Northwestern](https://github.com/google-research/harness2) · [paper](https://arxiv.org/abs/2610.14224) | **Recursive improvement method.** Retained improvement experience informs later harness edits; start with the scripted workflow demo. | [Local demo → experience-library source](docs/practice-guide.md#harness2) | English; demo: Python 3.12/3.13 and uv, no model credentials; real improvement requires model access. |
+| <a id="hermit"></a> [Hermit · CMU InfiniAI Lab](https://github.com/Infini-AI-Lab/hermit) · [docs](https://infini-ai-lab.github.io/hermit/docs/) | **Related self-improvement mechanism.** Train and version an external adapter while keeping the base model and original harness fixed; compare update methods through shared training and deployment interfaces. | [Offline training loop → small API example → adapter deployment](docs/practice-guide.md#hermit) | English; current source needs Python 3.12+ and Git. Offline teaching example needs no model account or GPU; real training needs method dependencies, model access and task data. |
 | <a id="meta-harness"></a> [Meta-Harness · Stanford IRIS and collaborators](https://github.com/stanford-iris-lab/meta-harness) · [paper](https://arxiv.org/abs/2603.28052) | **Related self-improvement mechanism.** A fixed coding proposer uses source, scores, and traces to search task-specific harness programs. | [Text-classification example](docs/practice-guide.md#meta-harness) | English; Python, proposer/task-model access and datasets; setup differs by model provider. |
 | <a id="gepa-curator"></a> [GEPA-Curator](https://arxiv.org/abs/2610.37651) | **Related self-improvement mechanism.** Select informative failures and retrieve useful past successes before prompt optimization; compare the extension to Meta-Harness code edits. | [§3 → §5.3 → Curator prompts](docs/practice-guide.md#gepa-curator) | English; GEPA / agent fundamentals; reading only at this check. A dedicated official implementation and runnable entry were not confirmed. |
 | <a id="aho"></a> [Agent Harness Optimizer (AHO) · Airbnb](https://github.com/airbnb/agent-harness-optimizer) · [paper](https://arxiv.org/abs/2609.05736) | **Related self-improvement mechanism.** Optimize prompts and tool middleware; distinguish candidate acceptance from final evaluation. | [BetterHarness BFCL example](docs/practice-guide.md#aho) | English; Python, model API and separately downloaded BFCL data; check scorecard settings. |
