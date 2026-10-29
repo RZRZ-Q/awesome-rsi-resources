@@ -6,7 +6,7 @@
 
 This guide collects learning goals, source entry points, and running requirements for specific examples. Choose a project by topic; use the [learning guide](learning-guide.md#survey-project-map) to connect it to survey chapters. The [three resource labels](../README.md#resource-scope) describe the recommended entry point; topic groups are not RSI capability levels.
 
-These notes come from upstream documentation and selected source reviews on **2026-10-22–28**. **No tutorials, model calls, or experiments were run.** See the [verification records](verification.md#verification) for each resource's review date and scope. API examples require model access and a call budget; training configurations are upstream examples, not minimum hardware requirements tested by this directory.
+These notes come from upstream documentation and selected source reviews on **2026-10-22–29**. **No tutorials, model calls, or experiments were run.** See the [verification records](verification.md#verification) for each resource's review date and scope. API examples require model access and a call budget; training configurations are upstream examples, not minimum hardware requirements tested by this directory.
 
 ## Contents
 
@@ -234,6 +234,22 @@ WORKSPACE=workspace/smoke ROUNDS=2 BRANCHES=3 REFINE=1 MAX_WORKERS=3 \
 
 **Language and running requirements.** English; Python ≥3.10, editable task-dependency installation, Gemini CLI/API access, and downloaded Math/Lasso task files. The dry run still checks task files, dependencies, the agent, and API keys; the second command makes real model calls. Lasso additionally needs `g++` / Eigen; KernelBench needs a GPU evaluation server. The published package omits the paper's harness-optimization experiment and Current History Only ablation.
 
+<a id="verse"></a>
+
+### [VERSE · Verified Self-Evolving Optimizer](https://github.com/wzekai/VERSE) · [paper](https://arxiv.org/abs/2610.02616)
+
+**Recursive improvement method · optimizer-harness inheritance.** VERSE uses execution feedback to improve both an executor harness and the optimizer's own prompts, skills, tools, hooks and notes. Trace how the updated optimizer participates in the next round while model weights, evaluation splits and selection rules remain fixed.
+
+**Recommended entry.** Read [paper §§2.1–2.3 → §3.1](https://arxiv.org/html/2610.02616v1) → [`verse_mh.yaml`](https://github.com/wzekai/VERSE/blob/d8ff0adab0cf82e13d7878f84ff84f823cb2f6c9/verse/configs/self_teacher/verse_mh.yaml) → [`driver.py`](https://github.com/wzekai/VERSE/blob/d8ff0adab0cf82e13d7878f84ff84f823cb2f6c9/verse/evolution/driver.py) → [`meta_teacher.py`](https://github.com/wzekai/VERSE/blob/d8ff0adab0cf82e13d7878f84ff84f823cb2f6c9/verse/evolution/meta_teacher.py). Follow `end_round()`: the meta-episode uses current tools to edit persistent `teacher_ws/`; edits that pass structural checks are committed, and the next `begin_round()` reloads the optimizer's equipment. Health checks govern executable hooks; they are distinct from measuring improvement quality.
+
+For a CPU-only first step, run `python results/make_table.py` from the cloned repository to recompute the published table from [released outcomes](https://github.com/wzekai/VERSE/tree/d8ff0adab0cf82e13d7878f84ff84f823cb2f6c9/results). This uses Python's standard library and makes no model calls. After [installation, data preparation and model serving](https://github.com/wzekai/VERSE/blob/d8ff0adab0cf82e13d7878f84ff84f823cb2f6c9/README.md), the actual evolution entry is:
+
+```bash
+CONFIG=self_teacher/verse_mh TAG=-r1 bash scripts/run_swe.sh
+```
+
+**Language and running requirements.** English; full runs require Python ≥3.12, Docker, separately prepared task data and model serving. The reference vLLM setup uses **4 GPUs for the optimizer and 1 for the executor**, not a verified minimum. The launcher defaults to six evolution rounds and 24 concurrent tasks, followed by three-repeat test evaluations; budget accordingly. Inspect `rounds.jsonl`, optimizer workspaces and `test110.json` to connect inherited changes with held-out outcomes. Recomputing released numbers is separate from rerunning these experiments.
+
 <a id="harness-optimization"></a>
 
 ## Harness Optimization
@@ -368,6 +384,16 @@ The launcher runs in the background. Follow `runs/hotpotqa-8b-seed0/run.log` unt
 
 **Language and running requirements.** English; Linux launch scripts use `setsid`, and the agentic package requires Python 3.12, uv and Docker. Provide Claude Code OAuth access to the configured proposer model, a matching CLI version in the proposer image (host CLI or `PREFLIGHT_CLAUDE_VERSION`), and an OpenAI-compatible solver service. The HotpotQA example serves Qwen3-8B and a BM25 retriever; both must be reachable from Docker. Obtain HotpotQA questions and Wikipedia abstracts separately; upstream estimates about 10 GB RAM to build the index. GPU requirements depend on how the solver is hosted. Runs make real model calls. MIT code; dependencies and datasets retain their own terms. AppWorld candidate snapshots are excluded from the release, although its optimization framework is included.
 
+<a id="gepa-curator"></a>
+
+### [GEPA-Curator: Curated Learning for Self Improving Agents](https://arxiv.org/abs/2610.37651)
+
+**Related self-improvement mechanism · feedback selection.** A Curator selects informative tasks and retrieves trustworthy successful trajectories for prompt optimization. Learn to distinguish prompt weaknesses from environment failures or noisy evaluation; the curation procedure remains fixed.
+
+**Recommended entry.** Read [§3 → §5.3 → Appendix B.2](https://arxiv.org/html/2610.37651v1): task selection and success retrieval → extension to Meta-Harness → Curator prompts. Pair this reading with [GEPA](#gepa) and [Meta-Harness](#meta-harness).
+
+**Language and running requirements.** English; reading needs agent and prompt-optimization fundamentals, without an API or GPU. No dedicated official implementation was confirmed at the [review date](verification.md#verification-2026-10-29); this is a paper-reading entry, with no verified reproduction command.
+
 <a id="model-training"></a>
 
 ## Model Training
@@ -462,6 +488,22 @@ The survey explicitly discusses CORAL and CoMAS in §3.2.1. R-Zero is our learni
 
 **Language and running requirements.** English docs and a Chinese README; Python **3.11–3.13**, Git, `uv`, Docker, and model API access. This example's `docker-opencode` preset uses OpenCode and a LiteLLM gateway; configure the API-key placeholder in `litellm_config.yaml`. Its NumPy / SciPy grader needs no training GPU. Budget for two agents' model calls and local evaluations.
 
+<a id="eat"></a>
+
+### [Evolving Agent Teams (EAT)](https://github.com/caoshiyi/EAT) · [paper](https://arxiv.org/abs/2610.36848)
+
+**Related self-improvement mechanism · team redesign from experience.** A supervisor diagnoses stalled progress and changes the coding team's roles, prompts and execution phases. Team artifacts, learning notes and evolution history inform the next redesign; the team edits the task program under a fixed evaluator. Learn how persistent experience changes team organization, without assuming that the supervisor's update algorithm rewrites itself.
+
+**Recommended entry.** Read [paper §3.2 → §§4.2 and 4.5](https://arxiv.org/html/2610.36848v1) → [task setup in `SKILL.md`](https://github.com/caoshiyi/EAT/blob/737e1665eeeffd3fce35d319174f88ea4613d7aa/SKILL.md) → [`SUPERVISOR.md`](https://github.com/caoshiyi/EAT/blob/737e1665eeeffd3fce35d319174f88ea4613d7aa/agent_team/SUPERVISOR.md) → [`launch_stateless.sh`](https://github.com/caoshiyi/EAT/blob/737e1665eeeffd3fce35d319174f88ea4613d7aa/agent_team/launch_stateless.sh). Follow team configuration → execution → official evaluation → reflection. The [Claude Code entry](https://github.com/caoshiyi/EAT/blob/737e1665eeeffd3fce35d319174f88ea4613d7aa/README.md#get-started) is:
+
+```text
+/plugin install eat --marketplace caoshiyi/EAT
+```
+
+Prepare a task Git repository with `eat/task.md` and `eat/eval.sh`; record the starting score and specify the iteration limit, team size and dollar budget. The script's `--persistent` mode retains the supervisor conversation. Read `eat/log/TEAM_CONFIG.md`, iteration evaluations and `eat/log/BUDGET.md` together to relate team changes to score and cost.
+
+**Language and running requirements.** English; documented runtime is Linux, Claude Code model access, Git, tmux and Python ≥3.11. EAT Gym additionally uses uv, the Hugging Face CLI and task-specific dependencies / hardware. The plugin is an installation entry, not a model-free demo; runs make real model calls. Use a dedicated task environment: the launcher runs coding agents with permission prompts disabled; upstream's optional [clean-room setup](https://github.com/caoshiyi/EAT/tree/737e1665eeeffd3fce35d319174f88ea4613d7aa/cleanroom) adds Linux bubblewrap and a network allowlist.
+
 <a id="comas"></a>
 
 ### [CoMAS](https://github.com/xxyQwQ/CoMAS)
@@ -543,6 +585,22 @@ These entries retain fixed game rules or preference judges and fixed training pr
 **Recommended entry.** [Start With Simple Words](https://aniruddhaadak-rsi.vercel.app/docs/start) → [Python admission-gate example](https://github.com/aniruddhaadak80/RSI/blob/main/engine/rsi_loop.py).
 
 **Language and running requirements.** English; the example uses the Python 3.10+ standard library. It makes decisions from externally supplied test status, gains, and file paths; it does not generate changes with a model or run evaluations automatically.
+
+<a id="textbook-baselines"></a>
+
+### [Do Self-Improving Coding Agents Beat Textbook Baselines?](https://github.com/tejasvi/self-improving-agents-textbook-baselines) · [paper](https://aixiv.online/abs/2610.02812)
+
+**Evaluation tool · comparative study and result reanalysis.** Compares a DGM port with standard engineering changes, one-shot redesign, placebo loops and compute-matched sampling; also re-evaluates released DGM and ADAS agents. Learn to separate search and selection effects from baseline quality, test-set transfer and resource budgets. Conclusions concern the tested models, tasks and implementations; changing the model is not an exact replication of the original experiment.
+
+**Recommended entry.** Read the pinned [README](https://github.com/tejasvi/self-improving-agents-textbook-baselines/blob/ee6419a25590578197e9acf1565cbb8bfda4661f/README.md) → [methods](https://github.com/tejasvi/self-improving-agents-textbook-baselines/blob/ee6419a25590578197e9acf1565cbb8bfda4661f/paper/sec_methods_v2.tex) → [discussion](https://github.com/tejasvi/self-improving-agents-textbook-baselines/blob/ee6419a25590578197e9acf1565cbb8bfda4661f/paper/sec_discussion_v2.tex) → [`replay.sh`](https://github.com/tejasvi/self-improving-agents-textbook-baselines/blob/ee6419a25590578197e9acf1565cbb8bfda4661f/replay.sh). From the cloned repository:
+
+```bash
+bash replay.sh
+```
+
+This regenerates summaries, tables and figures from shipped results without model calls. Compare the per-task outcomes and agent patches before interpreting aggregate scores. The paper is **aiXiv v2**; repository tag **v4** identifies the code/data archive, not the paper version. aiXiv is a separate platform from arXiv.
+
+**Language and running requirements.** English; offline reanalysis needs Python 3, NumPy, SciPy and Matplotlib, with no GPU or model API. Figure bytes can differ across Matplotlib versions. Full experiments additionally require model access, external LiveCodeBench data, bubblewrap, the upstream project layout and agent dependencies; SWE-bench runs need Docker and swebench 2.1.0. Full agent transcripts are absent, and three summaries derived from omitted logs are supplied as replay inputs. Reanalysis therefore checks the released results without recreating every experimental observation.
 
 <a id="longmemeval-v2"></a>
 

@@ -4,7 +4,7 @@
 
 [资源目录](../README_zh.md) · [学习指南](learning-guide_zh.md) · [实践指南](practice-guide_zh.md)
 
-本档案保留 **2026-10-22、2026-10-23、2026-10-25、2026-10-26、2026-10-27 和 2026-10-28** 的来源核验记录。下文的日期、版本、仓库覆盖与运行边界均以各次记录为准；迁移到独立文档不代表重新核验上游内容。
+本档案保留 **2026-10-22、2026-10-23、2026-10-25、2026-10-26、2026-10-27、2026-10-28 和 2026-10-29** 的来源核验记录。下文的日期、版本、仓库覆盖与运行边界均以各次记录为准；迁移到独立文档不代表重新核验上游内容。
 
 - [近期综述覆盖表](#survey-coverage)
 - [核验历史与扩展排漏](#review-log)
@@ -68,6 +68,10 @@
 ### 2026-10-27：HarnessPro 实践入口
 
 按名称、论文 ID 和仓库 URL 与本目录排重后，将 HarnessPro 补入现有 Harness 优化分支。它已出现在一个已收录索引中，本次补充直接学习与评测路线。[新增记录](#verification-2026-10-27)区分论文的演化方法与已发布的 Harness 产物、评测代码。
+
+### 2026-10-29：团队演化、改进器继承与评测
+
+与当前目录排重后，补入 EAT、VERSE、GEPA-Curator 和 DGM／ADAS 教科书式基线对照研究，扩充既有协同演化、Harness 与评测分支。[本轮四项记录](#verification-2026-10-29)区分近期代码封装、补充学习路线的旧研究、仅供阅读的方法与离线重算。原 12 篇综述覆盖表和各次历史快照保持不变。
 
 <a id="verification"></a>
 
@@ -194,3 +198,18 @@
 **Follow RSI 状态更正。** [10-27 撤回记录](https://github.com/adongwanai/follow-rsi/blob/1930ef8690dca98701da494296d24866a7fcfcba/data/feed/withdrawn-editions.json)说明，当期历史回填被误作当日动态，Harness RSI 分类需要逐篇复核。**2026-10-28** 复核[线上日报](https://adongwanai.github.io/follow-rsi/daily/index.html)与[公开 feed](https://adongwanai.github.io/follow-rsi/feed/latest.json)，前者标为已撤下，后者 `items: []`、`updated_at: null`，与[固定版本](https://github.com/adongwanai/follow-rsi/blob/1930ef8690dca98701da494296d24866a7fcfcba/site/feed/latest.json)一致。上方 10-27 的 25 条记录保留为当时快照，不能作为当前发布状态；导读和论文索引仍可作为阅读入口。
 
 **pinkbubblebubble 日期刷新。** [当前核验版本](https://github.com/pinkbubblebubble/awesome-rsi/blob/6785f5e3037be374504039e0a6e582026f90e5c2/README.md#L14)自报 Last reviewed **2026-10-26**，本次更新首页显示；上方 10-25 历史表中的 10-21 状态保持原记录。
+
+<a id="verification-2026-10-29"></a>
+
+### 2026-10-29：团队演化、改进器继承与评测
+
+于 **2026-10-29** 核对论文版本历史、作者关联来源及下列学习／执行入口。**未安装上游项目、运行示例、调用模型或复现实验。** [实践指南](practice-guide_zh.md)区分论文阅读、已有结果的离线重算与真实实验。
+
+覆盖核对范围为当前目录和两份固定来源：[pinkbubblebubble 的 README](https://github.com/pinkbubblebubble/awesome-rsi/blob/6785f5e3037be374504039e0a6e582026f90e5c2/README.md)与 [Prism 方法目录](https://github.com/Prism-Shadow/awesome-rsi/blob/378ae2cb678a70d18ac19d5c7ec8b5d3709ecb4c/site/src/data/methods.js)。按标题、论文 ID 和仓库 URL 匹配；下文“未检出”仅限这些文本，不代表所有已收录索引、PDF、历史版本和外部网站均未覆盖。
+
+| 资源 | 日期与固定来源 | 核验范围 | 已收录索引中的覆盖 |
+| --- | --- | --- | --- |
+| [Evolving Agent Teams（EAT）](practice-guide_zh.md#eat) | [论文](https://arxiv.org/abs/2610.36848)：v1 **2026-10-27**，当前唯一列出版本；[源码 737e166](https://github.com/caoshiyi/EAT/tree/737e1665eeeffd3fce35d319174f88ea4613d7aa)。**台北时间 10-29**，[5234c40](https://github.com/caoshiyi/EAT/commit/5234c4064e2c58df6039579e022e8b71d3e1ccf1)新增可复用 Skill／启动接口，[d4c9c4d](https://github.com/caoshiyi/EAT/commit/d4c9c4d48dd2d347c9de6ad1188a8eff5945bff7)新增插件清单；两者与论文日期分开记载。 | 论文 §3.2 与 §§4.2、4.5；README、Skill 环境说明、监督者／启动器源码和变更文件记录。确认团队重设计的可执行实现、经验保留、固定任务评测，以及 Linux／Claude Code／具体任务的前置条件。监督者修改团队配置，未证实其更新规则会自改写。未独立重放所链接的任务与轨迹集合。 | 两份所查文件均未检出对应标题、论文 ID 或仓库 URL；本次新增直接实践入口。 |
+| [VERSE](practice-guide_zh.md#verse) | [论文](https://arxiv.org/abs/2610.02616)：v1 **2026-10-02**，当前唯一列出版本；作者[源码 d8ff0ad](https://github.com/wzekai/VERSE/tree/d8ff0adab0cf82e13d7878f84ff84f823cb2f6c9)于 **10-06** 发布。本次补入旧研究的学习入口，不是 10 月 29 日新论文。 | 论文 §§2.1–2.3 与 §3.1；README、配置、演化 driver 和 meta-teacher 源码。确认 `teacher_ws/` 的修改会在后续改进轮次载入。优化器自改动通过机械检查，不以验证集成绩提升为准入条件；执行器选优是另一条流程。核对数据准备、本地模型服务、演化与已发布结果入口。文档中的优化器 4 GPU 加执行器 1 GPU 配置不是已验证的最低门槛。 | [pinkbubblebubble](https://github.com/pinkbubblebubble/awesome-rsi/blob/6785f5e3037be374504039e0a6e582026f90e5c2/README.md#L165)和所查 Prism 目录均已有入口；本次补齐直接源码阅读／实践路线。 |
+| [GEPA-Curator](practice-guide_zh.md#gepa-curator) | [论文](https://arxiv.org/abs/2610.37651)：v1 **2026-10-27 17:58 UTC**（**台北时间 10-28 01:58**），当前唯一列出版本；[固定版本全文](https://arxiv.org/html/2610.37651v1)。 | 阅读 §3、§5.3 和 Appendix B.2，核对任务筛选、历史成功轨迹检索及 Meta-Harness 扩展，确认推荐章节和提示模板入口。论文链接与定向搜索均未确认专属作者实现，不能把基线仓库当作该方法代码。作为相关机制阅读条目收录，尚无已核验的运行命令或最低硬件条件。 | 两份所查文件均未检出对应标题或论文 ID；本次新增直接阅读入口。 |
+| [DGM／ADAS 教科书式基线对照研究](practice-guide_zh.md#textbook-baselines) | [aiXiv 论文](https://aixiv.online/abs/2610.02812)：v1 与最新 **v2 均为 2026-10-28**；aiXiv 与 arXiv 是不同平台。作者[代码／数据归档 ee6419a](https://github.com/tejasvi/self-improving-agents-textbook-baselines/tree/ee6419a25590578197e9acf1565cbb8bfda4661f)日期为 **10-28**，其 `v4` 归档标签不是论文 v4。 | 作者发布记录与论文源码、README、`replay.sh`、分析输入和完整实验条件。公开入口从已存结果重算表格／汇总；依赖未公开日志的三份汇总作为输入随包提供。完整轨迹及 LiveCodeBench 题面／测试未包含。研究在指定模型与任务上比较 DGM 移植版及已发布 DGM／ADAS Agent，未复现 DGM 原模型条件，也不构成对整个 RSI 领域的结论。 | 两份所查文件均未检出对应标题、论文 URL 或仓库 URL；作为评测阅读和离线重算入口收录。 |

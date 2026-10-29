@@ -6,7 +6,7 @@
 
 这里集中记录具体示例的学习目标、源码入口和运行条件。先按主题选择项目；综述章节与项目的对应关系见[学习指南](learning-guide_zh.md#survey-project-map)。条目的[三类标签](../README_zh.md#resource-scope)描述所推荐入口的范围，主题分组不表示 RSI 能力等级。
 
-以下说明来自 **2026-10-22–28** 对上游文档与部分源码的核验，**未运行教程、调用模型或复现实验**；逐项日期与范围见[核验档案](verification_zh.md#verification)。API 示例需要相应模型权限与调用预算，训练配置是上游示例而非本目录实测的最低硬件要求。
+以下说明来自 **2026-10-22–29** 对上游文档与部分源码的核验，**未运行教程、调用模型或复现实验**；逐项日期与范围见[核验档案](verification_zh.md#verification)。API 示例需要相应模型权限与调用预算，训练配置是上游示例而非本目录实测的最低硬件要求。
 
 ## 目录
 
@@ -234,6 +234,22 @@ WORKSPACE=workspace/smoke ROUNDS=2 BRANCHES=3 REFINE=1 MAX_WORKERS=3 \
 
 **语言与运行条件。** 英文；Python ≥3.10、以 editable 模式安装任务依赖、Gemini CLI/API 访问，以及下载的 Math/Lasso 任务文件。Dry run 仍检查任务文件、依赖、Agent 与 API key；第二条命令会真实调用模型。Lasso 另需 `g++`／Eigen，KernelBench 另需 GPU 评估服务。已发布工程不包含论文中的 Harness 优化实验与 Current History Only 消融。
 
+<a id="verse"></a>
+
+### [VERSE · Verified Self-Evolving Optimizer](https://github.com/wzekai/VERSE) · [论文](https://arxiv.org/abs/2610.02616)
+
+**递归改进方法 · 优化器 Harness 继承。** VERSE 根据执行反馈，同时改进执行器 Harness 和优化器自身的提示、技能、工具、hooks 与笔记。追踪更新后的优化器如何参与下一轮；模型权重、评测划分和选择规则保持固定。
+
+**推荐入口。** 读[论文 §§2.1–2.3 → §3.1](https://arxiv.org/html/2610.02616v1) → [`verse_mh.yaml`](https://github.com/wzekai/VERSE/blob/d8ff0adab0cf82e13d7878f84ff84f823cb2f6c9/verse/configs/self_teacher/verse_mh.yaml) → [`driver.py`](https://github.com/wzekai/VERSE/blob/d8ff0adab0cf82e13d7878f84ff84f823cb2f6c9/verse/evolution/driver.py) → [`meta_teacher.py`](https://github.com/wzekai/VERSE/blob/d8ff0adab0cf82e13d7878f84ff84f823cb2f6c9/verse/evolution/meta_teacher.py)。重点跟踪 `end_round()`：meta-episode 用当前工具修改持久化的 `teacher_ws/`，通过结构检查的编辑被提交，下一轮 `begin_round()` 重新加载优化器的工具与指令。可执行 hooks 的健康检查与改进质量评测是两个不同环节。
+
+低门槛第一步是在克隆的仓库中运行 `python results/make_table.py`，从[已发布结果](https://github.com/wzekai/VERSE/tree/d8ff0adab0cf82e13d7878f84ff84f823cb2f6c9/results)重算论文表格；只使用 Python 标准库，无需模型调用。完成[安装、数据准备与模型服务](https://github.com/wzekai/VERSE/blob/d8ff0adab0cf82e13d7878f84ff84f823cb2f6c9/README.md)后，实际演化入口为：
+
+```bash
+CONFIG=self_teacher/verse_mh TAG=-r1 bash scripts/run_swe.sh
+```
+
+**语言与运行条件。** 英文；完整运行需要 Python ≥3.12、Docker、另行准备的任务数据与模型服务。参考 vLLM 部署为**优化器 4 GPU、执行器 1 GPU**，不是经本目录验证的最低配置。启动脚本默认六轮演化、24 个并发任务，并进行三次重复测试评估，需据此准备预算。结合 `rounds.jsonl`、优化器工作区和 `test110.json`，将继承的变化与持出结果对应起来。重算已发布数字与重新执行这些实验应分开理解。
+
 <a id="harness-optimization"></a>
 
 ## Harness 优化
@@ -369,6 +385,16 @@ scripts/run_one.sh configs/hotpotqa-8b.yaml
 
 **语言与运行门槛。** 英文；Linux 启动脚本使用 `setsid`，agentic 包要求 Python 3.12、uv 与 Docker。需有配置中 proposer 模型的 Claude Code OAuth 访问、与容器匹配的 CLI 版本（本机 CLI 或 `PREFLIGHT_CLAUDE_VERSION`），以及兼容 OpenAI 的 solver 服务。HotpotQA 示例使用 Qwen3-8B 和 BM25 检索服务，两者均须能从 Docker 访问。HotpotQA 问题与 Wikipedia 摘要需单独获取；上游估计构建索引需约 10 GB 内存。GPU 条件取决于 solver 的部署方式；真实运行会调用模型。代码为 MIT，依赖和数据保留各自条款。公开包不含 AppWorld 候选快照，但保留其优化框架。
 
+<a id="gepa-curator"></a>
+
+### [GEPA-Curator: Curated Learning for Self Improving Agents](https://arxiv.org/abs/2610.37651)
+
+**相关自改进机制 · 反馈筛选。** Curator 选择能提供有效信号的任务，并检索可信的成功轨迹用于提示优化。学习区分提示本身的不足、环境故障与评测噪声；筛选流程本身保持固定。
+
+**推荐入口。** 读[§3 → §5.3 → Appendix B.2](https://arxiv.org/html/2610.37651v1)：任务筛选和成功轨迹检索 → 扩展到 Meta-Harness → Curator 提示。结合 [GEPA](#gepa) 与 [Meta-Harness](#meta-harness) 阅读。
+
+**语言与运行条件。** 英文；阅读需要 Agent 与提示优化基础，无需 API 或 GPU。[核验时](verification_zh.md#verification-2026-10-29)尚未确认专属官方实现；本项作为论文阅读入口，暂无经过核验的复现命令。
+
 <a id="model-training"></a>
 
 ## 模型训练
@@ -463,6 +489,22 @@ python3 -m mass plan --config configs/paper.json
 
 **语言与运行条件。** 英文文档和中文 README；Python **3.11–3.13**、Git、`uv`、Docker 与模型 API。此示例的 `docker-opencode` 预设使用 OpenCode 和 LiteLLM 网关，须配置 `litellm_config.yaml` 的 API-key 占位符。NumPy / SciPy 评估器不需要训练 GPU；需预留两个 Agent 的模型调用与本地评估开销。
 
+<a id="eat"></a>
+
+### [Evolving Agent Teams（EAT）](https://github.com/caoshiyi/EAT) · [论文](https://arxiv.org/abs/2610.36848)
+
+**相关自改进机制 · 从经验重组团队。** 监督者诊断进展停滞的原因，修改编码团队的角色、提示和执行阶段；团队产物、学习笔记与演化历史进入下一次重组，团队则在固定评测器下修改任务程序。学习持久化经验如何改变团队组织，不据此假定监督者的更新算法会改写自身。
+
+**推荐入口。** 读[论文 §3.2 → §§4.2、4.5](https://arxiv.org/html/2610.36848v1) → [`SKILL.md` 的任务配置](https://github.com/caoshiyi/EAT/blob/737e1665eeeffd3fce35d319174f88ea4613d7aa/SKILL.md) → [`SUPERVISOR.md`](https://github.com/caoshiyi/EAT/blob/737e1665eeeffd3fce35d319174f88ea4613d7aa/agent_team/SUPERVISOR.md) → [`launch_stateless.sh`](https://github.com/caoshiyi/EAT/blob/737e1665eeeffd3fce35d319174f88ea4613d7aa/agent_team/launch_stateless.sh)，跟踪团队配置 → 执行 → 正式评测 → 反思。[Claude Code 入口](https://github.com/caoshiyi/EAT/blob/737e1665eeeffd3fce35d319174f88ea4613d7aa/README.md#get-started)为：
+
+```text
+/plugin install eat --marketplace caoshiyi/EAT
+```
+
+准备任务 Git 仓库中的 `eat/task.md` 和 `eat/eval.sh`，记录初始分数，并设置迭代上限、团队人数和美元预算。脚本的 `--persistent` 模式保留监督者会话。结合 `eat/log/TEAM_CONFIG.md`、每轮评测和 `eat/log/BUDGET.md`，将团队变化与分数、成本联系起来。
+
+**语言与运行条件。** 英文；文档运行环境为 Linux、Claude Code 模型访问、Git、tmux 与 Python ≥3.11。EAT Gym 另需 uv、Hugging Face CLI，以及具体任务的依赖／硬件。插件命令只是安装入口，不是免模型演示；实际运行会调用模型。应使用独立任务环境：启动器关闭编码 Agent 的权限提示；上游可选的 [clean-room 配置](https://github.com/caoshiyi/EAT/tree/737e1665eeeffd3fce35d319174f88ea4613d7aa/cleanroom)另需 Linux bubblewrap 与网络白名单。
+
 <a id="comas"></a>
 
 ### [CoMAS](https://github.com/xxyQwQ/CoMAS)
@@ -544,6 +586,22 @@ python3 -m mass plan --config configs/paper.json
 **推荐入口。** [Start With Simple Words](https://aniruddhaadak-rsi.vercel.app/docs/start) → [Python 门控示例](https://github.com/aniruddhaadak80/RSI/blob/main/engine/rsi_loop.py)。
 
 **语言与运行条件。** 英文；示例使用 Python 3.10+ 标准库。接收外部传入的测试状态、收益和路径后作判断，不包含模型生成改动或自动执行评测。
+
+<a id="textbook-baselines"></a>
+
+### [Do Self-Improving Coding Agents Beat Textbook Baselines?](https://github.com/tejasvi/self-improving-agents-textbook-baselines) · [论文](https://aixiv.online/abs/2610.02812)
+
+**评测工具 · 对照研究与结果重分析。** 将 DGM 移植实现与常规工程改进、单次重设计、空改动循环及计算量匹配的采样比较，并重新评测已发布的 DGM、ADAS Agent。学习区分搜索与选优的作用、基线质量、测试集迁移和资源预算。结论针对所测模型、任务与实现；更换模型后的评测不等于对原实验的完全复现。
+
+**推荐入口。** 读固定版本的 [README](https://github.com/tejasvi/self-improving-agents-textbook-baselines/blob/ee6419a25590578197e9acf1565cbb8bfda4661f/README.md) → [方法](https://github.com/tejasvi/self-improving-agents-textbook-baselines/blob/ee6419a25590578197e9acf1565cbb8bfda4661f/paper/sec_methods_v2.tex) → [讨论](https://github.com/tejasvi/self-improving-agents-textbook-baselines/blob/ee6419a25590578197e9acf1565cbb8bfda4661f/paper/sec_discussion_v2.tex) → [`replay.sh`](https://github.com/tejasvi/self-improving-agents-textbook-baselines/blob/ee6419a25590578197e9acf1565cbb8bfda4661f/replay.sh)。在克隆的仓库中运行：
+
+```bash
+bash replay.sh
+```
+
+这会用已发布结果重新生成汇总、表格和图，不调用模型。解释总体分数前，先对比逐任务结果和 Agent 补丁。论文为 **aiXiv v2**；仓库标签 **v4** 指代码／数据归档，不是论文版本。aiXiv 与 arXiv 是不同平台。
+
+**语言与运行条件。** 英文；离线重分析需要 Python 3、NumPy、SciPy 与 Matplotlib，无需 GPU 或模型 API。不同 Matplotlib 版本生成的图片字节可能不同。完整实验另需模型访问、外部 LiveCodeBench 数据、bubblewrap、上游要求的项目布局与 Agent 依赖；SWE-bench 部分需 Docker 和 swebench 2.1.0。归档没有提供完整 Agent 对话轨迹，三份依赖未公开日志的汇总以既有结果形式输入 replay。因此重分析核对的是发布结果，不会重新产生全部实验观测。
 
 <a id="longmemeval-v2"></a>
 
