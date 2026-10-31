@@ -551,6 +551,33 @@ Prepare a task Git repository with `eat/task.md` and `eat/eval.sh`; record the s
 
 **Language and running requirements.** English; advanced Python / RL, Linux / CUDA, PyTorch **2.7.0** and vLLM **0.9.1**. Scripts configure **8 GPUs**; no unified minimum Python / VRAM is stated. Requires model / data access, Hugging Face and W&B configuration; generated data is uploaded to a private HF dataset, and full evaluation uses a GPT API. Use an isolated training environment: the Challenger launcher contains broad `pkill python` cleanup.
 
+<a id="rsi-anything"></a>
+
+### [RSI-Anything · Gen-Verse](https://github.com/Gen-Verse/RSI-Anything) · [paper](https://arxiv.org/abs/2610.13912)
+
+**Related self-improvement mechanism · policy–world-model co-adaptation.** A policy proposes actions, a world model predicts consequences, and observed feedback supports persistent updates. The GUI implementation updates both components under fixed training and selection rules; follow retained checkpoints into later interaction, without assuming that the update algorithm rewrites itself.
+
+**Recommended entry.** Read [paper §§2.3–2.5 → Table 4](https://arxiv.org/html/2610.13912v1) → [GUI guide](https://github.com/Gen-Verse/RSI-Anything/blob/8ba44cd73ec6f57b151ec06e2f71a0726adfb687/tasks/gui/README.md) → [`rsi.py`](https://github.com/Gen-Verse/RSI-Anything/blob/8ba44cd73ec6f57b151ec06e2f71a0726adfb687/tasks/gui/src/rsi_anything_gui/rsi.py) → [`policy_train.py`](https://github.com/Gen-Verse/RSI-Anything/blob/8ba44cd73ec6f57b151ec06e2f71a0726adfb687/tasks/gui/src/rsi_anything_gui/policy_train.py) / [`gui_world.py`](https://github.com/Gen-Verse/RSI-Anything/blob/8ba44cd73ec6f57b151ec06e2f71a0726adfb687/tasks/gui/src/rsi_anything_gui/gui_world.py). Trace successful-action SFT plus replay, world-model updates from browser transitions and expert continuations, then development-set promotion of the policy/model pair. Both candidate generations freeze before crossed policy/world tests. The reported selected controller uses `alpha=0` (policy ranking); distinguish it from pure world-model ranking.
+
+Start with this CPU browser check from a pinned checkout. Install the shared CLI and browser runtime in separate environments:
+
+```bash
+git clone https://github.com/Gen-Verse/RSI-Anything.git
+cd RSI-Anything
+git checkout 8ba44cd73ec6f57b151ec06e2f71a0726adfb687
+python3.10 -m venv .venv
+.venv/bin/python -m pip install -e .
+python3.10 -m venv .venv-gui
+.venv-gui/bin/python -m pip install -e 'tasks/gui[browser]'
+.venv-gui/bin/python -m playwright install chromium
+.venv/bin/rsi run --config configs/gui/smoke.json
+.venv/bin/rsi report --run runs/gui-smoke
+```
+
+This executes rule-controlled checkbox actions in Chromium, with no model credentials or GPU. It checks the environment and report path, not learning or RSI performance. On Linux, missing browser system libraries require the Playwright dependencies described in the GUI guide.
+
+**Language and running requirements.** English guides and a Chinese README. Full GUI training uses Linux, Python 3.10, CUDA and roughly **22 GB** of base-model downloads, plus storage for traces and checkpoints. The default assigns **three GPUs** to separate roles; A800 80 GB is the recorded environment, not a verified minimum. Follow the GUI guide for model acquisition, resource configuration and the full workflow. The separate [code-repair route](https://github.com/Gen-Verse/RSI-Anything/blob/8ba44cd73ec6f57b151ec06e2f71a0726adfb687/docs/reproduction.en.md) keeps the coder fixed; its evaluation entry does not update parameters.
+
 <a id="jaxued"></a>
 
 ### [JaxUED](https://github.com/DramaCow/jaxued)

@@ -552,6 +552,33 @@ python3 -m mass plan --config configs/paper.json
 
 **语言与运行条件。** 英文；进阶 Python / RL、Linux / CUDA、PyTorch **2.7.0** 与 vLLM **0.9.1**。脚本配置 **8 GPU**，未声明统一最低 Python／显存要求。需要模型／数据访问及 Hugging Face、W&B 配置；生成数据会上传到 HF 私有数据集，完整评估使用 GPT API。应在隔离训练环境中使用：Challenger 启动器含范围较宽的 `pkill python` 清理命令。
 
+<a id="rsi-anything"></a>
+
+### [RSI-Anything · Gen-Verse](https://github.com/Gen-Verse/RSI-Anything) · [论文](https://arxiv.org/abs/2610.13912)
+
+**相关自改进机制 · 策略与世界模型协同改进。** 策略提出动作，世界模型预测后果，观测反馈支持持久更新。GUI 实现在固定训练与选优规则下更新两者；跟踪保留的 checkpoint 怎样参与后续交互，不据此假定更新算法会改写自身。
+
+**推荐入口。** 读[论文 §§2.3–2.5 → 表 4](https://arxiv.org/html/2610.13912v1) → [GUI 指南](https://github.com/Gen-Verse/RSI-Anything/blob/8ba44cd73ec6f57b151ec06e2f71a0726adfb687/tasks/gui/README.md) → [`rsi.py`](https://github.com/Gen-Verse/RSI-Anything/blob/8ba44cd73ec6f57b151ec06e2f71a0726adfb687/tasks/gui/src/rsi_anything_gui/rsi.py) → [`policy_train.py`](https://github.com/Gen-Verse/RSI-Anything/blob/8ba44cd73ec6f57b151ec06e2f71a0726adfb687/tasks/gui/src/rsi_anything_gui/policy_train.py)／[`gui_world.py`](https://github.com/Gen-Verse/RSI-Anything/blob/8ba44cd73ec6f57b151ec06e2f71a0726adfb687/tasks/gui/src/rsi_anything_gui/gui_world.py)。跟踪成功动作的 SFT 与回放、浏览器状态转移及专家延续带来的世界模型更新，再看开发集如何决定是否保留新策略／模型组合。两轮候选版本均在交叉评测策略与世界模型前冻结。报告中的 selected controller 使用 `alpha=0`（策略排序），须与纯世界模型排序模式区分。
+
+先从固定源码版本运行以下 CPU 浏览器检查，分别安装公共 CLI 和浏览器运行环境：
+
+```bash
+git clone https://github.com/Gen-Verse/RSI-Anything.git
+cd RSI-Anything
+git checkout 8ba44cd73ec6f57b151ec06e2f71a0726adfb687
+python3.10 -m venv .venv
+.venv/bin/python -m pip install -e .
+python3.10 -m venv .venv-gui
+.venv-gui/bin/python -m pip install -e 'tasks/gui[browser]'
+.venv-gui/bin/python -m playwright install chromium
+.venv/bin/rsi run --config configs/gui/smoke.json
+.venv/bin/rsi report --run runs/gui-smoke
+```
+
+该检查用规则控制器在 Chromium 中操作复选框，无需模型凭证或 GPU；验证的是环境与报告流程，不是学习效果或 RSI 性能。Linux 若缺少浏览器系统库，需按 GUI 指南安装 Playwright 依赖。
+
+**语言与运行条件。** 英文指南与中文 README。完整 GUI 训练使用 Linux、Python 3.10、CUDA，基础模型下载约 **22 GB**，还需为轨迹与 checkpoint 预留空间。默认将**三张 GPU**分配给不同角色；A800 80 GB 是记录中的环境，不是已核实的最低要求。模型获取、资源配置与完整工作流见 GUI 指南。另一条[代码修复路线](https://github.com/Gen-Verse/RSI-Anything/blob/8ba44cd73ec6f57b151ec06e2f71a0726adfb687/docs/reproduction.en.md)保持 coder 固定，其中评测入口不会更新参数。
+
 <a id="jaxued"></a>
 
 ### [JaxUED](https://github.com/DramaCow/jaxued)

@@ -12,7 +12,7 @@
 </p>
 
 <p align="center">
-  <a href="#resource-scope"><img src="https://img.shields.io/badge/resources-78-69D8AD?style=flat-square&amp;labelColor=182522" alt="78 项资源"></a>
+  <a href="#resource-scope"><img src="https://img.shields.io/badge/resources-79-69D8AD?style=flat-square&amp;labelColor=182522" alt="79 项资源"></a>
   <a href="README.md"><img src="https://img.shields.io/badge/languages-EN%20%2F%20%E4%B8%AD%E6%96%87-69D8AD?style=flat-square&amp;labelColor=182522" alt="中文与英文"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-69D8AD?style=flat-square&amp;labelColor=182522" alt="MIT 许可"></a>
 </p>
@@ -24,7 +24,7 @@
   <a href="docs/verification_zh.md">核验档案</a>
 </p>
 
-**收录 78 项资源；最近一次来源核验：2026-10-29。** 同一项目的网站、代码和 Notebook 合并计数；各项日期与实际核验范围见[核验档案](docs/verification_zh.md)。
+**收录 79 项资源；最近一次来源核验：2026-10-31。** 同一项目的网站、代码和 Notebook 合并计数；各项日期与实际核验范围见[核验档案](docs/verification_zh.md)。
 
 <a id="resource-scope"></a>
 
@@ -291,6 +291,7 @@
 | <a id="eat"></a> [Evolving Agent Teams（EAT）](https://github.com/caoshiyi/EAT) · [论文](https://arxiv.org/abs/2610.36848) | **相关自改进机制。** 当进展停滞时，监督者利用保留的经验重新设计团队角色、提示与执行阶段。 | [团队演化实验 → Skill 配置 → 监督者与启动器](docs/practice-guide_zh.md#eat) | 英文；Linux、Python 3.11+、Git、tmux、Claude Code 访问与模型调用预算。硬件依任务而定，GPU 示例需对应设备。 |
 | <a id="comas"></a> [CoMAS](https://github.com/xxyQwQ/CoMAS) | **相关自改进机制。** 同伴方案与批评转成交互奖励，更新各自策略。 | [训练启动器与 controller](docs/practice-guide_zh.md#comas) | 英文；Python 3.10、CUDA；上游推荐每 Agent 2 张 A100 80GB，默认四个 Agent。 |
 | <a id="r-zero"></a> [R-Zero](https://github.com/Chengsong-Huang/R-Zero) | **相关自改进机制。** 交替生成任务与训练 Solver，两个检查点进入后续轮次。 | [Challenger–Solver 交替循环](docs/practice-guide_zh.md#r-zero) | 英文；Linux/CUDA、8 GPU 脚本配置、HF/W&B 与评估 API。 |
+| <a id="rsi-anything"></a> [RSI-Anything · Gen-Verse](https://github.com/Gen-Verse/RSI-Anything) · [论文](https://arxiv.org/abs/2610.13912) | **相关自改进机制。** 学习 GUI 交互经验如何更新策略与世界模型，并在固定训练规则下选优、保留 checkpoint，供后续轮次复用。 | [更新／保留协议 → GUI 源码 → 浏览器检查](docs/practice-guide_zh.md#rsi-anything) | 中英文概览；无模型浏览器检查需 Python 3.10+ 与 Chromium。完整 GUI 学习需 Linux、CUDA 和模型权重，默认分配三个 GPU 角色。 |
 | <a id="jaxued"></a> [JaxUED](https://github.com/DramaCow/jaxued) | **相关自改进机制。** 按策略表现保留、变异环境，再用形成的课程训练策略。 | [Maze ACCEL → PAIRED](docs/practice-guide_zh.md#jaxued) | 英文；JAX/Flax；无需 LLM API；完整 RL 训练需要较多算力。 |
 
 <a id="adversarial-self-play"></a>

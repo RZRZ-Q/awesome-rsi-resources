@@ -12,7 +12,7 @@
 </p>
 
 <p align="center">
-  <a href="#resource-scope"><img src="https://img.shields.io/badge/resources-78-69D8AD?style=flat-square&amp;labelColor=182522" alt="78 resources"></a>
+  <a href="#resource-scope"><img src="https://img.shields.io/badge/resources-79-69D8AD?style=flat-square&amp;labelColor=182522" alt="79 resources"></a>
   <a href="README_zh.md"><img src="https://img.shields.io/badge/languages-EN%20%2F%20%E4%B8%AD%E6%96%87-69D8AD?style=flat-square&amp;labelColor=182522" alt="English and Chinese"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-69D8AD?style=flat-square&amp;labelColor=182522" alt="MIT license"></a>
 </p>
@@ -24,7 +24,7 @@
   <a href="docs/verification.md">Source records</a>
 </p>
 
-**78 resources; latest source review: 2026-10-29.** A project’s website, code, and notebooks count as one resource. See the [verification archive](docs/verification.md) for individual dates and the scope of each review.
+**79 resources; latest source review: 2026-10-31.** A project’s website, code, and notebooks count as one resource. See the [verification archive](docs/verification.md) for individual dates and the scope of each review.
 
 <a id="resource-scope"></a>
 
@@ -291,6 +291,7 @@ Compare reusable improvement experience with harness search under a fixed optimi
 | <a id="eat"></a> [Evolving Agent Teams (EAT)](https://github.com/caoshiyi/EAT) · [paper](https://arxiv.org/abs/2610.36848) | **Related self-improvement mechanism.** A supervisor uses retained experience to redesign team roles, prompts and execution phases when progress stalls. | [Team-evolution study → Skill setup → supervisor and launcher](docs/practice-guide.md#eat) | English; Linux, Python 3.11+, Git, tmux, Claude Code access and a model-call budget. Hardware depends on the task; GPU examples require the corresponding devices. |
 | <a id="comas"></a> [CoMAS](https://github.com/xxyQwQ/CoMAS) | **Related self-improvement mechanism.** Peer solutions and criticism become interaction rewards and separate policy updates. | [Training launcher and controller](docs/practice-guide.md#comas) | English; Python 3.10, CUDA; upstream recommends 2 A100 80GB GPUs per agent, four agents by default. |
 | <a id="r-zero"></a> [R-Zero](https://github.com/Chengsong-Huang/R-Zero) | **Related self-improvement mechanism.** Alternate task generation and solver learning, carrying both checkpoints into later rounds. | [Challenger–Solver loop](docs/practice-guide.md#r-zero) | English; Linux/CUDA, 8-GPU script configuration, HF/W&B and evaluation API. |
+| <a id="rsi-anything"></a> [RSI-Anything · Gen-Verse](https://github.com/Gen-Verse/RSI-Anything) · [paper](https://arxiv.org/abs/2610.13912) | **Related self-improvement mechanism.** Learn how GUI experience updates a policy and world model, with selected checkpoints reused in later rounds under fixed training rules. | [Update / retention protocol → GUI source → browser check](docs/practice-guide.md#rsi-anything) | Chinese / English overview; Python 3.10+ and Chromium for the model-free browser check. Full GUI learning needs Linux, CUDA and model weights; the default assigns three GPU roles. |
 | <a id="jaxued"></a> [JaxUED](https://github.com/DramaCow/jaxued) | **Related self-improvement mechanism.** Use policy performance to retain and mutate environments, then train on the resulting curriculum. | [Maze ACCEL → PAIRED](docs/practice-guide.md#jaxued) | English; JAX/Flax; no LLM API; full RL training requires substantial compute. |
 
 <a id="adversarial-self-play"></a>
