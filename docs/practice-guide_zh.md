@@ -317,6 +317,16 @@ uv run python meta_harness.py --iterations 1
 
 **语言与运行条件。** 英文代码／文档；Python **≥3.11**、uv、已认证的 Claude Code CLI 提案器与任务模型访问。示例默认用 OpenRouter；包装器会从提案器环境移除 `ANTHROPIC_API_KEY`。数据已附带，一轮仍包含多个候选／数据集的评测。API 路线无需训练 GPU；迁移到新领域前读 [ONBOARDING](https://github.com/stanford-iris-lab/meta-harness/blob/8123ccabe2b19fa1123090b2e5f1bacc20963ce8/ONBOARDING.md)。
 
+<a id="pce"></a>
+
+### [PCE · Population-Centered Agent Evolution](https://github.com/YanShuo1992/PCE) · [论文](https://arxiv.org/abs/2610.36660)
+
+**递归改进方法 · Harness 继承与种群证据。** 学习归档如何成为下一次修改的依据：先比较整个种群的任务覆盖率与最佳单个 Agent，再追踪提炼出的观察如何进入选中父代的 Harness。先恢复父代补丁，再由修改后的 Agent 执行下一次自修改；种群经验提炼流程保持固定。可与[编码 Agent 综述](../README_zh.md#coding-agents-survey)和 [DGM](#dgm) 对读。
+
+**推荐入口。** 读 [§§3.1–3.3 → §§4.3、5.2–5.4](https://arxiv.org/html/2610.36660v2)，再按固定版本源码阅读：[run_swe.sh](https://github.com/YanShuo1992/PCE/blob/afe623953f8b1d66336c53502096288fe0e0efb9/run_swe.sh) → [GEA_outer.py](https://github.com/YanShuo1992/PCE/blob/afe623953f8b1d66336c53502096288fe0e0efb9/GEA_outer.py) → [group_distill.py](https://github.com/YanShuo1992/PCE/blob/afe623953f8b1d66336c53502096288fe0e0efb9/group_distill.py)。重点看 `render_block`／`run_for` 如何将种群观察转成可复用上下文。再读 [self_improve_step.py 的父代补丁恢复](https://github.com/YanShuo1992/PCE/blob/afe623953f8b1d66336c53502096288fe0e0efb9/self_improve_step.py#L342-L371) → [继承后编码 Agent 的执行](https://github.com/YanShuo1992/PCE/blob/afe623953f8b1d66336c53502096288fe0e0efb9/self_improve_step.py#L449-L462)。这里构成递归连接，与固定的种群汇总机制分开看。
+
+**运行入口与门槛。** 先完成[固定版本 README 配置](https://github.com/YanShuo1992/PCE/blob/afe623953f8b1d66336c53502096288fe0e0efb9/README.md)，包括指定 SWE-bench 版本及补丁，或 Polyglot 镜像准备。运行 `./run_swe.sh distill` 或 `./run_polyglot.sh polyglot_distill`；对应的 `gea`／`polyglot_gea` 模式用于对照。需要 Linux、Docker、Conda／Python 3.11、DeepSeek 密钥与付费 API 调用，以及至少 500 GB 空闲磁盘（推荐 1 TB）。作者估计 SWE-bench 约四天、Polyglot 约一天，取决于 worker 数。建议先读源码；这些入口启动完整实验，并非轻量本地演示。本次核验未执行上游代码。
+
 <a id="aho"></a>
 
 ### [Agent Harness Optimizer（AHO）· Airbnb](https://github.com/airbnb/agent-harness-optimizer) · [论文](https://arxiv.org/abs/2609.05736)
@@ -532,6 +542,16 @@ python3 -m mass plan --config configs/paper.json
 
 **语言与运行条件。** 英文；文档运行环境为 Linux、Claude Code 模型访问、Git、tmux 与 Python ≥3.11。EAT Gym 另需 uv、Hugging Face CLI，以及具体任务的依赖／硬件。插件命令只是安装入口，不是免模型演示；实际运行会调用模型。应使用独立任务环境：启动器关闭编码 Agent 的权限提示；上游可选的 [clean-room 配置](https://github.com/caoshiyi/EAT/tree/737e1665eeeffd3fce35d319174f88ea4613d7aa/cleanroom)另需 Linux bubblewrap 与网络白名单。
 
+<a id="mas-loop"></a>
+
+### [MAS-Loop](https://arxiv.org/abs/2610.38946) — 方法阅读
+
+**递归改进方法 · 可学习的修订策略。** Orchestrator 构建多智能体图；Refiner 诊断执行轨迹，修改角色、连线或执行设置。重新执行产生奖励并训练两个策略，更新后的 Refiner 参与后续改进。RL 更新规则与任务评估器保持固定。对应[协同演化综述](../README_zh.md#coevolution-survey)；可将可学习的 Refiner 与 [EAT](#eat) 的团队修改监督者对比。
+
+**推荐入口。** 读 [§§3.1–3.3 → 附录 B 的 Algorithm 1 → 附录 D.1](https://arxiv.org/html/2610.38946v1)：结构化修改 → 原系统／修改后系统的执行对 → 分别计算策略奖励 → 匹配执行预算的对照。
+
+**语言与运行门槛。** 英文；多智能体与 RL 基础。**2026-11-01** 在论文与定向检索中尚未确认官方代码或可运行命令。附录 C.3 报告使用 verl、两个可训练的 Qwen3-8B 策略、冻结的 Qwen3-30B-A3B 执行模型及 **8 × H100**；这是实验配置，并非已验证的最低要求。阅读无需模型调用。
+
 <a id="comas"></a>
 
 ### [CoMAS](https://github.com/xxyQwQ/CoMAS)
@@ -656,6 +676,16 @@ bash replay.sh
 这会用已发布结果重新生成汇总、表格和图，不调用模型。解释总体分数前，先对比逐任务结果和 Agent 补丁。论文为 **aiXiv v2**；仓库标签 **v4** 指代码／数据归档，不是论文版本。aiXiv 与 arXiv 是不同平台。
 
 **语言与运行条件。** 英文；离线重分析需要 Python 3、NumPy、SciPy 与 Matplotlib，无需 GPU 或模型 API。不同 Matplotlib 版本生成的图片字节可能不同。完整实验另需模型访问、外部 LiveCodeBench 数据、bubblewrap、上游要求的项目布局与 Agent 依赖；SWE-bench 部分需 Docker 和 swebench 2.1.0。归档没有提供完整 Agent 对话轨迹，三份依赖未公开日志的汇总以既有结果形式输入 replay。因此重分析核对的是发布结果，不会重新产生全部实验观测。
+
+<a id="exlabel"></a>
+
+### [ExLabel / SWE-TQ](https://github.com/ZJU-CTAG/ExLabel) · [论文](https://arxiv.org/abs/2610.39417)
+
+**评测工具 · 持续积累评审经验。** 学习在用通过率衡量 Agent 改进之前，先检查任务与测试本身的质量。ExLabel 从有标签的训练案例保留评审经验，并检索用于后续判断；它不改写学习算法。对应[编码 Agent 综述的反馈与评测章节](../README_zh.md#coding-agents-survey)。
+
+**推荐入口。** 读 [§2.1 → §§3.1–3.2 → §4](https://arxiv.org/html/2610.39417v1)，再看 [core/app.py](https://github.com/ZJU-CTAG/ExLabel/blob/cef7b443ce2f991f721f1975d266e286b911c1b2/core/app.py) → [core/agent/agent.py](https://github.com/ZJU-CTAG/ExLabel/blob/cef7b443ce2f991f721f1975d266e286b911c1b2/core/agent/agent.py)。追踪 `accumulation` 如何读取 `train` 并保存记忆，再看 `inference` 如何评估 `test`。判断依据是任务／补丁文本，不能替代实际执行候选解的测试。
+
+**运行入口与门槛。** 按[固定版本配置与两阶段命令](https://github.com/ZJU-CTAG/ExLabel/blob/cef7b443ce2f991f721f1975d266e286b911c1b2/README.md)操作。需要 Python 3.12、仓库依赖、LLM／embedding 端点及 `API_KEY`／`EMBEDDER_API_KEY`。先选 `issue` 任务和 `data/SWE-bench-issue`；用 `python core/app.py --mode accumulation` 建库，再用 `--mode inference` 查询同一经验库，并补齐 README 中的数据集、模型、库路径和实验参数。仓库未附现成经验库。全新积累运行会清空目标库；`issue` 与 `test` 使用不同路径，建库与查询使用相同 embedder，修改配置后使用新实验 ID，因为输出按实例 ID 续跑。托管端点需要 API 预算，无需本地 GPU 训练；下游微调属于另一项实验。本次只核验源码与命令，未执行。
 
 <a id="longmemeval-v2"></a>
 

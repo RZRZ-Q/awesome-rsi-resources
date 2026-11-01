@@ -316,6 +316,16 @@ uv run python meta_harness.py --iterations 1
 
 **Language and running requirements.** English code / docs; Python **≥3.11**, uv, an authenticated Claude Code CLI proposer, and task-model access. The example defaults to OpenRouter; its wrapper removes `ANTHROPIC_API_KEY` from the proposer environment. Data are bundled; one iteration still evaluates multiple candidates / datasets. API route needs no training GPU. Read [ONBOARDING](https://github.com/stanford-iris-lab/meta-harness/blob/8123ccabe2b19fa1123090b2e5f1bacc20963ce8/ONBOARDING.md) before adapting to another domain.
 
+<a id="pce"></a>
+
+### [PCE · Population-Centered Agent Evolution](https://github.com/YanShuo1992/PCE) · [paper](https://arxiv.org/abs/2610.36660)
+
+**Recursive improvement method · inherited harness and population evidence.** Learn how the archive becomes evidence for the next edit: compare population-wide task coverage with the best single agent, then trace distilled observations into a selected parent's harness. Parent patches are restored before the edited agent performs the next self-modification; the population-distillation procedure stays fixed. Pair with the [coding-agent survey](../README.md#coding-agents-survey) and [DGM](#dgm).
+
+**Recommended entry.** Read [§§3.1–3.3 → §§4.3, 5.2–5.4](https://arxiv.org/html/2610.36660v2), then follow the pinned source: [run_swe.sh](https://github.com/YanShuo1992/PCE/blob/afe623953f8b1d66336c53502096288fe0e0efb9/run_swe.sh) → [GEA_outer.py](https://github.com/YanShuo1992/PCE/blob/afe623953f8b1d66336c53502096288fe0e0efb9/GEA_outer.py) → [group_distill.py](https://github.com/YanShuo1992/PCE/blob/afe623953f8b1d66336c53502096288fe0e0efb9/group_distill.py). Inspect `render_block` / `run_for` to see how population observations become reusable context. Then read [self_improve_step.py, parent-patch restoration](https://github.com/YanShuo1992/PCE/blob/afe623953f8b1d66336c53502096288fe0e0efb9/self_improve_step.py#L342-L371) → [execution of the inherited coding agent](https://github.com/YanShuo1992/PCE/blob/afe623953f8b1d66336c53502096288fe0e0efb9/self_improve_step.py#L449-L462). This is the recursion boundary, distinct from the fixed population summary mechanism.
+
+**Running entry and requirements.** Complete the [pinned README setup](https://github.com/YanShuo1992/PCE/blob/afe623953f8b1d66336c53502096288fe0e0efb9/README.md), including the specified SWE-bench revision / patches or Polyglot image preparation. Run `./run_swe.sh distill` or `./run_polyglot.sh polyglot_distill`; the corresponding `gea` / `polyglot_gea` modes provide the comparison. Requires Linux, Docker, Conda / Python 3.11, a DeepSeek key and paid API calls, and at least 500 GB free disk (1 TB recommended). Authors estimate roughly four days for SWE-bench and one for Polyglot, depending on workers. Start with source reading; these launchers run full experiments, not a small local demo. No upstream execution was performed in this review.
+
 <a id="aho"></a>
 
 ### [Agent Harness Optimizer (AHO) · Airbnb](https://github.com/airbnb/agent-harness-optimizer) · [paper](https://arxiv.org/abs/2609.05736)
@@ -531,6 +541,16 @@ Prepare a task Git repository with `eat/task.md` and `eat/eval.sh`; record the s
 
 **Language and running requirements.** English; documented runtime is Linux, Claude Code model access, Git, tmux and Python ≥3.11. EAT Gym additionally uses uv, the Hugging Face CLI and task-specific dependencies / hardware. The plugin is an installation entry, not a model-free demo; runs make real model calls. Use a dedicated task environment: the launcher runs coding agents with permission prompts disabled; upstream's optional [clean-room setup](https://github.com/caoshiyi/EAT/tree/737e1665eeeffd3fce35d319174f88ea4613d7aa/cleanroom) adds Linux bubblewrap and a network allowlist.
 
+<a id="mas-loop"></a>
+
+### [MAS-Loop](https://arxiv.org/abs/2610.38946) — method reading
+
+**Recursive improvement method · learned refinement policy.** The Orchestrator builds a multi-agent graph; the Refiner diagnoses its trajectory and patches roles, connections or execution settings. Re-execution supplies rewards to train both policies, so the learned Refiner participates in later improvements. The RL update rule and task evaluator stay fixed. Pair with the [co-evolution survey](../README.md#coevolution-survey); compare the learned Refiner with [EAT](#eat)'s team-editing supervisor.
+
+**Recommended entry.** Read [§§3.1–3.3 → Algorithm 1 in Appendix B → Appendix D.1](https://arxiv.org/html/2610.38946v1): structured patch → source / revised execution pair → separate policy rewards → execution-budget-matched comparison.
+
+**Language and running requirements.** English; multi-agent systems and RL fundamentals. No official code or runnable command was confirmed in the paper and targeted search on **2026-11-01**. Appendix C.3 reports verl, two trainable Qwen3-8B policies, a frozen Qwen3-30B-A3B executor and **8 × H100**; this describes the experiment, not a verified minimum. Reading requires no model calls.
+
 <a id="comas"></a>
 
 ### [CoMAS](https://github.com/xxyQwQ/CoMAS)
@@ -655,6 +675,16 @@ bash replay.sh
 This regenerates summaries, tables and figures from shipped results without model calls. Compare the per-task outcomes and agent patches before interpreting aggregate scores. The paper is **aiXiv v2**; repository tag **v4** identifies the code/data archive, not the paper version. aiXiv is a separate platform from arXiv.
 
 **Language and running requirements.** English; offline reanalysis needs Python 3, NumPy, SciPy and Matplotlib, with no GPU or model API. Figure bytes can differ across Matplotlib versions. Full experiments additionally require model access, external LiveCodeBench data, bubblewrap, the upstream project layout and agent dependencies; SWE-bench runs need Docker and swebench 2.1.0. Full agent transcripts are absent, and three summaries derived from omitted logs are supplied as replay inputs. Reanalysis therefore checks the released results without recreating every experimental observation.
+
+<a id="exlabel"></a>
+
+### [ExLabel / SWE-TQ](https://github.com/ZJU-CTAG/ExLabel) · [paper](https://arxiv.org/abs/2610.39417)
+
+**Evaluation tool · evolving assessment experience.** Learn to inspect the quality of the task and tests before using pass rates to judge agent improvement. ExLabel retains assessment experience from labeled training cases and retrieves it for later judgments; it does not rewrite its learning algorithm. Pair with the [coding-agent survey's feedback / evaluation chapters](../README.md#coding-agents-survey).
+
+**Recommended entry.** Read [§2.1 → §§3.1–3.2 → §4](https://arxiv.org/html/2610.39417v1), then [core/app.py](https://github.com/ZJU-CTAG/ExLabel/blob/cef7b443ce2f991f721f1975d266e286b911c1b2/core/app.py) → [core/agent/agent.py](https://github.com/ZJU-CTAG/ExLabel/blob/cef7b443ce2f991f721f1975d266e286b911c1b2/core/agent/agent.py). Follow `accumulation` on `train` into saved memories, then `inference` on `test`. Assessments use task / patch text; they do not replace executing a candidate solution's tests.
+
+**Running entry and requirements.** Follow the [pinned setup and two-stage commands](https://github.com/ZJU-CTAG/ExLabel/blob/cef7b443ce2f991f721f1975d266e286b911c1b2/README.md). Use Python 3.12, the repository requirements, configured LLM / embedding endpoints and `API_KEY` / `EMBEDDER_API_KEY`. Start with the `issue` task and `data/SWE-bench-issue`; build a bank with `python core/app.py --mode accumulation`, then query the same bank with `--mode inference`, supplying the README's dataset, model, bank and experiment arguments. Banks are not bundled. A fresh accumulation run clears its target bank; use distinct paths for `issue` and `test`, keep the same embedder, and use a new experiment ID when changing settings because outputs resume by instance ID. Hosted endpoints need API budget but no local GPU training; downstream fine-tuning is a separate experiment. Source and commands were inspected, not executed.
 
 <a id="longmemeval-v2"></a>
 

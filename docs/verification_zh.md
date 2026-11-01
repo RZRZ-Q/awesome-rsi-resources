@@ -4,11 +4,12 @@
 
 [资源目录](../README_zh.md) · [学习指南](learning-guide_zh.md) · [实践指南](practice-guide_zh.md)
 
-本档案保留 **2026-10-22、2026-10-23、2026-10-25、2026-10-26、2026-10-27、2026-10-28 和 2026-10-29** 的来源核验记录。下文的日期、版本、仓库覆盖与运行边界均以各次记录为准；迁移到独立文档不代表重新核验上游内容。
+本档案记录 **2026-10-22 至 2026-11-01** 的来源核验。每个日期小节分别说明来源、版本与核验范围；后续新增不代表重新核验此前记录。
 
 - [近期综述覆盖表](#survey-coverage)
 - [核验历史与扩展排漏](#review-log)
 - [逐项资源核验记录](#verification)
+- [2026-11-01：本轮补充与索引覆盖](#verification-2026-11-01)
 
 <a id="survey-coverage"></a>
 
@@ -240,3 +241,27 @@
 | 六个综述伴随仓库 · 32 份 | [selfimproving-agent](https://github.com/selfimproving-agent/Awesome-Self-Improving-Agents/tree/3dda2bbcdc8cb7c85ad431dfca9645833a151677) (17); [deepgrounding](https://github.com/deepgrounding/recursive-self-improvement/tree/6be0464c8fb4f9e074ed4aae0b50bffff730e95b) (8); [Zesearch](https://github.com/Zesearch/self-improvement-llm/tree/9586cdae8bdc5b7b6db3ffd5aa9686b57ad6f345) (1); [CharlesQ9](https://github.com/CharlesQ9/Self-Evolving-Agents/tree/c017544194314e4bc2579b8682f820e1eaa5203d) (1); [ANative-Lab](https://github.com/ANative-Lab/Awesome-Self-Evolving-Agents/tree/ab0c0118e81775bc9a364ad4bbbfd3856063af93) (1); [FrontisAI](https://github.com/FrontisAI/Awesome-Self-Improving-Agents/tree/65f4513aadc1e142cdc6346e20af0ddb54d749c2) (4) | README；selfimproving-agent 的 TeX／参考文献；deepgrounding 的正文、参考文献与两份完整 corpus CSV；FrontisAI 的论文／章节目录。 | 所查文本未检出。 |
 | 四个综述伴随仓库及研究笔记 · 49 份 | [theseus-labs-rsi](https://github.com/theseus-labs-rsi/awesome-rsi/tree/74ee83ec39ae5653d1ff3a151f78042a7774c9a4) (1); [xaddwell](https://github.com/xaddwell/awesome-self-evolving-agent-safety/tree/350041dc5c007391cdfae8b85a97ceb53a80ce11) (4); [Lee1003-lee](https://github.com/Lee1003-lee/Awesome-RSI-Research/tree/27512254db318eea140c4bb0e9b1a1a60d9bfa61) (2); [LucasXinYu](https://github.com/LucasXinYu/harness-rsi/tree/7f846c52fe70338ee97584c33c06f7ec99f67ed5) (6); [asimfish](https://github.com/asimfish/awesome_rsi/tree/06f599b6b8a4cb57558380b68a23ea729479d98a) (36) | README；安全综述语料／参考文献；RSI Research 网站文本；Harness 文献／目录／补充；asimfish 笔记与报告。 | 所查文本未检出。 |
 | Follow RSI · 8 份 | [adongwanai](https://github.com/adongwanai/follow-rsi/tree/c831b186f46fa93efa05ed953bb87096246b61df) (8) | README、`data/papers.yaml`、`site/papers.json`；分类回归评测的说明、种子、标签、缓存元数据与报告。 | [Curator 种子](https://github.com/adongwanai/follow-rsi/blob/c831b186f46fa93efa05ed953bb87096246b61df/feed/eval/curator-seeds.yaml#L20-L25)及[标签记录](https://github.com/adongwanai/follow-rsi/blob/c831b186f46fa93efa05ed953bb87096246b61df/feed/eval/labeled.yaml#L732-L737)标为 `label: include`，同时保留 `needs_owner_review: true`；[元数据](https://github.com/adongwanai/follow-rsi/blob/c831b186f46fa93efa05ed953bb87096246b61df/feed/eval/metadata/2610.13912.json#L23-L41)链接论文和代码。[回归数据说明](https://github.com/adongwanai/follow-rsi/blob/c831b186f46fa93efa05ed953bb87096246b61df/feed/eval/README.md)明确其评测用途。README 与所查两份公开论文目录未命中；可确认仓库内存在记录，不能据此称已正式发布到目录。 |
+
+<a id="verification-2026-11-01"></a>
+
+### 2026-11-01：具身智能、可学习的修订、种群证据与评审
+
+**核验日期：11 月 1 日，Asia/Taipei。** 按名称、完整标题、arXiv ID 与仓库 URL 对现有 79 项目录排重后，新增四项。这些是今天补录的 10 月论文；本轮未确认 11 月 1 日首次提交的论文。目录现有 **83 项资源**。下表论文／版本日期采用 arXiv 的 UTC 提交历史，不采用搜索引擎抓取日期。
+
+| 新增资源 | 首次提交 → 已核验最新版本 | 一手证据与学习入口 | 已收录索引的覆盖情况 |
+| --- | --- | --- | --- |
+| [Physical AI RSI 综述](https://arxiv.org/abs/2610.38266) | **2026-10-28 → v1，2026-10-28** | §§II-A–C、III–IV、VI-C；[作者文献库 `40bac13`](https://github.com/nkd-lkz/physical-ai-rsi-survey/tree/40bac136b3217b7215de927c6fdeb8e7c26ecad8)，含中文主题／证据地图。文献库 10 月 14 日的提交早于论文，不能当作论文发布日期。 | [pinkbubble 综述条目](https://github.com/pinkbubblebubble/awesome-rsi/blob/39ee6d5f05025b22647443c6653bc49063619298/README.md#L74)链接论文与文献库。 |
+| [MAS-Loop](https://arxiv.org/abs/2610.38946) | **2026-10-28 → v1，2026-10-28**；首次提交对应**台北时间 10-29** | §§3.1–3.3、附录 B／C.3／D.1。作为论文阅读入口：可学习的构建／修订策略；尚未确认官方仓库或可执行入口。 | [pinkbubble 方法条目](https://github.com/pinkbubblebubble/awesome-rsi/blob/39ee6d5f05025b22647443c6653bc49063619298/README.md#L245)。 |
+| [PCE](https://arxiv.org/abs/2610.36660) | **2026-10-27 → v2，2026-10-29** | §§3–5；[作者代码 `afe6239`](https://github.com/YanShuo1992/PCE/tree/afe623953f8b1d66336c53502096288fe0e0efb9)、README、启动器、外循环、种群经验提炼模块，以及自修改前恢复父代补丁的路径。本目录据此归为递归 Agent 代码改进；完整实验的磁盘、API 与时间开销较大。 | [pinkbubble 方法条目](https://github.com/pinkbubblebubble/awesome-rsi/blob/39ee6d5f05025b22647443c6653bc49063619298/README.md#L237)。 |
+| [ExLabel / SWE-TQ](https://arxiv.org/abs/2610.39417) | **2026-10-29 → v1，2026-10-29** | §§2.1、3–4；[作者代码 `cef7b44`](https://github.com/ZJU-CTAG/ExLabel/tree/cef7b443ce2f991f721f1975d266e286b911c1b2)、随附 train／test 文件、`core/app.py`、记忆操作与依赖。作为评测入口；推理前需自行构建经验库。 | pinkbubble 的[论文](https://github.com/pinkbubblebubble/awesome-rsi/blob/39ee6d5f05025b22647443c6653bc49063619298/README.md#L367)、[基准](https://github.com/pinkbubblebubble/awesome-rsi/blob/39ee6d5f05025b22647443c6653bc49063619298/README.md#L476)和[代码](https://github.com/pinkbubblebubble/awesome-rsi/blob/39ee6d5f05025b22647443c6653bc49063619298/README.md#L743)条目。 |
+
+**索引核验范围：已收录八个仓库中的 13 个文件。** 四项均已出现在 pinkbubble 10 月 31 日的更新中；其余下列受检文件未找到对应标题、标识或仓库 URL。这是限定文件的目录核验，不代表整个仓库、链接 PDF、提交历史或 Follow RSI 内部评测数据中均不存在。此前 10 月 31 日的 RSI-Anything 核验保留各自快照与范围。
+
+| 固定版本来源 | 受检文件 | 本轮四项的结果 |
+| --- | --- | --- |
+| [pinkbubblebubble `39ee6d5`](https://github.com/pinkbubblebubble/awesome-rsi/tree/39ee6d5f05025b22647443c6653bc49063619298) | `README.md` | 四项均收录；来源自报最近核验日期更新为 10 月 31 日。 |
+| [Prism-Shadow `e55e71b`](https://github.com/Prism-Shadow/awesome-rsi/tree/e55e71be8aa394fded59c6539ac178ba9d0e5786) | `README.md`；`site/src/data/{methods,papers,systems}.js` | 未匹配。 |
+| [natnew `be444d5`](https://github.com/natnew/awesome-recursive-self-improvement/tree/be444d5e019290f5f1c552a6a405e9be10450f78)；[lobehub `632ab50`](https://github.com/lobehub/awesome-rsi/tree/632ab5065bf579c7d1daa71bdaab801fdefd3698)；[Persdre `05a72dc`](https://github.com/Persdre/awesome-recursive-self-improvement/tree/05a72dc9a2719b52967e6c41adfad40a1e8424d7)；[Token-Rhythm `87681b4`](https://github.com/Token-Rhythm/awesome-rsi/tree/87681b460d6420f29f88bc3a2b848ddc6891dd1b)；[jacky-leng `f1888cd`](https://github.com/jacky-leng/awesome-rsi/tree/f1888cd25e2dc6150e5c300046598d789b03ceda) | 各仓库 `README.md`，共五个文件 | 未匹配。 |
+| [Follow RSI `c831b18`](https://github.com/adongwanai/follow-rsi/tree/c831b186f46fa93efa05ed953bb87096246b61df) | `README.md`、`data/papers.yaml`、`site/papers.json` | 在这些公共目录文件中未匹配。 |
+
+日期与发布状态依据一手论文页和固定版本源码核对；学习路线与资源标签是本目录的整理建议。本轮进行文档／源码核验，未运行上游模型、基准实验或复现报告增益。
