@@ -250,6 +250,16 @@ CONFIG=self_teacher/verse_mh TAG=-r1 bash scripts/run_swe.sh
 
 **Language and running requirements.** English; full runs require Python ≥3.12, Docker, separately prepared task data and model serving. The reference vLLM setup uses **4 GPUs for the optimizer and 1 for the executor**, not a verified minimum. The launcher defaults to six evolution rounds and 24 concurrent tasks, followed by three-repeat test evaluations; budget accordingly. Inspect `rounds.jsonl`, optimizer workspaces and `test110.json` to connect inherited changes with held-out outcomes. Recomputing released numbers is separate from rerunning these experiments.
 
+<a id="skill-infinity"></a>
+
+### [Skill∞](https://github.com/taowangcheng/Skill-Infinity) · [paper](https://arxiv.org/abs/2610.35434)
+
+**Recursive improvement method · editable optimization procedure.** A meta agent follows a meta-skill to improve task skills. When that meta-skill becomes the target, the current parent meta-skill governs its own revision; the selected version then guides later optimization. Pair with [VERSE](#verse) and the [experience / meta-evolution survey](../README.md#frontis-survey).
+
+**Recommended entry.** Read [§§3.2–3.4 → §4.3 → Appendix C → Appendix G](https://arxiv.org/html/2610.35434v1): recursive loop, self-improvement ablation, changed selection rule, and seed meta-skill. Track the retained procedure separately from task-specific skills and compare the cost of learning it with the cost of reuse.
+
+**Language and requirements.** English; agent and skill-optimization fundamentals; reading requires no API or GPU. The [official snapshot](https://github.com/taowangcheng/Skill-Infinity/tree/78197d69784665d38a74a327940783c48c8b4897) contains a README, license and artwork, with code still pending release as of **2026-11-02**. No runnable implementation, installation command or hardware minimum was verified.
+
 <a id="harness-optimization"></a>
 
 ## Harness Optimization
@@ -402,6 +412,16 @@ The first example uses three predefined actions, synthetic receipts and an in-me
 For the improvement lifecycle, read the [`CodexChiselController` contract](https://github.com/YuhuaJiang2002/HarnessMM/blob/9c2ed7b38aec25b137106c7d1276ed589efb0661/phiagent/harness/codex_chisel.py#L1): `train` → `select_validation` → `freeze` → `evaluate_test`. Connect real executor/optimizer callbacks only after preparing a new experiment configuration. Compare complete-task quality and input-plus-output tokens, including retries and fallback; account for development and selection costs separately when evaluating all-in improvement.
 
 **Language and running requirements.** English; Python **3.10–3.14**, Node.js **22+**. Both local examples require no model credentials or GPU. Full experiments need the selected upstream harness, benchmark data/native scorer, model access or serving, and benchmark-specific execution environments; coding evaluation needs an isolated verifier. The [reproduction guide](https://github.com/YuhuaJiang2002/HarnessMM/blob/9c2ed7b38aec25b137106c7d1276ed589efb0661/docs/REPRODUCIBILITY.md) explains deployment placeholders and source/configuration freezes. Reference configurations are historical protocols, not ready-to-launch jobs. Code is Apache-2.0; external components retain their own terms.
+
+<a id="sol-pi"></a>
+
+### [SoL-Pi · NVIDIA](https://github.com/NVlabs/SoL-Pi) · [paper](https://arxiv.org/abs/2609.20519)
+
+**Related self-improvement mechanism · deploying discovered harness changes.** The research searches for reusable efficiency changes; the public Pi extension packages four selected mechanisms. It does not expose an autonomous recursive search merely by being installed. Pair with [HarnessMM](#harnessmm), [HarnessPro](#harnesspro) and the [harness survey](../README.md#harness-rsi-survey).
+
+**Recommended entry.** Read [paper §2 → §3](https://arxiv.org/html/2609.20519v1), then [src/sol-pi/index.ts](https://github.com/NVlabs/SoL-Pi/blob/219568034fa54ed121ede80961655e33dfb9d0e3/src/sol-pi/index.ts) and the [configuration guide](https://github.com/NVlabs/SoL-Pi/blob/219568034fa54ed121ede80961655e33dfb9d0e3/docs/configuration.md). Trace which feature changes a tool result or context, then compare task completion and cost with that feature enabled and disabled under the same model and tasks.
+
+**Running entry and requirements.** Follow the [pinned Getting Started](https://github.com/NVlabs/SoL-Pi/blob/219568034fa54ed121ede80961655e33dfb9d0e3/README.md#getting-started): Node.js ≥22.19, npm and a tested Pi version. Upstream recommends Pi **1.3.0** for fresh installs; see [compatibility](https://github.com/NVlabs/SoL-Pi/blob/219568034fa54ed121ede80961655e33dfb9d0e3/docs/compatibility.md). The documented project-scoped extension command is `pi install git:github.com/NVlabs/SoL-Pi --local --approve`. Features default to off; configure `.pi/sol-pi.json` in a trusted project. Begin with `actionFusion` and `observationPack`, which add no extra model calls; the agent itself still needs model access. The reducer uses its configured model, and context compaction can continue the active task in a new turn. Source reading needs no runtime; applying the extension requires API budget but no model training. Installing the current branch can differ from the reviewed snapshot.
 
 <a id="elicitation-or-expansion"></a>
 
@@ -717,6 +737,24 @@ Read `sequence_comparison.json` alongside per-episode results and traces; the pe
 
 **Language and running requirements.** English; Python ≥3.11, uv, Docker, the chosen agent integration, and agent/judge model API access. The example uses `MINIMAX_API_KEY`; other profiles require corresponding configuration. It performs real model calls even though upstream calls it a smoke test. PAST-Bench measures improvement behavior; its name alone does not establish that an evaluated agent recursively improves its improver.
 
+<a id="clr-bench"></a>
+
+### [CLR-Bench](https://github.com/yausankit/clr-bench) · [paper](https://arxiv.org/abs/2610.40758)
+
+**Evaluation tool · rule learning from retained feedback.** Compare learning a category with memorizing its revealed members, then test unseen members and similar non-members. Connect [ACE](#ace)'s playbook updates to the [self-evolving-agent survey's evaluation branch](../README.md#self-evolving-agents).
+
+**Recommended entry.** Read [§§3–5 → §7.2](https://arxiv.org/html/2610.40758v1), then follow the [bilingual README](https://github.com/yausankit/clr-bench/blob/098d2a36cc9cd362ffd63208b998c30376ea3fbe/README.md) and [run_condition.sh](https://github.com/yausankit/clr-bench/blob/098d2a36cc9cd362ffd63208b998c30376ea3fbe/harness/run_condition.sh): practice → retained state → test replay. Compare `self`, `hint` and raw-history conditions before attributing gains to the update method.
+
+**Running entry and requirements.** Python 3.12. Start with the bundled TR1 reference program after installing the README dependencies:
+
+```bash
+python data/unpack_chains.py TR1
+cd data/chains/TR1
+python score_k1_v3.py --version 0 --program L1=controls/reference_L1.py --diagnostics
+```
+
+This local scorer executes the supplied reference program without a model API; it does not run agent learning. The [scorer's runner](https://github.com/yausankit/clr-bench/blob/098d2a36cc9cd362ffd63208b998c30376ea3fbe/data/chains/TR1/harness_k1_test/runner.py) uses local Python subprocesses, distinct from the full evaluation harness's Docker execution. Full method runs additionally need Docker, the upstream method dependencies and an OpenAI-compatible endpoint; follow the README's gateway and `harness/run_condition.sh` instructions. Constructing new probe-certified chains also calls a model. The repository's license is still marked undecided; inspect its terms before redistribution.
+
 <a id="scale-rsi-bench"></a>
 
 ### [Scale RSI Bench · scaleapi/rsi-benchmark](https://github.com/scaleapi/rsi-benchmark) · [website](https://www.rsi-benchmark.com)
@@ -726,3 +764,13 @@ Read `sequence_comparison.json` alongside per-episode results and traces; the pe
 **Recommended entry.** Read [`samples/nano-gpt-data-curation/README.md`](https://github.com/scaleapi/rsi-benchmark/blob/d9f7dcba7412ccc99dc0d97ad92f26e40f1b2354/samples/nano-gpt-data-curation/README.md): select a 12M-token subset for a fixed 30M-parameter model, then verify through training and held-out perplexity. Continue to the task's `instruction.md` and `task.toml`, then follow [Running the Benchmark](https://github.com/scaleapi/rsi-benchmark/blob/d9f7dcba7412ccc99dc0d97ad92f26e40f1b2354/README.md#running-the-benchmark) for the `harbor run` entry with that task path, agent/model arguments, and Modal runtime.
 
 **Language and running requirements.** English; Python ≥3.12, `pip install -e ".[runner]"`, Harbor, model API access, and configured Modal GPU sandboxes. The reviewed README requires GPUs for its tasks; hardware and timeouts are specified per task. Reading the task contract needs no compute service. Use the Scale repository/website linked above; `recursive-self-improvement-bench.com` and RSIBench-Data are different resources with different task counts.
+
+<a id="autorse"></a>
+
+### [AutoRSE](https://github.com/Ray-Tiann/AutoRSE) · [paper](https://arxiv.org/abs/2610.37228)
+
+**Evaluation tool · recommendation research.** Study whether an agent's gains come from training settings, ensembles or new algorithms, using six recommendation tasks. This evaluates research actions; improving a recommender alone does not establish that the research agent improves itself. Pair with the [AI R&D evaluation route](learning-guide.md#survey-project-map).
+
+**Recommended entry.** Read [§§2.2–2.3 → §§3.3–3.4](https://arxiv.org/html/2610.37228v1), then the [pinned README](https://github.com/Ray-Tiann/AutoRSE/blob/9711faddc2d684f15243fd0d871bb8633098d666/README.md) → [tools/run_agent.py](https://github.com/Ray-Tiann/AutoRSE/blob/9711faddc2d684f15243fd0d871bb8633098d666/tools/run_agent.py) → [runtime contract](https://github.com/Ray-Tiann/AutoRSE/blob/9711faddc2d684f15243fd0d871bb8633098d666/benchmark/RUNTIME.md). Begin with HSTU; trace experiment branches, public-validation selection, predictions and exported provenance.
+
+**Running entry and requirements.** Python 3.12+. After checkout and dependency setup, preview the documented command with `python tools/run_agent.py --task hstu --agent codex --model YOUR_MODEL_ID --gpu 0 --seed 2024 --dry-run`; this prints a launch plan and does not run research. Full trials require public task inputs, Linux, an NVIDIA GPU / CUDA 12.1-compatible driver, Docker / NVIDIA Container Toolkit, Harbor 0.18.0 and configured model credentials. The default research budget is 12 hours plus finalization; GPU memory depends on the task. `tools/run_baseline.py` offers training without an LLM agent, while `tools/validate_submission.py` checks prediction format only. Hidden-test scores depend on the hosted evaluator. The published [dataset](https://huggingface.co/datasets/RayTian/AutoRSE) and [scoring Space](https://huggingface.co/spaces/RayTian/AutoRSE) could not be verified as accessible in this review; source availability does not establish an end-to-end usable hosted service.

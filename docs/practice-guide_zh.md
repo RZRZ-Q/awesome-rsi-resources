@@ -250,6 +250,16 @@ CONFIG=self_teacher/verse_mh TAG=-r1 bash scripts/run_swe.sh
 
 **语言与运行条件。** 英文；完整运行需要 Python ≥3.12、Docker、另行准备的任务数据与模型服务。参考 vLLM 部署为**优化器 4 GPU、执行器 1 GPU**，不是经本目录验证的最低配置。启动脚本默认六轮演化、24 个并发任务，并进行三次重复测试评估，需据此准备预算。结合 `rounds.jsonl`、优化器工作区和 `test110.json`，将继承的变化与持出结果对应起来。重算已发布数字与重新执行这些实验应分开理解。
 
+<a id="skill-infinity"></a>
+
+### [Skill∞](https://github.com/taowangcheng/Skill-Infinity) · [论文](https://arxiv.org/abs/2610.35434)
+
+**递归改进方法 · 可修改的优化流程。** 元 Agent 按元技能优化任务技能；当元技能本身成为目标时，当前父代元技能指导自己的修订，选中版本再用于后续优化。可与 [VERSE](#verse) 和[经验／元演化综述](../README_zh.md#frontis-survey) 对读。
+
+**推荐入口。** 读 [§§3.2–3.4 → §4.3 → 附录 C → 附录 G](https://arxiv.org/html/2610.35434v1)：递归循环、自改进消融、选优规则修改和初始元技能。将保留的优化流程与任务专用技能分开追踪，比较学习该流程与后续复用的成本。
+
+**语言与门槛。** 英文；Agent 与技能优化基础；阅读无需 API 或 GPU。**2026-11-02** 检查的[官方快照](https://github.com/taowangcheng/Skill-Infinity/tree/78197d69784665d38a74a327940783c48c8b4897)仅含 README、许可证和图片，代码仍标为待发布。尚未核验可运行实现、安装命令或最低硬件要求。
+
 <a id="harness-optimization"></a>
 
 ## Harness 优化
@@ -403,6 +413,16 @@ python examples/partition.py
 继续读 [`CodexChiselController` 的接口约定](https://github.com/YuhuaJiang2002/HarnessMM/blob/9c2ed7b38aec25b137106c7d1276ed589efb0661/phiagent/harness/codex_chisel.py#L1)，追踪 `train` → `select_validation` → `freeze` → `evaluate_test`；准备新的实验配置后，才能接入真实执行器与优化器回调。对比完整任务的质量和输入加输出 Token，计入重试与回退；评估改进总成本时，另外核算开发与选优开销。
 
 **语言与运行条件。** 英文；Python **3.10–3.14**、Node.js **22+**。两项本地示例不需模型凭证或 GPU。完整实验需要选定的上游 Harness、benchmark 数据与原生评分器、模型访问或服务，以及任务对应的执行环境；代码评测需要隔离的验证环境。[复现指南](https://github.com/YuhuaJiang2002/HarnessMM/blob/9c2ed7b38aec25b137106c7d1276ed589efb0661/docs/REPRODUCIBILITY.md)说明了部署占位符、源码与配置冻结要求。参考配置描述历史协议，不能直接作为启动任务。代码为 Apache-2.0，外部组件保留各自条款。
+
+<a id="sol-pi"></a>
+
+### [SoL-Pi · NVIDIA](https://github.com/NVlabs/SoL-Pi) · [论文](https://arxiv.org/abs/2609.20519)
+
+**相关自改进机制 · 使用已发现的 Harness 改动。** 研究流程搜索可复用的效率改进，公开 Pi 扩展则打包四种已选中的机制。安装扩展本身不会开启自主递归搜索。可与 [HarnessMM](#harnessmm)、[HarnessPro](#harnesspro) 和 [Harness 综述](../README_zh.md#harness-rsi-survey) 对照。
+
+**推荐入口。** 读[论文 §2 → §3](https://arxiv.org/html/2609.20519v1)，再看 [src/sol-pi/index.ts](https://github.com/NVlabs/SoL-Pi/blob/219568034fa54ed121ede80961655e33dfb9d0e3/src/sol-pi/index.ts) 与[配置指南](https://github.com/NVlabs/SoL-Pi/blob/219568034fa54ed121ede80961655e33dfb9d0e3/docs/configuration.md)。追踪开关如何改变工具结果或上下文，再用相同模型与任务比较启用前后的完成效果和成本。
+
+**运行入口与门槛。** 按[固定版本 Getting Started](https://github.com/NVlabs/SoL-Pi/blob/219568034fa54ed121ede80961655e33dfb9d0e3/README.md#getting-started)配置：Node.js ≥22.19、npm 和经上游测试的 Pi 版本。全新安装推荐 Pi **1.3.0**，详见[兼容说明](https://github.com/NVlabs/SoL-Pi/blob/219568034fa54ed121ede80961655e33dfb9d0e3/docs/compatibility.md)。上游项目级扩展安装命令是 `pi install git:github.com/NVlabs/SoL-Pi --local --approve`。功能默认关闭，在可信项目的 `.pi/sol-pi.json` 配置；先尝试不增加额外模型调用的 `actionFusion` 与 `observationPack`，Agent 本身仍需模型访问。日志压缩器会调用配置的模型，上下文压缩可在新一轮中继续当前任务。读源码无需运行环境；使用扩展需要 API 预算，无需模型训练。直接安装当前分支可能与已核验快照不同。
 
 <a id="elicitation-or-expansion"></a>
 
@@ -718,6 +738,24 @@ HERMES_PLUS_MECHANISMS=all past-bench evolve \
 
 **语言与运行条件。** 英文；Python ≥3.11、uv、Docker、所选 Agent 集成，以及 Agent／裁判模型 API 访问。示例使用 `MINIMAX_API_KEY`，其他 profile 需相应配置。虽然上游称为 smoke test，它仍会真实调用模型。PAST-Bench 评估改进行为，不能仅凭名称认定被测 Agent 已递归改进其改进器。
 
+<a id="clr-bench"></a>
+
+### [CLR-Bench](https://github.com/yausankit/clr-bench) · [论文](https://arxiv.org/abs/2610.40758)
+
+**评测工具 · 从保留反馈中学习规则。** 比较学会类别与记住已揭示成员，再用未见成员和相似非成员检验泛化。可把 [ACE](#ace) 的 playbook 更新连接到[自演化 Agent 综述的评测分支](../README_zh.md#self-evolving-agents)。
+
+**推荐入口。** 读 [§§3–5 → §7.2](https://arxiv.org/html/2610.40758v1)，再按[双语 README](https://github.com/yausankit/clr-bench/blob/098d2a36cc9cd362ffd63208b998c30376ea3fbe/README.md) 和 [run_condition.sh](https://github.com/yausankit/clr-bench/blob/098d2a36cc9cd362ffd63208b998c30376ea3fbe/harness/run_condition.sh)追踪：练习 → 保留状态 → 测试重放。先比较 `self`、`hint` 与原始历史条件，再判断增益是否来自更新方法。
+
+**运行入口与门槛。** Python 3.12。安装 README 依赖后，先给随附 TR1 参考程序评分：
+
+```bash
+python data/unpack_chains.py TR1
+cd data/chains/TR1
+python score_k1_v3.py --version 0 --program L1=controls/reference_L1.py --diagnostics
+```
+
+本地评分器执行随附参考程序，无需模型 API，也不运行 Agent 学习。[评分器 runner](https://github.com/yausankit/clr-bench/blob/098d2a36cc9cd362ffd63208b998c30376ea3fbe/data/chains/TR1/harness_k1_test/runner.py)使用本地 Python 子进程，与完整评测 Harness 的 Docker 执行分开。完整方法实验另需 Docker、上游方法依赖及 OpenAI 兼容端点，按 README 的 gateway 与 `harness/run_condition.sh` 说明启动。生成新的探针认证课程链也需要调用模型。仓库许可证仍标为待定，二次分发前应查看其条款。
+
 <a id="scale-rsi-bench"></a>
 
 ### [Scale RSI Bench · scaleapi/rsi-benchmark](https://github.com/scaleapi/rsi-benchmark) · [官网](https://www.rsi-benchmark.com)
@@ -727,3 +765,13 @@ HERMES_PLUS_MECHANISMS=all past-bench evolve \
 **推荐入口。** 先读 [`samples/nano-gpt-data-curation/README.md`](https://github.com/scaleapi/rsi-benchmark/blob/d9f7dcba7412ccc99dc0d97ad92f26e40f1b2354/samples/nano-gpt-data-curation/README.md)：为固定的 30M 参数模型筛选 12M token 子集，再通过训练与留出集困惑度验证。接着读该任务的 `instruction.md` 与 `task.toml`，最后按 [Running the Benchmark](https://github.com/scaleapi/rsi-benchmark/blob/d9f7dcba7412ccc99dc0d97ad92f26e40f1b2354/README.md#running-the-benchmark) 使用 `harbor run`，填入该任务路径、Agent／模型参数与 Modal runtime。
 
 **语言与运行条件。** 英文；Python ≥3.12、`pip install -e ".[runner]"`、Harbor、模型 API 访问与已配置的 Modal GPU sandbox。核验 README 中的任务需要 GPU，具体硬件与超时由各任务规定。只读任务合同无需算力服务。使用上面链接的 Scale 仓库／官网；`recursive-self-improvement-bench.com` 与 RSIBench-Data 是不同资源，任务数量也不同。
+
+<a id="autorse"></a>
+
+### [AutoRSE](https://github.com/Ray-Tiann/AutoRSE) · [论文](https://arxiv.org/abs/2610.37228)
+
+**评测工具 · 推荐系统研究。** 利用六类推荐任务，分析 Agent 的提升来自训练设置、集成还是新算法。这评估研究行为；推荐器变强本身不代表研究 Agent 改进了自己。对应 [AI 研发评测路线](learning-guide_zh.md#survey-project-map)。
+
+**推荐入口。** 读 [§§2.2–2.3 → §§3.3–3.4](https://arxiv.org/html/2610.37228v1)，再按[固定版本 README](https://github.com/Ray-Tiann/AutoRSE/blob/9711faddc2d684f15243fd0d871bb8633098d666/README.md) → [tools/run_agent.py](https://github.com/Ray-Tiann/AutoRSE/blob/9711faddc2d684f15243fd0d871bb8633098d666/tools/run_agent.py) → [运行约定](https://github.com/Ray-Tiann/AutoRSE/blob/9711faddc2d684f15243fd0d871bb8633098d666/benchmark/RUNTIME.md)阅读。先选 HSTU，追踪实验分支、公共验证集选优、预测文件与导出的来源记录。
+
+**运行入口与门槛。** Python 3.12+。获取代码并配置依赖后，用 `python tools/run_agent.py --task hstu --agent codex --model YOUR_MODEL_ID --gpu 0 --seed 2024 --dry-run` 预览上游命令；它只打印启动计划，不执行研究。完整实验需要公共任务数据、Linux、NVIDIA GPU／兼容 CUDA 12.1 的驱动、Docker／NVIDIA Container Toolkit、Harbor 0.18.0 和模型凭据。默认研究预算为 12 小时，另加收尾时间；显存依任务而定。`tools/run_baseline.py` 支持不使用 LLM Agent 的训练，`tools/validate_submission.py` 仅检查预测格式。隐藏测试分数依赖托管评估器。本轮未能确认公开[数据集](https://huggingface.co/datasets/RayTian/AutoRSE)与[评分 Space](https://huggingface.co/spaces/RayTian/AutoRSE)可访问；有源码不代表托管服务已可完整使用。

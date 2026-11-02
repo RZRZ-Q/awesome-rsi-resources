@@ -4,12 +4,13 @@
 
 [Resource directory](../README.md) · [Learning guide](learning-guide.md) · [Practice guide](practice-guide.md)
 
-This archive records source checks from **2026-10-22 through 2026-11-01**. Each dated section specifies its own sources, versions and review scope; a later addition does not refresh earlier checks.
+This archive records source checks from **2026-10-22 through 2026-11-02**. Each dated section specifies its own sources, versions and review scope; a later addition does not refresh earlier checks.
 
 - [Recent survey coverage](#survey-coverage)
 - [Review history and expansion checks](#review-log)
 - [Resource review records](#verification)
 - [2026-11-01: Latest additions and index coverage](#verification-2026-11-01)
+- [2026-11-02: Latest additions and release checks](#verification-2026-11-02)
 
 <a id="survey-coverage"></a>
 
@@ -265,3 +266,26 @@ Read [paper §§2.3–2.5 and Table 4](https://arxiv.org/html/2610.13912v1), the
 | [Follow RSI `c831b18`](https://github.com/adongwanai/follow-rsi/tree/c831b186f46fa93efa05ed953bb87096246b61df) | `README.md`, `data/papers.yaml`, `site/papers.json` | No match in these public catalog files. |
 
 Dates and release status were checked against primary paper pages and pinned source. Learning routes and resource labels are this directory's editorial recommendations. This was a document / source review; upstream models, benchmark runs and reported gains were not reproduced.
+
+<a id="verification-2026-11-02"></a>
+
+### 2026-11-02: Meta-skills, deployable harness mechanisms and evaluation releases
+
+**Reviewed November 2, Asia/Taipei.** Four additions were deduplicated against the 83-resource catalog, bringing it to **87**. These are newly catalogued resources, not November 2 paper releases. Dates below are arXiv first-submission dates in UTC; all four papers still show **v1** at this check. Today's confirmed index change is [Prism's November 2 commit](https://github.com/Prism-Shadow/awesome-rsi/commit/8de6f0044ae0afc9c1b10d54ebe6473e4aec4291), which adds Skill∞ and the already-listed Harness². No duplicate Harness² entry was added.
+
+| Resource | Paper date / version | Verified release and recommended entry | Coverage in checked, already-listed sources |
+| --- | --- | --- | --- |
+| [Skill∞](https://arxiv.org/abs/2610.35434) | **2026-10-26 · v1** | [Official `78197d6`](https://github.com/taowangcheng/Skill-Infinity/tree/78197d69784665d38a74a327940783c48c8b4897) still contains only the README, license and artwork; code is announced, not released. Read §§3.2–3.4, §4.3 and Appendices C / G. | [Prism README](https://github.com/Prism-Shadow/awesome-rsi/blob/8de6f0044ae0afc9c1b10d54ebe6473e4aec4291/README.md#L343) and its method data. |
+| [SoL-Pi](https://arxiv.org/abs/2609.20519) | **2026-09-17 · v1** | [Official `2195680`](https://github.com/NVlabs/SoL-Pi/tree/219568034fa54ed121ede80961655e33dfb9d0e3): extension code, package requirements and compatibility instructions checked. Read paper §2 → §3, then feature registration / configuration. Classed by the practical entry: using selected efficiency mechanisms, not running the research search loop. | [Prism](https://github.com/Prism-Shadow/awesome-rsi/blob/8de6f0044ae0afc9c1b10d54ebe6473e4aec4291/README.md#L125), [lobehub](https://github.com/lobehub/awesome-rsi/blob/632ab5065bf579c7d1daa71bdaab801fdefd3698/README.md#L195), [pinkbubble](https://github.com/pinkbubblebubble/awesome-rsi/blob/39ee6d5f05025b22647443c6653bc49063619298/README.md#L424), [Follow RSI](https://github.com/adongwanai/follow-rsi/blob/62e89f254000e10e454456a99969c54b0ffb751c/README.md#L230). |
+| [CLR-Bench](https://arxiv.org/abs/2610.40758) | **2026-10-29 · v1**; first submission **10-30 in Taipei** | [Official `098d2a3`](https://github.com/yausankit/clr-bench/tree/098d2a36cc9cd362ffd63208b998c30376ea3fbe): bilingual README, chain unpacking, TR1 scorer / local runner, method launcher and dependencies checked. Local reference scoring and full Docker / model evaluation are separate entries. | No title, identifier or repository-name match in the ten files below; this does not establish absence from every included repository. |
+| [AutoRSE](https://arxiv.org/abs/2610.37228) | **2026-10-27 · v1** | [Official `9711fad`](https://github.com/Ray-Tiann/AutoRSE/tree/9711faddc2d684f15243fd0d871bb8633098d666): six task contracts, agent / baseline launchers and format validator are present; [runtime release commit](https://github.com/Ray-Tiann/AutoRSE/commit/46a4110501e76a75debf38d9c5fbd2c874be96d9) is dated **10-29**. Read §§2.2–2.3 and §§3.3–3.4, then HSTU and the launch preview. Hosted dataset / scorer availability was not confirmed; a format check is not a test score. | [pinkbubble evaluation entry](https://github.com/pinkbubblebubble/awesome-rsi/blob/39ee6d5f05025b22647443c6653bc49063619298/README.md#L475). |
+
+**Coverage scope: five repositories, ten public catalog files.** Checked names / title variants, arXiv identifiers and official repository paths. Positive matches are listed above; no match means only that the checked text did not contain those identifiers. Internal discovery queues, cached feed metadata, linked PDFs and other repositories were not included in this coverage check.
+
+| Source snapshot | Files checked |
+| --- | --- |
+| [Prism `8de6f00`](https://github.com/Prism-Shadow/awesome-rsi/tree/8de6f0044ae0afc9c1b10d54ebe6473e4aec4291) | `README.md`, `site/src/data/{methods,papers,systems}.js` (four) |
+| [pinkbubble `39ee6d5`](https://github.com/pinkbubblebubble/awesome-rsi/tree/39ee6d5f05025b22647443c6653bc49063619298); [lobehub `632ab50`](https://github.com/lobehub/awesome-rsi/tree/632ab5065bf579c7d1daa71bdaab801fdefd3698); [natnew `be444d5`](https://github.com/natnew/awesome-recursive-self-improvement/tree/be444d5e019290f5f1c552a6a405e9be10450f78) | Each `README.md` (three); natnew has no match for these additions |
+| [Follow RSI `62e89f2`](https://github.com/adongwanai/follow-rsi/tree/62e89f254000e10e454456a99969c54b0ffb751c) | `README.md`, `data/papers.yaml`, `site/papers.json` (three); SoL-Pi matches all three |
+
+The older dated checks retain their original snapshots and scope. This review verified sources, entry points and documented requirements; it did not install upstream agents, execute the reference scorer, launch training or reproduce performance claims.

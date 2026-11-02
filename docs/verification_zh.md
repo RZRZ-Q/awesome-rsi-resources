@@ -4,12 +4,13 @@
 
 [资源目录](../README_zh.md) · [学习指南](learning-guide_zh.md) · [实践指南](practice-guide_zh.md)
 
-本档案记录 **2026-10-22 至 2026-11-01** 的来源核验。每个日期小节分别说明来源、版本与核验范围；后续新增不代表重新核验此前记录。
+本档案记录 **2026-10-22 至 2026-11-02** 的来源核验。每个日期小节分别说明来源、版本与核验范围；后续新增不代表重新核验此前记录。
 
 - [近期综述覆盖表](#survey-coverage)
 - [核验历史与扩展排漏](#review-log)
 - [逐项资源核验记录](#verification)
 - [2026-11-01：本轮补充与索引覆盖](#verification-2026-11-01)
+- [2026-11-02：本轮补充与发布状态核验](#verification-2026-11-02)
 
 <a id="survey-coverage"></a>
 
@@ -265,3 +266,26 @@
 | [Follow RSI `c831b18`](https://github.com/adongwanai/follow-rsi/tree/c831b186f46fa93efa05ed953bb87096246b61df) | `README.md`、`data/papers.yaml`、`site/papers.json` | 在这些公共目录文件中未匹配。 |
 
 日期与发布状态依据一手论文页和固定版本源码核对；学习路线与资源标签是本目录的整理建议。本轮进行文档／源码核验，未运行上游模型、基准实验或复现报告增益。
+
+<a id="verification-2026-11-02"></a>
+
+### 2026-11-02：元技能、可部署的 Harness 机制与评测代码发布
+
+**核验日期：11 月 2 日，Asia/Taipei。** 对原有 83 项目录排重后补入四项，现为 **87 项**。这些是本轮新增收录，并非 11 月 2 日新发布的论文。下表使用 arXiv 首次提交的 UTC 日期，四篇论文本轮均仍为 **v1**。今天确认的索引变化是 [Prism 的 11 月 2 日提交](https://github.com/Prism-Shadow/awesome-rsi/commit/8de6f0044ae0afc9c1b10d54ebe6473e4aec4291)，新增 Skill∞ 及本目录已有的 Harness²；未重复增加 Harness² 条目。
+
+| 资源 | 论文日期／版本 | 已核验发布状态与推荐入口 | 已收录来源中本轮确认的覆盖 |
+| --- | --- | --- | --- |
+| [Skill∞](https://arxiv.org/abs/2610.35434) | **2026-10-26 · v1** | [官方 `78197d6`](https://github.com/taowangcheng/Skill-Infinity/tree/78197d69784665d38a74a327940783c48c8b4897)仍只有 README、许可证与图片；代码已预告但未发布。读 §§3.2–3.4、§4.3 和附录 C／G。 | [Prism README](https://github.com/Prism-Shadow/awesome-rsi/blob/8de6f0044ae0afc9c1b10d54ebe6473e4aec4291/README.md#L343)及其方法数据。 |
+| [SoL-Pi](https://arxiv.org/abs/2609.20519) | **2026-09-17 · v1** | [官方 `2195680`](https://github.com/NVlabs/SoL-Pi/tree/219568034fa54ed121ede80961655e33dfb9d0e3)：核对扩展源码、依赖要求与兼容说明。读论文 §2 → §3，再看功能注册／配置。按实际上手入口分类：使用筛选出的效率机制，不是运行研究搜索循环。 | [Prism](https://github.com/Prism-Shadow/awesome-rsi/blob/8de6f0044ae0afc9c1b10d54ebe6473e4aec4291/README.md#L125)、[lobehub](https://github.com/lobehub/awesome-rsi/blob/632ab5065bf579c7d1daa71bdaab801fdefd3698/README.md#L195)、[pinkbubble](https://github.com/pinkbubblebubble/awesome-rsi/blob/39ee6d5f05025b22647443c6653bc49063619298/README.md#L424)、[Follow RSI](https://github.com/adongwanai/follow-rsi/blob/62e89f254000e10e454456a99969c54b0ffb751c/README.md#L230)。 |
+| [CLR-Bench](https://arxiv.org/abs/2610.40758) | **2026-10-29 · v1**；首次提交对应**台北时间 10-30** | [官方 `098d2a3`](https://github.com/yausankit/clr-bench/tree/098d2a36cc9cd362ffd63208b998c30376ea3fbe)：核对双语 README、课程链解包、TR1 评分器／本地 runner、方法启动器及依赖。分开说明本地参考程序评分与完整 Docker／模型评测。 | 下列十个文件中未匹配到标题、标识或仓库名；不代表所有已收录仓库都没有它。 |
+| [AutoRSE](https://arxiv.org/abs/2610.37228) | **2026-10-27 · v1** | [官方 `9711fad`](https://github.com/Ray-Tiann/AutoRSE/tree/9711faddc2d684f15243fd0d871bb8633098d666)已有六类任务约定、Agent／基线启动器与格式校验器；[运行代码发布提交](https://github.com/Ray-Tiann/AutoRSE/commit/46a4110501e76a75debf38d9c5fbd2c874be96d9)日期为 **10-29**。读 §§2.2–2.3 和 §§3.3–3.4，再看 HSTU 与启动预览。未确认托管数据／评分器可用性；格式检查不等于测试分数。 | [pinkbubble 评测条目](https://github.com/pinkbubblebubble/awesome-rsi/blob/39ee6d5f05025b22647443c6653bc49063619298/README.md#L475)。 |
+
+**覆盖范围：五个仓库、十个公共目录文件。** 核对名称／标题变体、arXiv ID 与官方仓库路径。命中见上表；未匹配只表示受检文本没有对应标识。本轮覆盖检查未纳入内部发现队列、feed 缓存元数据、链接 PDF 或其他仓库。
+
+| 来源快照 | 受检文件 |
+| --- | --- |
+| [Prism `8de6f00`](https://github.com/Prism-Shadow/awesome-rsi/tree/8de6f0044ae0afc9c1b10d54ebe6473e4aec4291) | `README.md`、`site/src/data/{methods,papers,systems}.js`，共四个 |
+| [pinkbubble `39ee6d5`](https://github.com/pinkbubblebubble/awesome-rsi/tree/39ee6d5f05025b22647443c6653bc49063619298)；[lobehub `632ab50`](https://github.com/lobehub/awesome-rsi/tree/632ab5065bf579c7d1daa71bdaab801fdefd3698)；[natnew `be444d5`](https://github.com/natnew/awesome-recursive-self-improvement/tree/be444d5e019290f5f1c552a6a405e9be10450f78) | 各自 `README.md`，共三个；natnew 未匹配本轮新增项 |
+| [Follow RSI `62e89f2`](https://github.com/adongwanai/follow-rsi/tree/62e89f254000e10e454456a99969c54b0ffb751c) | `README.md`、`data/papers.yaml`、`site/papers.json`，共三个；三者均匹配 SoL-Pi |
+
+旧日期记录保留各自快照与范围。本轮核验来源、入口与文档中的运行条件，未安装上游 Agent、执行参考评分器、启动训练或复现性能主张。

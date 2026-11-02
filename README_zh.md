@@ -12,7 +12,7 @@
 </p>
 
 <p align="center">
-  <a href="#resource-scope"><img src="https://img.shields.io/badge/resources-83-69D8AD?style=flat-square&amp;labelColor=182522" alt="83 项资源"></a>
+  <a href="#resource-scope"><img src="https://img.shields.io/badge/resources-87-69D8AD?style=flat-square&amp;labelColor=182522" alt="87 项资源"></a>
   <a href="README.md"><img src="https://img.shields.io/badge/languages-EN%20%2F%20%E4%B8%AD%E6%96%87-69D8AD?style=flat-square&amp;labelColor=182522" alt="中文与英文"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-69D8AD?style=flat-square&amp;labelColor=182522" alt="MIT 许可"></a>
 </p>
@@ -24,7 +24,7 @@
   <a href="docs/verification_zh.md">核验档案</a>
 </p>
 
-**收录 83 项资源；最近一次来源核验：2026-11-01。** 同一项目的网站、代码和 Notebook 合并计数；各项日期与实际核验范围见[核验档案](docs/verification_zh.md)。
+**收录 87 项资源；最近一次来源核验：2026-11-02。** 同一项目的网站、代码和 Notebook 合并计数；各项日期与实际核验范围见[核验档案](docs/verification_zh.md)。
 
 <a id="resource-scope"></a>
 
@@ -243,6 +243,7 @@
 | <a id="hyperagents"></a> [HyperAgents · Meta 与合作团队](https://github.com/facebookresearch/HyperAgents) · [论文](https://arxiv.org/abs/2603.19461) | **递归改进方法。** 任务 Agent 与元 Agent 均可编辑，继承的元 Agent 代码执行后续修改。 | [DGM-Hyperagent 循环与源码入口](docs/practice-guide_zh.md#hyperagents) | 英文；Python 3.12、Docker／构建环境、领域数据与模型 API。 |
 | <a id="dream-rsi"></a> [Dream-RSI · Google Research](https://github.com/google-research/dream-rsi) · [论文](https://arxiv.org/abs/2609.14858) | **递归改进方法。** 用离线重放改进探索策略，选中的策略指导下一轮在线搜索。 | [Quick start → explore / learn / promote 循环](docs/practice-guide_zh.md#dream-rsi) | 英文；Python 3.10+、Gemini CLI/API 与任务依赖；部分任务需要 GPU 服务。 |
 | <a id="verse"></a> [VERSE](https://github.com/wzekai/VERSE) · [论文](https://arxiv.org/abs/2610.02616) | **递归改进方法。** 执行反馈同时改进执行器 Harness 与优化器自身的提示、技能、工具和笔记，更新后的优化器工作区参与后续轮次。 | [验证实验 → 优化器工作区 → 演化启动器](docs/practice-guide_zh.md#verse) | 英文；阅读源码与已发布结果无需模型访问。演化需 Python 3.12+、Docker、任务数据与模型服务；作者脚本使用优化器 4 张 GPU、执行器 1 张 GPU。 |
+| <a id="skill-infinity"></a> [Skill∞](https://github.com/taowangcheng/Skill-Infinity) · [论文](https://arxiv.org/abs/2610.35434) | **递归改进方法 · 论文阅读。** 用元技能定义技能优化流程，再以同一流程修改元技能，并跨任务技能复用。 | [元技能递归 → 选优规则修改案例](docs/practice-guide_zh.md#skill-infinity) | 英文；Agent／Skill 基础。官方仓库仍是占位，暂无已核验安装或运行命令。 |
 
 <a id="harness-optimization"></a>
 
@@ -261,6 +262,7 @@
 | <a id="beagle"></a> [Beagle / DarwinX · Salesforce AI Research](https://github.com/SalesforceAIResearch/Beagle) | **相关自改进机制。** 在固定算法下区分 evolver/evolvee，学习 Harness 评估、候选选优与谱系记录。 | [评估与演化配置预览](docs/practice-guide_zh.md#beagle) | 英文；Python、uv、Docker、Harness checkout 与 benchmark 缓存；真实运行需模型访问。 |
 | <a id="harnesspro"></a> [HarnessPro](https://github.com/pzs19/HarnessPro) · [论文](https://arxiv.org/abs/2610.26770) | **相关自改进机制。** 结合 Pareto 选优与已发布的 Lite／Medium／Heavy Harness，学习效果与成本的权衡。 | [论文 → 运行策略 → 单任务 TB2 评测](docs/practice-guide_zh.md#harnesspro) | 英文；Linux、Python 3.12/3.13、uv、Docker、Codex CLI、模型 API 与 benchmark 数据；公开入口评测已发布的 Harness。 |
 | <a id="harnessmm"></a> [HarnessMM](https://github.com/YuhuaJiang2002/HarnessMM) · [论文](https://arxiv.org/abs/2610.32813) | **相关自改进机制。** 复用执行回执支持的工具动作，追踪被替代的推理回调，并将运行时节省与独立的 Harness 配置优化联系起来。 | [本地决策复用演示 → 控制器 → 训练与选优流程](docs/practice-guide_zh.md#harnessmm) | 英文；Python 3.10–3.14、Node.js 22+。本地示例不需模型凭证或 GPU；benchmark 集成另需上游运行环境、数据与模型访问。 |
+| <a id="sol-pi"></a> [SoL-Pi · NVIDIA](https://github.com/NVlabs/SoL-Pi) · [论文](https://arxiv.org/abs/2609.20519) | **相关自改进机制。** 学习并使用自动研究筛选出的四类 Harness 效率机制：动作融合、观测复用、日志压缩与上下文压缩。 | [研究循环 → Pi 扩展 → 逐项开关对照](docs/practice-guide_zh.md#sol-pi) | 英文；Node.js ≥22.19、npm、兼容 Pi 与模型访问。公开扩展无需训练；安装不会启动递归搜索。 |
 | <a id="elicitation-or-expansion"></a> [Elicitation or Expansion?](https://github.com/furiosa-ai/elicitation-or-expansion) · [论文](https://arxiv.org/abs/2610.27889) | **相关自改进机制。** 比较不同尝试预算下的成功频率与已观察到的任务覆盖率，配有 Harness 优化代码和已生成候选。 | [收益诊断 → HotpotQA 搜索与留出评测](docs/practice-guide_zh.md#elicitation-or-expansion) | 英文；阅读无需 API。运行需 Linux、Python 3.12、uv、Docker、Claude Code 访问、solver 服务与数据／检索环境。 |
 
 <a id="model-training"></a>
@@ -316,7 +318,9 @@
 | <a id="rsi-atlas"></a> [RSI Atlas · aniruddhaadak80/RSI](https://github.com/aniruddhaadak80/RSI) | **评测工具。** 通过教学示例理解候选修改的验收门控与历史记录。 | [通俗说明 → Python 示例](docs/practice-guide_zh.md#rsi-atlas) | 英文；示例需 Python；讲解门控而非完整 RSI。 |
 | <a id="longmemeval-v2"></a> [LongMemEval-V2](https://github.com/xiaowu0162/LongMemEval-V2) · [论文](https://arxiv.org/abs/2605.12493) | **评测工具。** 用保留的 Agent 轨迹评测记忆准确率与查询延迟。 | [无检索与 RAG 基线](docs/practice-guide_zh.md#longmemeval-v2) | 英文；Python ≥3.11、数据、读者／嵌入接口及部分题型的付费裁判。 |
 | <a id="past-bench"></a> [PAST-Bench · Gen-Verse](https://github.com/Gen-Verse/PAST-Bench) · [论文](https://arxiv.org/abs/2608.04003) | **评测工具。** 在新会话组成的任务序列中，对比保留与不保留经验的表现。 | [偏好采纳任务族 → 持久化对照](docs/practice-guide_zh.md#past-bench) | 英文；Python 3.11+、uv、Docker、Agent 集成及 Agent／裁判 API。 |
+| <a id="clr-bench"></a> [CLR-Bench](https://github.com/yausankit/clr-bench) · [论文](https://arxiv.org/abs/2610.40758) | **评测工具。** 检验保留经验是否学会能泛化到未见案例的隐藏规则，而不只是不断扩充纠错案例清单。 | [单条课程链 → 离线参考程序评分 → 学习条件对照](docs/practice-guide_zh.md#clr-bench) | 中英文 README；Python 3.12。本地参考程序评分无需 API；完整方法评测另需 Docker、方法依赖与模型端点。 |
 | <a id="scale-rsi-bench"></a> [Scale RSI Bench](https://github.com/scaleapi/rsi-benchmark) · [官网](https://www.rsi-benchmark.com) | **评测工具。** 阅读数据筛选、自蒸馏、鲁棒性与 Agent 群体优化等可执行 AI 研发任务的约束和评分规则。 | [nanoGPT 数据筛选任务 → 其他公开样例](docs/practice-guide_zh.md#scale-rsi-bench) | 英文；Python 3.12+、Harbor、Modal GPU 沙盒与 Agent 模型 API。 |
+| <a id="autorse"></a> [AutoRSE](https://github.com/Ray-Tiann/AutoRSE) · [论文](https://arxiv.org/abs/2610.37228) | **评测工具。** 六类推荐工程任务，区分依据验证集选优、隐藏测试评分，以及 Agent 实际修改内容的分析。 | [HSTU 任务 → 启动预览 → 预测与来源记录约定](docs/practice-guide_zh.md#autorse) | 英文；预览／格式检查使用 Python 3.12+。完整实验需 Linux、NVIDIA GPU、Docker 与模型访问；本轮未确认托管数据／评分服务可用性。 |
 | <a id="textbook-baselines"></a> [Do Self-Improving Coding Agents Beat Textbook Baselines?](https://github.com/tejasvi/self-improving-agents-textbook-baselines) · [论文（aiXiv）](https://aixiv.online/abs/2610.02812) | **评测工具。** 将 DGM 移植版及已发布的 DGM／ADAS Agent 与工程基线、单次重设计和匹配计算预算进行对照，并追溯结论对应的已发布结果。 | [实验设计 → 结果归档 → 离线重算](docs/practice-guide_zh.md#textbook-baselines) | 英文；离线分析需 Python、NumPy、SciPy、Matplotlib，无需模型调用。完整实验另需模型访问、外部数据与 Linux 沙盒／Docker 环境。 |
 | <a id="exlabel"></a> [ExLabel / SWE-TQ](https://github.com/ZJU-CTAG/ExLabel) · [论文](https://arxiv.org/abs/2610.39417) | **评测工具。** 利用持续更新的经验库判断编码任务是否清楚、测试是否充分；SWE-TQ 提供人工标注评测数据。 | [从训练集构建经验库 → 评估留出任务](docs/practice-guide_zh.md#exlabel) | 英文；Python 3.12、LLM 与 embedding 服务及密钥。经验库需自行构建；使用托管端点无需本地模型训练。 |
 
