@@ -260,6 +260,14 @@ CONFIG=self_teacher/verse_mh TAG=-r1 bash scripts/run_swe.sh
 
 **Language and requirements.** English; agent and skill-optimization fundamentals; reading requires no API or GPU. The [official snapshot](https://github.com/taowangcheng/Skill-Infinity/tree/78197d69784665d38a74a327940783c48c8b4897) contains a README, license and artwork, with code still pending release as of **2026-11-02**. No runnable implementation, installation command or hardware minimum was verified.
 
+<a id="rsi-env"></a>
+
+### [RSI-Env](https://arxiv.org/abs/2611.01736) — method reading
+
+**Recursive improvement method.** Read [§§3.1–3.3 → §4.5 → Appendix A](https://arxiv.org/html/2611.01736v1). Trace the Self successor into the next improver and contrast it with a fixed Teacher. Registration checks validity and executability; capability evaluation is separate, so registration alone does not establish improvement.
+
+**Requirements.** English; reading needs no compute. No official runnable repository was located through the paper and repository searches on **2026-11-04**. Appendix A reports 32 A800 80GB GPUs for training and another 32 for inference, with ten three-hour rounds; this is the study setup, not a verified minimum.
+
 <a id="harness-optimization"></a>
 
 ## Harness Optimization
@@ -501,6 +509,14 @@ Then follow [Try one task](https://github.com/SakanaAI/mass/blob/fb403581bed2c97
 
 **Language and running requirements.** English; Python 3.12, uv, SGLang, Docker/slime, benchmark data, model weights, and the configured Orchard Agentic sandbox endpoint/key. Upstream training and evaluation use **8×B200**; this is a source-reading and research-reproduction route, not a small local tutorial. H-step model serving, candidate evaluation, and P-step RL must all be configured before a complete cycle can run.
 
+<a id="care"></a>
+
+### [CARE](https://arxiv.org/abs/2611.02839) — production-loop reading
+
+**Related self-improvement mechanism.** Read [§3.3 → §5 → §§6.1–6.3 → §7](https://arxiv.org/html/2611.02839v1): separate model faults from component faults, construct repairs at the first wrong decision, then study teacher-only hindsight and candidate promotion. The current model supplies experience and the self-teacher; external models diagnose failures and people approve deployment. This entry teaches a bounded production learning loop.
+
+**Requirements.** English; distillation and agent fundamentals. Reading needs no API. No public reproduction package was verified on **2026-11-04**; reproducing the loop requires business traces, versioned policies, simulation / inspection infrastructure and model training. No minimum hardware recommendation is established here.
+
 <a id="memory-skills"></a>
 
 ## Memory and Skills
@@ -526,6 +542,22 @@ Then follow [Try one task](https://github.com/SakanaAI/mass/blob/fb403581bed2c97
 **Language and running requirements.** English; Python ≥3.9, Node ≥16.13, licensed Minecraft Java **1.19**, Fabric **0.14.18** / mods, Java **17** for the custom mod, and OpenAI chat / embedding APIs. No model fine-tuning; the game must run locally. This classic implementation has legacy, partly unpinned dependencies and old model defaults; fresh installation / endpoint compatibility was not tested.
 
 **Learning exercise:** inspect the saved playbook or skill library, restart with that state, and trace its effect on a held-out example or new task. Compare with an empty-state run while keeping models and task budgets comparable. [LongMemEval-V2](#longmemeval-v2) offers a separate memory-component comparison; connecting these projects to its interface requires an adapter. Treat component accuracy, retained task gains, and changes to the improvement procedure as distinct questions.
+
+<a id="evorepair"></a>
+
+### [EvoRepair](https://github.com/iSEngLab/Learn-from-Repair-Experience) · [paper](https://arxiv.org/abs/2605.30105)
+
+**Related self-improvement mechanism · repair experience.** Start with [paper §III → §VI-A](https://arxiv.org/html/2605.30105v3), then [multi_turn_runner.py](https://github.com/iSEngLab/Learn-from-Repair-Experience/blob/d0d885513e750d3c5bbed183e839f0c709dfbf60/multi_turn_runner.py) and `expbank/`: repair → experience extraction / scoring → database update → later retrieval. The retained experience bank evolves under a fixed orchestration process. Compare with [ACE](#ace); track same-instance learning separately from cross-vulnerability transfer.
+
+**Running entry.** Follow the [pinned setup](https://github.com/iSEngLab/Learn-from-Repair-Experience/blob/d0d885513e750d3c5bbed183e839f0c709dfbf60/README.md), configure both extraction and repair endpoints, and prepare the embedding model and evaluation images. First inspect one bounded configuration:
+
+```bash
+python multi_turn_runner.py -o output_preview -n 1 --workers 1 --eval-workers 1 --dry-run
+```
+
+This validates configuration rather than repairing a vulnerability. For real runs, explicitly set `-o` and `-n`: the source requires an output directory, and omitting `-n` enables automatic iteration. Start with baseline mode to build `turn_1/cold-start/vec_DB`, then pass that path through `--exp-db` in a separate retrieve-only run. Despite its name, retrieve-only updates the bank after each turn. The [embedding downloader](https://github.com/iSEngLab/Learn-from-Repair-Experience/blob/d0d885513e750d3c5bbed183e839f0c709dfbf60/expbank/script/download_model.py) requires a model repository argument and `--local-dir`; align that directory with the runner configuration instead of copying the README's argument-free command.
+
+**Requirements.** English; [Python ≥3.10](https://github.com/iSEngLab/Learn-from-Repair-Experience/blob/d0d885513e750d3c5bbed183e839f0c709dfbf60/pyproject.toml), API budget, local embedding dependencies and Docker. Upstream recommends at least **500 GB** free space for the full 230-image PatchEval set; a smaller task subset needs its corresponding images. No training-GPU minimum was verified.
 
 <a id="coevolution-projects"></a>
 
@@ -754,6 +786,27 @@ python score_k1_v3.py --version 0 --program L1=controls/reference_L1.py --diagno
 ```
 
 This local scorer executes the supplied reference program without a model API; it does not run agent learning. The [scorer's runner](https://github.com/yausankit/clr-bench/blob/098d2a36cc9cd362ffd63208b998c30376ea3fbe/data/chains/TR1/harness_k1_test/runner.py) uses local Python subprocesses, distinct from the full evaluation harness's Docker execution. Full method runs additionally need Docker, the upstream method dependencies and an OpenAI-compatible endpoint; follow the README's gateway and `harness/run_condition.sh` instructions. Constructing new probe-certified chains also calls a model. The repository's license is still marked undecided; inspect its terms before redistribution.
+
+<a id="selfimprove-bench"></a>
+
+### [SelfImprove-Bench](https://github.com/theseus-labs-rsi/SelfImprove-Bench) · [paper](https://arxiv.org/abs/2611.02797)
+
+**Evaluation tool · generalization after adaptation.** Read [§§3.1–3.4 → §4.2](https://arxiv.org/html/2611.02797v1), then [the README](https://github.com/theseus-labs-rsi/SelfImprove-Bench/blob/99b07d7da9e2dda4bdd0b460ac58951c3c15108f/README.md). G0 checks encountered-instance retention; G1–G4 extend to unseen instances, difficulty, tasks and capabilities. Pair with [ACE](#ace) or [HyperAgents](#hyperagents), retaining initial and evolved evaluations on identical holdouts.
+
+**Recommended entry.** After the documented Python **3.13.12** environment and requirements installation, follow [examples/minimal_rsi.py](https://github.com/theseus-labs-rsi/SelfImprove-Bench/blob/99b07d7da9e2dda4bdd0b460ac58951c3c15108f/examples/minimal_rsi.py):
+
+```bash
+python -m benchmark configs/examples/minimal_rsi.json
+```
+
+The example returns a fixed action and records refinement rounds; it makes no model calls and demonstrates lifecycle / state handling, not learned improvement. Then configure the method's model/backend in `rsi_methods/ACE/config.toml` and use the [Farm experiment](https://github.com/theseus-labs-rsi/SelfImprove-Bench/blob/99b07d7da9e2dda4bdd0b460ac58951c3c15108f/configs/main/farm_ace.json):
+
+```bash
+python -m benchmark configs/main/farm_ace.json --initial
+python -m benchmark configs/main/farm_ace.json
+```
+
+**Requirements.** English; real methods require their backend credentials / CLI and model budget. Farm's main configuration has 20 adaptation tasks plus 60 holdouts and replay; it is not a one-call example. HyperAgents adds Docker; AHE needs Linux bubblewrap and unprivileged user namespaces; Minecraft / Astray add GameWorld and Chromium. Trajectory analysis also calls a model. No model-training GPU is required for the fixed-action example; inspect each backend before a full run.
 
 <a id="scale-rsi-bench"></a>
 

@@ -4,13 +4,14 @@
 
 [资源目录](../README_zh.md) · [学习指南](learning-guide_zh.md) · [实践指南](practice-guide_zh.md)
 
-本档案记录 **2026-10-22 至 2026-11-02** 的来源核验。每个日期小节分别说明来源、版本与核验范围；后续新增不代表重新核验此前记录。
+本档案记录 **2026-10-22 至 2026-11-04** 的来源核验。每个日期小节分别说明来源、版本与核验范围；后续新增不代表重新核验此前记录。
 
 - [近期综述覆盖表](#survey-coverage)
 - [核验历史与扩展排漏](#review-log)
 - [逐项资源核验记录](#verification)
 - [2026-11-01：本轮补充与索引覆盖](#verification-2026-11-01)
 - [2026-11-02：本轮补充与发布状态核验](#verification-2026-11-02)
+- [2026-11-04：后继系统与泛化](#verification-2026-11-04)
 
 <a id="survey-coverage"></a>
 
@@ -289,3 +290,26 @@
 | [Follow RSI `62e89f2`](https://github.com/adongwanai/follow-rsi/tree/62e89f254000e10e454456a99969c54b0ffb751c) | `README.md`、`data/papers.yaml`、`site/papers.json`，共三个；三者均匹配 SoL-Pi |
 
 旧日期记录保留各自快照与范围。本轮核验来源、入口与文档中的运行条件，未安装上游 Agent、执行参考评分器、启动训练或复现性能主张。
+
+<a id="verification-2026-11-04"></a>
+
+### 2026-11-04：后继系统、泛化与生产反馈
+
+**核验日期：11 月 4 日，Asia/Taipei。** 与现有 87 项资源排重后补入四项，总数为 **91**。本轮包括近期论文及索引更新带出的旧遗漏，不表示都在 11 月 4 日发表。下表日期为 UTC 的首次提交／最新修订日期。
+
+| 资源 | 论文日期／最新版本 | 已核验入口与发布状态 | 在本轮检查的公开目录中的覆盖 |
+| --- | --- | --- | --- |
+| [RSI-Env](https://arxiv.org/abs/2611.01736) | **2026-11-01 · v1** | 读 §§3.1–3.3、§4.5 与附录 A。通过论文与定向搜索未找到可确认的官方可运行仓库；硬件数字是作者实验配置。 | 下述十份文件未匹配到。 |
+| [SelfImprove-Bench](https://arxiv.org/abs/2611.02797) | **2026-11-02 · v1** | [官方 `99b07d7`](https://github.com/theseus-labs-rsi/SelfImprove-Bench/tree/99b07d7da9e2dda4bdd0b460ac58951c3c15108f)：核验 README、离线适配器／配置、Farm 配置与依赖。区分固定动作流程示例和调用 API 的方法实验。 | 下述十份文件未匹配到。 |
+| [CARE](https://arxiv.org/abs/2611.02839) | **2026-11-02 · v1** | 读 §3.3 与 §§5–7。论文阅读入口，未核验到公共复现包。本目录归为相关机制，因为外部诊断与人工晋级仍在被训练模型之外。 | 下述十份文件未匹配到。 |
+| [EvoRepair](https://arxiv.org/abs/2605.30105) | **2026-05-28 · v1 → 2026-10-21 · v3** | [官方 `d0d8855`](https://github.com/iSEngLab/Learn-from-Repair-Experience/tree/d0d885513e750d3c5bbed183e839f0c709dfbf60)：核验 README、运行器、包元数据与嵌入下载脚本。源码要求 `-o`，省略 `-n` 会自动迭代，下载脚本还要求 README 简写命令未列出的参数。 | [Prism README](https://github.com/Prism-Shadow/awesome-rsi/blob/edcfb17547929141f1784fdd777925a6787c1a5e/README.md#L320) 与 `site/src/data/methods.js`；[pinkbubble README](https://github.com/pinkbubblebubble/awesome-rsi/blob/9ca9894be723f7d95fae0dbc012e1e8b2e5a184b/README.md#L425)。 |
+
+**覆盖范围：五个仓库、十份公开目录文件。** 匹配名称、完整标题、arXiv 编号和仓库路径。未匹配仅指这些文件，不代表所有链接论文、未合并 PR 或其他仓库均未收录。本轮重新读取了 11 月 2 日使用的十个目录路径，固定版本如下。
+
+| 来源快照 | 检查文件 |
+| --- | --- |
+| [Prism `edcfb17`](https://github.com/Prism-Shadow/awesome-rsi/blob/edcfb17547929141f1784fdd777925a6787c1a5e/README.md) | `README.md`、`site/src/data/{methods,papers,systems}.js`，共四份 |
+| [pinkbubble `9ca9894`](https://github.com/pinkbubblebubble/awesome-rsi/blob/9ca9894be723f7d95fae0dbc012e1e8b2e5a184b/README.md)；[lobehub `632ab50`](https://github.com/lobehub/awesome-rsi/tree/632ab5065bf579c7d1daa71bdaab801fdefd3698)；[natnew `be444d5`](https://github.com/natnew/awesome-recursive-self-improvement/tree/be444d5e019290f5f1c552a6a405e9be10450f78) | 各自 `README.md`，共三份；lobehub 与 natnew 未匹配到本批新增 |
+| [Follow RSI `fa7a628`](https://github.com/adongwanai/follow-rsi/tree/fa7a628a1a1c720c130159943249979e08e0c0c9) | `README.md`、`data/papers.yaml`、`site/papers.json`，共三份；未匹配到本批新增 |
+
+[EvoRepair 索引合并](https://github.com/pinkbubblebubble/awesome-rsi/commit/b56e6abc2049c9d9cf2ab2df2bce83e77a014be6)发生于 **UTC 11 月 3 日／台北 11 月 4 日**，论文本身更早。[Skill∞](https://github.com/taowangcheng/Skill-Infinity/tree/78197d69784665d38a74a327940783c48c8b4897)重新检查后仍为相同 head，继续标为代码待发布的阅读条目。旧核验记录保留各自日期与范围。本轮只检查来源和文档条件，未运行上游示例、模型调用或实验。

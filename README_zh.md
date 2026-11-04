@@ -12,7 +12,7 @@
 </p>
 
 <p align="center">
-  <a href="#resource-scope"><img src="https://img.shields.io/badge/resources-87-69D8AD?style=flat-square&amp;labelColor=182522" alt="87 项资源"></a>
+  <a href="#resource-scope"><img src="https://img.shields.io/badge/resources-91-69D8AD?style=flat-square&amp;labelColor=182522" alt="91 项资源"></a>
   <a href="README.md"><img src="https://img.shields.io/badge/languages-EN%20%2F%20%E4%B8%AD%E6%96%87-69D8AD?style=flat-square&amp;labelColor=182522" alt="中文与英文"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-69D8AD?style=flat-square&amp;labelColor=182522" alt="MIT 许可"></a>
 </p>
@@ -24,7 +24,7 @@
   <a href="docs/verification_zh.md">核验档案</a>
 </p>
 
-**收录 87 项资源；最近一次来源核验：2026-11-02。** 同一项目的网站、代码和 Notebook 合并计数；各项日期与实际核验范围见[核验档案](docs/verification_zh.md)。
+**收录 91 项资源；最近一次来源核验：2026-11-04。** 同一项目的网站、代码和 Notebook 合并计数；各项日期与实际核验范围见[核验档案](docs/verification_zh.md)。
 
 <a id="resource-scope"></a>
 
@@ -244,6 +244,7 @@
 | <a id="dream-rsi"></a> [Dream-RSI · Google Research](https://github.com/google-research/dream-rsi) · [论文](https://arxiv.org/abs/2609.14858) | **递归改进方法。** 用离线重放改进探索策略，选中的策略指导下一轮在线搜索。 | [Quick start → explore / learn / promote 循环](docs/practice-guide_zh.md#dream-rsi) | 英文；Python 3.10+、Gemini CLI/API 与任务依赖；部分任务需要 GPU 服务。 |
 | <a id="verse"></a> [VERSE](https://github.com/wzekai/VERSE) · [论文](https://arxiv.org/abs/2610.02616) | **递归改进方法。** 执行反馈同时改进执行器 Harness 与优化器自身的提示、技能、工具和笔记，更新后的优化器工作区参与后续轮次。 | [验证实验 → 优化器工作区 → 演化启动器](docs/practice-guide_zh.md#verse) | 英文；阅读源码与已发布结果无需模型访问。演化需 Python 3.12+、Docker、任务数据与模型服务；作者脚本使用优化器 4 张 GPU、执行器 1 张 GPU。 |
 | <a id="skill-infinity"></a> [Skill∞](https://github.com/taowangcheng/Skill-Infinity) · [论文](https://arxiv.org/abs/2610.35434) | **递归改进方法 · 论文阅读。** 用元技能定义技能优化流程，再以同一流程修改元技能，并跨任务技能复用。 | [元技能递归 → 选优规则修改案例](docs/practice-guide_zh.md#skill-infinity) | 英文；Agent／Skill 基础。官方仓库仍是占位，暂无已核验安装或运行命令。 |
+| <a id="rsi-env"></a> [RSI-Env](https://arxiv.org/abs/2611.01736) | **递归改进方法 · 论文阅读。** 在 Self 设定中，更新后的模型与 Harness 接手后续研究轮次。 | [系统交接 → 独立评测](docs/practice-guide_zh.md#rsi-env) | 英文；Agent／训练背景。本轮未找到可确认的官方可运行仓库。 |
 
 <a id="harness-optimization"></a>
 
@@ -275,6 +276,7 @@
 | <a id="agent-lightning"></a> [Microsoft Agent Lightning v1.0](https://github.com/microsoft/agent-lightning) | **相关自改进机制。** 在固定训练器下追踪工具轨迹、奖励、GRPO 更新与策略检查点。 | [Calc-X Local Mode](docs/practice-guide_zh.md#agent-lightning) | 英文；Python 3.12+、Linux/WSL、CUDA；示例用 1 张 A100 80GB。 |
 | <a id="mass"></a> [MASS · Sakana AI](https://github.com/SakanaAI/mass) · [论文](https://arxiv.org/abs/2610.12176) | **递归改进方法。** 共享模型执行、优化并评审工作流，筛选出的轨迹用于训练下一轮模型。 | [计划预览 → 单任务搜索 → 两轮配置](docs/practice-guide_zh.md#mass) | 英文；计划预览无需 GPU／模型调用；搜索与训练需 Linux、模型服务和 GPU。 |
 | <a id="self-hpo"></a> [Self-HPO · MSR Orchard](https://github.com/MSR-Orchard/Self-HPO) · [论文](https://arxiv.org/abs/2610.22791) | **递归改进方法。** 交替进行 Harness 提案和策略 RL 更新，更新后的策略继续提议下一轮 Harness。 | [H-step → P-step → 导出策略](docs/practice-guide_zh.md#self-hpo) | 英文；先读源码与已发布 Harness；上游训练／评测配置使用 8 张 B200。 |
+| <a id="care"></a> [CARE](https://arxiv.org/abs/2611.02839) | **相关自改进机制 · 论文阅读。** 将生产失败转成已验证修复与自蒸馏训练；外部诊断和人工晋级仍参与闭环。 | [归因 → 自教师 → 晋级](docs/practice-guide_zh.md#care) | 英文；蒸馏／Agent 基础。未核验到公共复现包。 |
 
 <a id="memory-skills"></a>
 
@@ -284,6 +286,7 @@
 | --- | --- | --- | --- |
 | <a id="ace"></a> [ACE：Agentic Context Engineering](https://github.com/ace-agent/ace) | **相关自改进机制。** 把反馈转成持久文本经验手册，对比适应与重载后的评测。 | [Formula CLI 与手册重载](docs/practice-guide_zh.md#ace) | 英文；Python ≥3.10、uv 与模型 API；无需训练 GPU。 |
 | <a id="voyager"></a> [Voyager](https://github.com/MineDojo/Voyager) | **相关自改进机制。** 跨会话保存、检索并组合可执行的 Minecraft 技能。 | [技能管理器 → 已学习技能示例](docs/practice-guide_zh.md#voyager) | 英文；Python、Node、Minecraft Java/Fabric 与模型 API；依赖较旧。 |
+| <a id="evorepair"></a> [EvoRepair](https://github.com/iSEngLab/Learn-from-Repair-Experience) · [论文](https://arxiv.org/abs/2605.30105) | **相关自改进机制。** 保存并评分修复经验，供后续漏洞修复复用。 | [经验库 → 限定轮数的 PatchEval 运行](docs/practice-guide_zh.md#evorepair) | 英文；Python ≥3.10、模型 API、嵌入模型与 Docker；完整评测镜像需要较大磁盘空间。 |
 
 <a id="coevolution-projects"></a>
 
@@ -319,6 +322,7 @@
 | <a id="longmemeval-v2"></a> [LongMemEval-V2](https://github.com/xiaowu0162/LongMemEval-V2) · [论文](https://arxiv.org/abs/2605.12493) | **评测工具。** 用保留的 Agent 轨迹评测记忆准确率与查询延迟。 | [无检索与 RAG 基线](docs/practice-guide_zh.md#longmemeval-v2) | 英文；Python ≥3.11、数据、读者／嵌入接口及部分题型的付费裁判。 |
 | <a id="past-bench"></a> [PAST-Bench · Gen-Verse](https://github.com/Gen-Verse/PAST-Bench) · [论文](https://arxiv.org/abs/2608.04003) | **评测工具。** 在新会话组成的任务序列中，对比保留与不保留经验的表现。 | [偏好采纳任务族 → 持久化对照](docs/practice-guide_zh.md#past-bench) | 英文；Python 3.11+、uv、Docker、Agent 集成及 Agent／裁判 API。 |
 | <a id="clr-bench"></a> [CLR-Bench](https://github.com/yausankit/clr-bench) · [论文](https://arxiv.org/abs/2610.40758) | **评测工具。** 检验保留经验是否学会能泛化到未见案例的隐藏规则，而不只是不断扩充纠错案例清单。 | [单条课程链 → 离线参考程序评分 → 学习条件对照](docs/practice-guide_zh.md#clr-bench) | 中英文 README；Python 3.12。本地参考程序评分无需 API；完整方法评测另需 Docker、方法依赖与模型端点。 |
+| <a id="selfimprove-bench"></a> [SelfImprove-Bench](https://github.com/theseus-labs-rsi/SelfImprove-Bench) · [论文](https://arxiv.org/abs/2611.02797) | **评测工具。** 通过 G0–G4 泛化阶梯比较保留的收益能否迁移到新实例、难度、任务和能力。 | [离线适配器流程 → Farm／ACE](docs/practice-guide_zh.md#selfimprove-bench) | 英文；文档使用 Python 3.13.12。离线示例不调用模型；真实方法需要模型访问和对应沙箱。 |
 | <a id="scale-rsi-bench"></a> [Scale RSI Bench](https://github.com/scaleapi/rsi-benchmark) · [官网](https://www.rsi-benchmark.com) | **评测工具。** 阅读数据筛选、自蒸馏、鲁棒性与 Agent 群体优化等可执行 AI 研发任务的约束和评分规则。 | [nanoGPT 数据筛选任务 → 其他公开样例](docs/practice-guide_zh.md#scale-rsi-bench) | 英文；Python 3.12+、Harbor、Modal GPU 沙盒与 Agent 模型 API。 |
 | <a id="autorse"></a> [AutoRSE](https://github.com/Ray-Tiann/AutoRSE) · [论文](https://arxiv.org/abs/2610.37228) | **评测工具。** 六类推荐工程任务，区分依据验证集选优、隐藏测试评分，以及 Agent 实际修改内容的分析。 | [HSTU 任务 → 启动预览 → 预测与来源记录约定](docs/practice-guide_zh.md#autorse) | 英文；预览／格式检查使用 Python 3.12+。完整实验需 Linux、NVIDIA GPU、Docker 与模型访问；本轮未确认托管数据／评分服务可用性。 |
 | <a id="textbook-baselines"></a> [Do Self-Improving Coding Agents Beat Textbook Baselines?](https://github.com/tejasvi/self-improving-agents-textbook-baselines) · [论文（aiXiv）](https://aixiv.online/abs/2610.02812) | **评测工具。** 将 DGM 移植版及已发布的 DGM／ADAS Agent 与工程基线、单次重设计和匹配计算预算进行对照，并追溯结论对应的已发布结果。 | [实验设计 → 结果归档 → 离线重算](docs/practice-guide_zh.md#textbook-baselines) | 英文；离线分析需 Python、NumPy、SciPy、Matplotlib，无需模型调用。完整实验另需模型访问、外部数据与 Linux 沙盒／Docker 环境。 |

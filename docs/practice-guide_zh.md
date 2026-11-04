@@ -260,6 +260,14 @@ CONFIG=self_teacher/verse_mh TAG=-r1 bash scripts/run_swe.sh
 
 **语言与门槛。** 英文；Agent 与技能优化基础；阅读无需 API 或 GPU。**2026-11-02** 检查的[官方快照](https://github.com/taowangcheng/Skill-Infinity/tree/78197d69784665d38a74a327940783c48c8b4897)仅含 README、许可证和图片，代码仍标为待发布。尚未核验可运行实现、安装命令或最低硬件要求。
 
+<a id="rsi-env"></a>
+
+### [RSI-Env](https://arxiv.org/abs/2611.01736) — 方法阅读
+
+**递归改进方法。** 读 [§§3.1–3.3 → §4.5 → 附录 A](https://arxiv.org/html/2611.01736v1)，追踪 Self 后继版本怎样成为下一轮改进器，并与固定 Teacher 对照。版本注册检查合法性和可执行性，能力评测独立进行，因此注册本身不代表提升。
+
+**条件。** 英文；阅读不需算力。**2026-11-04** 通过论文与仓库搜索未找到可确认的官方可运行仓库。附录 A 报告训练与推理各用 32 张 A800 80GB，分配十轮、每轮三小时；这是论文实验配置，不是已核验的最低门槛。
+
 <a id="harness-optimization"></a>
 
 ## Harness 优化
@@ -502,6 +510,14 @@ python3 -m mass plan --config configs/paper.json
 
 **语言与运行条件。** 英文；Python 3.12、uv、SGLang、Docker/slime、benchmark 数据、模型权重，以及已配置的 Orchard Agentic sandbox 地址与 key。上游训练和评测使用 **8×B200**，适合作为源码阅读与研究复现路线，不是轻量本地教程。完整一轮需要配置 H-step 模型服务、候选评估与 P-step RL。
 
+<a id="care"></a>
+
+### [CARE](https://arxiv.org/abs/2611.02839) — 生产闭环阅读
+
+**相关自改进机制。** 读 [§3.3 → §5 → §§6.1–6.3 → §7](https://arxiv.org/html/2611.02839v1)：区分模型与组件故障，在首个错误决策处构造修复，再学习仅教师可见的事后信息和候选晋级。当前模型提供经验并充当自教师；外部模型负责诊断，人员批准部署。本条目用于学习有外部约束的生产学习闭环。
+
+**条件。** 英文；蒸馏与 Agent 基础。阅读不需 API。**2026-11-04** 未核验到公共复现包；复现闭环需要业务轨迹、版本化策略、仿真／质检设施和模型训练。这里不提供未经核验的最低硬件建议。
+
 <a id="memory-skills"></a>
 
 ## 记忆与技能
@@ -527,6 +543,22 @@ python3 -m mass plan --config configs/paper.json
 **语言与运行条件。** 英文；Python ≥3.9、Node ≥16.13、正版 Minecraft Java **1.19**、Fabric **0.14.18**／模组、构建自定义模组所需 Java **17**，以及 OpenAI 聊天／嵌入 API。不微调模型，但需在本地运行游戏。经典实现采用较旧且部分未锁版的依赖与旧模型默认值；未实测全新安装／端点兼容性。
 
 **学习练习：** 查看保存的手册或技能库，重启后加载它，再追踪它对持出样本或新任务的作用；保持模型与任务预算相近，与空状态运行作比较。[LongMemEval-V2](#longmemeval-v2) 提供独立的记忆组件对比，将这些项目接入其接口需要编写适配器。把组件准确率、保留经验带来的任务收益，以及改进流程自身的变化分开考察。
+
+<a id="evorepair"></a>
+
+### [EvoRepair](https://github.com/iSEngLab/Learn-from-Repair-Experience) · [论文](https://arxiv.org/abs/2605.30105)
+
+**相关自改进机制 · 修复经验。** 从[论文 §III → §VI-A](https://arxiv.org/html/2605.30105v3)进入 [multi_turn_runner.py](https://github.com/iSEngLab/Learn-from-Repair-Experience/blob/d0d885513e750d3c5bbed183e839f0c709dfbf60/multi_turn_runner.py) 与 `expbank/`：修复 → 提取／评分经验 → 更新数据库 → 后续检索。保留的经验库在固定编排过程下演化。与 [ACE](#ace) 对照，分别观察同一实例内学习和跨漏洞迁移。
+
+**运行入口。** 按[固定版本的安装说明](https://github.com/iSEngLab/Learn-from-Repair-Experience/blob/d0d885513e750d3c5bbed183e839f0c709dfbf60/README.md)配置经验提取与修复两组模型端点，准备嵌入模型和评测镜像。先检查限定轮数的配置：
+
+```bash
+python multi_turn_runner.py -o output_preview -n 1 --workers 1 --eval-workers 1 --dry-run
+```
+
+该命令检查配置，不执行漏洞修复。正式运行要显式指定 `-o` 和 `-n`：源码要求输出目录，省略 `-n` 会自动迭代。先用 baseline 模式生成 `turn_1/cold-start/vec_DB`，再在独立 retrieve-only 运行中通过 `--exp-db` 传入该路径。retrieve-only 虽然如此命名，每轮后仍更新经验库。[嵌入模型下载脚本](https://github.com/iSEngLab/Learn-from-Repair-Experience/blob/d0d885513e750d3c5bbed183e839f0c709dfbf60/expbank/script/download_model.py)要求模型仓库参数和 `--local-dir`；应与运行配置中的目录对齐，不能直接照抄 README 中不带参数的命令。
+
+**条件。** 英文；[Python ≥3.10](https://github.com/iSEngLab/Learn-from-Repair-Experience/blob/d0d885513e750d3c5bbed183e839f0c709dfbf60/pyproject.toml)、API 预算、本地嵌入依赖和 Docker。完整 230 个 PatchEval 镜像的上游建议是至少 **500 GB** 可用空间；较小任务子集需要对应镜像。未核验训练 GPU 的最低要求。
 
 <a id="coevolution-projects"></a>
 
@@ -755,6 +787,27 @@ python score_k1_v3.py --version 0 --program L1=controls/reference_L1.py --diagno
 ```
 
 本地评分器执行随附参考程序，无需模型 API，也不运行 Agent 学习。[评分器 runner](https://github.com/yausankit/clr-bench/blob/098d2a36cc9cd362ffd63208b998c30376ea3fbe/data/chains/TR1/harness_k1_test/runner.py)使用本地 Python 子进程，与完整评测 Harness 的 Docker 执行分开。完整方法实验另需 Docker、上游方法依赖及 OpenAI 兼容端点，按 README 的 gateway 与 `harness/run_condition.sh` 说明启动。生成新的探针认证课程链也需要调用模型。仓库许可证仍标为待定，二次分发前应查看其条款。
+
+<a id="selfimprove-bench"></a>
+
+### [SelfImprove-Bench](https://github.com/theseus-labs-rsi/SelfImprove-Bench) · [论文](https://arxiv.org/abs/2611.02797)
+
+**评测工具 · 适应后的泛化。** 读 [§§3.1–3.4 → §4.2](https://arxiv.org/html/2611.02797v1)，再看 [README](https://github.com/theseus-labs-rsi/SelfImprove-Bench/blob/99b07d7da9e2dda4bdd0b460ac58951c3c15108f/README.md)。G0 检查已遇实例上的能力保留；G1–G4 扩展到未见实例、难度、任务和能力。可配合 [ACE](#ace) 或 [HyperAgents](#hyperagents)，在相同留出任务上保留初始与演化后结果。
+
+**推荐入口。** 按文档创建 Python **3.13.12** 环境、安装依赖后，跟读 [examples/minimal_rsi.py](https://github.com/theseus-labs-rsi/SelfImprove-Bench/blob/99b07d7da9e2dda4bdd0b460ac58951c3c15108f/examples/minimal_rsi.py)：
+
+```bash
+python -m benchmark configs/examples/minimal_rsi.json
+```
+
+示例返回固定动作、记录改进轮数，不调用模型；用于理解生命周期和状态保存，不演示学得提升。随后在 `rsi_methods/ACE/config.toml` 配置模型／后端，再进入 [Farm 实验](https://github.com/theseus-labs-rsi/SelfImprove-Bench/blob/99b07d7da9e2dda4bdd0b460ac58951c3c15108f/configs/main/farm_ace.json)：
+
+```bash
+python -m benchmark configs/main/farm_ace.json --initial
+python -m benchmark configs/main/farm_ace.json
+```
+
+**条件。** 英文；真实方法需要对应后端凭证／CLI 与模型预算。Farm 主配置包含 20 个适应任务、60 个留出任务和重放，不是单次调用示例。HyperAgents 另需 Docker；AHE 需要 Linux bubblewrap 与非特权用户命名空间；Minecraft／Astray 另需 GameWorld 和 Chromium。轨迹分析也会调用模型。固定动作示例不需模型训练 GPU；完整运行前需检查各后端。
 
 <a id="scale-rsi-bench"></a>
 

@@ -4,13 +4,14 @@
 
 [Resource directory](../README.md) · [Learning guide](learning-guide.md) · [Practice guide](practice-guide.md)
 
-This archive records source checks from **2026-10-22 through 2026-11-02**. Each dated section specifies its own sources, versions and review scope; a later addition does not refresh earlier checks.
+This archive records source checks from **2026-10-22 through 2026-11-04**. Each dated section specifies its own sources, versions and review scope; a later addition does not refresh earlier checks.
 
 - [Recent survey coverage](#survey-coverage)
 - [Review history and expansion checks](#review-log)
 - [Resource review records](#verification)
 - [2026-11-01: Latest additions and index coverage](#verification-2026-11-01)
 - [2026-11-02: Latest additions and release checks](#verification-2026-11-02)
+- [2026-11-04: Successor systems and generalization](#verification-2026-11-04)
 
 <a id="survey-coverage"></a>
 
@@ -289,3 +290,26 @@ Dates and release status were checked against primary paper pages and pinned sou
 | [Follow RSI `62e89f2`](https://github.com/adongwanai/follow-rsi/tree/62e89f254000e10e454456a99969c54b0ffb751c) | `README.md`, `data/papers.yaml`, `site/papers.json` (three); SoL-Pi matches all three |
 
 The older dated checks retain their original snapshots and scope. This review verified sources, entry points and documented requirements; it did not install upstream agents, execute the reference scorer, launch training or reproduce performance claims.
+
+<a id="verification-2026-11-04"></a>
+
+### 2026-11-04: Successor systems, generalization and production feedback
+
+**Reviewed November 4, Asia/Taipei.** Four additions were deduplicated against the 87-resource catalog, bringing it to **91**. The review covers recent papers and older omissions surfaced by index updates; it does not imply November 4 publication. Paper dates below are first submission / latest revision in UTC.
+
+| Resource | Paper date / latest version | Verified entry and release status | Coverage in checked public catalogs |
+| --- | --- | --- | --- |
+| [RSI-Env](https://arxiv.org/abs/2611.01736) | **2026-11-01 · v1** | Read §§3.1–3.3, §4.5 and Appendix A. No official runnable repository located in the paper or targeted searches; the hardware figure is the authors' experiment setup. | No match in the ten files below. |
+| [SelfImprove-Bench](https://arxiv.org/abs/2611.02797) | **2026-11-02 · v1** | [Official `99b07d7`](https://github.com/theseus-labs-rsi/SelfImprove-Bench/tree/99b07d7da9e2dda4bdd0b460ac58951c3c15108f): README, offline adapter / config, Farm config and requirements checked. Separate the fixed-action lifecycle example from API-backed method runs. | No match in the ten files below. |
+| [CARE](https://arxiv.org/abs/2611.02839) | **2026-11-02 · v1** | Read §3.3 and §§5–7. Paper-reading entry; no public reproduction package verified. Classified here as a related mechanism because external diagnosis and human promotion remain outside the learned model. | No match in the ten files below. |
+| [EvoRepair](https://arxiv.org/abs/2605.30105) | **2026-05-28 · v1 → 2026-10-21 · v3** | [Official `d0d8855`](https://github.com/iSEngLab/Learn-from-Repair-Experience/tree/d0d885513e750d3c5bbed183e839f0c709dfbf60): README, runner, package metadata and embedding downloader checked. The source requires `-o`, enables auto-iteration without `-n`, and requires downloader arguments omitted by the README's abbreviated setup. | [Prism README](https://github.com/Prism-Shadow/awesome-rsi/blob/edcfb17547929141f1784fdd777925a6787c1a5e/README.md#L320) and `site/src/data/methods.js`; [pinkbubble README](https://github.com/pinkbubblebubble/awesome-rsi/blob/9ca9894be723f7d95fae0dbc012e1e8b2e5a184b/README.md#L425). |
+
+**Coverage scope: five repositories, ten public catalog files.** Matched names, full titles, arXiv identifiers and repository paths. A negative match applies only to the checked files, not every linked paper, unmerged PR or repository. These are the same ten catalog paths used on November 2, fetched again at the snapshots below.
+
+| Source snapshot | Files checked |
+| --- | --- |
+| [Prism `edcfb17`](https://github.com/Prism-Shadow/awesome-rsi/blob/edcfb17547929141f1784fdd777925a6787c1a5e/README.md) | `README.md`, `site/src/data/{methods,papers,systems}.js` (four) |
+| [pinkbubble `9ca9894`](https://github.com/pinkbubblebubble/awesome-rsi/blob/9ca9894be723f7d95fae0dbc012e1e8b2e5a184b/README.md); [lobehub `632ab50`](https://github.com/lobehub/awesome-rsi/tree/632ab5065bf579c7d1daa71bdaab801fdefd3698); [natnew `be444d5`](https://github.com/natnew/awesome-recursive-self-improvement/tree/be444d5e019290f5f1c552a6a405e9be10450f78) | Each `README.md` (three); lobehub and natnew have no match for these additions |
+| [Follow RSI `fa7a628`](https://github.com/adongwanai/follow-rsi/tree/fa7a628a1a1c720c130159943249979e08e0c0c9) | `README.md`, `data/papers.yaml`, `site/papers.json` (three); no match for these additions |
+
+The [EvoRepair index merge](https://github.com/pinkbubblebubble/awesome-rsi/commit/b56e6abc2049c9d9cf2ab2df2bce83e77a014be6) occurred on **November 3 UTC / November 4 Taipei**; its paper is older. [Skill∞](https://github.com/taowangcheng/Skill-Infinity/tree/78197d69784665d38a74a327940783c48c8b4897) was rechecked at the unchanged head and remains a code-pending reading entry. Earlier dated records retain their original scope. This review inspected sources and documented requirements; it did not run upstream examples, model calls or experiments.
