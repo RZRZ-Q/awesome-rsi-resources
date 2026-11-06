@@ -12,7 +12,7 @@
 </p>
 
 <p align="center">
-  <a href="#resource-scope"><img src="https://img.shields.io/badge/resources-91-69D8AD?style=flat-square&amp;labelColor=182522" alt="91 项资源"></a>
+  <a href="#resource-scope"><img src="https://img.shields.io/badge/resources-95-69D8AD?style=flat-square&amp;labelColor=182522" alt="95 项资源"></a>
   <a href="README.md"><img src="https://img.shields.io/badge/languages-EN%20%2F%20%E4%B8%AD%E6%96%87-69D8AD?style=flat-square&amp;labelColor=182522" alt="中文与英文"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-69D8AD?style=flat-square&amp;labelColor=182522" alt="MIT 许可"></a>
 </p>
@@ -24,7 +24,7 @@
   <a href="docs/verification_zh.md">核验档案</a>
 </p>
 
-**收录 91 项资源；最近一次来源核验：2026-11-04。** 同一项目的网站、代码和 Notebook 合并计数；各项日期与实际核验范围见[核验档案](docs/verification_zh.md)。
+**收录 95 项资源；最近一次来源核验：2026-11-07。** 同一项目的网站、代码和 Notebook 合并计数；各项日期与实际核验范围见[核验档案](docs/verification_zh.md)。
 
 <a id="resource-scope"></a>
 
@@ -91,8 +91,8 @@
 | <a id="persdre"></a> [Persdre/awesome-recursive-self-improvement](https://github.com/Persdre/awesome-recursive-self-improvement) | 以“修改对象 × 闭环程度”整理研究，适合辨析不同工作所说的 RSI。 | [What Counts as RSI?](https://github.com/Persdre/awesome-recursive-self-improvement#what-counts-as-rsi)，再按修改对象查论文。 | 英文；机器学习 / Agent 背景；其中层级标签是作者的整理框架。 |
 | <a id="token-rhythm"></a> [Token-Rhythm/awesome-rsi](https://github.com/Token-Rhythm/awesome-rsi) | 双语文献表带日期、主题标签、摘要和论文 / 代码入口，适合按方向查阅。 | [中文精选读物](https://github.com/Token-Rhythm/awesome-rsi/blob/main/README_zh.md#featured-rsi-readings) → [分类概览](https://github.com/Token-Rhythm/awesome-rsi/blob/main/README_zh.md#category-overview)。 | 中英；纯阅读。上游最近核验标为 **2026-08-13**，9–10 月资料宜结合其他目录查阅。 |
 | <a id="jacky-leng"></a> [jacky-leng/awesome-rsi](https://github.com/jacky-leng/awesome-rsi) | 用闭环位置、反馈、搜索、持久状态、人的角色和证据类型六个轴比较改进循环，适合做方法对照。 | [TAXONOMY.md](https://github.com/jacky-leng/awesome-rsi/blob/main/TAXONOMY.md) → [Landscape](https://github.com/jacky-leng/awesome-rsi#landscape)。 | 英文；纯阅读。上游标注核验覆盖至 **2026-10-07**。 |
-| <a id="pinkbubblebubble"></a> [pinkbubblebubble/awesome-rsi](https://github.com/pinkbubblebubble/awesome-rsi) | 用 RSI / Self-improvement / Enabler 标签解释资源与递归改进的关系，兼收 Harness、评测和工程报告，适合寻找近期实践方向。 | [Scope and labels](https://github.com/pinkbubblebubble/awesome-rsi#scope-and-labels) → [Start here](https://github.com/pinkbubblebubble/awesome-rsi#start-here)；实践可看 [Harness 清单](https://github.com/pinkbubblebubble/awesome-rsi#self-improvement-harnesses)。 | 英文；纯阅读。上游自报最近核验 **2026-10-31**；第三方实现各有运行条件。 |
-| <a id="follow-rsi"></a> [Follow RSI](https://adongwanai.github.io/follow-rsi/index.html) · [仓库](https://github.com/adongwanai/follow-rsi) | 聚焦 Harness 自进化的论文索引，提供阅读路线，以及留出评测、同预算对照、迁移和成本等证据卡片，适合学习怎样判断改进主张的依据。 | [中英 Harness 导读](https://adongwanai.github.io/follow-rsi/guide.html) → [阅读路线](https://adongwanai.github.io/follow-rsi/index.html#routes) → [日报状态](https://adongwanai.github.io/follow-rsi/daily/index.html)。 | 中文与英文；只读学习。多数证据字段仍为 `unknown`（尚未审定）；核验时订阅 Skill 已预告但尚未实现。10-27 日报已撤回，[10-28 复核](docs/verification_zh.md#verification-2026-10-28)时 feed 为空。 |
+| <a id="pinkbubblebubble"></a> [pinkbubblebubble/awesome-rsi](https://github.com/pinkbubblebubble/awesome-rsi) | 用 RSI / Self-improvement / Enabler 标签解释资源与递归改进的关系，兼收 Harness、评测和工程报告，适合寻找近期实践方向。 | [Scope and labels](https://github.com/pinkbubblebubble/awesome-rsi#scope-and-labels) → [Start here](https://github.com/pinkbubblebubble/awesome-rsi#start-here)；实践可看 [Harness 清单](https://github.com/pinkbubblebubble/awesome-rsi#self-improvement-harnesses)。 | 英文；纯阅读。上游自报最近核验 **2026-11-05**；第三方实现各有运行条件。 |
+| <a id="follow-rsi"></a> [Follow RSI](https://adongwanai.github.io/follow-rsi/index.html) · [仓库](https://github.com/adongwanai/follow-rsi) | 聚焦 Harness 自进化的论文索引，提供阅读路线，以及留出评测、同预算对照、迁移和成本等证据卡片，适合学习怎样判断改进主张的依据。 | [中英 Harness 导读](https://adongwanai.github.io/follow-rsi/guide.html) → [阅读路线](https://adongwanai.github.io/follow-rsi/index.html#routes) → [日报状态](https://adongwanai.github.io/follow-rsi/daily/index.html)。 | 中文与英文；只读学习。多数证据字段仍为 `unknown`（尚未审定）；已出现经审核的 11-02 日报，订阅 Skill 仍标为即将推出。见 [11-07 状态复核](docs/verification_zh.md#verification-2026-11-07)。 |
 
 <a id="surveys"></a>
 
@@ -167,6 +167,7 @@
 | <a id="ashish-kumar"></a> [Ashish Kumar：Recursive self-improvement 三篇导读](https://ashishkumar.ai/series/recursive-self-improvement/) | 从理论基础讲到 self-play / self-training，再到自修改代码；包含 text-to-SQL 自训练循环示意与评估 Harness 讨论。 | 按顺序读 [Part 1：概念与理论](https://ashishkumar.ai/blog/recursive-self-improvement-explained/)、[Part 2：自博弈与自训练](https://ashishkumar.ai/blog/self-improving-ai-self-play-self-training/)、[Part 3：自修改代码](https://ashishkumar.ai/blog/self-improving-code-alphaevolve-to-aide/)。 | 英文；适合有 LLM / 机器学习基础的读者。**2026-10-11** 发布的解释性文章，代码段用于讲解。 |
 | <a id="rsi-research-notes"></a> [RSI 研究札记 · asimfish/awesome_rsi](https://github.com/asimfish/awesome_rsi) | 中文论文精读与综合分析，对照模型权重、Harness 代码和文本技能等改进方式，重点讨论评估；适合从领域概览进入单篇论文。 | 按 [Start Here](https://github.com/asimfish/awesome_rsi#1-start-here) 选择路线，先读[报告 10：汇总洞察](https://github.com/asimfish/awesome_rsi/blob/main/reports/10_synthesis_insights.md)，再读[报告 12：自进化 Agent 综述](https://github.com/asimfish/awesome_rsi/blob/main/reports/12_self_evolving_agents_survey.md)。学习 Harness 优化时可先读[报告 13 第 4 节：Meta-Harness](https://github.com/asimfish/awesome_rsi/blob/63f83e581ff3161932b62ab5fbe845fdf03cf84b/reports/13_meta_harness.md)，再进入[官方代码入口](#harness-optimization)。 | 中文；LLM / Agent 基础；纯阅读。报告包含整理者的分析；配套论文中译为机器翻译，引用与技术细节应回到论文原文。 |
 | <a id="weng-harness"></a> [Lilian Weng：Harness Engineering for Self-Improvement](https://lilianweng.github.io/posts/2026-07-04-harness/) | 串联上下文管理、工作流搜索、自修改 Harness、进化搜索及 Harness／权重联合更新的研究长文，适合对照本目录实践项目背后的机制。 | 从 [Harness Optimization](https://lilianweng.github.io/posts/2026-07-04-harness/#harness-optimization) 开始，重点读 Self-Improving Harness 与 Evolutionary Search，再读 Future Challenges。 | 英文；Agent 与评估基础；纯阅读。属于综述性技术博客，与经过同行评审的综述论文分开标注。 |
+| <a id="metr-acceleration"></a> [METR：Anthropic 的 AI 研发加速评估](https://metr.org/blog/2026-11-05-anthropic-ai-rd-acceleration-assessment/) | 研究阅读：学习如何测量研发速度，以及如何将加速归因于 AI 辅助。 | [发现 → 方法 → 局限](docs/practice-guide_zh.md#metr-acceleration) | 英文；**2026-11-05** 发布，评估 2026 年 10 月的情况。纯阅读；部分底层证据未公开或被删节。 |
 
 <a id="prerequisite-courses"></a>
 
@@ -245,6 +246,7 @@
 | <a id="verse"></a> [VERSE](https://github.com/wzekai/VERSE) · [论文](https://arxiv.org/abs/2610.02616) | **递归改进方法。** 执行反馈同时改进执行器 Harness 与优化器自身的提示、技能、工具和笔记，更新后的优化器工作区参与后续轮次。 | [验证实验 → 优化器工作区 → 演化启动器](docs/practice-guide_zh.md#verse) | 英文；阅读源码与已发布结果无需模型访问。演化需 Python 3.12+、Docker、任务数据与模型服务；作者脚本使用优化器 4 张 GPU、执行器 1 张 GPU。 |
 | <a id="skill-infinity"></a> [Skill∞](https://github.com/taowangcheng/Skill-Infinity) · [论文](https://arxiv.org/abs/2610.35434) | **递归改进方法 · 论文阅读。** 用元技能定义技能优化流程，再以同一流程修改元技能，并跨任务技能复用。 | [元技能递归 → 选优规则修改案例](docs/practice-guide_zh.md#skill-infinity) | 英文；Agent／Skill 基础。官方仓库仍是占位，暂无已核验安装或运行命令。 |
 | <a id="rsi-env"></a> [RSI-Env](https://arxiv.org/abs/2611.01736) | **递归改进方法 · 论文阅读。** 在 Self 设定中，更新后的模型与 Harness 接手后续研究轮次。 | [系统交接 → 独立评测](docs/practice-guide_zh.md#rsi-env) | 英文；Agent／训练背景。本轮未找到可确认的官方可运行仓库。 |
+| <a id="exo"></a> [Exo](https://github.com/exoharness/exo) · [论文](https://arxiv.org/abs/2611.00463) | **递归改进方法 · 实验性运行时。** 自改进 Agent 示例修改自己的 Harness 与指令，再激活这些修改参与后续工作。 | [自改进示例 → 更新工具 → 状态保留](docs/practice-guide_zh.md#exo) | 英文；Rust、Node.js／pnpm、Docker 和模型 API。请从示例进入；当前首页主要介绍通用运行时。 |
 
 <a id="harness-optimization"></a>
 
@@ -256,6 +258,7 @@
 | --- | --- | --- | --- |
 | <a id="harness2"></a> [Harness² · Google Cloud AI Research／Northwestern](https://github.com/google-research/harness2) · [论文](https://arxiv.org/abs/2610.14224) | **递归改进方法。** 保留的改进经验指导后续 Harness 编辑；先看固定编辑逻辑的流程演示。 | [本地 Demo → 经验库源码](docs/practice-guide_zh.md#harness2) | 英文；Demo 需 Python 3.12/3.13 与 uv、无需模型凭证；真实改进需模型访问。 |
 | <a id="hermit"></a> [Hermit · CMU InfiniAI Lab](https://github.com/Infini-AI-Lab/hermit) · [文档](https://infini-ai-lab.github.io/hermit/docs/) | **相关自改进机制。** 保持基础模型和原 Harness 固定，训练并记录外置 adapter 的版本，通过统一训练与部署接口比较不同更新方法。 | [离线训练流程 → 小型 API 示例 → adapter 部署](docs/practice-guide_zh.md#hermit) | 英文；当前源码需 Python 3.12+ 与 Git。离线教学例子无需模型账号或 GPU；真实训练需方法依赖、模型访问和任务数据。 |
+| <a id="flashrsi"></a> [FlashRSI · RUC-NLPIR](https://github.com/RUC-NLPIR/FlashRSI) · [文档](https://ruc-nlpir.github.io/FlashRSI/) | **相关自改进机制 · 实验框架。** 通过版本化 Agent 资源、执行反馈和独立训练／开发／测试切分，比较所配置的优化方法。 | [小型 SearchQA 示例 → 快照与轨迹](docs/practice-guide_zh.md#flashrsi) | 中英文 README；Python ≥3.11、使用 Linux daemon 的 Docker，以及目标／工作模型 API；托管模型示例无需训练 GPU。 |
 | <a id="meta-harness"></a> [Meta-Harness · Stanford IRIS 与合作团队](https://github.com/stanford-iris-lab/meta-harness) · [论文](https://arxiv.org/abs/2603.28052) | **相关自改进机制。** 固定编码提案器利用源码、分数和轨迹搜索任务专用 Harness。 | [文本分类示例](docs/practice-guide_zh.md#meta-harness) | 英文；Python、提案器／任务模型访问与数据；按供应商配置环境。 |
 | <a id="pce"></a> [PCE · Population-Centered Agent Evolution](https://github.com/YanShuo1992/PCE) · [论文](https://arxiv.org/abs/2610.36660) | **递归改进方法。** 用种群证据指导 Harness 修改；下一次自修改前先加载继承的父代补丁。 | [种群证据 → Harness 修改 → 实验启动器](docs/practice-guide_zh.md#pce) | 英文；Linux、Docker、Conda／Python 3.11、DeepSeek API；至少 500 GB 磁盘。作者配置下完整运行需数天。 |
 | <a id="gepa-curator"></a> [GEPA-Curator](https://arxiv.org/abs/2610.37651) | **相关自改进机制。** 在提示优化前筛选有学习价值的失败、检索有用的历史成功轨迹，并比较其扩展到 Meta-Harness 代码修改的方式。 | [§3 → §5.3 → Curator 提示](docs/practice-guide_zh.md#gepa-curator) | 英文；GEPA／Agent 基础；本次仅推荐论文阅读，尚未确认专属官方实现与运行入口。 |
@@ -287,6 +290,7 @@
 | <a id="ace"></a> [ACE：Agentic Context Engineering](https://github.com/ace-agent/ace) | **相关自改进机制。** 把反馈转成持久文本经验手册，对比适应与重载后的评测。 | [Formula CLI 与手册重载](docs/practice-guide_zh.md#ace) | 英文；Python ≥3.10、uv 与模型 API；无需训练 GPU。 |
 | <a id="voyager"></a> [Voyager](https://github.com/MineDojo/Voyager) | **相关自改进机制。** 跨会话保存、检索并组合可执行的 Minecraft 技能。 | [技能管理器 → 已学习技能示例](docs/practice-guide_zh.md#voyager) | 英文；Python、Node、Minecraft Java/Fabric 与模型 API；依赖较旧。 |
 | <a id="evorepair"></a> [EvoRepair](https://github.com/iSEngLab/Learn-from-Repair-Experience) · [论文](https://arxiv.org/abs/2605.30105) | **相关自改进机制。** 保存并评分修复经验，供后续漏洞修复复用。 | [经验库 → 限定轮数的 PatchEval 运行](docs/practice-guide_zh.md#evorepair) | 英文；Python ≥3.10、模型 API、嵌入模型与 Docker；完整评测镜像需要较大磁盘空间。 |
+| <a id="specforge"></a> [SpecForge](https://github.com/ccsnow127/SpecForge) · [论文](https://arxiv.org/abs/2610.15708) | **相关自改进机制。** 从测试失败中改进持久化行为规格，再用于代码生成和下游任务；搜索程序保持固定。 | [测试合成 → 规格搜索 → 迁移](docs/practice-guide_zh.md#specforge) | 英文；Python、模型 API 和本地生成代码执行；Java 迁移另需 JDK／Maven。 |
 
 <a id="coevolution-projects"></a>
 

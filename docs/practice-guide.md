@@ -6,7 +6,7 @@
 
 This guide collects learning goals, source entry points, and running requirements for specific examples. Choose a project by topic; use the [learning guide](learning-guide.md#survey-project-map) to connect it to survey chapters. The [three resource labels](../README.md#resource-scope) describe the recommended entry point; topic groups are not RSI capability levels.
 
-These notes come from upstream documentation and selected source reviews on **2026-10-22–29**. **No tutorials, model calls, or experiments were run.** See the [verification records](verification.md#verification) for each resource's review date and scope. API examples require model access and a call budget; training configurations are upstream examples, not minimum hardware requirements tested by this directory.
+These notes come from upstream documentation and selected source reviews on **2026-10-22–2026-11-07**. **No tutorials, model calls, or experiments were run.** See the [verification records](verification.md#verification) for each resource's review date and scope. API examples require model access and a call budget; training configurations are upstream examples, not minimum hardware requirements tested by this directory.
 
 ## Contents
 
@@ -268,6 +268,24 @@ CONFIG=self_teacher/verse_mh TAG=-r1 bash scripts/run_swe.sh
 
 **Requirements.** English; reading needs no compute. No official runnable repository was located through the paper and repository searches on **2026-11-04**. Appendix A reports 32 A800 80GB GPUs for training and another 32 for inference, with ten three-hour rounds; this is the study setup, not a verified minimum.
 
+<a id="exo"></a>
+
+### [Exo](https://github.com/exoharness/exo) · [paper](https://arxiv.org/abs/2611.00463)
+
+**Recursive improvement method · runtime self-modification.** The self-improving agent can edit its harness and instructions for later improvement, then activate the changed implementation while retaining conversation history. The current root README describes a general runtime; start with the separate self-improving-agent example.
+
+**Source route.** Read [paper §§3–4 → §5.4](https://arxiv.org/html/2611.00463v1) → [example README](https://github.com/exoharness/exo/blob/d7fb6d2ee477dec48d272461b4c534152939ad22/examples/self-improving-agent/README.md) → [harness prompt assembly](https://github.com/exoharness/exo/blob/d7fb6d2ee477dec48d272461b4c534152939ad22/examples/self-improving-agent/harness.ts) → [rebuild tool](https://github.com/exoharness/exo/blob/d7fb6d2ee477dec48d272461b4c534152939ad22/examples/self-improving-agent/tools/guardian-tools.ts). Follow source edits into the guardian's build / restart operation and the next agent turn. Inspect `.exo/guardian-updates/` and conversation events to connect a requested update with its recorded outcome.
+
+**Running entry.** Use a dedicated checkout at the reviewed revision. From its root, run `pnpm install`, copy `.env.example` to `.env`, and configure `OPENAI_API_KEY` and an accessible model using the example's settings. On a new instance only:
+
+```bash
+./examples/self-improving-agent/exo.sh fresh --control
+```
+
+`fresh` deletes existing agents, conversations and adapters for this checkout. Resume with `./examples/self-improving-agent/exo.sh --control` to keep state; the control wrapper restarts the REPL child when a guardian update requests it.
+
+**Requirements.** English; Docker, model API access and a Rust / Node / pnpm build environment. The reviewed [mise.toml](https://github.com/exoharness/exo/blob/d7fb6d2ee477dec48d272461b4c534152939ad22/mise.toml) pins Rust 1.95, Node 22.15.0, pnpm 10.26.2 and Python 3.11. The agent edits the mounted checkout; use an instance dedicated to this experiment. Build success is not a quality gate. [Self-control documentation](https://github.com/exoharness/exo/blob/d7fb6d2ee477dec48d272461b4c534152939ad22/examples/self-improving-agent/docs/SELF-CONTROL.md) describes separate validation / rollback primitives; cloning and a canary comparison path remain planned.
+
 <a id="harness-optimization"></a>
 
 ## Harness Optimization
@@ -316,6 +334,32 @@ Inspect the generated `ADAPTER.md` and evaluation summaries. The scripted learne
 **Language and running requirements.** English. The [first real-model tutorial](https://github.com/Infini-AI-Lab/hermit/blob/2056e435d4be138358872208c3b233890cecf74c/docs/get-started/first-model.md) uses nine included sentiment tasks (three each for training, validation and testing), a chat-completions API and `python -m pip install -e . --group gepa`; dependency groups require **pip ≥25.1**. Keep the pinned checkout's dependencies and examples together; its layout and Python requirement differ from the initial PyPI 0.1.0 release. [OfficeQA](https://github.com/Infini-AI-Lab/hermit/blob/2056e435d4be138358872208c3b233890cecf74c/docs/recipes/officeqa.md) adds dataset access and model configuration; sandboxed learner programs need Linux / bubblewrap, and its Codex acting route adds Docker / npm.
 
 Specification validity does not establish a score gain; compare no-adapter, root and final on the same test split. The Evolver selects `final`, which is not universally the highest-scoring checkpoint. [Deployment and conversion](https://github.com/Infini-AI-Lab/hermit/blob/2056e435d4be138358872208c3b233890cecf74c/docs/tutorials/deploy-an-adapter.md) generate host workspaces or supported plugin files; they do not start Codex / Claude Code or run training.
+
+<a id="flashrsi"></a>
+
+### [FlashRSI · RUC-NLPIR](https://github.com/RUC-NLPIR/FlashRSI)
+
+**Related self-improvement mechanism · experiment framework.** Configure the algorithm, target harness, editing worker and benchmark separately; follow candidate resources through execution, selection and saved snapshots. Whether the improver changes depends on the chosen algorithm. The quickstart uses SkillOpt to revise skills with fixed model weights.
+
+**Recommended entry.** Read the pinned [quickstart](https://github.com/RUC-NLPIR/FlashRSI/blob/1d3f4d3703cc7c90eba01968626d0873158f2e24/docs/index.md) → [configuration](https://github.com/RUC-NLPIR/FlashRSI/blob/1d3f4d3703cc7c90eba01968626d0873158f2e24/examples/quickstart.yaml). It includes 12 SearchQA questions split **6 / 3 / 3** for train / dev / test and one fast update. Check out that revision, create a Python virtual environment and install `python -m pip install -e ".[all]"`. From the repository root:
+
+```bash
+flashrsi run --config examples/quickstart.yaml --check-only
+```
+
+This checks startup and may prepare data / dependencies; it makes no model calls and does not test remote authentication. Configure `TARGET_API_KEY` and `WORKER_API_KEY` separately, then use model names available to your account:
+
+```bash
+flashrsi run --config examples/quickstart.yaml \
+  --model YOUR_TARGET_MODEL --worker-model YOUR_WORKER_MODEL \
+  --output-dir runs/quickstart \
+  --set agent.llm.api_key="$TARGET_API_KEY" \
+  --set algorithm.worker.llm.api_key="$WORKER_API_KEY"
+```
+
+For custom endpoints, set `agent.llm.base_url` and `algorithm.worker.llm.base_url`. Inspect `snapshots/`, `trajectories/`, `result.json` and `end-summary.md`; compare initial and selected snapshots on the same held-out tasks. This small run teaches the experiment workflow, not a research-level improvement estimate.
+
+**Requirements.** English / Chinese documentation; Python **≥3.11**, with **3.12** recommended, a running **Docker Linux daemon**, and model API budget. Docker is required even for this quickstart: target tasks run in containers that must reach the model endpoint. Hosted-model use requires no local training GPU; full benchmarks add their own data and dependencies. Compare with [Hermit](#hermit) for external adapters and [Beagle](#beagle) for evolution interfaces.
 
 <a id="meta-harness"></a>
 
@@ -559,6 +603,27 @@ This validates configuration rather than repairing a vulnerability. For real run
 
 **Requirements.** English; [Python ≥3.10](https://github.com/iSEngLab/Learn-from-Repair-Experience/blob/d0d885513e750d3c5bbed183e839f0c709dfbf60/pyproject.toml), API budget, local embedding dependencies and Docker. Upstream recommends at least **500 GB** free space for the full 230-image PatchEval set; a smaller task subset needs its corresponding images. No training-GPU minimum was verified.
 
+<a id="specforge"></a>
+
+### [SpecForge · ccsnow127](https://github.com/ccsnow127/SpecForge) · [paper](https://arxiv.org/abs/2610.15708)
+
+**Related self-improvement mechanism · reusable behavioral specifications.** Test failures refine natural-language descriptions of functions and classes; the descriptions then guide new code generation. Learn how a Pareto archive, dependency-aware entity selection and different failure subsets reduce interference between edits. The search procedure and model weights stay fixed.
+
+**Recommended entry.** Read [§§2–3 → §4.5](https://arxiv.org/html/2610.15708v1), then the [two-stage README](https://github.com/ccsnow127/SpecForge/blob/5ed001d759fb5db408308c367e1ae25d238f31df/README.md) and [runner](https://github.com/ccsnow127/SpecForge/blob/5ed001d759fb5db408308c367e1ae25d238f31df/scripts/run_specforge.py). At that revision, install `python -m pip install -r requirements.txt` in a virtual environment and set `OPENAI_API_KEY` for the documented example:
+
+```bash
+python scripts/generate_llm_tests.py \
+  --module data/deveval_plus/stocktrends/indicators.py \
+  --model gpt-4o --branch-coverage 0.90
+python scripts/run_specforge.py \
+  --module data/deveval_plus/stocktrends/indicators.py \
+  --model gpt-4o --output-dir artifacts/quickstart
+```
+
+Stage 1 checks generated tests against the reference implementation. Confirm that Stage 2 prints `LLM-generated` for `Search-time tests`: if those tests are missing, the runner falls back to ground-truth tests, exposing final-evaluation information during search. `--no-llm-tests` also uses ground truth for both stages. Inspect `nodes/` for revised specifications and failures, then `result.json` / `summary.json` for evaluation and usage.
+
+**Requirements.** English; Python, [repository dependencies](https://github.com/ccsnow127/SpecForge/blob/5ed001d759fb5db408308c367e1ae25d238f31df/requirements.txt) and model API budget; no explicit minimum Python version was verified. This example uses local test execution and hosted inference rather than weight training. Use a disposable workspace because generated code executes locally. Default search settings are budget 50 and width 3; test synthesis and other stages also make calls, so this is not an end-to-end spending cap. Python → Java transfer adds JDK / Maven. Use this exact repository; other projects share the SpecForge name.
+
 <a id="coevolution-projects"></a>
 
 ## Co-Evolution
@@ -701,6 +766,14 @@ These entries retain fixed game rules or preference judges and fixed training pr
 <a id="evaluation"></a>
 
 ## Evaluation
+
+<a id="metr-acceleration"></a>
+
+### [METR: AI R&D Acceleration Assessment](https://metr.org/blog/2026-11-05-anthropic-ai-rd-acceleration-assessment/) — research reading
+
+**Evaluation reading.** This November 5 report assesses Anthropic's October 2026 research progress. Read Key findings → Appendices: Methodology / Benchmark scores (AECI) → Limitations. Distinguish historical, current and counterfactual growth, then separate measured acceleration from attribution to AI use.
+
+**Requirements.** English; basic statistics; no runtime or API. Some underlying evidence is private or redacted, so the public report is not a complete reproduction package or a demonstration of autonomous RSI.
 
 <a id="rsi-atlas"></a>
 

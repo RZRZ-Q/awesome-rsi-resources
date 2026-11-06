@@ -4,7 +4,7 @@
 
 [资源目录](../README_zh.md) · [学习指南](learning-guide_zh.md) · [实践指南](practice-guide_zh.md)
 
-本档案记录 **2026-10-22 至 2026-11-04** 的来源核验。每个日期小节分别说明来源、版本与核验范围；后续新增不代表重新核验此前记录。
+本档案记录 **2026-10-22 至 2026-11-07** 的来源核验。每个日期小节分别说明来源、版本与核验范围；后续新增不代表重新核验此前记录。
 
 - [近期综述覆盖表](#survey-coverage)
 - [核验历史与扩展排漏](#review-log)
@@ -12,6 +12,7 @@
 - [2026-11-01：本轮补充与索引覆盖](#verification-2026-11-01)
 - [2026-11-02：本轮补充与发布状态核验](#verification-2026-11-02)
 - [2026-11-04：后继系统与泛化](#verification-2026-11-04)
+- [2026-11-07：实验框架、运行时更新与改进测量](#verification-2026-11-07)
 
 <a id="survey-coverage"></a>
 
@@ -313,3 +314,31 @@
 | [Follow RSI `fa7a628`](https://github.com/adongwanai/follow-rsi/tree/fa7a628a1a1c720c130159943249979e08e0c0c9) | `README.md`、`data/papers.yaml`、`site/papers.json`，共三份；未匹配到本批新增 |
 
 [EvoRepair 索引合并](https://github.com/pinkbubblebubble/awesome-rsi/commit/b56e6abc2049c9d9cf2ab2df2bce83e77a014be6)发生于 **UTC 11 月 3 日／台北 11 月 4 日**，论文本身更早。[Skill∞](https://github.com/taowangcheng/Skill-Infinity/tree/78197d69784665d38a74a327940783c48c8b4897)重新检查后仍为相同 head，继续标为代码待发布的阅读条目。旧核验记录保留各自日期与范围。本轮只检查来源和文档条件，未运行上游示例、模型调用或实验。
+
+<a id="verification-2026-11-07"></a>
+
+### 2026-11-07：实验框架、运行时更新与改进测量
+
+**核验日期：台北时间 11 月 7 日。** 对照原有 91 项资源排重后新增四项，总数增至 **95**。本批包含近期发布内容，以及更新索引带出的较早工作；核验日期不等于它们的发布日期。下表论文日期采用 UTC。
+
+| 资源 | 日期／本次核实的最新版本 | 核实的入口与发布状态 | 已检查公开目录中的覆盖 |
+| --- | --- | --- | --- |
+| [FlashRSI](https://github.com/RUC-NLPIR/FlashRSI) | 源码快照 **2026-11-06**；未确认独立配套论文编号 | [官方 `1d3f4d3`](https://github.com/RUC-NLPIR/FlashRSI/tree/1d3f4d3703cc7c90eba01968626d0873158f2e24)：检查 README、文档、包元数据、CLI 和 `examples/quickstart.yaml`。12 题 SkillOpt／MiniAgent 示例需要 Docker，以及分别配置的目标模型／worker 模型。`--check-only` 不调用模型，也不验证远程认证。 | 下列十份文件中未匹配到。 |
+| [SpecForge](https://arxiv.org/abs/2610.15708) | **2026-10-11 · v1** | [官方 `5ed001d`](https://github.com/ccsnow127/SpecForge/tree/5ed001d759fb5db408308c367e1ae25d238f31df)：检查 README、依赖、默认配置和 runner。先读 §§2–3 → §4.5；先生成测试，再搜索规格说明。生成测试缺失时，runner 会回退到真值测试，因此需确认实际使用的搜索测试来源。固定搜索逻辑优化行为规格说明。 | [Prism README](https://github.com/Prism-Shadow/awesome-rsi/blob/aac1c2d41c09f51e7c752f79d6d35c638546cac1/README.md#L177)及方法数据；[pinkbubble README](https://github.com/pinkbubblebubble/awesome-rsi/blob/6ec0a43c397e1b667c4072fbace485ba7cc06465/README.md#L195)。 |
+| [Exo](https://arxiv.org/abs/2611.00463) | **2026-10-30 · v1**；首次提交在台北为 **10-31** | [官方 `d7fb6d2`](https://github.com/exoharness/exo/tree/d7fb6d2ee477dec48d272461b4c534152939ad22)：检查根目录／示例 README、自控制文档、harness、启动器、guardian 工具及工具链版本。先读 §§3–4 → §5.4，再进入 `examples/self-improving-agent`；当前首页介绍的是更通用的运行时。`fresh` 会删除已有 Agent／会话状态；构建成功不代表能力提高。 | [Prism README](https://github.com/Prism-Shadow/awesome-rsi/blob/aac1c2d41c09f51e7c752f79d6d35c638546cac1/README.md#L174)及方法数据；[pinkbubble 仓库条目](https://github.com/pinkbubblebubble/awesome-rsi/blob/6ec0a43c397e1b667c4072fbace485ba7cc06465/README.md#L682)。 |
+| [METR：Independent Assessment of AI R&D Acceleration at Anthropic in October 2026](https://metr.org/blog/2026-11-05-anthropic-ai-rd-acceleration-assessment/) | 报告发布于 **2026-11-05**，评估对象为 **2026 年 10 月** | 读 Key findings → 附录 Methodology／Benchmark scores (AECI) → Limitations。这是测量与归因研究，不是可运行 benchmark，也不是自主 RSI 的演示；部分支撑证据经过删节。 | 下列十份文件中未匹配到；一般性的 METR 机构链接不算覆盖该报告。 |
+
+**覆盖范围：五个仓库、十份公开目录文件。** 对名称、标题变体、arXiv 编号及官方仓库／报告路径进行不区分大小写的匹配。“未匹配到”只适用于这些文件，不代表链接的 PDF、内部发现队列、未合并修改或所有已收录仓库都没有。
+
+| 来源快照 | 检查的文件 | 本批结果 |
+| --- | --- | --- |
+| [Prism `aac1c2d`](https://github.com/Prism-Shadow/awesome-rsi/tree/aac1c2d41c09f51e7c752f79d6d35c638546cac1) | `README.md`、`site/src/data/{methods,papers,systems}.js`，共四份 | SpecForge 和 Exo 均匹配 README 与方法数据。 |
+| [pinkbubble `6ec0a43`](https://github.com/pinkbubblebubble/awesome-rsi/tree/6ec0a43c397e1b667c4072fbace485ba7cc06465) | `README.md`，一份 | 匹配 SpecForge 和 Exo。 |
+| [lobehub `632ab50`](https://github.com/lobehub/awesome-rsi/tree/632ab5065bf579c7d1daa71bdaab801fdefd3698)；[natnew `be444d5`](https://github.com/natnew/awesome-recursive-self-improvement/tree/be444d5e019290f5f1c552a6a405e9be10450f78) | 各自 `README.md`，共两份 | 未匹配到这四项新增。 |
+| [Follow RSI `6cb8262`](https://github.com/adongwanai/follow-rsi/tree/6cb8262adfc844ddedcc149e345c22e042b71445) | `README.md`、`data/papers.yaml`、`site/papers.json`，共三份 | 未匹配到这四项新增。 |
+
+**已有条目更新。** 已收录的 RSI-Env 已出现在 [pinkbubble 的 11 月 5 日快照](https://github.com/pinkbubblebubble/awesome-rsi/blob/6ec0a43c397e1b667c4072fbace485ba7cc06465/README.md#L250)，未重复新增。Follow RSI 的固定版本 README，以及额外检查的状态文件 [`site/daily/index.html`](https://github.com/adongwanai/follow-rsi/blob/6cb8262adfc844ddedcc149e345c22e042b71445/site/daily/index.html)，均已展示经过审核、包含三篇论文的 **11 月 2 日刊期**。这更新了 10 月 28 日记录的空 feed 状态；订阅 Skill 仍处于预告阶段。本次核对的是已提交的发布内容，未验证线上网站部署。状态 HTML 不计入上述十份目录文件。
+
+**观察项。** [EvoGroup](https://arxiv.org/abs/2611.03868)，**v1、UTC 11 月 2 日／台北 11 月 3 日**，已出现在 Prism README 和方法数据。论文仍说明代码将开源；在核实具体运行入口前，保留为阅读线索，不计入本轮四项新增。
+
+旧日期记录保留原快照。本轮检查了一手文档、公开源码和文档所述运行条件，未安装上游 Agent、调用模型或复现论文收益。

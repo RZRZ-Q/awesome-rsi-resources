@@ -6,7 +6,7 @@
 
 这里集中记录具体示例的学习目标、源码入口和运行条件。先按主题选择项目；综述章节与项目的对应关系见[学习指南](learning-guide_zh.md#survey-project-map)。条目的[三类标签](../README_zh.md#resource-scope)描述所推荐入口的范围，主题分组不表示 RSI 能力等级。
 
-以下说明来自 **2026-10-22–29** 对上游文档与部分源码的核验，**未运行教程、调用模型或复现实验**；逐项日期与范围见[核验档案](verification_zh.md#verification)。API 示例需要相应模型权限与调用预算，训练配置是上游示例而非本目录实测的最低硬件要求。
+以下说明来自 **2026-10-22–2026-11-07** 对上游文档与部分源码的核验，**未运行教程、调用模型或复现实验**；逐项日期与范围见[核验档案](verification_zh.md#verification)。API 示例需要相应模型权限与调用预算，训练配置是上游示例而非本目录实测的最低硬件要求。
 
 ## 目录
 
@@ -268,6 +268,24 @@ CONFIG=self_teacher/verse_mh TAG=-r1 bash scripts/run_swe.sh
 
 **条件。** 英文；阅读不需算力。**2026-11-04** 通过论文与仓库搜索未找到可确认的官方可运行仓库。附录 A 报告训练与推理各用 32 张 A800 80GB，分配十轮、每轮三小时；这是论文实验配置，不是已核验的最低门槛。
 
+<a id="exo"></a>
+
+### [Exo](https://github.com/exoharness/exo) · [论文](https://arxiv.org/abs/2611.00463)
+
+**递归改进方法 · 运行时自修改。** 自改进 Agent 可以编辑自己的 Harness 与后续改进指令，随后启用修改后的实现并保留对话历史。当前首页介绍的是通用运行时；学习自改进应进入独立的 self-improving-agent 示例。
+
+**源码路线。** [论文 §§3–4 → §5.4](https://arxiv.org/html/2611.00463v1) → [示例 README](https://github.com/exoharness/exo/blob/d7fb6d2ee477dec48d272461b4c534152939ad22/examples/self-improving-agent/README.md) → [Harness 提示组装](https://github.com/exoharness/exo/blob/d7fb6d2ee477dec48d272461b4c534152939ad22/examples/self-improving-agent/harness.ts) → [重建工具](https://github.com/exoharness/exo/blob/d7fb6d2ee477dec48d272461b4c534152939ad22/examples/self-improving-agent/tools/guardian-tools.ts)。追踪源码修改如何进入 guardian 的构建／重启操作，再参与下一个 Agent 回合；查看 `.exo/guardian-updates/` 和对话事件，将更新请求与实际记录的结果对应起来。
+
+**运行入口。** 使用核验版本的独立 checkout。在仓库根目录运行 `pnpm install`，将 `.env.example` 复制为 `.env`，按示例配置 `OPENAI_API_KEY` 和有权访问的模型。仅在新实例首次启动时执行：
+
+```bash
+./examples/self-improving-agent/exo.sh fresh --control
+```
+
+`fresh` 会删除该 checkout 已有的 Agent、对话和 adapter。后续用 `./examples/self-improving-agent/exo.sh --control` 保留状态；guardian 更新发出请求后，control 包装层会重启 REPL 子进程。
+
+**条件。** 英文；Docker、模型 API 权限及 Rust／Node／pnpm 构建环境。核验的 [mise.toml](https://github.com/exoharness/exo/blob/d7fb6d2ee477dec48d272461b4c534152939ad22/mise.toml) 固定 Rust 1.95、Node 22.15.0、pnpm 10.26.2 和 Python 3.11。Agent 会编辑挂载的 checkout，应使用专供该实验的实例。构建成功不等于质量达标。[自控制说明](https://github.com/exoharness/exo/blob/d7fb6d2ee477dec48d272461b4c534152939ad22/examples/self-improving-agent/docs/SELF-CONTROL.md)提供分开的验证／回退原语；克隆与 canary 对照路径仍在计划中。
+
 <a id="harness-optimization"></a>
 
 ## Harness 优化
@@ -316,6 +334,32 @@ hermit eval --config docs/_examples/first_training/run.yaml --adapter final
 **语言与运行条件。** 英文。[首个真实模型教程](https://github.com/Infini-AI-Lab/hermit/blob/2056e435d4be138358872208c3b233890cecf74c/docs/get-started/first-model.md)使用九个内置情感任务（训练、验证、测试各三个）、chat-completions API，以及 `python -m pip install -e . --group gepa`；依赖组要求 **pip ≥25.1**。应配套使用固定源码版本的依赖与例子，其布局和 Python 要求不同于最初的 PyPI 0.1.0 发布。[OfficeQA](https://github.com/Infini-AI-Lab/hermit/blob/2056e435d4be138358872208c3b233890cecf74c/docs/recipes/officeqa.md)另需数据集权限与模型配置；沙箱中的 learner 程序需 Linux／bubblewrap，其 Codex 执行路线还需 Docker／npm。
 
 规格检查通过不等于分数提升，应在相同测试划分比较 no-adapter、root 与 final。Evolver 决定 `final`，它并不统一代表最高分检查点。[部署与转换](https://github.com/Infini-AI-Lab/hermit/blob/2056e435d4be138358872208c3b233890cecf74c/docs/tutorials/deploy-an-adapter.md)生成宿主工作区或受支持的插件文件，不会启动 Codex／Claude Code，也不会执行训练。
+
+<a id="flashrsi"></a>
+
+### [FlashRSI · RUC-NLPIR](https://github.com/RUC-NLPIR/FlashRSI)
+
+**相关自改进机制 · 实验框架。** 分别配置算法、目标 Harness、编辑 Worker 与 benchmark，追踪候选资源的执行、选优和快照保存。改进器是否变化取决于所选算法；快速入门使用 SkillOpt 修改技能，模型权重固定。
+
+**推荐入口。** 固定版本的[快速入门](https://github.com/RUC-NLPIR/FlashRSI/blob/1d3f4d3703cc7c90eba01968626d0873158f2e24/docs/index.md) → [配置文件](https://github.com/RUC-NLPIR/FlashRSI/blob/1d3f4d3703cc7c90eba01968626d0873158f2e24/examples/quickstart.yaml)。示例含 12 道 SearchQA，训练／开发／测试按 **6 / 3 / 3** 划分，执行一次快速更新。检出该版本，建立 Python 虚拟环境后运行 `python -m pip install -e ".[all]"`。在仓库根目录检查：
+
+```bash
+flashrsi run --config examples/quickstart.yaml --check-only
+```
+
+该命令检查启动条件，可能准备数据／依赖；不调用模型，也不验证远端鉴权。分别配置 `TARGET_API_KEY` 与 `WORKER_API_KEY`，随后选择账户可用的模型名称：
+
+```bash
+flashrsi run --config examples/quickstart.yaml \
+  --model YOUR_TARGET_MODEL --worker-model YOUR_WORKER_MODEL \
+  --output-dir runs/quickstart \
+  --set agent.llm.api_key="$TARGET_API_KEY" \
+  --set algorithm.worker.llm.api_key="$WORKER_API_KEY"
+```
+
+自定义端点需设置 `agent.llm.base_url` 与 `algorithm.worker.llm.base_url`。查看 `snapshots/`、`trajectories/`、`result.json` 和 `end-summary.md`，在同一留出任务上比较初始与选中快照。这个小样本用于学习实验流程，不足以形成研究级改进估计。
+
+**条件。** 中英文文档；Python **≥3.11**，推荐 **3.12**，运行中的 **Docker Linux daemon** 和模型 API 预算。该快速入门同样需要 Docker：目标任务在容器内运行，容器必须能访问模型端点。使用托管模型无需本地训练 GPU；完整 benchmark 另有数据与依赖要求。可与 [Hermit](#hermit) 的外置 adapter、[Beagle](#beagle) 的演化接口对照学习。
 
 <a id="meta-harness"></a>
 
@@ -560,6 +604,27 @@ python multi_turn_runner.py -o output_preview -n 1 --workers 1 --eval-workers 1 
 
 **条件。** 英文；[Python ≥3.10](https://github.com/iSEngLab/Learn-from-Repair-Experience/blob/d0d885513e750d3c5bbed183e839f0c709dfbf60/pyproject.toml)、API 预算、本地嵌入依赖和 Docker。完整 230 个 PatchEval 镜像的上游建议是至少 **500 GB** 可用空间；较小任务子集需要对应镜像。未核验训练 GPU 的最低要求。
 
+<a id="specforge"></a>
+
+### [SpecForge · ccsnow127](https://github.com/ccsnow127/SpecForge) · [论文](https://arxiv.org/abs/2610.15708)
+
+**相关自改进机制 · 可复用行为规格。** 根据测试失败改写函数和类的自然语言描述，再用这些描述引导新代码生成。学习 Pareto 归档、考虑依赖关系的实体选择和不同失败子集如何减少修改之间的干扰。搜索规则与模型权重保持固定。
+
+**推荐入口。** [§§2–3 → §4.5](https://arxiv.org/html/2610.15708v1) → [两阶段 README](https://github.com/ccsnow127/SpecForge/blob/5ed001d759fb5db408308c367e1ae25d238f31df/README.md) → [运行器](https://github.com/ccsnow127/SpecForge/blob/5ed001d759fb5db408308c367e1ae25d238f31df/scripts/run_specforge.py)。在该版本的虚拟环境中安装 `python -m pip install -r requirements.txt`，为文档示例设置 `OPENAI_API_KEY`：
+
+```bash
+python scripts/generate_llm_tests.py \
+  --module data/deveval_plus/stocktrends/indicators.py \
+  --model gpt-4o --branch-coverage 0.90
+python scripts/run_specforge.py \
+  --module data/deveval_plus/stocktrends/indicators.py \
+  --model gpt-4o --output-dir artifacts/quickstart
+```
+
+第一阶段用参考实现筛验生成测试。确认第二阶段的 `Search-time tests` 显示 `LLM-generated`：若生成测试缺失，运行器会回退到真值测试，使搜索提前接触最终评测信息。`--no-llm-tests` 同样会让搜索与最终评测共用真值测试。查看 `nodes/` 中的规格修改与失败，再读 `result.json`／`summary.json` 中的评测和用量。
+
+**条件。** 英文；Python、[仓库依赖](https://github.com/ccsnow127/SpecForge/blob/5ed001d759fb5db408308c367e1ae25d238f31df/requirements.txt)和模型 API 预算；未核验到明确的最低 Python 版本。该示例采用本地测试与托管推理，不训练权重；生成代码会在本地执行，应使用可丢弃的工作区。默认搜索预算为 50、宽度为 3，测试生成等其他阶段也会调用模型，因此这不是全流程费用上限。Python → Java 迁移另需 JDK／Maven。请使用此处的准确仓库，其他项目也使用 SpecForge 名称。
+
 <a id="coevolution-projects"></a>
 
 ## 协同演化
@@ -702,6 +767,14 @@ python3.10 -m venv .venv-gui
 <a id="evaluation"></a>
 
 ## 评测
+
+<a id="metr-acceleration"></a>
+
+### [METR：AI 研发加速评估](https://metr.org/blog/2026-11-05-anthropic-ai-rd-acceleration-assessment/) — 研究阅读
+
+**评估阅读。** 这份 11 月 5 日报告评估 Anthropic 在 2026 年 10 月的研发进展。按 Key findings → Appendices: Methodology / Benchmark scores (AECI) → Limitations 阅读。区分历史、当前和反事实增长率，再将观测到的加速与归因于 AI 使用的部分分开。
+
+**条件。** 英文；基础统计知识；无需运行环境或 API。部分底层证据未公开或被删节，因此公开报告不是完整复现包，也不是自主 RSI 的演示。
 
 <a id="rsi-atlas"></a>
 

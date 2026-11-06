@@ -4,7 +4,7 @@
 
 [Resource directory](../README.md) · [Learning guide](learning-guide.md) · [Practice guide](practice-guide.md)
 
-This archive records source checks from **2026-10-22 through 2026-11-04**. Each dated section specifies its own sources, versions and review scope; a later addition does not refresh earlier checks.
+This archive records source checks from **2026-10-22 through 2026-11-07**. Each dated section specifies its own sources, versions and review scope; a later addition does not refresh earlier checks.
 
 - [Recent survey coverage](#survey-coverage)
 - [Review history and expansion checks](#review-log)
@@ -12,6 +12,7 @@ This archive records source checks from **2026-10-22 through 2026-11-04**. Each 
 - [2026-11-01: Latest additions and index coverage](#verification-2026-11-01)
 - [2026-11-02: Latest additions and release checks](#verification-2026-11-02)
 - [2026-11-04: Successor systems and generalization](#verification-2026-11-04)
+- [2026-11-07: Experiment frameworks, runtime updates and measurement](#verification-2026-11-07)
 
 <a id="survey-coverage"></a>
 
@@ -313,3 +314,31 @@ The older dated checks retain their original snapshots and scope. This review ve
 | [Follow RSI `fa7a628`](https://github.com/adongwanai/follow-rsi/tree/fa7a628a1a1c720c130159943249979e08e0c0c9) | `README.md`, `data/papers.yaml`, `site/papers.json` (three); no match for these additions |
 
 The [EvoRepair index merge](https://github.com/pinkbubblebubble/awesome-rsi/commit/b56e6abc2049c9d9cf2ab2df2bce83e77a014be6) occurred on **November 3 UTC / November 4 Taipei**; its paper is older. [Skill∞](https://github.com/taowangcheng/Skill-Infinity/tree/78197d69784665d38a74a327940783c48c8b4897) was rechecked at the unchanged head and remains a code-pending reading entry. Earlier dated records retain their original scope. This review inspected sources and documented requirements; it did not run upstream examples, model calls or experiments.
+
+<a id="verification-2026-11-07"></a>
+
+### 2026-11-07: Experiment frameworks, runtime updates and measurement
+
+**Reviewed November 7, Asia/Taipei.** Four additions were deduplicated against the 91-resource catalog, bringing it to **95**. This batch includes recent releases and earlier work surfaced by updated indexes; the review date is not their publication date. Paper dates below use UTC.
+
+| Resource | Date / latest verified version | Verified entry and release status | Coverage in checked public catalogs |
+| --- | --- | --- | --- |
+| [FlashRSI](https://github.com/RUC-NLPIR/FlashRSI) | Source snapshot **2026-11-06**; no dedicated paper identifier verified | [Official `1d3f4d3`](https://github.com/RUC-NLPIR/FlashRSI/tree/1d3f4d3703cc7c90eba01968626d0873158f2e24): README, documentation, package metadata, CLI and `examples/quickstart.yaml` checked. The 12-question SkillOpt / MiniAgent example requires Docker and separate target / worker model configuration. `--check-only` makes no model calls and does not verify remote authentication. | No match in the ten files below. |
+| [SpecForge](https://arxiv.org/abs/2610.15708) | **2026-10-11 · v1** | [Official `5ed001d`](https://github.com/ccsnow127/SpecForge/tree/5ed001d759fb5db408308c367e1ae25d238f31df): README, dependencies, defaults and runner checked. Read §§2–3 → §4.5; generate tests before specification search. The runner falls back to ground-truth tests when generated tests are missing, so verify the selected search-test source. Fixed search logic optimizes behavioral specifications. | [Prism README](https://github.com/Prism-Shadow/awesome-rsi/blob/aac1c2d41c09f51e7c752f79d6d35c638546cac1/README.md#L177) and method data; [pinkbubble README](https://github.com/pinkbubblebubble/awesome-rsi/blob/6ec0a43c397e1b667c4072fbace485ba7cc06465/README.md#L195). |
+| [Exo](https://arxiv.org/abs/2611.00463) | **2026-10-30 · v1**; first submission **10-31 in Taipei** | [Official `d7fb6d2`](https://github.com/exoharness/exo/tree/d7fb6d2ee477dec48d272461b4c534152939ad22): root / example READMEs, self-control documentation, harness, launcher, guardian tools and toolchain versions checked. Read §§3–4 → §5.4, then `examples/self-improving-agent`; the current homepage describes a broader runtime. `fresh` deletes existing agent / conversation state; a successful rebuild does not establish a capability gain. | [Prism README](https://github.com/Prism-Shadow/awesome-rsi/blob/aac1c2d41c09f51e7c752f79d6d35c638546cac1/README.md#L174) and method data; [pinkbubble repository entry](https://github.com/pinkbubblebubble/awesome-rsi/blob/6ec0a43c397e1b667c4072fbace485ba7cc06465/README.md#L682). |
+| [METR: Independent Assessment of AI R&D Acceleration at Anthropic in October 2026](https://metr.org/blog/2026-11-05-anthropic-ai-rd-acceleration-assessment/) | Report published **2026-11-05**, assessing **October 2026** | Read Key findings → appendix Methodology / Benchmark scores (AECI) → Limitations. A measurement and attribution study; not a runnable benchmark or a demonstration of autonomous RSI. Some supporting evidence is redacted. | No match in the ten files below; a generic METR organization link is not coverage of this report. |
+
+**Coverage scope: five repositories, ten public catalog files.** Matched names, title variants, arXiv identifiers and official repository / report paths case-insensitively. “No match” applies only to these files, not linked PDFs, internal discovery queues, unmerged changes or every included repository.
+
+| Source snapshot | Files checked | Result for this batch |
+| --- | --- | --- |
+| [Prism `aac1c2d`](https://github.com/Prism-Shadow/awesome-rsi/tree/aac1c2d41c09f51e7c752f79d6d35c638546cac1) | `README.md`, `site/src/data/{methods,papers,systems}.js` (four) | SpecForge and Exo match the README and method data. |
+| [pinkbubble `6ec0a43`](https://github.com/pinkbubblebubble/awesome-rsi/tree/6ec0a43c397e1b667c4072fbace485ba7cc06465) | `README.md` (one) | SpecForge and Exo match. |
+| [lobehub `632ab50`](https://github.com/lobehub/awesome-rsi/tree/632ab5065bf579c7d1daa71bdaab801fdefd3698); [natnew `be444d5`](https://github.com/natnew/awesome-recursive-self-improvement/tree/be444d5e019290f5f1c552a6a405e9be10450f78) | Each `README.md` (two) | No match for these four additions. |
+| [Follow RSI `6cb8262`](https://github.com/adongwanai/follow-rsi/tree/6cb8262adfc844ddedcc149e345c22e042b71445) | `README.md`, `data/papers.yaml`, `site/papers.json` (three) | No match for these four additions. |
+
+**Existing-entry updates.** The already-listed RSI-Env now appears in [pinkbubble's November 5 snapshot](https://github.com/pinkbubblebubble/awesome-rsi/blob/6ec0a43c397e1b667c4072fbace485ba7cc06465/README.md#L250); no duplicate was added. Follow RSI's pinned README and an additional status check of [`site/daily/index.html`](https://github.com/adongwanai/follow-rsi/blob/6cb8262adfc844ddedcc149e345c22e042b71445/site/daily/index.html) now show a reviewed **November 2 edition with three papers**. This supersedes the empty-feed status recorded on October 28; the subscription Skill is still announced. This checks committed publication content, not live site deployment. The status HTML is outside the ten-file catalog coverage count.
+
+**Watchlist.** [EvoGroup](https://arxiv.org/abs/2611.03868), **v1, November 2 UTC / November 3 Taipei**, appears in Prism's README and method data. Its paper says code will be open-sourced; keep it as a reading lead until a concrete execution entry is verified. It is not counted among the four additions.
+
+Earlier dated records retain their original snapshots. This review inspected primary documents, public source and documented requirements; it did not install upstream agents, make model calls or reproduce reported gains.
