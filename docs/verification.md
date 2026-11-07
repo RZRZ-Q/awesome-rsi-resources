@@ -13,6 +13,7 @@ This archive records source checks from **2026-10-22 through 2026-11-07**. Each 
 - [2026-11-02: Latest additions and release checks](#verification-2026-11-02)
 - [2026-11-04: Successor systems and generalization](#verification-2026-11-04)
 - [2026-11-07: Experiment frameworks, runtime updates and measurement](#verification-2026-11-07)
+- [2026-11-07: agent-qa app-memory source route](#verification-agent-qa)
 
 <a id="survey-coverage"></a>
 
@@ -342,3 +343,13 @@ The [EvoRepair index merge](https://github.com/pinkbubblebubble/awesome-rsi/comm
 **Watchlist.** [EvoGroup](https://arxiv.org/abs/2611.03868), **v1, November 2 UTC / November 3 Taipei**, appears in Prism's README and method data. Its paper says code will be open-sourced; keep it as a reading lead until a concrete execution entry is verified. It is not counted among the four additions.
 
 Earlier dated records retain their original snapshots. This review inspected primary documents, public source and documented requirements; it did not install upstream agents, make model calls or reproduce reported gains.
+
+<a id="verification-agent-qa"></a>
+
+### 2026-11-07: agent-qa app-memory source route
+
+**Scope.** Read official documentation, release metadata and pinned source; checked this catalog and its existing issues for duplicates. The release date below is not the first publication date of its memory feature. Earlier review batches remain unchanged.
+
+| Resource | Date / latest verified version | Verified entry and review boundary | Coverage in checked public catalogs |
+| --- | --- | --- | --- |
+| [agent-qa](https://vostride.com) | [v0.3.1](https://github.com/vostride/agent-qa/releases/tag/v0.3.1), released **2026-11-06 UTC**; source `2d56b09` | Read README, [package metadata](https://github.com/vostride/agent-qa/blob/2d56b09304b000034a1ab1c9a5ef2fb4c546c66e/package.json), [license](https://github.com/vostride/agent-qa/blob/2d56b09304b000034a1ab1c9a5ef2fb4c546c66e/LICENSE.md), [memory](https://vostride.com/docs/agent-qa/memory) / [self-improvement](https://vostride.com/docs/agent-qa/self-improvement) docs, [promotion gate](https://github.com/vostride/agent-qa/blob/2d56b09304b000034a1ab1c9a5ef2fb4c546c66e/packages/knowledge-local/src/curator/commit.ts#L1181) and [bundle persistence](https://github.com/vostride/agent-qa/blob/2d56b09304b000034a1ab1c9a5ef2fb4c546c66e/packages/knowledge-local/src/bundle-publish.ts#L312). App-knowledge updates under a fixed implementation; CI proposes only. No installation, execution, benchmark reproduction or measured memory benefit established. | [ForAI QA category](https://github.com/SeanShaffer88/ForAI/blob/4d04f467af7d0f46d65549dcef8de90a0c9a2619/categories/test-automation-and-quality-engineering.md) contains agent-qa. No pre-existing entry in this catalog or matching issue found. |

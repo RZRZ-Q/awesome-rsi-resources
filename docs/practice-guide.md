@@ -565,6 +565,16 @@ Then follow [Try one task](https://github.com/SakanaAI/mass/blob/fb403581bed2c97
 
 ## Memory and Skills
 
+<a id="agent-qa"></a>
+
+### [agent-qa](https://vostride.com) · [code](https://github.com/vostride/agent-qa)
+
+**Related self-improvement mechanism.** Inspect persistent memidex app memory for web, Android and iOS QA. Run evidence becomes candidates for reusable facts, cautions and procedures; admission gates control what later runs can trust. The updated object is app knowledge, not model weights or the improvement implementation. CI proposes candidates only.
+
+**Recommended entry.** Read the [memory](https://vostride.com/docs/agent-qa/memory) and [self-improvement](https://vostride.com/docs/agent-qa/self-improvement) docs, then trace the pinned v0.3.1 [promotion gate](https://github.com/vostride/agent-qa/blob/2d56b09304b000034a1ab1c9a5ef2fb4c546c66e/packages/knowledge-local/src/curator/commit.ts#L1181) → [staged-file write](https://github.com/vostride/agent-qa/blob/2d56b09304b000034a1ab1c9a5ef2fb4c546c66e/packages/knowledge-local/src/bundle-publish.ts#L199) → [durable publication](https://github.com/vostride/agent-qa/blob/2d56b09304b000034a1ab1c9a5ef2fb4c546c66e/packages/knowledge-local/src/bundle-publish.ts#L312). Follow candidate evidence, admission outcomes and retained files; the docs explain how later runs receive relevant records.
+
+**Language and requirements.** English; this source-reading route needs only a browser. Execution requires [Node.js ≥24](https://github.com/vostride/agent-qa/blob/2d56b09304b000034a1ab1c9a5ef2fb4c546c66e/package.json), a configured model provider and target-specific app setup. [FSL-1.1-ALv2](https://github.com/vostride/agent-qa/blob/2d56b09304b000034a1ab1c9a5ef2fb4c546c66e/LICENSE.md); model/API and environment costs are separate. Sources reviewed on 2026-11-07; no installation, runtime test, benchmark reproduction or measured memory-benefit claim.
+
 <a id="ace"></a>
 
 ### [ACE: Agentic Context Engineering](https://github.com/ace-agent/ace)

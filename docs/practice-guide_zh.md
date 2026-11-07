@@ -566,6 +566,16 @@ python3 -m mass plan --config configs/paper.json
 
 ## 记忆与技能
 
+<a id="agent-qa"></a>
+
+### [agent-qa](https://vostride.com) · [代码](https://github.com/vostride/agent-qa)
+
+**相关自改进机制。** 阅读面向 Web、Android 与 iOS QA 的 memidex 持久应用记忆。运行证据形成可复用事实、注意事项与操作流程的候选条目；准入门控决定后续运行可信任什么。更新对象是应用知识，而非模型权重或改进逻辑的实现。CI 仅提出候选。
+
+**推荐入口。** 先读[记忆](https://vostride.com/docs/agent-qa/memory)与[自改进](https://vostride.com/docs/agent-qa/self-improvement)文档，再沿固定 v0.3.1 源码追踪[晋升门控](https://github.com/vostride/agent-qa/blob/2d56b09304b000034a1ab1c9a5ef2fb4c546c66e/packages/knowledge-local/src/curator/commit.ts#L1181) → [暂存文件写入](https://github.com/vostride/agent-qa/blob/2d56b09304b000034a1ab1c9a5ef2fb4c546c66e/packages/knowledge-local/src/bundle-publish.ts#L199) → [持久发布](https://github.com/vostride/agent-qa/blob/2d56b09304b000034a1ab1c9a5ef2fb4c546c66e/packages/knowledge-local/src/bundle-publish.ts#L312)。检查候选证据、准入结果与保留文件；后续运行如何获得相关记录见文档。
+
+**语言与运行要求。** 英文；此源码阅读路线只需浏览器。实际运行需要 [Node.js ≥24](https://github.com/vostride/agent-qa/blob/2d56b09304b000034a1ab1c9a5ef2fb4c546c66e/package.json)、已配置的模型提供方及对应目标应用环境。[FSL-1.1-ALv2](https://github.com/vostride/agent-qa/blob/2d56b09304b000034a1ab1c9a5ef2fb4c546c66e/LICENSE.md)；模型／API 与环境费用另计。2026-11-07 核验来源；未安装或运行、未复现基准，也不宣称测得记忆带来的性能收益。
+
 <a id="ace"></a>
 
 ### [ACE：Agentic Context Engineering](https://github.com/ace-agent/ace)

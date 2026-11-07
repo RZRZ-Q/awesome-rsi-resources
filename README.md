@@ -12,7 +12,7 @@
 </p>
 
 <p align="center">
-  <a href="#resource-scope"><img src="https://img.shields.io/badge/resources-95-69D8AD?style=flat-square&amp;labelColor=182522" alt="95 resources"></a>
+  <a href="#resource-scope"><img src="https://img.shields.io/badge/resources-96-69D8AD?style=flat-square&amp;labelColor=182522" alt="96 resources"></a>
   <a href="README_zh.md"><img src="https://img.shields.io/badge/languages-EN%20%2F%20%E4%B8%AD%E6%96%87-69D8AD?style=flat-square&amp;labelColor=182522" alt="English and Chinese"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-69D8AD?style=flat-square&amp;labelColor=182522" alt="MIT license"></a>
 </p>
@@ -24,7 +24,7 @@
   <a href="docs/verification.md">Source records</a>
 </p>
 
-**95 resources; latest source review: 2026-11-07.** A project’s website, code, and notebooks count as one resource. See the [verification archive](docs/verification.md) for individual dates and the scope of each review.
+**96 resources; latest source review: 2026-11-07.** A project’s website, code, and notebooks count as one resource. See the [verification archive](docs/verification.md) for individual dates and the scope of each review.
 
 <a id="resource-scope"></a>
 
@@ -287,6 +287,7 @@ Compare reusable improvement experience with harness search under a fixed optimi
 
 | Resource | Features and learning goals | Recommended entry | Language and requirements |
 | --- | --- | --- | --- |
+| <a id="agent-qa"></a> [agent-qa](https://vostride.com) · [code](https://github.com/vostride/agent-qa) | **Related self-improvement mechanism.** Persistent memidex memory turns verified QA evidence into reusable app facts, cautions and procedures; study admission and reuse. | [Memory docs → promotion → durable files](docs/practice-guide.md#agent-qa) | English; source reading. Execution needs Node.js ≥24, a model provider and target app setup. FSL-1.1-ALv2. |
 | <a id="ace"></a> [ACE: Agentic Context Engineering](https://github.com/ace-agent/ace) | **Related self-improvement mechanism.** Convert feedback into a persistent text playbook; compare adaptation and reloaded evaluation. | [Formula CLI and playbook reload](docs/practice-guide.md#ace) | English; Python ≥3.10, uv and model API; no training GPU. |
 | <a id="voyager"></a> [Voyager](https://github.com/MineDojo/Voyager) | **Related self-improvement mechanism.** Save, retrieve, and compose executable Minecraft skills across sessions. | [Skill manager → saved-skill example](docs/practice-guide.md#voyager) | English; Python, Node, Minecraft Java/Fabric and model APIs; legacy dependencies. |
 | <a id="evorepair"></a> [EvoRepair](https://github.com/iSEngLab/Learn-from-Repair-Experience) · [paper](https://arxiv.org/abs/2605.30105) | **Related self-improvement mechanism.** Retain and score repair experience for reuse across vulnerability-repair episodes. | [Experience bank → bounded PatchEval run](docs/practice-guide.md#evorepair) | English; Python ≥3.10, model API, embedding model and Docker; full benchmark images need substantial disk space. |
