@@ -4,7 +4,7 @@
 
 [Resource directory](../README.md) · [Learning guide](learning-guide.md) · [Practice guide](practice-guide.md)
 
-This archive records source checks from **2026-10-22 through 2026-11-07**. Each dated section specifies its own sources, versions and review scope; a later addition does not refresh earlier checks.
+This archive records source checks from **2026-10-22 through 2026-11-12**. Each dated section specifies its own sources, versions and review scope; a later addition does not refresh earlier checks.
 
 - [Recent survey coverage](#survey-coverage)
 - [Review history and expansion checks](#review-log)
@@ -14,6 +14,7 @@ This archive records source checks from **2026-10-22 through 2026-11-07**. Each 
 - [2026-11-04: Successor systems and generalization](#verification-2026-11-04)
 - [2026-11-07: Experiment frameworks, runtime updates and measurement](#verification-2026-11-07)
 - [2026-11-07: agent-qa app-memory source route](#verification-agent-qa)
+- [2026-11-12: Package tutorials, embodied skills and total improvement cost](#verification-2026-11-12)
 
 <a id="survey-coverage"></a>
 
@@ -353,3 +354,32 @@ Earlier dated records retain their original snapshots. This review inspected pri
 | Resource | Date / latest verified version | Verified entry and review boundary | Coverage in checked public catalogs |
 | --- | --- | --- | --- |
 | [agent-qa](https://vostride.com) | [v0.3.1](https://github.com/vostride/agent-qa/releases/tag/v0.3.1), released **2026-11-06 UTC**; source `2d56b09` | Read README, [package metadata](https://github.com/vostride/agent-qa/blob/2d56b09304b000034a1ab1c9a5ef2fb4c546c66e/package.json), [license](https://github.com/vostride/agent-qa/blob/2d56b09304b000034a1ab1c9a5ef2fb4c546c66e/LICENSE.md), [memory](https://vostride.com/docs/agent-qa/memory) / [self-improvement](https://vostride.com/docs/agent-qa/self-improvement) docs, [promotion gate](https://github.com/vostride/agent-qa/blob/2d56b09304b000034a1ab1c9a5ef2fb4c546c66e/packages/knowledge-local/src/curator/commit.ts#L1181) and [bundle persistence](https://github.com/vostride/agent-qa/blob/2d56b09304b000034a1ab1c9a5ef2fb4c546c66e/packages/knowledge-local/src/bundle-publish.ts#L312). App-knowledge updates under a fixed implementation; CI proposes only. No installation, execution, benchmark reproduction or measured memory benefit established. | [ForAI QA category](https://github.com/SeanShaffer88/ForAI/blob/4d04f467af7d0f46d65549dcef8de90a0c9a2619/categories/test-automation-and-quality-engineering.md) contains agent-qa. No pre-existing entry in this catalog or matching issue found. |
+
+<a id="verification-2026-11-12"></a>
+
+### 2026-11-12: Package tutorials, embodied skills and total improvement cost
+
+**Reviewed November 12, Asia/Taipei.** Five additions were deduplicated against the 95-resource catalog, bringing it to **100**. These include recent papers and an older tutorial surfaced by index updates; they are not all November 12 releases. Paper dates below are arXiv first submissions in UTC; all four papers show **v1** at this check.
+
+| Resource | Date / latest verified version | Verified entry and scope | Coverage in checked public files |
+| --- | --- | --- | --- |
+| [Sage](https://github.com/ZHangZHengEric/Sage) | Source snapshot **2026-11-12**; first-run tutorial [added 2026-10-12](https://github.com/ZHangZHengEric/Sage/commit/480cbe62cc5bc2139cc4c2417cc7375371fd8c1e) | [Official `be0499c`](https://github.com/ZHangZHengEric/Sage/tree/be0499cdc1a5902ea14f085573608852253bc35f): tutorial, example, optimizer / runner and dependencies checked. The no-key example scripts all responses and grades. Current output uses `goal_verified`, not the old tutorial's `final_passed`; fixed-validation selection is not an independent final exam. | [pinkbubble's exact repository entry](https://github.com/pinkbubblebubble/awesome-rsi/blob/b046b9d9ffad6dd100ce34874a87867dedbc1b70/README.md#L711). Other works named SAGE are different resources. |
+| [EmoHarness](https://arxiv.org/abs/2611.11994) | **2026-11-09 · v1** | [Official `f8da941`](https://github.com/Emo-Harness/EmoHarness/tree/f8da94134ef0c164d6b9556ed3da7b56abfbf050): README, package metadata, CLI, fake pipeline, Builder loop and gates checked. Read §§3.1–3.3 → §5.1; separate the model-free workflow demonstration from GPU / API-backed evolution. Most reported gains come from audio evidence; the paper distinguishes Builder exclusion from human development exposure to evaluation items. | [Follow RSI November 10 supplement](https://github.com/adongwanai/follow-rsi/blob/393d70fcd3ff5c9ead9ee48d3d927be19331e0dc/daily/2026-11-10.md), reviewed November 12. |
+| [RoboScript](https://arxiv.org/abs/2611.12885) | **2026-11-09 · v1**; **11-10 in Taipei** | [Official `fad0496`](https://github.com/ArcheOne-AI/RoboScript/tree/fad0496a773ea9fee66addf43e44af5095982b78): package metadata, Mock tutorial, skill builder, learning stages and RoboTwin instructions checked. Read §4.1 / Appendix C.2 → §§4.2, 4.4, 5.5. The mock intentionally returns `success=False`; real skill building and memory updates have separate stages, and skills freeze before task learning. | [Follow RSI November 11 supplement](https://github.com/adongwanai/follow-rsi/blob/393d70fcd3ff5c9ead9ee48d3d927be19331e0dc/daily/2026-11-11.md), reviewed November 12. |
+| [Flex-RSI](https://arxiv.org/abs/2611.08946) | **2026-11-06 · v1** | [Official `ebff615`](https://github.com/flex-rsi/rsi-bench/tree/ebff61558d15dfd0ad64f636ca8318aec0386adb): README, package metadata, configuration, harness, operations and task / testing guides checked. Distinguish offline scripted checks from task runs requiring data, backend and sandbox preparation. Trace executor / improver edits under fixed evaluator, split and budget controls. | [pinkbubble method entry](https://github.com/pinkbubblebubble/awesome-rsi/blob/b046b9d9ffad6dd100ce34874a87867dedbc1b70/README.md#L251), benchmark list and harness table. |
+| [The RSI Tax](https://arxiv.org/abs/2611.13524) | **2026-11-10 · v1** | Read §§2–3 → §4 → §5: account for update and execution tokens together, then compare a simple reflection-with-notes baseline. Paper-reading entry; no official runnable repository verified in this review. | No resource entry found in the thirteen files below. |
+
+**Coverage scope: five repositories, thirteen public files.** Rechecked the ten catalog paths from November 7 and added three public Follow RSI daily files. Matched names, titles, identifiers and official repository paths, then inspected context to distinguish resource entries from status text and similarly named work. A missing match applies only to these files, not all included repositories, linked papers or internal discovery queues.
+
+| Source snapshot | Files checked | Result for this batch |
+| --- | --- | --- |
+| [Prism `6105f8e`](https://github.com/Prism-Shadow/awesome-rsi/tree/6105f8eb7cb32b3c90689c17946387ff910c2612) | `README.md`, `site/src/data/{methods,papers,systems}.js` (four) | No entry for these five additions. The November 8 update does add the already-listed HarnessMM; no duplicate was added here. |
+| [pinkbubble `b046b9d`](https://github.com/pinkbubblebubble/awesome-rsi/tree/b046b9d9ffad6dd100ce34874a87867dedbc1b70) | `README.md` (one) | Flex-RSI and Sage; upstream review date is now November 10. The already-listed SelfImprove-Bench also gained coverage. |
+| [lobehub `632ab50`](https://github.com/lobehub/awesome-rsi/tree/632ab5065bf579c7d1daa71bdaab801fdefd3698); [natnew `be444d5`](https://github.com/natnew/awesome-recursive-self-improvement/tree/be444d5e019290f5f1c552a6a405e9be10450f78) | Each `README.md` (two) | No entry for these five additions. |
+| [Follow RSI `393d70f`](https://github.com/adongwanai/follow-rsi/tree/393d70fcd3ff5c9ead9ee48d3d927be19331e0dc) | `README.md`, `data/papers.yaml`, `site/papers.json`; `daily/2026-11-{10,11,12}.md` (six) | EmoHarness and RoboScript appear in the two supplements linked above. Mentions in status text are not separate paper cards. No entry for Sage, Flex-RSI or The RSI Tax. |
+
+**Follow RSI status.** The committed [November 12 bulletin](https://github.com/adongwanai/follow-rsi/blob/393d70fcd3ff5c9ead9ee48d3d927be19331e0dc/daily/2026-11-12.md) reports no new papers for that edition; the EmoHarness and RoboScript supplements carry earlier recommendation dates and a November 12 review date. Its README still describes the subscription Skill as forthcoming. This verifies committed publication content, not live deployment or uninterrupted daily coverage.
+
+**Release watch.** [BOXBOX v2](https://arxiv.org/abs/2611.09218v2) was withdrawn on **November 9**; the authors say they are adding a clarification about Claude Code use for company compliance, so it was not added as a current paper. [EvoGroup's official snapshot `f57639b`](https://github.com/BigggFatttRabittt/EvoGroup/tree/f57639b712a57842809ee5e4df0f6478844c9840) still contains only README, license and `.gitignore`; no runnable entry was available there. Neither observation establishes a problem with the underlying research results.
+
+Older records retain their original dates and source snapshots. This was a primary-source and code review; upstream installations, model calls, robot / benchmark runs and reported improvements were not reproduced.

@@ -4,7 +4,7 @@
 
 [资源目录](../README_zh.md) · [学习指南](learning-guide_zh.md) · [实践指南](practice-guide_zh.md)
 
-本档案记录 **2026-10-22 至 2026-11-07** 的来源核验。每个日期小节分别说明来源、版本与核验范围；后续新增不代表重新核验此前记录。
+本档案记录 **2026-10-22 至 2026-11-12** 的来源核验。每个日期小节分别说明来源、版本与核验范围；后续新增不代表重新核验此前记录。
 
 - [近期综述覆盖表](#survey-coverage)
 - [核验历史与扩展排漏](#review-log)
@@ -14,6 +14,7 @@
 - [2026-11-04：后继系统与泛化](#verification-2026-11-04)
 - [2026-11-07：实验框架、运行时更新与改进测量](#verification-2026-11-07)
 - [2026-11-07：agent-qa 应用记忆源码路线](#verification-agent-qa)
+- [2026-11-12：Agent 包教程、具身技能与改进总成本](#verification-2026-11-12)
 
 <a id="survey-coverage"></a>
 
@@ -353,3 +354,32 @@
 | 资源 | 日期／本次核实的最新版本 | 核实的入口与核验边界 | 已检查公开目录中的覆盖 |
 | --- | --- | --- | --- |
 | [agent-qa](https://vostride.com) | [v0.3.1](https://github.com/vostride/agent-qa/releases/tag/v0.3.1)，于 **2026-11-06 UTC** 发布；源码 `2d56b09` | 阅读 README、[包元数据](https://github.com/vostride/agent-qa/blob/2d56b09304b000034a1ab1c9a5ef2fb4c546c66e/package.json)、[许可证](https://github.com/vostride/agent-qa/blob/2d56b09304b000034a1ab1c9a5ef2fb4c546c66e/LICENSE.md)、[记忆](https://vostride.com/docs/agent-qa/memory)／[自改进](https://vostride.com/docs/agent-qa/self-improvement)文档、[晋升门控](https://github.com/vostride/agent-qa/blob/2d56b09304b000034a1ab1c9a5ef2fb4c546c66e/packages/knowledge-local/src/curator/commit.ts#L1181)与[记忆包持久化](https://github.com/vostride/agent-qa/blob/2d56b09304b000034a1ab1c9a5ef2fb4c546c66e/packages/knowledge-local/src/bundle-publish.ts#L312)。固定实现下更新应用知识；CI 仅提出候选。未安装、运行或复现基准，也未证实可量化的记忆收益。 | [ForAI QA 分类](https://github.com/SeanShaffer88/ForAI/blob/4d04f467af7d0f46d65549dcef8de90a0c9a2619/categories/test-automation-and-quality-engineering.md)已收录 agent-qa；本目录未发现已有条目或匹配 Issue。 |
+
+<a id="verification-2026-11-12"></a>
+
+### 2026-11-12：Agent 包教程、具身技能与改进总成本
+
+**核验于 11 月 12 日，Asia/Taipei。** 对现有 95 项资源排重后新增五项，总数达到 **100**。其中既有近期论文，也有索引更新带出的较早教程，不代表全部于 11 月 12 日发布。下列论文日期采用 arXiv 首次提交的 UTC 日期；四篇论文在核验时均为 **v1**。
+
+| 资源 | 日期／最新核验版本 | 已核验入口与范围 | 已检查公开文件中的覆盖 |
+| --- | --- | --- | --- |
+| [Sage](https://github.com/ZHangZHengEric/Sage) | 源码快照 **2026-11-12**；首次运行教程[新增于 2026-10-12](https://github.com/ZHangZHengEric/Sage/commit/480cbe62cc5bc2139cc4c2417cc7375371fd8c1e) | [官方 `be0499c`](https://github.com/ZHangZHengEric/Sage/tree/be0499cdc1a5902ea14f085573608852253bc35f)：检查教程、示例、优化器／runner 与依赖。无 key 示例的全部响应与评分均为预设。当前输出为 `goal_verified`，并非旧教程的 `final_passed`；固定验证集选优不等于独立终考。 | [pinkbubble 的准确仓库条目](https://github.com/pinkbubblebubble/awesome-rsi/blob/b046b9d9ffad6dd100ce34874a87867dedbc1b70/README.md#L711)。其他名为 SAGE 的工作属于不同资源。 |
+| [EmoHarness](https://arxiv.org/abs/2611.11994) | **2026-11-09 · v1** | [官方 `f8da941`](https://github.com/Emo-Harness/EmoHarness/tree/f8da94134ef0c164d6b9556ed3da7b56abfbf050)：检查 README、包配置、CLI、fake 流程、Builder 循环与验收门。读 §§3.1–3.3 → §5.1；区分无模型流程演示和依赖 GPU／API 的真实演化。论文报告的主要收益来自音频证据，并区分 Builder 不见评测项与人工开发时接触评测项。 | [Follow RSI 11 月 10 日补刊](https://github.com/adongwanai/follow-rsi/blob/393d70fcd3ff5c9ead9ee48d3d927be19331e0dc/daily/2026-11-10.md)，11 月 12 日审核。 |
+| [RoboScript](https://arxiv.org/abs/2611.12885) | **2026-11-09 · v1**；台北为 **11-10** | [官方 `fad0496`](https://github.com/ArcheOne-AI/RoboScript/tree/fad0496a773ea9fee66addf43e44af5095982b78)：检查包配置、Mock 教程、技能构建器、学习阶段与 RoboTwin 说明。读 §4.1／附录 C.2 → §§4.2、4.4、5.5。Mock 故意返回 `success=False`；真实技能构建和记忆更新属于不同阶段，技能在任务学习前冻结。 | [Follow RSI 11 月 11 日补刊](https://github.com/adongwanai/follow-rsi/blob/393d70fcd3ff5c9ead9ee48d3d927be19331e0dc/daily/2026-11-11.md)，11 月 12 日审核。 |
+| [Flex-RSI](https://arxiv.org/abs/2611.08946) | **2026-11-06 · v1** | [官方 `ebff615`](https://github.com/flex-rsi/rsi-bench/tree/ebff61558d15dfd0ad64f636ca8318aec0386adb)：检查 README、包配置、配置协议、Harness、运维及任务／测试指南。区分离线脚本检查与需要数据、后端和沙盒准备的任务运行；在评估器、数据切分与预算控制固定时，追踪执行器及改进器的修改。 | [pinkbubble 方法条目](https://github.com/pinkbubblebubble/awesome-rsi/blob/b046b9d9ffad6dd100ce34874a87867dedbc1b70/README.md#L251)、benchmark 清单与 Harness 表。 |
+| [The RSI Tax](https://arxiv.org/abs/2611.13524) | **2026-11-10 · v1** | 读 §§2–3 → §4 → §5：合并计算更新和执行 token，再对比简单反思笔记基线。论文阅读入口；本轮未核验到官方可运行仓库。 | 下述十三份文件中未找到资源条目。 |
+
+**覆盖范围：五个仓库、十三份公开文件。** 重查 11 月 7 日的十份目录路径，并增加 Follow RSI 的三份公开日报。匹配名称、标题、论文编号与官方仓库路径后，再检查上下文，区分资源条目、状态说明和同名工作。未匹配仅适用于这些文件，不代表所有已收录仓库、链接论文或内部发现队列均未覆盖。
+
+| 来源快照 | 检查文件 | 本批结果 |
+| --- | --- | --- |
+| [Prism `6105f8e`](https://github.com/Prism-Shadow/awesome-rsi/tree/6105f8eb7cb32b3c90689c17946387ff910c2612) | `README.md`、`site/src/data/{methods,papers,systems}.js`，共四份 | 未找到这五项新增的条目。11 月 8 日更新已加入本目录原有的 HarnessMM，此处未重复新增。 |
+| [pinkbubble `b046b9d`](https://github.com/pinkbubblebubble/awesome-rsi/tree/b046b9d9ffad6dd100ce34874a87867dedbc1b70) | `README.md`，一份 | 覆盖 Flex-RSI 和 Sage；上游核验日期已更新为 11 月 10 日。本目录原有的 SelfImprove-Bench 也已获得覆盖。 |
+| [lobehub `632ab50`](https://github.com/lobehub/awesome-rsi/tree/632ab5065bf579c7d1daa71bdaab801fdefd3698)；[natnew `be444d5`](https://github.com/natnew/awesome-recursive-self-improvement/tree/be444d5e019290f5f1c552a6a405e9be10450f78) | 各自 `README.md`，共两份 | 未找到这五项新增的条目。 |
+| [Follow RSI `393d70f`](https://github.com/adongwanai/follow-rsi/tree/393d70fcd3ff5c9ead9ee48d3d927be19331e0dc) | `README.md`、`data/papers.yaml`、`site/papers.json`；`daily/2026-11-{10,11,12}.md`，共六份 | EmoHarness 与 RoboScript 出现在上面链接的两份补刊中。状态说明中的提及不算独立论文卡片；未找到 Sage、Flex-RSI 或 The RSI Tax 的条目。 |
+
+**Follow RSI 状态。** 已提交的 [11 月 12 日简报](https://github.com/adongwanai/follow-rsi/blob/393d70fcd3ff5c9ead9ee48d3d927be19331e0dc/daily/2026-11-12.md)表示该刊期未收录新论文；EmoHarness 与 RoboScript 补刊采用较早的推荐日期，审核日期均为 11 月 12 日。README 仍将订阅 Skill 标为即将推出。本次核对已提交的发布内容，不代表验证了线上部署或每天持续更新的完整性。
+
+**发布状态观察。** [BOXBOX v2](https://arxiv.org/abs/2611.09218v2)于 **11 月 9 日**撤回；作者说明是为公司合规要求补充 Claude Code 使用说明，因此未作为当前论文新增。[EvoGroup 官方快照 `f57639b`](https://github.com/BigggFatttRabittt/EvoGroup/tree/f57639b712a57842809ee5e4df0f6478844c9840)仍只有 README、许可证和 `.gitignore`，其中没有可运行入口。这两项观察均不能据此推断研究结果有问题。
+
+旧记录保留原日期和来源快照。本次为一手资料与源码核验，未执行上游安装、模型调用、机器人／benchmark 运行或复现报告中的改进收益。

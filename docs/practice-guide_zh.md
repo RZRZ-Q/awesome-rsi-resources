@@ -6,7 +6,7 @@
 
 这里集中记录具体示例的学习目标、源码入口和运行条件。先按主题选择项目；综述章节与项目的对应关系见[学习指南](learning-guide_zh.md#survey-project-map)。条目的[三类标签](../README_zh.md#resource-scope)描述所推荐入口的范围，主题分组不表示 RSI 能力等级。
 
-以下说明来自 **2026-10-22–2026-11-07** 对上游文档与部分源码的核验，**未运行教程、调用模型或复现实验**；逐项日期与范围见[核验档案](verification_zh.md#verification)。API 示例需要相应模型权限与调用预算，训练配置是上游示例而非本目录实测的最低硬件要求。
+以下说明来自 **2026-10-22–2026-11-12** 对上游文档与部分源码的核验，**未运行教程、调用模型或复现实验**；逐项日期与范围见[核验档案](verification_zh.md#verification)。API 示例需要相应模型权限与调用预算，训练配置是上游示例而非本目录实测的最低硬件要求。
 
 ## 目录
 
@@ -94,6 +94,27 @@
 **推荐入口。** [第 4 章：记忆与 Skill 系统](https://datawhalechina.github.io/hello-generic-agent/part1/chapter4/) → [第 12 章：自我进化](https://datawhalechina.github.io/hello-generic-agent/part2/chapter12/)；安装时参照实现仓库的[当前中文安装指南](https://github.com/lsdefine/GenericAgent/blob/main/docs/installation_zh.md)。
 
 **语言与运行条件。** 中文；教程仍为 **Beta**。推荐 Python 3.11/3.12、模型 API，以及所选界面／工具的依赖。更新对象是记忆和技能，可能需要用户引导；验证规则属于提示词约束，并非完整自动晋升机制。
+
+<a id="sage"></a>
+
+### [Sage · Agent 包优化](https://github.com/ZHangZHengEric/Sage)
+
+**相关自改进机制 · 流程教程。** 通过独立的 target、tuner 和 evaluator 调用比较不同版本的指令与技能。被接受的包成为后续父版本；模型权重、tuner 实现与选择逻辑保持固定。选优返回候选包，应用到正在使用的 Agent 是另一个动作。
+
+**推荐入口。** 对照阅读[首次运行指南](https://github.com/ZHangZHengEric/Sage/blob/be0499cdc1a5902ea14f085573608852253bc35f/docs/en/applications/FIRST_RSI_RUN.md)与[当前示例源码](https://github.com/ZHangZHengEric/Sage/blob/be0499cdc1a5902ea14f085573608852253bc35f/examples/v2/package_optimizer.py)。在该固定版本的 checkout 中执行：
+
+```bash
+python3.12 -m venv .venv
+source .venv/bin/activate
+python -m pip install -e .
+python -m examples.v2.package_optimizer
+```
+
+找到被拒绝的第二轮和选中包的 hash。三个角色都使用预设响应：分数固定为 0.4 → 0.6 → 0.5 → 0.8，target 返回指令标签，并不实际求解单位换算。脚本打印 JSON，使用临时 Session 存储并在正常退出时删除；不调用模型，也未启用工具。
+
+**版本差异。** 指南的旧输出使用 `final_passed`，当前源码输出 `goal_verified`。此固定验证集模式没有独立终考；应阅读 [`_select_adaptive` 与保留父版本的更新](https://github.com/ZHangZHengEric/Sage/blob/be0499cdc1a5902ea14f085573608852253bc35f/sagents/v2/optimization/optimizer.py)，不要把旧输出当作当前选优规则。
+
+**条件与下一步。** Python **3.12+**、Git 和依赖安装；此示例无需 API key、Flutter 或训练 GPU。继续阅读[优化器 API](https://github.com/ZHangZHengEric/Sage/blob/be0499cdc1a5902ea14f085573608852253bc35f/sagents/v2/optimization/README.md)。[真实模型领域实验](https://github.com/ZHangZHengEric/Sage/blob/be0499cdc1a5902ea14f085573608852253bc35f/examples/v2/README.md)需 Responses 兼容模型目录、凭据、明确 domain 和全新输出目录，会产生 API 费用，并采用另一套旧版选优／最终评测协议。
 
 <a id="prompt-optimization"></a>
 
@@ -360,6 +381,23 @@ flashrsi run --config examples/quickstart.yaml \
 自定义端点需设置 `agent.llm.base_url` 与 `algorithm.worker.llm.base_url`。查看 `snapshots/`、`trajectories/`、`result.json` 和 `end-summary.md`，在同一留出任务上比较初始与选中快照。这个小样本用于学习实验流程，不足以形成研究级改进估计。
 
 **条件。** 中英文文档；Python **≥3.11**，推荐 **3.12**，运行中的 **Docker Linux daemon** 和模型 API 预算。该快速入门同样需要 Docker：目标任务在容器内运行，容器必须能访问模型端点。使用托管模型无需本地训练 GPU；完整 benchmark 另有数据与依赖要求。可与 [Hermit](#hermit) 的外置 adapter、[Beagle](#beagle) 的演化接口对照学习。
+
+<a id="emoharness"></a>
+
+### [EmoHarness](https://github.com/Emo-Harness/EmoHarness) · [论文](https://arxiv.org/abs/2611.11994)
+
+**相关自改进机制 · 多模态 Harness 搜索。** Builder 根据冻结学生模型的失败，修改提示、配置和受限验证代码；验证门槛决定下一版 Harness。Builder 逻辑、门槛和学生权重保持固定。学习区分音频证据、人工脚手架和演化修改各自带来的收益。
+
+**推荐入口。** 读 [§§3.1–3.3 → §5.1](https://arxiv.org/html/2611.11994v1)，再看[构建循环](https://github.com/Emo-Harness/EmoHarness/blob/f8da94134ef0c164d6b9556ed3da7b56abfbf050/src/emoharness/builder/loop.py)和[选择门槛](https://github.com/Emo-Harness/EmoHarness/blob/f8da94134ef0c164d6b9556ed3da7b56abfbf050/src/emoharness/builder/gates.py)。切到该版本后，从仓库根目录开始：
+
+```bash
+poetry install
+poetry run emoharness reproduce --fake --root tmp/emoharness-fake
+```
+
+fake 流程演示准备、评估、构建和报告，不需要模型、GPU 或外部数据集，会跳过真实 IntentQA；其中分数用于说明流程接通。真实运行按 [README](https://github.com/Emo-Harness/EmoHarness/blob/f8da94134ef0c164d6b9556ed3da7b56abfbf050/README.md)依次执行 `prepare` → `evaluate --student qwen3vl_4b` → `evolve --student qwen3vl_4b --builder sol`（每项加前缀 `poetry run emoharness`）。
+
+**条件与结果解读。** 英文；Python **≥3.10,<3.13**、Poetry。真实运行另需 `poetry install --with api,audio`、数据集、ffmpeg、独立 vLLM 环境、学生／感知模型所需 GPU，以及演化调用的 API 预算。论文将主要收益归于音频证据；MHE 增量均未通过其 Holm 校正。开发时人工查看过 986 条评测项，虽然 Builder 未见评测项，但“留出任务类型”不等于从未接触的评测集。
 
 <a id="meta-harness"></a>
 
@@ -635,6 +673,26 @@ python scripts/run_specforge.py \
 
 **条件。** 英文；Python、[仓库依赖](https://github.com/ccsnow127/SpecForge/blob/5ed001d759fb5db408308c367e1ae25d238f31df/requirements.txt)和模型 API 预算；未核验到明确的最低 Python 版本。该示例采用本地测试与托管推理，不训练权重；生成代码会在本地执行，应使用可丢弃的工作区。默认搜索预算为 50、宽度为 3，测试生成等其他阶段也会调用模型，因此这不是全流程费用上限。Python → Java 迁移另需 JDK／Maven。请使用此处的准确仓库，其他项目也使用 SpecForge 名称。
 
+<a id="roboscript"></a>
+
+### [RoboScript](https://github.com/ArcheOne-AI/RoboScript) · [论文](https://arxiv.org/abs/2611.12885)
+
+**相关自改进机制 · 具身技能与记忆。** 固定 driver 从示范缺口中接纳可执行技能，再冻结技能集；任务演练形成 Task Memory，后续反思为新的评测块追加指导。模型权重和 driver 保持固定。
+
+**推荐入口。** 读 [§4.1 与附录 C.2 → §§4.2、4.4、5.5](https://arxiv.org/pdf/2611.12885v1)，再看 [Mock 教程](https://github.com/ArcheOne-AI/RoboScript/blob/fad0496a773ea9fee66addf43e44af5095982b78/examples/tutorials/quickstart_mock/README.md)。从固定版本的仓库根目录运行：
+
+```bash
+uv sync --all-packages
+cd examples/tutorials
+uv run python -m quickstart_mock.run ../../tmp/quickstart
+```
+
+这个 CPU 示例使用 `ScriptedBrain`，不调用模型或模拟器。脚本故意让手臂保持原位，因此 `success=False` 是预期结果。检查 `events.jsonl`，学习工具可见性、动作预算和环境独立判定；这里没有运行学习过程。
+
+继续看[技能构建门槛](https://github.com/ArcheOne-AI/RoboScript/blob/fad0496a773ea9fee66addf43e44af5095982b78/packages/methods/src/roboscript_methods/skill_builder/builder/README.md) → [RoboTwin 构建／冻结入口](https://github.com/ArcheOne-AI/RoboScript/blob/fad0496a773ea9fee66addf43e44af5095982b78/examples/simBenchmarks/RoboTwin/p1/README.md)，以及[学习阶段说明](https://github.com/ArcheOne-AI/RoboScript/blob/fad0496a773ea9fee66addf43e44af5095982b78/docs/concepts/learning.md)。对比技能接纳、记忆修改与反思；技能在任务学习前冻结。
+
+**条件。** 英文；教程需 Python **≥3.10** 与 uv。真实技能构建另需 Linux／bubblewrap、独立环境中的指定版本 RoboTwin 2.0 模拟器、示范、cuRobo／视觉 GPU 服务，以及模型 gateway 凭据与预算。[视觉服务约 8 GiB 显存](https://github.com/ArcheOne-AI/RoboScript/blob/fad0496a773ea9fee66addf43e44af5095982b78/packages/vision/README.md)是组件占用，不是全流程最低要求。真实机器人部署代码仍在上游 TODO 清单中。
+
 <a id="coevolution-projects"></a>
 
 ## 协同演化
@@ -786,6 +844,16 @@ python3.10 -m venv .venv-gui
 
 **条件。** 英文；基础统计知识；无需运行环境或 API。部分底层证据未公开或被删节，因此公开报告不是完整复现包，也不是自主 RSI 的演示。
 
+<a id="rsi-tax"></a>
+
+### [The RSI Tax: When Recursive Self-Improvement Is Not Worth the Cost](https://arxiv.org/abs/2611.13524) — 评估阅读材料
+
+**评估阅读材料 · 核算改进过程的额外成本。** 学习把任务准确率与总 token 消耗放在一起比较，将验证、探索和写入更新的调用都计入成本；未被采用的更新同样产生开销。论文把六种方法适配到统一在线协议，在两条任务流和两个模型底座上比较；任务先评分，之后的反馈才能更新后续状态。结论对应这些配置，不是 RSI 方法的普遍排名。
+
+**推荐入口。** 阅读 [§§2.2–2.3 → §3 → §4 → §5.1](https://arxiv.org/html/2611.13524v1)，再看附录 A.2–A.3 中的更新周期与实现选择。对照完整成本核算和简单的反思笔记基线 SRN，沿[评测路线](learning-guide_zh.md#survey-project-map)，在相同任务顺序与预算下比较初始 Agent、轻量笔记基线和更完整的改进循环。分别记录任务执行与更新 token，保留失败尝试。产物是否在后续被使用属于描述性证据，不能直接证明它带来收益，也不能据此认定删除未使用的工作不会影响准确率。
+
+**语言与运行门槛。** 英文；阅读论文不需要算力。本次未核实到官方复现包或独立运行入口；复现实验仍需论文所述任务环境与模型访问。本条提供阅读练习，不作为可直接运行的评测工具。
+
 <a id="rsi-atlas"></a>
 
 ### [RSI Atlas · aniruddhaadak80/RSI](https://github.com/aniruddhaadak80/RSI)
@@ -891,6 +959,25 @@ python -m benchmark configs/main/farm_ace.json
 ```
 
 **条件。** 英文；真实方法需要对应后端凭证／CLI 与模型预算。Farm 主配置包含 20 个适应任务、60 个留出任务和重放，不是单次调用示例。HyperAgents 另需 Docker；AHE 需要 Linux bubblewrap 与非特权用户命名空间；Minecraft／Astray 另需 GameWorld 和 Chromium。轨迹分析也会调用模型。固定动作示例不需模型训练 GPU；完整运行前需检查各后端。
+
+<a id="flex-rsi"></a>
+
+### [Flex-RSI](https://github.com/flex-rsi/rsi-bench) · [论文](https://arxiv.org/abs/2611.08946)
+
+**评测工具 · 分离执行器与改进器的收益。** 对比 `base`（只有执行器）、`fixed-i`（改进器修改执行器）与 `full`（改进器还可修改自身）。学习在相同模型、任务和预算下，哪些收益能够保留到留出集评测。编排器、任务定义与评测划分保持固定，测试集分数在运行结束后生成。可接在[评测学习路线](learning-guide_zh.md#survey-project-map)之后。
+
+**推荐入口。** 阅读[论文 §§3.1–3.3 → §5.4](https://arxiv.org/html/2611.08946v1)，再看[测试指南](https://github.com/flex-rsi/rsi-bench/blob/ebff61558d15dfd0ad64f636ca8318aec0386adb/docs/testing-guide.md)与 [Harness 接口](https://github.com/flex-rsi/rsi-bench/blob/ebff61558d15dfd0ad64f636ca8318aec0386adb/docs/harness.md)。在该版本按 [README 安装说明](https://github.com/flex-rsi/rsi-bench/blob/ebff61558d15dfd0ad64f636ca8318aec0386adb/README.md)创建虚拟环境并执行 `python -m pip install -e ".[all,tasks]"`。完成任务数据准备与站点配置后，官方首轮检查命令为：
+
+```bash
+rsib run new --task <task> --model mock:finish --mode base \
+  --max-rounds 1 --budget wall_hours=0.5
+rsib run start <worktree> --backend local
+rsib report <worktree>
+```
+
+它检查运行环境与初始方案评测，不执行模型驱动的改进；之后换成真实模型并对比三种模式。缩减预算的练习不等于标准基准结果复现。
+
+**语言与运行门槛。** 英文；Python ≥3.11、Git ≥2.30、支持非特权用户命名空间的 Linux 沙箱、任务数据、算力配置，以及模型 API 或已登录的 Claude Code / Codex CLI。[Spatial-VSI](https://github.com/flex-rsi/rsi-bench/blob/ebff61558d15dfd0ad64f636ca8318aec0386adb/docs/tasks.md#spatial-vsi)不需要本地 GPU，但需要约 5.4 GB 数据和模型调用；其他任务另需对应 GPU／容器，标准运行可能需要 10–72 小时。代码已经公开，本次核验时结果提交渠道尚未开放。
 
 <a id="scale-rsi-bench"></a>
 
