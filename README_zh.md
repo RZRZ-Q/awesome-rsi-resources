@@ -76,6 +76,7 @@
   - [对抗式自博弈](#adversarial-self-play)
 - [评测工具](#evaluation)
 - [核验与贡献](#verification)
+- [Star 增长曲线](#star-history)
 
 <a id="indexes"></a>
 
@@ -355,6 +356,18 @@
 ## 参与贡献
 
 欢迎通过 [Issue](https://github.com/RZRZ-Q/awesome-rsi-resources/issues) 推荐资源，或提交 Pull Request。收录要求见[贡献指南（中文）](CONTRIBUTING.md)。
+
+<a id="star-history"></a>
+
+## Star 增长曲线
+
+<a href="https://www.star-history.com/?repos=RZRZ-Q%2Fawesome-rsi-resources&amp;type=date&amp;legend=top-left">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=RZRZ-Q/awesome-rsi-resources&amp;type=date&amp;theme=dark&amp;legend=top-left">
+    <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=RZRZ-Q/awesome-rsi-resources&amp;type=date&amp;legend=top-left">
+    <img alt="Awesome RSI Resources 的 Star 增长曲线" src="https://api.star-history.com/chart?repos=RZRZ-Q/awesome-rsi-resources&amp;type=date&amp;legend=top-left" width="100%">
+  </picture>
+</a>
 
 ## 许可
 

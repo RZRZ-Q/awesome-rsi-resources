@@ -76,6 +76,7 @@ Read further: [Learning guide](docs/learning-guide.md) for routes and project ma
   - [Adversarial Self-Play](#adversarial-self-play)
 - [Evaluation Tools](#evaluation)
 - [Verification and Contribution](#verification)
+- [Star History](#star-history)
 
 <a id="indexes"></a>
 
@@ -355,6 +356,18 @@ Source-review dates, survey versions and coverage, per-resource review scope, an
 ## Contributing
 
 Recommend a resource through an [issue](https://github.com/RZRZ-Q/awesome-rsi-resources/issues) or submit a pull request. See the [contribution guide (Chinese)](CONTRIBUTING.md) for inclusion requirements.
+
+<a id="star-history"></a>
+
+## Star History
+
+<a href="https://www.star-history.com/?repos=RZRZ-Q%2Fawesome-rsi-resources&amp;type=date&amp;legend=top-left">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=RZRZ-Q/awesome-rsi-resources&amp;type=date&amp;theme=dark&amp;legend=top-left">
+    <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=RZRZ-Q/awesome-rsi-resources&amp;type=date&amp;legend=top-left">
+    <img alt="Star history of Awesome RSI Resources" src="https://api.star-history.com/chart?repos=RZRZ-Q/awesome-rsi-resources&amp;type=date&amp;legend=top-left" width="100%">
+  </picture>
+</a>
 
 ## License
 
