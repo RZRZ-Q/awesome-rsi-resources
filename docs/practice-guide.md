@@ -6,7 +6,7 @@
 
 This guide collects learning goals, source entry points, and running requirements for specific examples. Choose a project by topic; use the [learning guide](learning-guide.md#survey-project-map) to connect it to survey chapters. The [three resource labels](../README.md#resource-scope) describe the recommended entry point; topic groups are not RSI capability levels.
 
-These notes come from upstream documentation and selected source reviews on **2026-10-22–2026-11-07**. **No tutorials, model calls, or experiments were run.** See the [verification records](verification.md#verification) for each resource's review date and scope. API examples require model access and a call budget; training configurations are upstream examples, not minimum hardware requirements tested by this directory.
+These notes come from upstream documentation and selected source reviews on **2026-10-22–2026-11-12**. **No tutorials, model calls, or experiments were run.** See the [verification records](verification.md#verification) for each resource's review date and scope. API examples require model access and a call budget; training configurations are upstream examples, not minimum hardware requirements tested by this directory.
 
 ## Contents
 
@@ -94,6 +94,27 @@ These notes come from upstream documentation and selected source reviews on **20
 **Recommended entry.** [Chapter 4: Memory and Skills](https://datawhalechina.github.io/hello-generic-agent/part1/chapter4/) → [Chapter 12: Self-evolution](https://datawhalechina.github.io/hello-generic-agent/part2/chapter12/); for setup, use the implementation's [current Chinese installation guide](https://github.com/lsdefine/GenericAgent/blob/main/docs/installation_zh.md).
 
 **Language and running requirements.** Chinese; tutorial remains in **Beta**. Python 3.11/3.12 recommended, model API access, and dependencies for the chosen UI/tools. Updates memory and skills; user guidance may be needed, and validation rules are prompt guidance rather than a fully automated promotion gate.
+
+<a id="sage"></a>
+
+### [Sage · Agent-package optimization](https://github.com/ZHangZHengEric/Sage)
+
+**Related self-improvement mechanism · workflow tutorial.** Compare versioned instructions and skills through separate target, tuner and evaluator invocations. Accepted packages become later parents; model weights, tuner implementation and selection logic remain fixed. Selection returns a candidate; using it in the active Agent is a separate action.
+
+**Recommended entry.** Read the [first-run guide](https://github.com/ZHangZHengEric/Sage/blob/be0499cdc1a5902ea14f085573608852253bc35f/docs/en/applications/FIRST_RSI_RUN.md) alongside the [current example source](https://github.com/ZHangZHengEric/Sage/blob/be0499cdc1a5902ea14f085573608852253bc35f/examples/v2/package_optimizer.py). In a checkout of that revision:
+
+```bash
+python3.12 -m venv .venv
+source .venv/bin/activate
+python -m pip install -e .
+python -m examples.v2.package_optimizer
+```
+
+Find the rejected second round and the selected package hash. All three roles use scripted responses: scores are predefined as 0.4 → 0.6 → 0.5 → 0.8, and the target returns a guidance label rather than solving unit conversions. The script prints JSON, uses temporary Session storage and removes it on normal exit. It makes no model calls and enables no tools.
+
+**Version detail.** The guide's old output uses `final_passed`; current source prints `goal_verified`. Its fixed-validation mode has no independent final exam. Read [`_select_adaptive` and retained-parent updates](https://github.com/ZHangZHengEric/Sage/blob/be0499cdc1a5902ea14f085573608852253bc35f/sagents/v2/optimization/optimizer.py) instead of treating the old output as the current selection contract.
+
+**Requirements and next step.** Python **3.12+**, Git and dependency installation; no API key, Flutter or training GPU for this example. Continue with the [optimizer API](https://github.com/ZHangZHengEric/Sage/blob/be0499cdc1a5902ea14f085573608852253bc35f/sagents/v2/optimization/README.md). [Real-model domain experiments](https://github.com/ZHangZHengEric/Sage/blob/be0499cdc1a5902ea14f085573608852253bc35f/examples/v2/README.md) require a Responses-compatible model catalog, credentials, explicit domain and a new output directory; they incur API costs and use a different, legacy selection / final-evaluation protocol.
 
 <a id="prompt-optimization"></a>
 
@@ -361,6 +382,23 @@ For custom endpoints, set `agent.llm.base_url` and `algorithm.worker.llm.base_ur
 
 **Requirements.** English / Chinese documentation; Python **≥3.11**, with **3.12** recommended, a running **Docker Linux daemon**, and model API budget. Docker is required even for this quickstart: target tasks run in containers that must reach the model endpoint. Hosted-model use requires no local training GPU; full benchmarks add their own data and dependencies. Compare with [Hermit](#hermit) for external adapters and [Beagle](#beagle) for evolution interfaces.
 
+<a id="emoharness"></a>
+
+### [EmoHarness](https://github.com/Emo-Harness/EmoHarness) · [paper](https://arxiv.org/abs/2611.11994)
+
+**Related self-improvement mechanism · multimodal harness search.** A Builder edits prompts, configuration and restricted verification code from a frozen student's failures. Validation gates choose the next harness; Builder logic, gates and student weights stay fixed. Learn to separate gains from audio evidence, a human-written scaffold and evolved edits.
+
+**Recommended entry.** Read [§§3.1–3.3 → §5.1](https://arxiv.org/html/2611.11994v1), then the [construction loop](https://github.com/Emo-Harness/EmoHarness/blob/f8da94134ef0c164d6b9556ed3da7b56abfbf050/src/emoharness/builder/loop.py) and [selection gates](https://github.com/Emo-Harness/EmoHarness/blob/f8da94134ef0c164d6b9556ed3da7b56abfbf050/src/emoharness/builder/gates.py). At this revision, start from the repository root:
+
+```bash
+poetry install
+poetry run emoharness reproduce --fake --root tmp/emoharness-fake
+```
+
+The fake pipeline exercises preparation, evaluation, construction and reporting without models, GPUs or external datasets; it skips real IntentQA. Its scores illustrate workflow wiring. For real runs, follow the [README](https://github.com/Emo-Harness/EmoHarness/blob/f8da94134ef0c164d6b9556ed3da7b56abfbf050/README.md): `prepare` → `evaluate --student qwen3vl_4b` → `evolve --student qwen3vl_4b --builder sol` (prefix each with `poetry run emoharness`).
+
+**Requirements and interpretation.** English; Python **≥3.10,<3.13**, Poetry. Real runs add `poetry install --with api,audio`, datasets, ffmpeg, separate vLLM environments, GPUs for the student / perception models and an API budget for evolution. The paper attributes most gains to audio evidence; no MHE increment survives its Holm correction. Humans inspected 986 evaluation items during development, although the Builder never saw evaluation items: “held-out task types” does not mean an untouched evaluation set.
+
 <a id="meta-harness"></a>
 
 ### [Meta-Harness · Stanford IRIS and collaborators](https://github.com/stanford-iris-lab/meta-harness) · [paper](https://arxiv.org/abs/2603.28052)
@@ -624,6 +662,26 @@ Stage 1 checks generated tests against the reference implementation. Confirm tha
 
 **Requirements.** English; Python, [repository dependencies](https://github.com/ccsnow127/SpecForge/blob/5ed001d759fb5db408308c367e1ae25d238f31df/requirements.txt) and model API budget; no explicit minimum Python version was verified. This example uses local test execution and hosted inference rather than weight training. Use a disposable workspace because generated code executes locally. Default search settings are budget 50 and width 3; test synthesis and other stages also make calls, so this is not an end-to-end spending cap. Python → Java transfer adds JDK / Maven. Use this exact repository; other projects share the SpecForge name.
 
+<a id="roboscript"></a>
+
+### [RoboScript](https://github.com/ArcheOne-AI/RoboScript) · [paper](https://arxiv.org/abs/2611.12885)
+
+**Related self-improvement mechanism · embodied skills and memory.** A fixed driver accepts executable skills from demonstration gaps, then freezes the skillset. Rehearsal builds Task Memory; later reflection adds guidance for new evaluation blocks. Model weights and the driver stay fixed.
+
+**Recommended entry.** Read [§4.1 and Appendix C.2 → §§4.2, 4.4, 5.5](https://arxiv.org/pdf/2611.12885v1), then the [Mock tutorial](https://github.com/ArcheOne-AI/RoboScript/blob/fad0496a773ea9fee66addf43e44af5095982b78/examples/tutorials/quickstart_mock/README.md). From the fixed revision's root:
+
+```bash
+uv sync --all-packages
+cd examples/tutorials
+uv run python -m quickstart_mock.run ../../tmp/quickstart
+```
+
+This CPU example uses `ScriptedBrain` without a model or simulator. It deliberately holds still, so `success=False` is expected. Inspect `events.jsonl` to learn tool visibility, action budgets and the environment's independent verdict; this is not a learning run.
+
+Continue with the [skill builder's gates](https://github.com/ArcheOne-AI/RoboScript/blob/fad0496a773ea9fee66addf43e44af5095982b78/packages/methods/src/roboscript_methods/skill_builder/builder/README.md) → [RoboTwin build / freeze entry](https://github.com/ArcheOne-AI/RoboScript/blob/fad0496a773ea9fee66addf43e44af5095982b78/examples/simBenchmarks/RoboTwin/p1/README.md), and [learning stages](https://github.com/ArcheOne-AI/RoboScript/blob/fad0496a773ea9fee66addf43e44af5095982b78/docs/concepts/learning.md). Compare skill acceptance with memory revision and reflection; skills freeze before task learning.
+
+**Requirements.** English; Python **≥3.10** and uv for the tutorial. Real skill building adds Linux / bubblewrap, the pinned RoboTwin 2.0 simulator in a separate environment, demonstrations, cuRobo / vision GPU services and model-gateway credentials / budget. The [vision service's approximately 8 GiB](https://github.com/ArcheOne-AI/RoboScript/blob/fad0496a773ea9fee66addf43e44af5095982b78/packages/vision/README.md) is component usage, not a whole-pipeline minimum. Real-robot deployment code remains on the upstream TODO list.
+
 <a id="coevolution-projects"></a>
 
 ## Co-Evolution
@@ -775,6 +833,16 @@ These entries retain fixed game rules or preference judges and fixed training pr
 
 **Requirements.** English; basic statistics; no runtime or API. Some underlying evidence is private or redacted, so the public report is not a complete reproduction package or a demonstration of autonomous RSI.
 
+<a id="rsi-tax"></a>
+
+### [The RSI Tax: When Recursive Self-Improvement Is Not Worth the Cost](https://arxiv.org/abs/2611.13524) — evaluation reading
+
+**Evaluation reading · accounting for improvement overhead.** Learn to compare task accuracy against total tokens, including the calls spent verifying, exploring and writing updates. Rejected updates still incur cost. The paper adapts six methods to a common online protocol across two task streams and two model backbones; tasks are scored before their feedback can update later state. Its findings concern those configurations, rather than a universal ranking of RSI methods.
+
+**Recommended entry.** Read [§§2.2–2.3 → §3 → §4 → §5.1](https://arxiv.org/html/2611.13524v1), then Appendix A.2–A.3 for update schedules and implementation choices. Contrast the total-cost accounting with SRN, a simple reflection-and-notes baseline. Use the [evaluation route](learning-guide.md#survey-project-map) to compare the starting agent, a lightweight notes baseline and a fuller improvement loop under the same task order and budget. Record task-execution and update tokens separately, retaining failed attempts. Whether an artifact is later used is descriptive evidence, not proof that it caused a gain or that unused work can be removed without affecting accuracy.
+
+**Language and running requirements.** English; the paper is directly readable without compute. No official reproduction package or standalone execution entry was verified in this review. Reproducing its experiments would require the task environments and model access described in the paper; this entry is a reading exercise, not a runnable evaluation tool.
+
 <a id="rsi-atlas"></a>
 
 ### [RSI Atlas · aniruddhaadak80/RSI](https://github.com/aniruddhaadak80/RSI)
@@ -880,6 +948,25 @@ python -m benchmark configs/main/farm_ace.json
 ```
 
 **Requirements.** English; real methods require their backend credentials / CLI and model budget. Farm's main configuration has 20 adaptation tasks plus 60 holdouts and replay; it is not a one-call example. HyperAgents adds Docker; AHE needs Linux bubblewrap and unprivileged user namespaces; Minecraft / Astray add GameWorld and Chromium. Trajectory analysis also calls a model. No model-training GPU is required for the fixed-action example; inspect each backend before a full run.
+
+<a id="flex-rsi"></a>
+
+### [Flex-RSI](https://github.com/flex-rsi/rsi-bench) · [paper](https://arxiv.org/abs/2611.08946)
+
+**Evaluation tool · separating executor and improver gains.** Compare `base` (executor only), `fixed-i` (improver changes the executor), and `full` (improver also changes itself). Learn which gains survive held-out evaluation under the same model, task and budget. The orchestrator, task definitions and evaluation splits remain fixed; test scores are produced after the run ends. This complements the [evaluation learning route](learning-guide.md#survey-project-map).
+
+**Recommended entry.** Read [paper §§3.1–3.3 → §5.4](https://arxiv.org/html/2611.08946v1), then the [testing guide](https://github.com/flex-rsi/rsi-bench/blob/ebff61558d15dfd0ad64f636ca8318aec0386adb/docs/testing-guide.md) and [harness interfaces](https://github.com/flex-rsi/rsi-bench/blob/ebff61558d15dfd0ad64f636ca8318aec0386adb/docs/harness.md). At this revision, create a virtual environment and install `python -m pip install -e ".[all,tasks]"` using the [README setup](https://github.com/flex-rsi/rsi-bench/blob/ebff61558d15dfd0ad64f636ca8318aec0386adb/README.md). After task-data preparation and site configuration, the documented first check is:
+
+```bash
+rsib run new --task <task> --model mock:finish --mode base \
+  --max-rounds 1 --budget wall_hours=0.5
+rsib run start <worktree> --backend local
+rsib report <worktree>
+```
+
+This checks the runtime and starter evaluation; it does not exercise model-driven improvement. Continue with a real model and compare the three modes. Reduced-budget exercises do not reproduce standard benchmark results.
+
+**Language and running requirements.** English; Python ≥3.11, Git ≥2.30, Linux unprivileged user namespaces for the sandbox, task data, a compute profile, and model API access or an authenticated Claude Code / Codex CLI. [Spatial-VSI](https://github.com/flex-rsi/rsi-bench/blob/ebff61558d15dfd0ad64f636ca8318aec0386adb/docs/tasks.md#spatial-vsi) needs no local GPU but downloads about 5.4 GB and uses model calls. Other tasks require task-specific GPUs / containers; standard runs can take 10–72 hours. Public code is available; the result-submission channel was not yet open at review.
 
 <a id="scale-rsi-bench"></a>
 
