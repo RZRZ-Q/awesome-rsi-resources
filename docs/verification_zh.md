@@ -13,6 +13,7 @@
 - [2026-11-02：本轮补充与发布状态核验](#verification-2026-11-02)
 - [2026-11-04：后继系统与泛化](#verification-2026-11-04)
 - [2026-11-07：实验框架、运行时更新与改进测量](#verification-2026-11-07)
+- [2026-11-07：agent-qa 应用记忆源码路线](#verification-agent-qa)
 - [2026-11-12：Agent 包教程、具身技能与改进总成本](#verification-2026-11-12)
 
 <a id="survey-coverage"></a>
@@ -343,6 +344,16 @@
 **观察项。** [EvoGroup](https://arxiv.org/abs/2611.03868)，**v1、UTC 11 月 2 日／台北 11 月 3 日**，已出现在 Prism README 和方法数据。论文仍说明代码将开源；在核实具体运行入口前，保留为阅读线索，不计入本轮四项新增。
 
 旧日期记录保留原快照。本轮检查了一手文档、公开源码和文档所述运行条件，未安装上游 Agent、调用模型或复现论文收益。
+
+<a id="verification-agent-qa"></a>
+
+### 2026-11-07：agent-qa 应用记忆源码路线
+
+**核验范围。** 阅读官方文档、发布元数据与固定源码，并检查本目录及已有 Issue 以避免重复。下方版本发布日期不代表其记忆功能的首次公开日期。此前批次的核验记录保持不变。
+
+| 资源 | 日期／本次核实的最新版本 | 核实的入口与核验边界 | 已检查公开目录中的覆盖 |
+| --- | --- | --- | --- |
+| [agent-qa](https://vostride.com) | [v0.3.1](https://github.com/vostride/agent-qa/releases/tag/v0.3.1)，于 **2026-11-06 UTC** 发布；源码 `2d56b09` | 阅读 README、[包元数据](https://github.com/vostride/agent-qa/blob/2d56b09304b000034a1ab1c9a5ef2fb4c546c66e/package.json)、[许可证](https://github.com/vostride/agent-qa/blob/2d56b09304b000034a1ab1c9a5ef2fb4c546c66e/LICENSE.md)、[记忆](https://vostride.com/docs/agent-qa/memory)／[自改进](https://vostride.com/docs/agent-qa/self-improvement)文档、[晋升门控](https://github.com/vostride/agent-qa/blob/2d56b09304b000034a1ab1c9a5ef2fb4c546c66e/packages/knowledge-local/src/curator/commit.ts#L1181)与[记忆包持久化](https://github.com/vostride/agent-qa/blob/2d56b09304b000034a1ab1c9a5ef2fb4c546c66e/packages/knowledge-local/src/bundle-publish.ts#L312)。固定实现下更新应用知识；CI 仅提出候选。未安装、运行或复现基准，也未证实可量化的记忆收益。 | [ForAI QA 分类](https://github.com/SeanShaffer88/ForAI/blob/4d04f467af7d0f46d65549dcef8de90a0c9a2619/categories/test-automation-and-quality-engineering.md)已收录 agent-qa；本目录未发现已有条目或匹配 Issue。 |
 
 <a id="verification-2026-11-12"></a>
 

@@ -12,7 +12,7 @@
 </p>
 
 <p align="center">
-  <a href="#resource-scope"><img src="https://img.shields.io/badge/resources-100-69D8AD?style=flat-square&amp;labelColor=182522" alt="100 项资源"></a>
+  <a href="#resource-scope"><img src="https://img.shields.io/badge/resources-101-69D8AD?style=flat-square&amp;labelColor=182522" alt="101 项资源"></a>
   <a href="README.md"><img src="https://img.shields.io/badge/languages-EN%20%2F%20%E4%B8%AD%E6%96%87-69D8AD?style=flat-square&amp;labelColor=182522" alt="中文与英文"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-69D8AD?style=flat-square&amp;labelColor=182522" alt="MIT 许可"></a>
 </p>
@@ -24,7 +24,7 @@
   <a href="docs/verification_zh.md">核验档案</a>
 </p>
 
-**收录 100 项资源；最近一次来源核验：2026-11-12。** 同一项目的网站、代码和 Notebook 合并计数；各项日期与实际核验范围见[核验档案](docs/verification_zh.md)。
+**收录 101 项资源；最近一次来源核验：2026-11-12。** 同一项目的网站、代码和 Notebook 合并计数；各项日期与实际核验范围见[核验档案](docs/verification_zh.md)。
 
 <a id="resource-scope"></a>
 
@@ -291,6 +291,7 @@
 
 | 资源 | 特色与学习目标 | 推荐学习入口 | 语言与条件 |
 | --- | --- | --- | --- |
+| <a id="agent-qa"></a> [agent-qa](https://vostride.com) · [代码](https://github.com/vostride/agent-qa) | **相关自改进机制。** memidex 持久记忆把经核实的 QA 证据转成可复用的应用事实、注意事项与操作流程；学习准入与复用。 | [记忆文档 → 晋升门控 → 持久文件](docs/practice-guide_zh.md#agent-qa) | 英文；源码阅读。运行需 Node.js ≥24、模型提供方与目标应用环境。FSL-1.1-ALv2。 |
 | <a id="ace"></a> [ACE：Agentic Context Engineering](https://github.com/ace-agent/ace) | **相关自改进机制。** 把反馈转成持久文本经验手册，对比适应与重载后的评测。 | [Formula CLI 与手册重载](docs/practice-guide_zh.md#ace) | 英文；Python ≥3.10、uv 与模型 API；无需训练 GPU。 |
 | <a id="voyager"></a> [Voyager](https://github.com/MineDojo/Voyager) | **相关自改进机制。** 跨会话保存、检索并组合可执行的 Minecraft 技能。 | [技能管理器 → 已学习技能示例](docs/practice-guide_zh.md#voyager) | 英文；Python、Node、Minecraft Java/Fabric 与模型 API；依赖较旧。 |
 | <a id="evorepair"></a> [EvoRepair](https://github.com/iSEngLab/Learn-from-Repair-Experience) · [论文](https://arxiv.org/abs/2605.30105) | **相关自改进机制。** 保存并评分修复经验，供后续漏洞修复复用。 | [经验库 → 限定轮数的 PatchEval 运行](docs/practice-guide_zh.md#evorepair) | 英文；Python ≥3.10、模型 API、嵌入模型与 Docker；完整评测镜像需要较大磁盘空间。 |
