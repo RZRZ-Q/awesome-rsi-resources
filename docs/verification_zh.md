@@ -4,7 +4,7 @@
 
 [资源目录](../README_zh.md) · [学习指南](learning-guide_zh.md) · [实践指南](practice-guide_zh.md)
 
-本档案记录 **2026-10-22 至 2026-11-12** 的来源核验。每个日期小节分别说明来源、版本与核验范围；后续新增不代表重新核验此前记录。
+本档案记录 **2026-10-22 至 2026-11-14** 的来源核验。每个日期小节分别说明来源、版本与核验范围；后续新增不代表重新核验此前记录。
 
 - [近期综述覆盖表](#survey-coverage)
 - [核验历史与扩展排漏](#review-log)
@@ -15,6 +15,7 @@
 - [2026-11-07：实验框架、运行时更新与改进测量](#verification-2026-11-07)
 - [2026-11-07：agent-qa 应用记忆源码路线](#verification-agent-qa)
 - [2026-11-12：Agent 包教程、具身技能与改进总成本](#verification-2026-11-12)
+- [2026-11-14：优化经验、联合训练与评测基线](#verification-2026-11-14)
 
 <a id="survey-coverage"></a>
 
@@ -383,3 +384,33 @@
 **发布状态观察。** [BOXBOX v2](https://arxiv.org/abs/2611.09218v2)于 **11 月 9 日**撤回；作者说明是为公司合规要求补充 Claude Code 使用说明，因此未作为当前论文新增。[EvoGroup 官方快照 `f57639b`](https://github.com/BigggFatttRabittt/EvoGroup/tree/f57639b712a57842809ee5e4df0f6478844c9840)仍只有 README、许可证和 `.gitignore`，其中没有可运行入口。这两项观察均不能据此推断研究结果有问题。
 
 旧记录保留原日期和来源快照。本次为一手资料与源码核验，未执行上游安装、模型调用、机器人／benchmark 运行或复现报告中的改进收益。
+
+<a id="verification-2026-11-14"></a>
+
+### 2026-11-14：优化经验、联合训练与评测基线
+
+**核验日期：11 月 14 日，Asia/Taipei。** 本轮在 **101 项资源**基础上排重后新增六项，总数增至 **107**。基线已包含 PR #1 的 agent-qa，本轮不重复计数。这些是近期论文与索引更新带出的遗漏，并非六篇都在 11 月 14 日发表。下表采用 arXiv 首次提交的 UTC 日期；本次核验时六篇论文均为 **v1**。
+
+| 资源 | 日期／本次核实的最新版本 | 核实的入口与发布边界 | 已检查公开文件中的覆盖 |
+| --- | --- | --- | --- |
+| [InfraRSI](https://arxiv.org/abs/2611.11558) | **2026-11-08 · v1**；**台北为 11-09** | [官方 `512f8ea`](https://github.com/TokenRhythm/InfraRSI/tree/512f8ea784054f4ca3331d03cc6589267a4cbdf5)：核对包元数据、CPU toy、CLI、经验回写与搜索初始化。阅读 §§2.1、3 → §§4–5。toy 模拟指标；真实优化需要已可运行的训练任务。可选 Skill 接口于 11 月 12 日加入，晚于论文发表。 | 下方十三个文件中未匹配到。 |
+| [JoMoHa](https://arxiv.org/abs/2611.11499) | **2026-11-08 · v1**；**台北为 11-09** | [官方 `5d6c7fd`](https://github.com/xudongwu-0/coevolve/tree/5d6c7fdbff3b65d3fbb60e68cd68b4d9042f5cf6)：核对配对 rollout、角色更新、调度与复现档案。阅读 §4 → §§5.1–5.3 → §6.2。离线脚本重算已存结果，其中明确披露开发集复用；这不是新的持出集测试。已发布 actor 不含继续训练所需状态。 | 未发现资源条目；Follow RSI 的 `site/papers.json` 仅有历史审核状态提及。 |
+| [ACE-RL](https://arxiv.org/abs/2611.16409) | **2026-11-12 · v1** | [作者仓库 `f2d04dc`](https://github.com/doyoungkim-ml/ehrl/tree/f2d04dc4c8be112db0456b423a8518903ab80fab)仅有 README 和论文，实现仍待发布。阅读 §§2.1–2.2 → §§3.1–3.2 → §§4.2、5.2 与附录 E／F.1／H。区分角色策略训练与推理期单任务 playbook 更新；参数更新 FLOPs 不包含全部生成成本。 | 下方十三个文件中未匹配到。 |
+| [No Second Run](https://arxiv.org/abs/2611.10719) | **2026-11-07 · v1** | [官方 `8b5dc7d`](https://github.com/GAIR-NLP/801-30B/tree/8b5dc7dc50abf1b896afa8e0488dc081006e243b)：核对报告、图表与 README；已链接 Tiny-SFT，基础权重仍待发布，该快照没有完整训练／改进流水线。阅读 §2／表 2 → §3.3 → §4.1 → §5 → §8.1。属于人、Agent 与基础设施共同参与项目的工程阅读，并非自主重复完整训练的演示。 | 下方十三个文件中未匹配到。 |
+| [MixUA](https://arxiv.org/abs/2611.10439) | **2026-11-07 · v1** | 阅读 §§3.2–3.4 → §4 → §5.3 与附录 C／G。固定方法在四种共享范围保存记忆；植入事实探针评估其披露约定，不代表一般隐私保证。未核验到官方实现或独立运行入口；附录 D 记录研究环境和成本口径。 | [pinkbubble README](https://github.com/pinkbubblebubble/awesome-rsi/blob/6cb162f94f2f66d37a84ac495b1c07eaa49fe89e/README.md#L373)。 |
+| [JustRUA](https://arxiv.org/abs/2611.16009) | **2026-11-11 · v1**；**台北为 11-12** | [官方 `7429b76`](https://github.com/ZefanW/JustRUA/tree/7429b76ffc765b9feee95e2ffb4340f09163e930)：核对 adapter、安装／评测脚本与 policy。阅读 §§2.4–2.5 → §§4.2–4.3／附录 G → §5。发布代码是最终静态 adapter，与五轮改进实验分开；debug 路径检查传输和关节保持，真实评测还需模拟器、深度模型与 actor 访问。 | [Follow RSI 11 月 13 日补刊](https://github.com/adongwanai/follow-rsi/blob/f9dec2a7fdfc973e7411e00f0e5464028a5aa22b/daily/2026-11-13.md#L17)，11 月 14 日审核。 |
+
+**覆盖范围：五个仓库、十三个公开文件。** 匹配名称、标题变体、arXiv 编号和已知官方仓库路径，再区分资源条目与状态文字。未匹配仅针对这些文件，不代表全部已收录仓库、链接论文或发现队列均未覆盖。
+
+| 来源快照 | 检查文件 | 本轮结果 |
+| --- | --- | --- |
+| [Prism `b6bb140`](https://github.com/Prism-Shadow/awesome-rsi/tree/b6bb14007c5e705f7849ebcd63fe5d4cb9836e8c) | `README.md`、`site/src/data/{methods,papers,systems}.js`（四个） | 无本轮六项新增的条目；其 11 月 13 日新增的 SkillDuet 与 PASE 留在下方发布观察中。 |
+| [pinkbubble `6cb162f`](https://github.com/pinkbubblebubble/awesome-rsi/tree/6cb162f94f2f66d37a84ac495b1c07eaa49fe89e) | `README.md`（一个） | 已收录 MixUA；虽有 11 月 14 日编辑，文档自述最近审核日期仍为 11 月 10 日。 |
+| [lobehub `632ab50`](https://github.com/lobehub/awesome-rsi/tree/632ab5065bf579c7d1daa71bdaab801fdefd3698)；[natnew `be444d5`](https://github.com/natnew/awesome-recursive-self-improvement/tree/be444d5e019290f5f1c552a6a405e9be10450f78) | 各自 `README.md`（两个） | 仓库 head 未变，无本轮六项新增的条目。 |
+| [Follow RSI `f9dec2a`](https://github.com/adongwanai/follow-rsi/tree/f9dec2a7fdfc973e7411e00f0e5464028a5aa22b) | `README.md`、`data/papers.yaml`、`site/papers.json`；`daily/2026-11-{12,13,14}.md`（六个） | JustRUA 有上方补刊；其余 JustRUA 提及和 JoMoHa 历史审核提及均为状态文字，不是独立论文条目。 |
+
+**Follow RSI 状态。** 已提交的 [11 月 14 日简报](https://github.com/adongwanai/follow-rsi/blob/f9dec2a7fdfc973e7411e00f0e5464028a5aa22b/daily/2026-11-14.md)当期没有新增论文选录。JustRUA 保留 11 月 13 日推荐日期和 11 月 14 日审核日期，与论文日期分开。订阅 Skill 仍待发布。本次核实已提交的出版内容，不代表线上部署已验证，也不代表其他来源没有新工作。
+
+**发布状态观察。** [PASE](https://arxiv.org/abs/2611.14019)首次提交于 11 月 10 日，**11 月 11 日更新至 v2**；其宣布的[官方仓库](https://github.com/NEUIR/PASE)在核验时返回 404。[SkillDuet](https://arxiv.org/abs/2611.12109)首次提交于 11 月 9 日，**11 月 12 日更新至 v2**；检索到的[同名仓库](https://github.com/stoney0062/SkillDuet)自述为动画／项目页面，不是已发布的研究实现。两项均未计入本轮六项新增。
+
+旧日期记录及其批次计数保持不变。本轮阅读一手论文、文档与公开源码，未安装上游项目、调用模型、运行模拟器／训练或复现报告收益。

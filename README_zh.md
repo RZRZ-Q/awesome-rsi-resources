@@ -12,7 +12,7 @@
 </p>
 
 <p align="center">
-  <a href="#resource-scope"><img src="https://img.shields.io/badge/resources-101-69D8AD?style=flat-square&amp;labelColor=182522" alt="101 项资源"></a>
+  <a href="#resource-scope"><img src="https://img.shields.io/badge/resources-107-69D8AD?style=flat-square&amp;labelColor=182522" alt="107 项资源"></a>
   <a href="README.md"><img src="https://img.shields.io/badge/languages-EN%20%2F%20%E4%B8%AD%E6%96%87-69D8AD?style=flat-square&amp;labelColor=182522" alt="中文与英文"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-69D8AD?style=flat-square&amp;labelColor=182522" alt="MIT 许可"></a>
 </p>
@@ -24,7 +24,7 @@
   <a href="docs/verification_zh.md">核验档案</a>
 </p>
 
-**收录 101 项资源；最近一次来源核验：2026-11-12。** 同一项目的网站、代码和 Notebook 合并计数；各项日期与实际核验范围见[核验档案](docs/verification_zh.md)。
+**收录 107 项资源；最近一次来源核验：2026-11-14。** 同一项目的网站、代码和 Notebook 合并计数；各项日期与实际核验范围见[核验档案](docs/verification_zh.md)。
 
 <a id="resource-scope"></a>
 
@@ -93,7 +93,7 @@
 | <a id="token-rhythm"></a> [Token-Rhythm/awesome-rsi](https://github.com/Token-Rhythm/awesome-rsi) | 双语文献表带日期、主题标签、摘要和论文 / 代码入口，适合按方向查阅。 | [中文精选读物](https://github.com/Token-Rhythm/awesome-rsi/blob/main/README_zh.md#featured-rsi-readings) → [分类概览](https://github.com/Token-Rhythm/awesome-rsi/blob/main/README_zh.md#category-overview)。 | 中英；纯阅读。上游最近核验标为 **2026-08-13**，9–10 月资料宜结合其他目录查阅。 |
 | <a id="jacky-leng"></a> [jacky-leng/awesome-rsi](https://github.com/jacky-leng/awesome-rsi) | 用闭环位置、反馈、搜索、持久状态、人的角色和证据类型六个轴比较改进循环，适合做方法对照。 | [TAXONOMY.md](https://github.com/jacky-leng/awesome-rsi/blob/main/TAXONOMY.md) → [Landscape](https://github.com/jacky-leng/awesome-rsi#landscape)。 | 英文；纯阅读。上游标注核验覆盖至 **2026-10-07**。 |
 | <a id="pinkbubblebubble"></a> [pinkbubblebubble/awesome-rsi](https://github.com/pinkbubblebubble/awesome-rsi) | 用 RSI / Self-improvement / Enabler 标签解释资源与递归改进的关系，兼收 Harness、评测和工程报告，适合寻找近期实践方向。 | [Scope and labels](https://github.com/pinkbubblebubble/awesome-rsi#scope-and-labels) → [Start here](https://github.com/pinkbubblebubble/awesome-rsi#start-here)；实践可看 [Harness 清单](https://github.com/pinkbubblebubble/awesome-rsi#self-improvement-harnesses)。 | 英文；纯阅读。上游自报最近核验 **2026-11-10**；第三方实现各有运行条件。 |
-| <a id="follow-rsi"></a> [Follow RSI](https://adongwanai.github.io/follow-rsi/index.html) · [仓库](https://github.com/adongwanai/follow-rsi) | 聚焦 Harness 自进化的论文索引，提供阅读路线，以及留出评测、同预算对照、迁移和成本等证据卡片，适合学习怎样判断改进主张的依据。 | [中英 Harness 导读](https://adongwanai.github.io/follow-rsi/guide.html) → [阅读路线](https://adongwanai.github.io/follow-rsi/index.html#routes) → [日报状态](https://adongwanai.github.io/follow-rsi/daily/index.html)。 | 中文与英文；只读学习。多数证据字段仍为 `unknown`（尚未审定）；源码已包含 11-12 审核简报与 11-10–11 补刊，订阅 Skill 仍标为即将推出。见 [11-12 状态复核](docs/verification_zh.md#verification-2026-11-12)。 |
+| <a id="follow-rsi"></a> [Follow RSI](https://adongwanai.github.io/follow-rsi/index.html) · [仓库](https://github.com/adongwanai/follow-rsi) | 聚焦 Harness 自进化的论文索引，提供阅读路线，以及留出评测、同预算对照、迁移和成本等证据卡片，适合学习怎样判断改进主张的依据。 | [中英 Harness 导读](https://adongwanai.github.io/follow-rsi/guide.html) → [阅读路线](https://adongwanai.github.io/follow-rsi/index.html#routes) → [日报状态](https://adongwanai.github.io/follow-rsi/daily/index.html)。 | 中文与英文；只读学习。多数证据字段仍为 `unknown`（尚未审定）；源码已包含 11-14 审核简报与 11-13 JustRUA 补刊，订阅 Skill 仍标为即将推出。见 [11-14 状态复核](docs/verification_zh.md#verification-2026-11-14)。 |
 
 <a id="surveys"></a>
 
@@ -170,6 +170,7 @@
 | <a id="weng-harness"></a> [Lilian Weng：Harness Engineering for Self-Improvement](https://lilianweng.github.io/posts/2026-07-04-harness/) | 串联上下文管理、工作流搜索、自修改 Harness、进化搜索及 Harness／权重联合更新的研究长文，适合对照本目录实践项目背后的机制。 | 从 [Harness Optimization](https://lilianweng.github.io/posts/2026-07-04-harness/#harness-optimization) 开始，重点读 Self-Improving Harness 与 Evolutionary Search，再读 Future Challenges。 | 英文；Agent 与评估基础；纯阅读。属于综述性技术博客，与经过同行评审的综述论文分开标注。 |
 | <a id="metr-acceleration"></a> [METR：Anthropic 的 AI 研发加速评估](https://metr.org/blog/2026-11-05-anthropic-ai-rd-acceleration-assessment/) | 研究阅读：学习如何测量研发速度，以及如何将加速归因于 AI 辅助。 | [发现 → 方法 → 局限](docs/practice-guide_zh.md#metr-acceleration) | 英文；**2026-11-05** 发布，评估 2026 年 10 月的情况。纯阅读；部分底层证据未公开或被删节。 |
 | <a id="rsi-tax"></a> [The RSI Tax: When Recursive Self-Improvement Is Not Worth the Cost](https://arxiv.org/abs/2611.13524) | 评估阅读：把验证、探索和写入开销与任务执行一并计入，按完整成本比较保留经验与简单基线。 | [成本定义 → 适配协议 → 结果拆解](docs/practice-guide_zh.md#rsi-tax) | 英文；Agent／评估基础。论文阅读；本次未核验到官方复现仓库。 |
+| <a id="no-second-run"></a> [No Second Run: Does RSI Stop at Frontier Pre-training?](https://arxiv.org/abs/2611.10719) · [报告仓库](https://github.com/GAIR-NLP/801-30B) | 工程报告：在完整预训练项目中构建可重复的调试、后训练潜力测量与数据流水线改进闭环。 | [闭环设计 → 保留诊断 → 评测](docs/practice-guide_zh.md#no-second-run) | 英文；需预训练／评测基础；纯阅读。已检查仓库未提供完整训练流水线。 |
 
 <a id="prerequisite-courses"></a>
 
@@ -232,6 +233,7 @@
 | --- | --- | --- | --- |
 | <a id="shinkaevolve"></a> [ShinkaEvolve · SakanaAI](https://github.com/SakanaAI/ShinkaEvolve) | **相关自改进机制。** 学习程序变异、评估反馈、父代选择与搜索记录保存。 | [教程 Notebook](docs/practice-guide_zh.md#shinkaevolve) | 英文；Python 3.10+（推荐 3.11）、模型 API 与评估依赖。 |
 | <a id="openevolve"></a> [OpenEvolve](https://github.com/algorithmicsuperintelligence/openevolve) | **相关自改进机制。** 围绕任务程序学习评估、搜索配置与检查点。 | [函数最小化示例](docs/practice-guide_zh.md#openevolve) | 英文；Python 3.10+、NumPy 与模型接口；无需训练 GPU。 |
+| <a id="infrarsi"></a> [InfraRSI](https://github.com/TokenRhythm/InfraRSI) · [论文](https://arxiv.org/abs/2611.11558) | **相关自改进机制。** 利用实测约束与保留的搜索经验优化训练配置和代码。 | [CPU 教学示例 → 经验复用 → 真实训练任务优化](docs/practice-guide_zh.md#infrarsi) | 双语 README；Python ≥3.10。教学示例无需 GPU／模型；真实优化需可运行的训练任务和模型访问。 |
 
 <a id="recursive-methods"></a>
 
@@ -283,6 +285,8 @@
 | <a id="agent-lightning"></a> [Microsoft Agent Lightning v1.0](https://github.com/microsoft/agent-lightning) | **相关自改进机制。** 在固定训练器下追踪工具轨迹、奖励、GRPO 更新与策略检查点。 | [Calc-X Local Mode](docs/practice-guide_zh.md#agent-lightning) | 英文；Python 3.12+、Linux/WSL、CUDA；示例用 1 张 A100 80GB。 |
 | <a id="mass"></a> [MASS · Sakana AI](https://github.com/SakanaAI/mass) · [论文](https://arxiv.org/abs/2610.12176) | **递归改进方法。** 共享模型执行、优化并评审工作流，筛选出的轨迹用于训练下一轮模型。 | [计划预览 → 单任务搜索 → 两轮配置](docs/practice-guide_zh.md#mass) | 英文；计划预览无需 GPU／模型调用；搜索与训练需 Linux、模型服务和 GPU。 |
 | <a id="self-hpo"></a> [Self-HPO · MSR Orchard](https://github.com/MSR-Orchard/Self-HPO) · [论文](https://arxiv.org/abs/2610.22791) | **递归改进方法。** 交替进行 Harness 提案和策略 RL 更新，更新后的策略继续提议下一轮 Harness。 | [H-step → P-step → 导出策略](docs/practice-guide_zh.md#self-hpo) | 英文；先读源码与已发布 Harness；上游训练／评测配置使用 8 张 B200。 |
+| <a id="jomoha"></a> [JoMoHa](https://github.com/xudongwu-0/coevolve) · [论文](https://arxiv.org/abs/2611.11499) | **递归改进方法。** 同时训练编写 Harness 的 Engineer 与执行任务的 Solver，更新后的 Engineer 参与后续 Harness 构建。 | [离线归档核对 → 配对轨迹 → 联合更新](docs/practice-guide_zh.md#jomoha) | 英文；归档核对需 Python ≥3.10，无需模型／GPU。新训练另需固定框架、任务资源和 GPU；已发布分数复用了开发数据。 |
+| <a id="ace-rl"></a> [ACE-RL](https://arxiv.org/abs/2611.16409) · [作者仓库](https://github.com/doyoungkim-ml/ehrl) | **相关自改进机制 · 论文阅读。** 在固定 Harness 下，按对后续尝试的作用训练执行、反思与经验手册编辑。 | [题内经验传递 → 角色奖励 → 同 Harness 对照](docs/practice-guide_zh.md#ace-rl) | 英文；需 RL／Agent 基础。作者仓库目前提供论文，训练代码待发布。 |
 | <a id="care"></a> [CARE](https://arxiv.org/abs/2611.02839) | **相关自改进机制 · 论文阅读。** 将生产失败转成已验证修复与自蒸馏训练；外部诊断和人工晋级仍参与闭环。 | [归因 → 自教师 → 晋级](docs/practice-guide_zh.md#care) | 英文；蒸馏／Agent 基础。未核验到公共复现包。 |
 
 <a id="memory-skills"></a>
@@ -297,6 +301,7 @@
 | <a id="evorepair"></a> [EvoRepair](https://github.com/iSEngLab/Learn-from-Repair-Experience) · [论文](https://arxiv.org/abs/2605.30105) | **相关自改进机制。** 保存并评分修复经验，供后续漏洞修复复用。 | [经验库 → 限定轮数的 PatchEval 运行](docs/practice-guide_zh.md#evorepair) | 英文；Python ≥3.10、模型 API、嵌入模型与 Docker；完整评测镜像需要较大磁盘空间。 |
 | <a id="specforge"></a> [SpecForge](https://github.com/ccsnow127/SpecForge) · [论文](https://arxiv.org/abs/2610.15708) | **相关自改进机制。** 从测试失败中改进持久化行为规格，再用于代码生成和下游任务；搜索程序保持固定。 | [测试合成 → 规格搜索 → 迁移](docs/practice-guide_zh.md#specforge) | 英文；Python、模型 API 和本地生成代码执行；Java 迁移另需 JDK／Maven。 |
 | <a id="roboscript"></a> [RoboScript](https://github.com/ArcheOne-AI/RoboScript) · [论文](https://arxiv.org/abs/2611.12885) | **相关自改进机制。** 在模型和 driver 固定时构建可复用机器人技能，并从世界反馈中保留 Task Memory。 | [Mock episode → 技能构建 → 记忆与反思](docs/practice-guide_zh.md#roboscript) | 英文；Python 3.10+／uv 可运行脚本化 CPU 教程。真实学习需要 Linux、模拟器／感知服务、GPU 和模型访问。 |
+| <a id="mixua"></a> [MixUA: Who Remembers What?](https://arxiv.org/abs/2611.10439) | **相关自改进机制 · 论文阅读。** 通过明确的记忆范围与证据路由规则，在用户／Agent 群体间共享经验。 | [四种范围 → 学习轮次 → 冻结记忆评测](docs/practice-guide_zh.md#mixua) | 英文；需 Agent／记忆基础。本轮未核验到官方可运行实现。 |
 
 <a id="coevolution-projects"></a>
 
@@ -334,6 +339,7 @@
 | <a id="clr-bench"></a> [CLR-Bench](https://github.com/yausankit/clr-bench) · [论文](https://arxiv.org/abs/2610.40758) | **评测工具。** 检验保留经验是否学会能泛化到未见案例的隐藏规则，而不只是不断扩充纠错案例清单。 | [单条课程链 → 离线参考程序评分 → 学习条件对照](docs/practice-guide_zh.md#clr-bench) | 中英文 README；Python 3.12。本地参考程序评分无需 API；完整方法评测另需 Docker、方法依赖与模型端点。 |
 | <a id="selfimprove-bench"></a> [SelfImprove-Bench](https://github.com/theseus-labs-rsi/SelfImprove-Bench) · [论文](https://arxiv.org/abs/2611.02797) | **评测工具。** 通过 G0–G4 泛化阶梯比较保留的收益能否迁移到新实例、难度、任务和能力。 | [离线适配器流程 → Farm／ACE](docs/practice-guide_zh.md#selfimprove-bench) | 英文；文档使用 Python 3.13.12。离线示例不调用模型；真实方法需要模型访问和对应沙箱。 |
 | <a id="flex-rsi"></a> [Flex-RSI](https://github.com/flex-rsi/rsi-bench) · [论文](https://arxiv.org/abs/2611.08946) | **评测工具。** 在视觉／机器人任务上对比固定 Harness、固定改进器但可编辑求解器，以及完整可编辑 Harness。 | [协议 → base／fixed-i／full → 单任务启动](docs/practice-guide_zh.md#flex-rsi) | 英文；Python 3.11+、Git 2.30+、Linux namespaces、任务数据、计算配置和模型 API／CLI；硬件随任务变化。 |
+| <a id="justrua"></a> [JustRUA](https://github.com/ZefanW/JustRUA) · [论文](https://arxiv.org/abs/2611.16009) | **评测工具 · 受控基线。** 对照机器人 Harness 的各个构件及单独的技能演化实验；公开策略本身保持静态。 | [消融研究 → 无模型通信检查 → 机器人评测](docs/practice-guide_zh.md#justrua) | 英文文档／双语项目页；Python ≥3.10。真实评测需 RoboDojo／Isaac、GPU 感知、机器人资源和 Codex 模型访问。 |
 | <a id="scale-rsi-bench"></a> [Scale RSI Bench](https://github.com/scaleapi/rsi-benchmark) · [官网](https://www.rsi-benchmark.com) | **评测工具。** 阅读数据筛选、自蒸馏、鲁棒性与 Agent 群体优化等可执行 AI 研发任务的约束和评分规则。 | [nanoGPT 数据筛选任务 → 其他公开样例](docs/practice-guide_zh.md#scale-rsi-bench) | 英文；Python 3.12+、Harbor、Modal GPU 沙盒与 Agent 模型 API。 |
 | <a id="autorse"></a> [AutoRSE](https://github.com/Ray-Tiann/AutoRSE) · [论文](https://arxiv.org/abs/2610.37228) | **评测工具。** 六类推荐工程任务，区分依据验证集选优、隐藏测试评分，以及 Agent 实际修改内容的分析。 | [HSTU 任务 → 启动预览 → 预测与来源记录约定](docs/practice-guide_zh.md#autorse) | 英文；预览／格式检查使用 Python 3.12+。完整实验需 Linux、NVIDIA GPU、Docker 与模型访问；本轮未确认托管数据／评分服务可用性。 |
 | <a id="textbook-baselines"></a> [Do Self-Improving Coding Agents Beat Textbook Baselines?](https://github.com/tejasvi/self-improving-agents-textbook-baselines) · [论文（aiXiv）](https://aixiv.online/abs/2610.02812) | **评测工具。** 将 DGM 移植版及已发布的 DGM／ADAS Agent 与工程基线、单次重设计和匹配计算预算进行对照，并追溯结论对应的已发布结果。 | [实验设计 → 结果归档 → 离线重算](docs/practice-guide_zh.md#textbook-baselines) | 英文；离线分析需 Python、NumPy、SciPy、Matplotlib，无需模型调用。完整实验另需模型访问、外部数据与 Linux 沙盒／Docker 环境。 |

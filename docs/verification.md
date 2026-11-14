@@ -4,7 +4,7 @@
 
 [Resource directory](../README.md) · [Learning guide](learning-guide.md) · [Practice guide](practice-guide.md)
 
-This archive records source checks from **2026-10-22 through 2026-11-12**. Each dated section specifies its own sources, versions and review scope; a later addition does not refresh earlier checks.
+This archive records source checks from **2026-10-22 through 2026-11-14**. Each dated section specifies its own sources, versions and review scope; a later addition does not refresh earlier checks.
 
 - [Recent survey coverage](#survey-coverage)
 - [Review history and expansion checks](#review-log)
@@ -15,6 +15,7 @@ This archive records source checks from **2026-10-22 through 2026-11-12**. Each 
 - [2026-11-07: Experiment frameworks, runtime updates and measurement](#verification-2026-11-07)
 - [2026-11-07: agent-qa app-memory source route](#verification-agent-qa)
 - [2026-11-12: Package tutorials, embodied skills and total improvement cost](#verification-2026-11-12)
+- [2026-11-14: Optimization experience, joint training and evaluation baselines](#verification-2026-11-14)
 
 <a id="survey-coverage"></a>
 
@@ -383,3 +384,33 @@ Earlier dated records retain their original snapshots. This review inspected pri
 **Release watch.** [BOXBOX v2](https://arxiv.org/abs/2611.09218v2) was withdrawn on **November 9**; the authors say they are adding a clarification about Claude Code use for company compliance, so it was not added as a current paper. [EvoGroup's official snapshot `f57639b`](https://github.com/BigggFatttRabittt/EvoGroup/tree/f57639b712a57842809ee5e4df0f6478844c9840) still contains only README, license and `.gitignore`; no runnable entry was available there. Neither observation establishes a problem with the underlying research results.
 
 Older records retain their original dates and source snapshots. This was a primary-source and code review; upstream installations, model calls, robot / benchmark runs and reported improvements were not reproduced.
+
+<a id="verification-2026-11-14"></a>
+
+### 2026-11-14: Optimization experience, joint training and evaluation baselines
+
+**Reviewed November 14, Asia/Taipei.** Six additions were deduplicated against the **101-resource** catalog, bringing it to **107**. The baseline already includes agent-qa from PR #1; it is not counted again. These are recent papers and omissions surfaced by updated indexes, not six November 14 publications. Dates below are arXiv first submissions in UTC; all six papers show **v1** at this check.
+
+| Resource | Date / latest verified version | Verified entry and release boundary | Coverage in checked public files |
+| --- | --- | --- | --- |
+| [InfraRSI](https://arxiv.org/abs/2611.11558) | **2026-11-08 · v1**; **11-09 in Taipei** | [Official `512f8ea`](https://github.com/TokenRhythm/InfraRSI/tree/512f8ea784054f4ca3331d03cc6589267a4cbdf5): package metadata, CPU toy, CLI and experience write-back / search initialization checked. Read §§2.1, 3 → §§4–5. The toy simulates metrics; real optimization needs a working training job. The optional Skill interface was added November 12, after the paper. | No match in the thirteen files below. |
+| [JoMoHa](https://arxiv.org/abs/2611.11499) | **2026-11-08 · v1**; **11-09 in Taipei** | [Official `5d6c7fd`](https://github.com/xudongwu-0/coevolve/tree/5d6c7fdbff3b65d3fbb60e68cd68b4d9042f5cf6): paired rollouts, role updates, scheduling and reproduction archive checked. Read §4 → §§5.1–5.3 → §6.2. The offline script recomputes archived outcomes, including disclosed development-data reuse; it is not a fresh held-out test. Released actors omit training-continuation state. | No resource entry found. Follow RSI's `site/papers.json` only mentions historical review status. |
+| [ACE-RL](https://arxiv.org/abs/2611.16409) | **2026-11-12 · v1** | [Author repository `f2d04dc`](https://github.com/doyoungkim-ml/ehrl/tree/f2d04dc4c8be112db0456b423a8518903ab80fab) contains README and paper; implementation is announced. Read §§2.1–2.2 → §§3.1–3.2 → §§4.2, 5.2 and Appendices E / F.1 / H. Distinguish training role policies from task-local playbook updates at inference; update FLOPs do not include all generation costs. | No match in the thirteen files below. |
+| [No Second Run](https://arxiv.org/abs/2611.10719) | **2026-11-07 · v1** | [Official `8b5dc7d`](https://github.com/GAIR-NLP/801-30B/tree/8b5dc7dc50abf1b896afa8e0488dc081006e243b): report, figures and README checked; Tiny-SFT is linked, base weights are forthcoming, and a full training / improvement pipeline is absent from this snapshot. Read §2 / Table 2 → §3.3 → §4.1 → §5 → §8.1. Engineering reading about a human–agent–infrastructure project, not repeated autonomous full training runs. | No match in the thirteen files below. |
+| [MixUA](https://arxiv.org/abs/2611.10439) | **2026-11-07 · v1** | Read §§3.2–3.4 → §4 → §5.3 and Appendices C / G. A fixed method retains memories at four sharing scopes; planted-fact probes assess its disclosure contract, not a general privacy guarantee. No official implementation or standalone execution entry verified; Appendix D records the study's environment and cost accounting. | [pinkbubble README](https://github.com/pinkbubblebubble/awesome-rsi/blob/6cb162f94f2f66d37a84ac495b1c07eaa49fe89e/README.md#L373). |
+| [JustRUA](https://arxiv.org/abs/2611.16009) | **2026-11-11 · v1**; **11-12 in Taipei** | [Official `7429b76`](https://github.com/ZefanW/JustRUA/tree/7429b76ffc765b9feee95e2ffb4340f09163e930): adapter, setup / evaluation scripts and policy checked. Read §§2.4–2.5 → §§4.2–4.3 / Appendix G → §5. Released code is the final static adapter, separate from the five-round improvement experiment. Its debug path checks transport and joint holding; real evaluation adds simulator, depth model and actor access. | [Follow RSI November 13 supplement](https://github.com/adongwanai/follow-rsi/blob/f9dec2a7fdfc973e7411e00f0e5464028a5aa22b/daily/2026-11-13.md#L17), reviewed November 14. |
+
+**Coverage scope: five repositories, thirteen public files.** Matched names, title variants, arXiv identifiers and known official repository paths, then distinguished resource entries from status text. A negative match applies only to these files, not all included repositories, linked papers or discovery queues.
+
+| Source snapshot | Files checked | Result for this batch |
+| --- | --- | --- |
+| [Prism `b6bb140`](https://github.com/Prism-Shadow/awesome-rsi/tree/b6bb14007c5e705f7849ebcd63fe5d4cb9836e8c) | `README.md`, `site/src/data/{methods,papers,systems}.js` (four) | No entry for these six additions. Its November 13 additions, SkillDuet and PASE, remain release-watch items below. |
+| [pinkbubble `6cb162f`](https://github.com/pinkbubblebubble/awesome-rsi/tree/6cb162f94f2f66d37a84ac495b1c07eaa49fe89e) | `README.md` (one) | MixUA is included. The stated last-review date remains November 10 despite the November 14 edit. |
+| [lobehub `632ab50`](https://github.com/lobehub/awesome-rsi/tree/632ab5065bf579c7d1daa71bdaab801fdefd3698); [natnew `be444d5`](https://github.com/natnew/awesome-recursive-self-improvement/tree/be444d5e019290f5f1c552a6a405e9be10450f78) | Each `README.md` (two) | Unchanged heads; no entry for these six additions. |
+| [Follow RSI `f9dec2a`](https://github.com/adongwanai/follow-rsi/tree/f9dec2a7fdfc973e7411e00f0e5464028a5aa22b) | `README.md`, `data/papers.yaml`, `site/papers.json`; `daily/2026-11-{12,13,14}.md` (six) | JustRUA has the supplement linked above; its other mentions and JoMoHa's historical-review mention are status text, not separate paper entries. |
+
+**Follow RSI status.** The committed [November 14 bulletin](https://github.com/adongwanai/follow-rsi/blob/f9dec2a7fdfc973e7411e00f0e5464028a5aa22b/daily/2026-11-14.md) contains no new-paper selection for that edition. JustRUA keeps its November 13 recommendation date and November 14 review date, distinct from its paper date. The subscription Skill remains forthcoming. This checks committed publication content, not live deployment or the absence of new work elsewhere.
+
+**Release watch.** [PASE](https://arxiv.org/abs/2611.14019) was first submitted November 10 and revised to **v2 on November 11**; its announced [official repository](https://github.com/NEUIR/PASE) returned 404 at review. [SkillDuet](https://arxiv.org/abs/2611.12109) was first submitted November 9 and revised to **v2 on November 12**; the located [same-name repository](https://github.com/stoney0062/SkillDuet) describes an animation / project page, not a released research implementation. Neither is counted among these six additions.
+
+Earlier dated records, including their batch counts, remain unchanged. This review inspected primary papers, documentation and public code; it did not install upstream projects, invoke models, run simulators / training or reproduce reported gains.

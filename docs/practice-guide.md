@@ -6,7 +6,7 @@
 
 This guide collects learning goals, source entry points, and running requirements for specific examples. Choose a project by topic; use the [learning guide](learning-guide.md#survey-project-map) to connect it to survey chapters. The [three resource labels](../README.md#resource-scope) describe the recommended entry point; topic groups are not RSI capability levels.
 
-These notes come from upstream documentation and selected source reviews on **2026-10-22–2026-11-12**. **No tutorials, model calls, or experiments were run.** See the [verification records](verification.md#verification) for each resource's review date and scope. API examples require model access and a call budget; training configurations are upstream examples, not minimum hardware requirements tested by this directory.
+These notes come from upstream documentation and selected source reviews on **2026-10-22–2026-11-14**. **No tutorials, model calls, or experiments were run.** See the [verification records](verification.md#verification) for each resource's review date and scope. API examples require model access and a call budget; training configurations are upstream examples, not minimum hardware requirements tested by this directory.
 
 ## Contents
 
@@ -163,6 +163,25 @@ Find the rejected second round and the selected package hash. All three roles us
 **Recommended entry.** Read [Installation & Setup](https://github.com/algorithmicsuperintelligence/openevolve#installation--setup), obtain the repository examples, then follow [Function Minimization](https://github.com/algorithmicsuperintelligence/openevolve/tree/main/examples/function_minimization), reading `initial_program.py`, `evaluator.py`, and `config.yaml` together.
 
 **Language and running requirements.** English; Python 3.10+, NumPy, and a model endpoint. The example defaults to Gemini through an OpenAI-compatible API; Docker is optional. This API example needs no training GPU. It optimizes task code rather than model weights.
+
+<a id="infrarsi"></a>
+
+### [InfraRSI](https://github.com/TokenRhythm/InfraRSI) · [paper](https://arxiv.org/abs/2611.11558)
+
+**Related self-improvement mechanism · retained optimization experience.** Verified training-system trials become experience that seeds later search configurations and performance / memory priors. Within a run, measurements revise those priors and guide configuration / code proposals. The task contract, search implementation and verifier remain fixed; the retained asset improves subsequent optimization choices.
+
+**Recommended entry.** Read [§§2.1, 3 → §§4–5](https://arxiv.org/html/2611.11558v1), then trace [experience write-back](https://github.com/TokenRhythm/InfraRSI/blob/512f8ea784054f4ca3331d03cc6589267a4cbdf5/infrarsi/experience/runs.py) → [next-search initialization](https://github.com/TokenRhythm/InfraRSI/blob/512f8ea784054f4ca3331d03cc6589267a4cbdf5/infrarsi/search/bcomp.py#L570). From the pinned repository root, start with the [CPU toy](https://github.com/TokenRhythm/InfraRSI/blob/512f8ea784054f4ca3331d03cc6589267a4cbdf5/examples/toy_cpu/train.py):
+
+```bash
+python -m pip install -e .
+infrarsi doctor examples/toy_cpu
+infrarsi run examples/toy_cpu --strategy random --llm none --screens 2
+infrarsi report examples/toy_cpu
+```
+
+This example simulates time, memory and loss to teach contracts, rejected candidates and reports; it neither trains a model nor exercises LLM-guided B-Comp. Continue with the [real-job workflow](https://github.com/TokenRhythm/InfraRSI/blob/512f8ea784054f4ca3331d03cc6589267a4cbdf5/README.md#-getting-started): `init` → `doctor` → `run --strategy bcomp --llm codex-cli` → `report` → preview `apply`. Compare `--experience off` with retained experience under the same workload and budget.
+
+**Requirements.** Bilingual README; Python ≥3.10. The toy needs no GPU or model credentials. Real optimization needs an already working training job, its framework / GPUs and an authenticated coding CLI or model API. Search caps exclude baseline checks, diagnosis and final verification. The [Claude Code / Codex Skill](https://github.com/TokenRhythm/InfraRSI/blob/512f8ea784054f4ca3331d03cc6589267a4cbdf5/agent_skill/README.md) is an optional interface, added November 12; the paper first appeared November 8 UTC. The reported 8–16 H100/H200 configurations are experiment setups, not minimum requirements.
 
 <a id="agent-code"></a>
 
@@ -599,6 +618,42 @@ Then follow [Try one task](https://github.com/SakanaAI/mass/blob/fb403581bed2c97
 
 **Requirements.** English; distillation and agent fundamentals. Reading needs no API. No public reproduction package was verified on **2026-11-04**; reproducing the loop requires business traces, versioned policies, simulation / inspection infrastructure and model training. No minimum hardware recommendation is established here.
 
+<a id="jomoha"></a>
+
+### [JoMoHa](https://github.com/xudongwu-0/coevolve) · [paper](https://arxiv.org/abs/2611.11499)
+
+**Recursive improvement method · joint policy training.** An Engineer generates an executable harness; the Solver acts under it. Their shared task outcome trains both policies on their own generated tokens, so later harness construction uses an updated Engineer alongside the updated Solver. The RL implementation, environment and validation / fallback rules remain fixed.
+
+**Recommended entry.** Read [§4 → §§5.1–5.3 → §6.2](https://arxiv.org/html/2611.11499v1), then [paired rollouts](https://github.com/xudongwu-0/coevolve/blob/5d6c7fdbff3b65d3fbb60e68cd68b4d9042f5cf6/whale_local/sao_bridge/joint_workflow.py) → [partner weighting](https://github.com/xudongwu-0/coevolve/blob/5d6c7fdbff3b65d3fbb60e68cd68b4d9042f5cf6/whale_local/sao_bridge/joint_updates.py) → [role scheduling](https://github.com/xudongwu-0/coevolve/blob/5d6c7fdbff3b65d3fbb60e68cd68b4d9042f5cf6/whale_local/sao_bridge/joint_schedule.py). Start from the pinned checkout with the documented [offline evidence audit](https://github.com/xudongwu-0/coevolve/blob/5d6c7fdbff3b65d3fbb60e68cd68b4d9042f5cf6/docs/REPRODUCE_MA_SAO.md):
+
+```bash
+python3 -B scripts/reproduce_ma_progress.py --best97
+```
+
+Python ≥3.10 and the standard library suffice; this checks released files and recomputes archived outcomes without models, APIs, GPUs or initialized submodules. The official archive identifies selection/evaluation overlap: `best97` is 194/200 on reused development data, while Full144's 186/200 belongs to a different run. Treat this as result inspection, not a new held-out evaluation.
+
+**Requirements for new runs.** Follow [source restoration](https://github.com/xudongwu-0/coevolve/blob/5d6c7fdbff3b65d3fbb60e68cd68b4d9042f5cf6/docs/REPRODUCE_MA_SAO.md#restoring-the-training-source) and the [benchmark guide](https://github.com/xudongwu-0/coevolve/blob/5d6c7fdbff3b65d3fbb60e68cd68b4d9042f5cf6/docs/BENCHMARK_IMPLEMENTATIONS.md): pinned submodules, patched AReaL, task assets and GPU inference / training. The recorded 9B stack uses Python 3.12, PyTorch 2.10.0+cu129 and vLLM 0.19.1; the Full144 run used two eight-GPU nodes, not a verified minimum. Released best97 actors total about 35.09 GiB and omit critics / optimizer state needed for training continuation; historical launchers require environment-specific configuration.
+
+<a id="ace-rl"></a>
+
+### [ACE-RL: Experience-Handoff Reinforcement Learning](https://arxiv.org/abs/2611.16409) · [author repository](https://github.com/doyoungkim-ml/ehrl)
+
+**Related self-improvement mechanism · learning to write useful experience.** A shared model learns acting, reflection and playbook editing under a fixed ACE harness. During training, a candidate playbook receives credit from a fresh actor rollout; at inference, the next attempt reads the edited playbook with weights frozen. The memory is local to one task, rather than a cross-task experience bank.
+
+**Recommended entry.** Read [§§2.1–2.2 → §§3.1–3.2 / Algorithm 1 → §4.2 and §5.2](https://arxiv.org/pdf/2611.16409v1). Trace which role receives which reward, then compare actor-only RL inside the same harness. Use Appendix C for role prompts and Appendices E / F.1 / H for evaluation and cost accounting. Equal actor-episode counts still leave extra reflection / curation calls; the paper's compute comparison counts update FLOPs, not total generation cost. Compare with the [ACE practice entry](#ace) to distinguish learning a writer from retaining its output.
+
+**Requirements and release status.** English; RL and agent fundamentals; reading needs no compute. The [verified repository snapshot](https://github.com/doyoungkim-ml/ehrl/tree/f2d04dc4c8be112db0456b423a8518903ab80fab) contains a README and paper, with implementation announced. There is no runnable training entry at this snapshot. Table 5 reports two H100/H200 GPUs per experiment; this is the authors' setup, not a verified minimum.
+
+<a id="no-second-run"></a>
+
+### [No Second Run: Does RSI Stop at Frontier Pre-training?](https://arxiv.org/abs/2611.10719) · [801-30B repository](https://github.com/GAIR-NLP/801-30B)
+
+**Engineering report · improvement within a pre-training project.** Learn how teams split a long training run into smaller loops: infrastructure / data debugging, post-training-headroom measurement, and conversion of experience into measurable data-pipeline criteria. Shared records retain rejected hypotheses and diagnoses for subsequent work. The improving system includes researchers, agents and infrastructure.
+
+**Recommended entry.** Read [§2 / Table 2 → §3.3 → §4.1 → §5](https://arxiv.org/html/2611.10719v1), then §8.1 for the evaluation protocol. For each loop, identify the trial, feedback and retained artifact. Compare base models under the same SFT protocol; the separate comparison with vendor post-trained models is a headroom reference, not matched training. The report studies one full pre-training project, not repeated autonomous end-to-end training cycles.
+
+**Requirements and release status.** English; pre-training and evaluation fundamentals; reading needs no hardware. The [verified repository](https://github.com/GAIR-NLP/801-30B/tree/8b5dc7dc50abf1b896afa8e0488dc081006e243b) supplies the report and figures and links a Tiny-SFT dataset; its README still marks base weights as forthcoming. A full training / improvement pipeline is not present in this snapshot. The reported 30B-total / 3B-active model used 11.8T tokens over three months; this is a research case study, not a small runnable tutorial.
+
 <a id="memory-skills"></a>
 
 ## Memory and Skills
@@ -691,6 +746,16 @@ This CPU example uses `ScriptedBrain` without a model or simulator. It deliberat
 Continue with the [skill builder's gates](https://github.com/ArcheOne-AI/RoboScript/blob/fad0496a773ea9fee66addf43e44af5095982b78/packages/methods/src/roboscript_methods/skill_builder/builder/README.md) → [RoboTwin build / freeze entry](https://github.com/ArcheOne-AI/RoboScript/blob/fad0496a773ea9fee66addf43e44af5095982b78/examples/simBenchmarks/RoboTwin/p1/README.md), and [learning stages](https://github.com/ArcheOne-AI/RoboScript/blob/fad0496a773ea9fee66addf43e44af5095982b78/docs/concepts/learning.md). Compare skill acceptance with memory revision and reflection; skills freeze before task learning.
 
 **Requirements.** English; Python **≥3.10** and uv for the tutorial. Real skill building adds Linux / bubblewrap, the pinned RoboTwin 2.0 simulator in a separate environment, demonstrations, cuRobo / vision GPU services and model-gateway credentials / budget. The [vision service's approximately 8 GiB](https://github.com/ArcheOne-AI/RoboScript/blob/fad0496a773ea9fee66addf43e44af5095982b78/packages/vision/README.md) is component usage, not a whole-pipeline minimum. Real-robot deployment code remains on the upstream TODO list.
+
+<a id="mixua"></a>
+
+### [MixUA: Who Remembers What?](https://arxiv.org/abs/2611.10439)
+
+**Related self-improvement mechanism · paper reading.** Learn how independent users and agents share experience through four memory scopes: Pair, User, Agent and Global. A fixed writing / retrieval pipeline retains lessons across rounds; protected evidence is routed separately from shareable evidence. Model weights and the memory-update procedure are not evolved.
+
+**Recommended entry.** Read [§§3.2–3.4 → §4 → §5.3](https://arxiv.org/html/2611.10439v1), then Appendix C's population-learning algorithm and Appendix G's disclosure matrix. Trace one lesson from a trajectory into its permitted audience, then compare a frozen store on held-out tasks with the learning rounds. CrossLearnBench measures task success, preference retention and planted-fact leakage separately. Its privacy probes test the stated boundary contract; they are not a general privacy guarantee.
+
+**Requirements.** English; reading only. No official runnable implementation or standalone reproduction entry was verified. Appendix D describes Linux / Python 3.12, Harbor task containers, several model / agent services and an embedding service; these are the study's configuration, not a verified minimum setup. Read its full-cost accounting before attempting a reproduction: table cost columns include only the writer on the memory side, while other memory operations also incur cost.
 
 <a id="coevolution-projects"></a>
 
@@ -997,3 +1062,20 @@ This checks the runtime and starter evaluation; it does not exercise model-drive
 **Recommended entry.** Read [§§2.2–2.3 → §§3.3–3.4](https://arxiv.org/html/2610.37228v1), then the [pinned README](https://github.com/Ray-Tiann/AutoRSE/blob/9711faddc2d684f15243fd0d871bb8633098d666/README.md) → [tools/run_agent.py](https://github.com/Ray-Tiann/AutoRSE/blob/9711faddc2d684f15243fd0d871bb8633098d666/tools/run_agent.py) → [runtime contract](https://github.com/Ray-Tiann/AutoRSE/blob/9711faddc2d684f15243fd0d871bb8633098d666/benchmark/RUNTIME.md). Begin with HSTU; trace experiment branches, public-validation selection, predictions and exported provenance.
 
 **Running entry and requirements.** Python 3.12+. After checkout and dependency setup, preview the documented command with `python tools/run_agent.py --task hstu --agent codex --model YOUR_MODEL_ID --gpu 0 --seed 2024 --dry-run`; this prints a launch plan and does not run research. Full trials require public task inputs, Linux, an NVIDIA GPU / CUDA 12.1-compatible driver, Docker / NVIDIA Container Toolkit, Harbor 0.18.0 and configured model credentials. The default research budget is 12 hours plus finalization; GPU memory depends on the task. `tools/run_baseline.py` offers training without an LLM agent, while `tools/validate_submission.py` checks prediction format only. Hidden-test scores depend on the hosted evaluator. The published [dataset](https://huggingface.co/datasets/RayTian/AutoRSE) and [scoring Space](https://huggingface.co/spaces/RayTian/AutoRSE) could not be verified as accessible in this review; source availability does not establish an end-to-end usable hosted service.
+
+<a id="justrua"></a>
+
+### [JustRUA](https://github.com/ZefanW/JustRUA) · [paper](https://arxiv.org/abs/2611.16009)
+
+**Evaluation tool · controlled robot-harness baseline.** Compare full episode history, motion length, experience reuse and scene geometry on one evaluation set. The released policy keeps fixed model weights and uses no self-improvement loop. The paper separately studies a five-round loop that edits shared Python operations and guidance; its final policy does not inherit that library. Use this comparison to identify which component produces a gain.
+
+**Recommended entry.** Read [§§2.4–2.5 → §§4.2–4.3 and Appendix G → §5](https://arxiv.org/html/2611.16009v1), then the [repository setup](https://github.com/ZefanW/JustRUA/blob/7429b76ffc765b9feee95e2ffb4340f09163e930/README.md#use-with-xpolicylab) and [adapter instructions](https://github.com/ZefanW/JustRUA/blob/7429b76ffc765b9feee95e2ffb4340f09163e930/policy/JustRUA/README.md). After installing the adapter in the documented XPolicyLab checkout and setting `SERVER_PY` / `EVAL_PY`, run from the XPolicyLab root:
+
+```bash
+EVAL_ENV_TYPE=debug DEBUG_OBS_ENCODED=1 bash policy/JustRUA/eval.sh \
+  RoboDojo insert_tubes no-checkpoint arx_x5 joint 0 0 0 "$SERVER_PY" "$EVAL_PY"
+```
+
+This exercises WebSocket transport and a 20-step joint-hold loop without the simulator, model account or depth weights. It does not test robot task solving or improvement. Follow [policy.py](https://github.com/ZefanW/JustRUA/blob/7429b76ffc765b9feee95e2ffb4340f09163e930/policy/JustRUA/policy.py) into the 20-control motion cap before attempting the documented real task evaluation.
+
+**Requirements and interpretation.** English documentation / bilingual project page. The pinned [XPolicyLab package](https://github.com/XPolicyLab/XPolicyLab/blob/6baccd57ff958570d0db1588370289ee36c8bb70/pyproject.toml) requires Python ≥3.10. Real evaluation adds RoboDojo / Isaac, robot assets, the Cartesian planner, compatible GPU / PyTorch dependencies, Apple's Depth Pro weights and Codex **0.153.4** with access to the selected actor. Keep the coding Python environment separate as documented. The 111-episode subset differs from the official leaderboard protocol; the experience experiment uses tasks that are later scored. Compare its measured behavior and cost within that protocol, rather than crediting the static policy's score gain to RSI.

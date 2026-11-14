@@ -6,7 +6,7 @@
 
 这里集中记录具体示例的学习目标、源码入口和运行条件。先按主题选择项目；综述章节与项目的对应关系见[学习指南](learning-guide_zh.md#survey-project-map)。条目的[三类标签](../README_zh.md#resource-scope)描述所推荐入口的范围，主题分组不表示 RSI 能力等级。
 
-以下说明来自 **2026-10-22–2026-11-12** 对上游文档与部分源码的核验，**未运行教程、调用模型或复现实验**；逐项日期与范围见[核验档案](verification_zh.md#verification)。API 示例需要相应模型权限与调用预算，训练配置是上游示例而非本目录实测的最低硬件要求。
+以下说明来自 **2026-10-22–2026-11-14** 对上游文档与部分源码的核验，**未运行教程、调用模型或复现实验**；逐项日期与范围见[核验档案](verification_zh.md#verification)。API 示例需要相应模型权限与调用预算，训练配置是上游示例而非本目录实测的最低硬件要求。
 
 ## 目录
 
@@ -163,6 +163,25 @@ python -m examples.v2.package_optimizer
 **推荐入口。** 阅读 [Installation & Setup](https://github.com/algorithmicsuperintelligence/openevolve#installation--setup)，取得仓库示例后跟随 [Function Minimization](https://github.com/algorithmicsuperintelligence/openevolve/tree/main/examples/function_minimization)，结合阅读 `initial_program.py`、`evaluator.py` 和 `config.yaml`。
 
 **语言与运行条件。** 英文；Python 3.10+、NumPy 和模型端点。示例默认经 OpenAI 兼容 API 使用 Gemini；Docker 可选。该 API 示例无需训练 GPU。优化的是任务代码，不更新模型权重。
+
+<a id="infrarsi"></a>
+
+### [InfraRSI](https://github.com/TokenRhythm/InfraRSI) · [论文](https://arxiv.org/abs/2611.11558)
+
+**相关自改进机制 · 保留优化经验。** 经过核验的训练系统试验转成经验，供后续搜索初始化配置及性能／显存先验；单轮运行内，测量结果修正先验并指导配置／代码提案。任务约束、搜索实现和验证器保持固定，保留的经验用于改善下一轮优化决策。
+
+**推荐入口。** 阅读[§§2.1、3 → §§4–5](https://arxiv.org/html/2611.11558v1)，再跟踪[经验回写](https://github.com/TokenRhythm/InfraRSI/blob/512f8ea784054f4ca3331d03cc6589267a4cbdf5/infrarsi/experience/runs.py) → [下一轮搜索初始化](https://github.com/TokenRhythm/InfraRSI/blob/512f8ea784054f4ca3331d03cc6589267a4cbdf5/infrarsi/search/bcomp.py#L570)。从固定版本仓库根目录的 [CPU toy](https://github.com/TokenRhythm/InfraRSI/blob/512f8ea784054f4ca3331d03cc6589267a4cbdf5/examples/toy_cpu/train.py) 开始：
+
+```bash
+python -m pip install -e .
+infrarsi doctor examples/toy_cpu
+infrarsi run examples/toy_cpu --strategy random --llm none --screens 2
+infrarsi report examples/toy_cpu
+```
+
+该示例模拟耗时、显存和损失，讲解任务约束、候选拒绝与报告；不训练模型，也未启用 LLM 引导的 B-Comp。随后按[真实任务流程](https://github.com/TokenRhythm/InfraRSI/blob/512f8ea784054f4ca3331d03cc6589267a4cbdf5/README.md#-getting-started)学习 `init` → `doctor` → `run --strategy bcomp --llm codex-cli` → `report` → 用 `apply` 预览。固定工作负载和预算，对比 `--experience off` 与保留经验的结果。
+
+**运行要求。** 中英文 README；Python ≥3.10。toy 无需 GPU 或模型凭据。真实优化需要已能正常运行的训练任务、对应框架／GPU，以及已登录的 coding CLI 或模型 API。搜索预算不包含 baseline 检查、诊断及最终复验。[Claude Code／Codex Skill](https://github.com/TokenRhythm/InfraRSI/blob/512f8ea784054f4ca3331d03cc6589267a4cbdf5/agent_skill/README.md) 是可选交互入口，于 11 月 12 日新增；论文初版为 UTC 11 月 8 日。报告中的 8–16 张 H100／H200 是实验配置，不是最低要求。
 
 <a id="agent-code"></a>
 
@@ -600,6 +619,42 @@ python3 -m mass plan --config configs/paper.json
 
 **条件。** 英文；蒸馏与 Agent 基础。阅读不需 API。**2026-11-04** 未核验到公共复现包；复现闭环需要业务轨迹、版本化策略、仿真／质检设施和模型训练。这里不提供未经核验的最低硬件建议。
 
+<a id="jomoha"></a>
+
+### [JoMoHa](https://github.com/xudongwu-0/coevolve) · [论文](https://arxiv.org/abs/2611.11499)
+
+**递归改进方法 · 双策略联合训练。** Engineer 生成可执行 Harness，Solver 在其下执行任务；两者根据共享任务结果，分别在各自生成的 token 上训练。后续 Harness 构建因此使用更新后的 Engineer，并与更新后的 Solver 配合。RL 实现、环境及验证／回退规则保持固定。
+
+**推荐入口。** 阅读[§4 → §§5.1–5.3 → §6.2](https://arxiv.org/html/2611.11499v1)，再跟踪[成对 rollout](https://github.com/xudongwu-0/coevolve/blob/5d6c7fdbff3b65d3fbb60e68cd68b4d9042f5cf6/whale_local/sao_bridge/joint_workflow.py) → [伙伴轨迹加权](https://github.com/xudongwu-0/coevolve/blob/5d6c7fdbff3b65d3fbb60e68cd68b4d9042f5cf6/whale_local/sao_bridge/joint_updates.py) → [角色调度](https://github.com/xudongwu-0/coevolve/blob/5d6c7fdbff3b65d3fbb60e68cd68b4d9042f5cf6/whale_local/sao_bridge/joint_schedule.py)。在固定版本仓库中，先做文档提供的[离线证据核对](https://github.com/xudongwu-0/coevolve/blob/5d6c7fdbff3b65d3fbb60e68cd68b4d9042f5cf6/docs/REPRODUCE_MA_SAO.md)：
+
+```bash
+python3 -B scripts/reproduce_ma_progress.py --best97
+```
+
+只需 Python ≥3.10 与标准库，无需模型、API、GPU 或初始化子模块；脚本检查已发布文件并重算归档结果。官方档案明确选优与评估集有重叠：`best97` 是复用开发集上的 194/200，Full144 的 186/200 来自另一轮运行。该入口用于结果分析，不是一次新的独立测试。
+
+**新实验所需条件。** 按[源码恢复](https://github.com/xudongwu-0/coevolve/blob/5d6c7fdbff3b65d3fbb60e68cd68b4d9042f5cf6/docs/REPRODUCE_MA_SAO.md#restoring-the-training-source)与[benchmark 指南](https://github.com/xudongwu-0/coevolve/blob/5d6c7fdbff3b65d3fbb60e68cd68b4d9042f5cf6/docs/BENCHMARK_IMPLEMENTATIONS.md)准备固定子模块、修改过的 AReaL、任务资产及 GPU 推理／训练环境。归档 9B 环境使用 Python 3.12、PyTorch 2.10.0+cu129 与 vLLM 0.19.1；Full144 用过两台各八张 GPU 的节点，不代表已核实的最低门槛。已发布 best97 actor 约 35.09 GiB，缺少续训所需的 critic／optimizer 状态；历史 launcher 需按自己的环境配置。
+
+<a id="ace-rl"></a>
+
+### [ACE-RL：Experience-Handoff Reinforcement Learning](https://arxiv.org/abs/2611.16409) · [作者仓库](https://github.com/doyoungkim-ml/ehrl)
+
+**相关自改进机制 · 学习编写有用经验。** 在固定 ACE Harness 下，共享模型同时学习执行、反思和经验手册编辑。训练时用新的执行轨迹给候选手册分配奖励；推理时冻结权重，下一次尝试读取修改后的手册。记忆限于同一道任务，不是跨任务经验库。
+
+**推荐入口。** 阅读 [§§2.1–2.2 → §§3.1–3.2／算法 1 → §4.2 与 §5.2](https://arxiv.org/pdf/2611.16409v1)，追踪各角色的奖励来源，再对比同一 Harness 中只训练执行者的 RL。附录 C 提供角色提示，附录 E／F.1／H 解释评测和成本口径。执行轨迹数量相同仍会多出反思／编辑调用；论文的计算量对照统计参数更新 FLOPs，不含完整生成成本。结合 [ACE 实践条目](#ace)，区分训练经验编写者与保留其输出。
+
+**条件与发布状态。** 英文；需 RL 与 Agent 基础；阅读无需算力。[已核验仓库快照](https://github.com/doyoungkim-ml/ehrl/tree/f2d04dc4c8be112db0456b423a8518903ab80fab)只有 README 与论文，代码仍待发布，没有可运行训练入口。表 5 每次实验使用两张 H100／H200，这是作者配置，不是已核实的最低门槛。
+
+<a id="no-second-run"></a>
+
+### [No Second Run: Does RSI Stop at Frontier Pre-training?](https://arxiv.org/abs/2611.10719) · [801-30B 仓库](https://github.com/GAIR-NLP/801-30B)
+
+**工程报告 · 预训练项目中的改进闭环。** 学习团队如何将长周期训练拆成较小闭环：基础设施／数据调试、后训练潜力测量，以及把经验转成可测量的数据流水线标准。共享记录保留被排除的假设与诊断，供后续工作复用；改进系统包含研究人员、Agent 和基础设施。
+
+**推荐入口。** 阅读 [§2／表 2 → §3.3 → §4.1 → §5](https://arxiv.org/html/2611.10719v1)，再看 §8.1 的评测协议。逐个识别闭环中的试验、反馈与保留产物。比较基座模型时使用相同 SFT 协议；另列的厂商后训练模型对照用于参考后训练潜力，不是匹配训练条件的比较。报告研究的是一次完整预训练项目，不是反复执行的自主端到端训练周期。
+
+**条件与发布状态。** 英文；需预训练与评测基础；阅读无需硬件。[已核验仓库](https://github.com/GAIR-NLP/801-30B/tree/8b5dc7dc50abf1b896afa8e0488dc081006e243b)提供报告、图表和 Tiny-SFT 数据集链接，README 仍将基座权重标为待发布；此快照没有完整训练／改进流水线。作者的总参数 30B／激活参数 3B 模型训练使用 11.8T tokens、历时三个月，适合作为研究案例阅读，不是小规模可运行教程。
+
 <a id="memory-skills"></a>
 
 ## 记忆与技能
@@ -692,6 +747,16 @@ uv run python -m quickstart_mock.run ../../tmp/quickstart
 继续看[技能构建门槛](https://github.com/ArcheOne-AI/RoboScript/blob/fad0496a773ea9fee66addf43e44af5095982b78/packages/methods/src/roboscript_methods/skill_builder/builder/README.md) → [RoboTwin 构建／冻结入口](https://github.com/ArcheOne-AI/RoboScript/blob/fad0496a773ea9fee66addf43e44af5095982b78/examples/simBenchmarks/RoboTwin/p1/README.md)，以及[学习阶段说明](https://github.com/ArcheOne-AI/RoboScript/blob/fad0496a773ea9fee66addf43e44af5095982b78/docs/concepts/learning.md)。对比技能接纳、记忆修改与反思；技能在任务学习前冻结。
 
 **条件。** 英文；教程需 Python **≥3.10** 与 uv。真实技能构建另需 Linux／bubblewrap、独立环境中的指定版本 RoboTwin 2.0 模拟器、示范、cuRobo／视觉 GPU 服务，以及模型 gateway 凭据与预算。[视觉服务约 8 GiB 显存](https://github.com/ArcheOne-AI/RoboScript/blob/fad0496a773ea9fee66addf43e44af5095982b78/packages/vision/README.md)是组件占用，不是全流程最低要求。真实机器人部署代码仍在上游 TODO 清单中。
+
+<a id="mixua"></a>
+
+### [MixUA: Who Remembers What?](https://arxiv.org/abs/2611.10439)
+
+**相关自改进机制 · 论文阅读。** 学习独立用户与 Agent 如何通过 Pair、User、Agent、Global 四种记忆范围共享经验。固定的写入／检索流程跨轮保留经验，并将受保护证据与可共享证据分开路由；模型权重及记忆更新程序本身不参与演化。
+
+**推荐入口。** 先读[§§3.2–3.4 → §4 → §5.3](https://arxiv.org/html/2611.10439v1)，再读附录 C 的群体学习算法与附录 G 的披露范围矩阵。追踪一条经验从轨迹到允许读取的对象，再对比学习轮次与冻结记忆后的持出任务。CrossLearnBench 分别测量任务成功率、偏好保留和植入事实泄漏；隐私探针检验的是其定义的边界契约，不代表一般隐私保证。
+
+**运行要求。** 英文；纯阅读，本轮未确认官方可运行实现或独立复现入口。附录 D 说明了 Linux／Python 3.12、Harbor 任务容器、多种模型／Agent 服务及 embedding 服务；这是论文实验配置，不是已核验的最低环境。准备复现前先看完整成本核算：结果表的记忆侧成本列只计 writer，其他记忆操作也会产生费用。
 
 <a id="coevolution-projects"></a>
 
@@ -998,3 +1063,20 @@ rsib report <worktree>
 **推荐入口。** 读 [§§2.2–2.3 → §§3.3–3.4](https://arxiv.org/html/2610.37228v1)，再按[固定版本 README](https://github.com/Ray-Tiann/AutoRSE/blob/9711faddc2d684f15243fd0d871bb8633098d666/README.md) → [tools/run_agent.py](https://github.com/Ray-Tiann/AutoRSE/blob/9711faddc2d684f15243fd0d871bb8633098d666/tools/run_agent.py) → [运行约定](https://github.com/Ray-Tiann/AutoRSE/blob/9711faddc2d684f15243fd0d871bb8633098d666/benchmark/RUNTIME.md)阅读。先选 HSTU，追踪实验分支、公共验证集选优、预测文件与导出的来源记录。
 
 **运行入口与门槛。** Python 3.12+。获取代码并配置依赖后，用 `python tools/run_agent.py --task hstu --agent codex --model YOUR_MODEL_ID --gpu 0 --seed 2024 --dry-run` 预览上游命令；它只打印启动计划，不执行研究。完整实验需要公共任务数据、Linux、NVIDIA GPU／兼容 CUDA 12.1 的驱动、Docker／NVIDIA Container Toolkit、Harbor 0.18.0 和模型凭据。默认研究预算为 12 小时，另加收尾时间；显存依任务而定。`tools/run_baseline.py` 支持不使用 LLM Agent 的训练，`tools/validate_submission.py` 仅检查预测格式。隐藏测试分数依赖托管评估器。本轮未能确认公开[数据集](https://huggingface.co/datasets/RayTian/AutoRSE)与[评分 Space](https://huggingface.co/spaces/RayTian/AutoRSE)可访问；有源码不代表托管服务已可完整使用。
+
+<a id="justrua"></a>
+
+### [JustRUA](https://github.com/ZefanW/JustRUA) · [论文](https://arxiv.org/abs/2611.16009)
+
+**评测工具 · 机器人 Harness 受控基线。** 在同一评测集上对比完整会话历史、运动长度、经验复用与场景几何。公开策略固定模型权重，没有自改进循环；论文另行研究了五轮更新共享 Python 操作与指南的循环，最终策略不采用该技能库。通过对照学习如何识别收益来自哪个组件。
+
+**推荐入口。** 先读[§§2.4–2.5 → §§4.2–4.3 与附录 G → §5](https://arxiv.org/html/2611.16009v1)，再看[仓库环境说明](https://github.com/ZefanW/JustRUA/blob/7429b76ffc765b9feee95e2ffb4340f09163e930/README.md#use-with-xpolicylab)与[适配器指南](https://github.com/ZefanW/JustRUA/blob/7429b76ffc765b9feee95e2ffb4340f09163e930/policy/JustRUA/README.md)。按文档将适配器安装到指定 XPolicyLab 版本并设置 `SERVER_PY`／`EVAL_PY` 后，在 XPolicyLab 根目录运行：
+
+```bash
+EVAL_ENV_TYPE=debug DEBUG_OBS_ENCODED=1 bash policy/JustRUA/eval.sh \
+  RoboDojo insert_tubes no-checkpoint arx_x5 joint 0 0 0 "$SERVER_PY" "$EVAL_PY"
+```
+
+该入口检查 WebSocket 传输与 20 步关节保持循环，无需模拟器、模型账户或深度权重，不检验机器人任务求解或改进效果。随后沿 [policy.py](https://github.com/ZefanW/JustRUA/blob/7429b76ffc765b9feee95e2ffb4340f09163e930/policy/JustRUA/policy.py) 理解每次运动最多执行 20 条控制，再准备文档中的真实单任务评测。
+
+**运行要求与结果解读。** 英文文档／双语项目页。固定版本的 [XPolicyLab 包](https://github.com/XPolicyLab/XPolicyLab/blob/6baccd57ff958570d0db1588370289ee36c8bb70/pyproject.toml)要求 Python ≥3.10。真实评测另需 RoboDojo／Isaac、机器人资产、笛卡尔规划器、兼容的 GPU／PyTorch 环境、Apple Depth Pro 权重，以及有指定 actor 访问权限的 Codex **0.153.4**；按文档单独配置代码执行的 Python 环境。论文的 111-episode 子集与官方榜单协议不同，经验实验还使用了后来计分的任务；应在该协议内比较行为与成本，不能把静态最终策略的得分提升归因于 RSI。
