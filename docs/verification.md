@@ -4,7 +4,7 @@
 
 [Resource directory](../README.md) · [Learning guide](learning-guide.md) · [Practice guide](practice-guide.md)
 
-This archive records source checks from **2026-10-22 through 2026-11-14**. Each dated section specifies its own sources, versions and review scope; a later addition does not refresh earlier checks.
+This archive records source checks from **2026-10-22 through 2026-11-16**. Each dated section specifies its own sources, versions and review scope; a later addition does not refresh earlier checks.
 
 - [Recent survey coverage](#survey-coverage)
 - [Review history and expansion checks](#review-log)
@@ -16,6 +16,7 @@ This archive records source checks from **2026-10-22 through 2026-11-14**. Each 
 - [2026-11-07: agent-qa app-memory source route](#verification-agent-qa)
 - [2026-11-12: Package tutorials, embodied skills and total improvement cost](#verification-2026-11-12)
 - [2026-11-14: Optimization experience, joint training and evaluation baselines](#verification-2026-11-14)
+- [2026-11-16: Embodied loops, experiment infrastructure and survey updates](#verification-2026-11-16)
 
 <a id="survey-coverage"></a>
 
@@ -414,3 +415,35 @@ Older records retain their original dates and source snapshots. This was a prima
 **Release watch.** [PASE](https://arxiv.org/abs/2611.14019) was first submitted November 10 and revised to **v2 on November 11**; its announced [official repository](https://github.com/NEUIR/PASE) returned 404 at review. [SkillDuet](https://arxiv.org/abs/2611.12109) was first submitted November 9 and revised to **v2 on November 12**; the located [same-name repository](https://github.com/stoney0062/SkillDuet) describes an animation / project page, not a released research implementation. Neither is counted among these six additions.
 
 Earlier dated records, including their batch counts, remain unchanged. This review inspected primary papers, documentation and public code; it did not install upstream projects, invoke models, run simulators / training or reproduce reported gains.
+
+<a id="verification-2026-11-16"></a>
+
+### 2026-11-16: Embodied loops, experiment infrastructure and survey updates
+
+**Reviewed November 16, Asia/Taipei.** Six deduplicated additions bring the catalog from **107 to 113** resources. RSIHub and its linked framework / diagnostic papers count as one resource; the existing Harness-focused survey receives a version refresh without another count. Paper dates below are first submissions in UTC, not discovery dates or repository release dates; all seven arXiv papers in the six additions remain **v1** at this check.
+
+| Resource | Date / latest verified version | Verified entry and release boundary | Coverage in checked public files |
+| --- | --- | --- | --- |
+| [RSIHub](https://arxiv.org/abs/2610.32253) + [Beneath the Surface](https://arxiv.org/abs/2611.07624) | Framework **2026-10-23 · v1**; diagnostic paper **2026-11-05 · v1** | [Official `d655429`](https://github.com/simple-agent-lab/RSIHub/tree/d6554299c58bf0fe2db04ddda0277f9db67ea680): driver, operator loading, HyperAgents recipe, validation / promotion and setup checked. Framework §§3.1–3.3 → §4.1 / Appendix D; diagnostic §§3.2–4 → §§5–7. Stub generation zero checks initialization, not mutation. Real runs require Docker, task data and model access; no separate EvoAudit / AGE runtime entry was found in this tree. | Framework: [pinkbubble README](https://github.com/pinkbubblebubble/awesome-rsi/blob/3c96bfb50424d7c6a8e4791cfa166c20e51f0931/README.md#L696) and [Follow RSI paper record](https://github.com/adongwanai/follow-rsi/blob/1ea3bfdd1105d026ebf5ab9dfbb87cd821ec7d51/data/papers.yaml#L1334). No match for the diagnostic paper in these files. |
+| [ESI](https://arxiv.org/abs/2611.18176) | **2026-11-13 · v1** | The [official project page](https://www.zerith.com/blog/esi/) links the new [source release `bc29d46`](https://github.com/ZERITH-ZLab/ESI/tree/bc29d46f38378eb5058aeab40397f5a44c494eb2), committed November 16; the older arXiv-linked repository returns 404. README, installation / configuration guides, launchers and prompt / checkpoint handoff checked. Read §§3.4, 4.3 → §§5.3–5.5 → §6.1 and Appendices B / C. Configuration preview does not run simulation or learning. | No match in the fifteen files below. |
+| [RecurIR](https://arxiv.org/abs/2611.18006) | **2026-11-13 · v1** | Read §§3.1–3.4 → §4.4 → §§7.3–7.4, 8.2. Trace accepted changes into the later restoration policy and learned revision mechanism while the restoration-tool library stays fixed. No official runnable implementation or verified launch command was found; included as method reading. | No match in the fifteen files below. |
+| [G-CAST](https://arxiv.org/abs/2611.17814) | **2026-11-13 · v1** | Read §3 / Table 1 → §4 → §5 / Tables 2–4. Distinguish evolving training rewards and promoted checkpoints from the frozen evaluation reward; business requirements and human reward audits remain external. Cumulative evaluation slices also govern promotion. No official runnable implementation verified. | No match in the fifteen files below. |
+| [TRUST](https://arxiv.org/abs/2611.10787) | **2026-11-07 · v1** | Read §3 → §4 / Algorithm 1 → §5 / Assumption 1 → §6.1 and Appendices G.1 / I. An acceptance-method reading entry in the optional reliability branch. Its error-control claim depends on the reuse-bias bound and does not promise every accepted update improves; no official runnable implementation verified. | No match in the fifteen files below. |
+| [Cross-Scenario Survey](https://arxiv.org/abs/2611.14256) | **2026-11-10 · v1**; **11-11 in Taipei** | Read §II-C → §III → §VIII-E → §§IX-B–D. [Author collection `3f99e2a`](https://github.com/jingjing12110/SE-MMAgents/tree/3f99e2aea8d42f21595bf79f4f657d95471a5cef) contains scenario / code-link tables, literature data, the paper and static-site tools. It is a reading companion, not an agent training package; portability judgments are hypotheses awaiting cross-scenario tests. | [pinkbubble README](https://github.com/pinkbubblebubble/awesome-rsi/blob/3c96bfb50424d7c6a8e4791cfa166c20e51f0931/README.md#L75); the author collection is newly linked here. |
+
+**Existing survey refresh.** The [November 14 author PDF](https://github.com/LucasXinYu/harness-rsi/blob/7c60e793f575e31e7ead79c933086c2ad1d07239/docs/paper/Harness_RSI_Preprint_2026-11-14.pdf) is a 93-page revision, separate from [Preprints.org v2](https://doi.org/10.20944/preprints202610.2293.v2), posted October 30. The current reading route is §2.1 (p. 3) → §3.2 (p. 8) → §§4.5–5 (p. 12), with the new comparison supplement in Appendix M (p. 91). Its original **95 category–source records / 62 papers + one benchmark** remain frozen at October 1. Dataset v0.5.0 separately contains **159 records / 126 works**, with targeted AI-assisted source checks and human adjudication pending. The repository's November 15 bibliography update does not change either version. No arXiv version was verified; previous dated coverage records retain their original snapshots.
+
+**Coverage scope: five repositories, fifteen public files.** Names, title variants, identifiers and official paths were matched, then inspected to distinguish resource entries from status mentions. The two survey companions were reviewed separately for their own entries; they are not included in this five-index comparison. Negative matches do not establish absence from all included repositories or their linked sources.
+
+| Source snapshot | Files checked | Result for this batch |
+| --- | --- | --- |
+| [Prism `57787ad`](https://github.com/Prism-Shadow/awesome-rsi/tree/57787ad4211893d7319d9c926a73d804475316eb) | `README.md`, `site/src/data/{methods,papers,systems}.js` (four) | No entry for the six additions. New index leads include FGSE, Student-Aware Teaching and the older AgonAlpha paper; they were not added in this batch. |
+| [pinkbubble `3c96bfb`](https://github.com/pinkbubblebubble/awesome-rsi/tree/3c96bfb50424d7c6a8e4791cfa166c20e51f0931) | `README.md` (one) | RSIHub and Cross-Scenario Survey; also the already-listed Harness survey, ACE-RL and RSI Tax. Its stated review date is November 15. |
+| [lobehub `632ab50`](https://github.com/lobehub/awesome-rsi/tree/632ab5065bf579c7d1daa71bdaab801fdefd3698); [natnew `7152191`](https://github.com/natnew/awesome-recursive-self-improvement/tree/7152191ed372ecbc540cfab0601a1f61de2d0d82) | Each `README.md` (two) | No entry for the six additions. lobehub is unchanged; natnew adds the already-listed EvoRepair. |
+| [Follow RSI `1ea3bfd`](https://github.com/adongwanai/follow-rsi/tree/1ea3bfdd1105d026ebf5ab9dfbb87cd821ec7d51) | `README.md`, `data/papers.yaml`, `site/papers.json`; `daily/2026-11-{11,12,13,14,15}.md` (eight) | RSIHub has a paper entry. The checked November 16 daily path returned 404 and is not counted among the fifteen successful reads. |
+
+**Follow RSI status.** At the November 16 source snapshot, the latest published bulletin remains [November 15](https://github.com/adongwanai/follow-rsi/blob/1ea3bfdd1105d026ebf5ab9dfbb87cd821ec7d51/daily/2026-11-15.md). It reports no newly dated selection for that edition, while the November 11–12 supplements contain additions reviewed on November 15. Publication, review and paper dates remain separate. The subscription Skill is still forthcoming; committed content was checked, not live deployment or all-day source completeness.
+
+**Release watch.** [PASE's announced repository](https://github.com/NEUIR/PASE) still returns 404. The located [SkillDuet project-page snapshot `52fddde`](https://github.com/stoney0062/SkillDuet/tree/52fddde400a9ab9828fe330bf2ce34486f7f5120) is unchanged and does not release the research implementation. These remain watch items rather than runnable-project additions.
+
+Earlier dated records and batch counts remain unchanged. This was a primary-paper, documentation and source review; no upstream installation, model calls, simulation, training or reproduction of reported gains was performed.

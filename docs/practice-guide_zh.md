@@ -6,7 +6,7 @@
 
 这里集中记录具体示例的学习目标、源码入口和运行条件。先按主题选择项目；综述章节与项目的对应关系见[学习指南](learning-guide_zh.md#survey-project-map)。条目的[三类标签](../README_zh.md#resource-scope)描述所推荐入口的范围，主题分组不表示 RSI 能力等级。
 
-以下说明来自 **2026-10-22–2026-11-14** 对上游文档与部分源码的核验，**未运行教程、调用模型或复现实验**；逐项日期与范围见[核验档案](verification_zh.md#verification)。API 示例需要相应模型权限与调用预算，训练配置是上游示例而非本目录实测的最低硬件要求。
+以下说明来自 **2026-10-22–2026-11-16** 对上游文档与部分源码的核验，**未运行教程、调用模型或复现实验**；逐项日期与范围见[核验档案](verification_zh.md#verification)。API 示例需要相应模型权限与调用预算，训练配置是上游示例而非本目录实测的最低硬件要求。
 
 ## 目录
 
@@ -375,6 +375,27 @@ hermit eval --config docs/_examples/first_training/run.yaml --adapter final
 
 规格检查通过不等于分数提升，应在相同测试划分比较 no-adapter、root 与 final。Evolver 决定 `final`，它并不统一代表最高分检查点。[部署与转换](https://github.com/Infini-AI-Lab/hermit/blob/2056e435d4be138358872208c3b233890cecf74c/docs/tutorials/deploy-an-adapter.md)生成宿主工作区或受支持的插件文件，不会启动 Codex／Claude Code，也不会执行训练。
 
+<a id="rsihub"></a>
+
+### [RSIHub](https://github.com/simple-agent-lab/RSIHub) · [框架论文](https://arxiv.org/abs/2610.32253)
+
+**相关自改进机制 · 实验框架。** 通过可复用算子和统一评测流程比较方法。其中 HyperAgents recipe 允许同时修改 `target/**` 与 `operators/**`，包括变异程序；保留的算子代码会参与后续改进。评估器、框架机制和模型权重保持固定，其他 recipe 的可修改范围更窄。
+
+**推荐入口。** 阅读[§§3.1–3.3 → §4.1／附录 D](https://arxiv.org/html/2610.32253v1)，再跟踪 [recipe](https://github.com/simple-agent-lab/RSIHub/blob/d6554299c58bf0fe2db04ddda0277f9db67ea680/recipes/hyperagents/evolve.yaml) → [变异算子](https://github.com/simple-agent-lab/RSIHub/blob/d6554299c58bf0fe2db04ddda0277f9db67ea680/library/mutate/hyperagents.py) → [父代快照继承](https://github.com/simple-agent-lab/RSIHub/blob/d6554299c58bf0fe2db04ddda0277f9db67ea680/src/evolve/driver.py#L681) → [算子加载](https://github.com/simple-agent-lab/RSIHub/blob/d6554299c58bf0fe2db04ddda0277f9db67ea680/src/evolve/operators.py#L66)。修改后的算子在下次调用时生效；前序算子影响后续代，尚未执行的 gate 可在本代生效。
+
+先做文档中的[确定性基线检查](https://github.com/simple-agent-lab/RSIHub/blob/d6554299c58bf0fe2db04ddda0277f9db67ea680/docs/getting-started.md#run-a-deterministic-baseline-check)：`EVAL_STUB=1` 与 `--max-generations 0` 在无模型、无 Docker 的条件下检查工作区创建、第零代评估与档案完整性，不发生变异。按[快速开始](https://github.com/simple-agent-lab/RSIHub/blob/d6554299c58bf0fe2db04ddda0277f9db67ea680/docs/QUICKSTART.md)配置凭据和 Docker 后，从固定版本仓库根目录运行：
+
+```bash
+./scripts/setup_terminal_bench.sh hyperagents
+./scripts/run_recipe_demo.sh hyperagents
+```
+
+启动脚本默认运行一代；该 recipe 将精选的 30 个任务全部用于同一个优化集，优化曲线不等于持出集迁移结果。
+
+**配套评测阅读。** [Beneath the Surface §§3.2–4 → §§5–6 → §7](https://arxiv.org/html/2611.07624v1)使用 RSIHub 区分重复成功率、任务覆盖的增减、部署成本和迁移。沿诊断结果学习 EvoAudit 如何重设计算子；AGE 安装四个修改后的算子，每次报告运行中这些算子保持固定。已检查仓库提供框架和既有 recipe，但本轮未核验到名为 EvoAudit／AGE 的独立复现入口。这里将两篇论文与仓库合并为一项资源。
+
+**运行要求。** 双语仓库；Python ≥3.12、uv 和 Git。真实启动流程另需 Bash、Git ≥2.25、Docker、Harbor 任务下载及模型权限／预算。Harbor 固定为 0.18.0，HyperAgents 变异容器使用 Codex 0.146.0。本源码路线不提供未经实测的最低机器配置，也未复现报告收益。
+
 <a id="flashrsi"></a>
 
 ### [FlashRSI · RUC-NLPIR](https://github.com/RUC-NLPIR/FlashRSI)
@@ -654,6 +675,42 @@ python3 -B scripts/reproduce_ma_progress.py --best97
 **推荐入口。** 阅读 [§2／表 2 → §3.3 → §4.1 → §5](https://arxiv.org/html/2611.10719v1)，再看 §8.1 的评测协议。逐个识别闭环中的试验、反馈与保留产物。比较基座模型时使用相同 SFT 协议；另列的厂商后训练模型对照用于参考后训练潜力，不是匹配训练条件的比较。报告研究的是一次完整预训练项目，不是反复执行的自主端到端训练周期。
 
 **条件与发布状态。** 英文；需预训练与评测基础；阅读无需硬件。[已核验仓库](https://github.com/GAIR-NLP/801-30B/tree/8b5dc7dc50abf1b896afa8e0488dc081006e243b)提供报告、图表和 Tiny-SFT 数据集链接，README 仍将基座权重标为待发布；此快照没有完整训练／改进流水线。作者的总参数 30B／激活参数 3B 模型训练使用 11.8T tokens、历时三个月，适合作为研究案例阅读，不是小规模可运行教程。
+
+<a id="esi"></a>
+
+### [ESI](https://github.com/ZERITH-ZLab/ESI) · [论文](https://arxiv.org/abs/2611.18176)
+
+**相关自改进机制 · 具身策略学习。** 教师纠正与学生有效动作转成下一轮机器人策略更新的回放数据。系统设计还会在 LLM 冻结时修改指南与技能；已报告的三轮 VLA 实验在策略更新间固定提示和技能目录。
+
+**推荐入口。** 阅读 [§§3.4、4.3 → §§5.3–5.5 → §6.1](https://arxiv.org/html/2611.18176v1)，再按中文[安装说明](https://github.com/ZERITH-ZLab/ESI/blob/bc29d46f38378eb5058aeab40397f5a44c494eb2/docs/INSTALLATION.md)和[配置指南](https://github.com/ZERITH-ZLab/ESI/blob/bc29d46f38378eb5058aeab40397f5a44c494eb2/docs/CONFIGURATION.md)准备单 worker 部署模板，在仓库根目录预览：
+
+```bash
+bash scripts/eval.sh --set run.name=esi_preview --show-config
+```
+
+该命令解析配置，不启动模型、SSH 或模拟器。继续跟踪 `collect.sh` → `annotate.sh` → `data.sh` → `train.sh`，再将新 checkpoint 显式传给下一轮采集。可选的 [prompt 演化](https://github.com/ZERITH-ZLab/ESI/blob/bc29d46f38378eb5058aeab40397f5a44c494eb2/hybrid_rollout/robodojo/prompt_evolution/README.md)发布审核后的 bundle，供后续运行按 hash 选择；自动更新默认关闭。附录 C 区分采集任务集评测与迁移案例。
+
+**运行要求。** 双语 README／中文部署指南；Linux、Python 3.11、分离的模拟器与 OpenPI 环境、固定版本 RoboDojo／Isaac Sim 5.1.0 依赖、资产、支持 RTX 渲染的 GPU、策略算力及模型账户访问。单机也通过 SSH 部署；多节点需同路径共享存储。[已发布模型](https://huggingface.co/Embodied-Self-Improvement/ESI-pi05)约 11.6 GiB。8／16 GPU 训练模板是示例，不是已核实的最低门槛。
+
+<a id="recurir"></a>
+
+### [RecurIR: Learning When and How to Revise Restoration Policies](https://arxiv.org/abs/2611.18006)
+
+**递归改进方法 · 论文阅读。** 当退化条件改变时，学习到的修订算子调整工具选择、顺序、强度和图像区域。通过核验的更新同时改进修复策略及其修订机制，再指导下一轮假设发现与任务生成。图像修复工具库保持冻结，迁移与保留检查控制更新接受。
+
+**推荐入口。** 阅读 [§§3.1–3.4 → §4.4 → §§7.3–7.4 与 8.2](https://arxiv.org/html/2611.18006v1)，沿一条条件规则跟踪匹配工具对照、定向反例、学习修订及接受过程。区分决定是否编辑方案的学习门控，与决定是否保留策略更新的验证门控。参考图像用于训练监督，推理时不依赖这些参考图像，而是估计退化条件。
+
+**条件与发布状态。** 英文；需图像修复与策略学习基础；纯阅读。**2026-11-16** 未核验到官方实现或启动命令。§7.3 引用 MAIR 设置及共享预训练工具库；复现闭环还需修复数据、受控退化生成和修订机制训练。本目录未确认可直接使用的环境或最低硬件要求。
+
+<a id="g-cast"></a>
+
+### [G-CAST：受控持续自训练](https://arxiv.org/abs/2611.17814)
+
+**相关自改进机制 · 生产训练案例。** 已接受的 checkpoint 生成轨迹，再分流至 SFT、RL 或回归监测。能力约定变化与评分错误触发可执行训练奖励的修订；通过验证的 checkpoint 与奖励版本进入后续轮次。产品需求与晋级流程仍由外部指定，人工奖励审核也是系统的一部分。
+
+**推荐入口。** 阅读[§3／表 1 → §4 → §5／表 2–4](https://arxiv.org/html/2611.17814v1)，追踪一条轨迹如何经过分流、训练与 checkpoint 准入。区分持续更新的训练奖励和统一冻结的评测奖励，再对照新需求适应与旧需求能力保留。累积评测切片同时用于晋级，不是另行保留、从未参与选择的最终测试集。
+
+**条件。** 英文；需 SFT／RL 与 Agent 评测基础；论文阅读。本轮未核验到官方可运行实现。研究使用 Qwen3-4B-Thinking-2507、生产查询、每题八条轨迹与版本化业务工具；阅读无需算力，复现则需要应用数据、奖励规则和训练设施。未确认公开的最低硬件配置。
 
 <a id="memory-skills"></a>
 
@@ -1080,3 +1137,13 @@ EVAL_ENV_TYPE=debug DEBUG_OBS_ENCODED=1 bash policy/JustRUA/eval.sh \
 该入口检查 WebSocket 传输与 20 步关节保持循环，无需模拟器、模型账户或深度权重，不检验机器人任务求解或改进效果。随后沿 [policy.py](https://github.com/ZefanW/JustRUA/blob/7429b76ffc765b9feee95e2ffb4340f09163e930/policy/JustRUA/policy.py) 理解每次运动最多执行 20 条控制，再准备文档中的真实单任务评测。
 
 **运行要求与结果解读。** 英文文档／双语项目页。固定版本的 [XPolicyLab 包](https://github.com/XPolicyLab/XPolicyLab/blob/6baccd57ff958570d0db1588370289ee36c8bb70/pyproject.toml)要求 Python ≥3.10。真实评测另需 RoboDojo／Isaac、机器人资产、笛卡尔规划器、兼容的 GPU／PyTorch 环境、Apple Depth Pro 权重，以及有指定 actor 访问权限的 Codex **0.153.4**；按文档单独配置代码执行的 Python 环境。论文的 111-episode 子集与官方榜单协议不同，经验实验还使用了后来计分的任务；应在该协议内比较行为与成本，不能把静态最终策略的得分提升归因于 RSI。
+
+<a id="trust-gate"></a>
+
+### [TRUST：带统计检验的可信递归更新](https://arxiv.org/abs/2611.10787)
+
+**评测工具 · 更新准入方法阅读。** 学习何时保留候选 Harness 更新。TRUST 结合序贯证据、允许的损失幅度、验证样本复用修正与跨轮错误预算；LLM 根据历史上下文辅助分配预算，统计流程本身保持固定。对应[持续自改进可靠性的可选分支](learning-guide_zh.md#reliability-safety)。
+
+**推荐入口。** 阅读[§3 → §4／算法 1 → §5／假设 1 → §6.1](https://arxiv.org/html/2611.10787v1)，再看附录 G.1 的共同协议和附录 I 的验证集过拟合案例。区分有害更新占已接受更新的期望比例，与每次更新都变好的保证；理论依赖复用偏差的上界，论文尚未给出从数据确定该上界的方法。
+
+**条件。** 英文；需概率、假设检验和 Agent 评测基础。阅读不需 API；本轮未确认官方可运行实现。报告协议使用 HotpotQA、DROP、APPS，两种模型服务，独立的 200 题验证集／300 题测试集，以及五个 seed、每次 30 轮。这些是研究配置，不是已打包的复现入口或最低预算。

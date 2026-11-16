@@ -6,7 +6,7 @@
 
 This guide collects learning goals, source entry points, and running requirements for specific examples. Choose a project by topic; use the [learning guide](learning-guide.md#survey-project-map) to connect it to survey chapters. The [three resource labels](../README.md#resource-scope) describe the recommended entry point; topic groups are not RSI capability levels.
 
-These notes come from upstream documentation and selected source reviews on **2026-10-22–2026-11-14**. **No tutorials, model calls, or experiments were run.** See the [verification records](verification.md#verification) for each resource's review date and scope. API examples require model access and a call budget; training configurations are upstream examples, not minimum hardware requirements tested by this directory.
+These notes come from upstream documentation and selected source reviews on **2026-10-22–2026-11-16**. **No tutorials, model calls, or experiments were run.** See the [verification records](verification.md#verification) for each resource's review date and scope. API examples require model access and a call budget; training configurations are upstream examples, not minimum hardware requirements tested by this directory.
 
 ## Contents
 
@@ -375,6 +375,27 @@ Inspect the generated `ADAPTER.md` and evaluation summaries. The scripted learne
 
 Specification validity does not establish a score gain; compare no-adapter, root and final on the same test split. The Evolver selects `final`, which is not universally the highest-scoring checkpoint. [Deployment and conversion](https://github.com/Infini-AI-Lab/hermit/blob/2056e435d4be138358872208c3b233890cecf74c/docs/tutorials/deploy-an-adapter.md) generate host workspaces or supported plugin files; they do not start Codex / Claude Code or run training.
 
+<a id="rsihub"></a>
+
+### [RSIHub](https://github.com/simple-agent-lab/RSIHub) · [framework paper](https://arxiv.org/abs/2610.32253)
+
+**Related self-improvement mechanism · experiment framework.** Compare methods through reusable operators and a common evaluation lifecycle. Its HyperAgents recipe permits changes to both `target/**` and `operators/**`, including the mutation procedure; retained operator code can participate in later improvement work. The evaluator, framework mechanism and model weights stay fixed. Other recipes use narrower mutable surfaces.
+
+**Recommended entry.** Read [§§3.1–3.3 → §4.1 / Appendix D](https://arxiv.org/html/2610.32253v1), then trace the [recipe](https://github.com/simple-agent-lab/RSIHub/blob/d6554299c58bf0fe2db04ddda0277f9db67ea680/recipes/hyperagents/evolve.yaml) → [mutation operator](https://github.com/simple-agent-lab/RSIHub/blob/d6554299c58bf0fe2db04ddda0277f9db67ea680/library/mutate/hyperagents.py) → [parent snapshot inheritance](https://github.com/simple-agent-lab/RSIHub/blob/d6554299c58bf0fe2db04ddda0277f9db67ea680/src/evolve/driver.py#L681) → [operator loading](https://github.com/simple-agent-lab/RSIHub/blob/d6554299c58bf0fe2db04ddda0277f9db67ea680/src/evolve/operators.py#L66). Changed operators take effect when next invoked; earlier-stage changes affect later generations, while an unexecuted gate may change within the current generation.
+
+Start with the documented [deterministic baseline check](https://github.com/simple-agent-lab/RSIHub/blob/d6554299c58bf0fe2db04ddda0277f9db67ea680/docs/getting-started.md#run-a-deterministic-baseline-check). Its `EVAL_STUB=1` and `--max-generations 0` exercise workspace creation, generation-zero evaluation and archive integrity without a model or Docker; no mutation occurs. After configuring credentials and Docker as in the [quick start](https://github.com/simple-agent-lab/RSIHub/blob/d6554299c58bf0fe2db04ddda0277f9db67ea680/docs/QUICKSTART.md), run from the pinned repository root:
+
+```bash
+./scripts/setup_terminal_bench.sh hyperagents
+./scripts/run_recipe_demo.sh hyperagents
+```
+
+The launcher defaults to one generation. This recipe uses all 30 curated tasks as a shared optimization set; its optimization curve is not a held-out transfer result.
+
+**Companion evaluation reading.** [Beneath the Surface §§3.2–4 → §§5–6 → §7](https://arxiv.org/html/2611.07624v1) uses RSIHub to distinguish repeated success, task-coverage gains and losses, deployment cost, and transfer. Follow the diagnostics into EvoAudit's operator redesign; AGE installs four revised operators that stay fixed during each reported run. The checked repository exposes the framework and existing recipes, but no named EvoAudit / AGE reproduction entry was verified. The two papers and repository are grouped as one resource here.
+
+**Requirements.** Bilingual repository; Python ≥3.12, uv and Git. The real launcher additionally needs Bash, Git ≥2.25, Docker, Harbor task downloads and model access / budget. Harbor is pinned to 0.18.0; the HyperAgents mutation container uses Codex 0.146.0. This source route does not establish a minimum machine specification or reproduce the reported gains.
+
 <a id="flashrsi"></a>
 
 ### [FlashRSI · RUC-NLPIR](https://github.com/RUC-NLPIR/FlashRSI)
@@ -653,6 +674,42 @@ Python ≥3.10 and the standard library suffice; this checks released files and 
 **Recommended entry.** Read [§2 / Table 2 → §3.3 → §4.1 → §5](https://arxiv.org/html/2611.10719v1), then §8.1 for the evaluation protocol. For each loop, identify the trial, feedback and retained artifact. Compare base models under the same SFT protocol; the separate comparison with vendor post-trained models is a headroom reference, not matched training. The report studies one full pre-training project, not repeated autonomous end-to-end training cycles.
 
 **Requirements and release status.** English; pre-training and evaluation fundamentals; reading needs no hardware. The [verified repository](https://github.com/GAIR-NLP/801-30B/tree/8b5dc7dc50abf1b896afa8e0488dc081006e243b) supplies the report and figures and links a Tiny-SFT dataset; its README still marks base weights as forthcoming. A full training / improvement pipeline is not present in this snapshot. The reported 30B-total / 3B-active model used 11.8T tokens over three months; this is a research case study, not a small runnable tutorial.
+
+<a id="esi"></a>
+
+### [ESI](https://github.com/ZERITH-ZLab/ESI) · [paper](https://arxiv.org/abs/2611.18176)
+
+**Related self-improvement mechanism · embodied policy learning.** Teacher corrections and useful student actions become replay data for the next robot-policy update. The design also revises guidance and skills with the LLM frozen; the reported three-round VLA experiment keeps prompts and the skill catalog fixed across policy updates.
+
+**Recommended entry.** Read [§§3.4, 4.3 → §§5.3–5.5 → §6.1](https://arxiv.org/html/2611.18176v1), then follow the Chinese [installation](https://github.com/ZERITH-ZLab/ESI/blob/bc29d46f38378eb5058aeab40397f5a44c494eb2/docs/INSTALLATION.md) and [configuration](https://github.com/ZERITH-ZLab/ESI/blob/bc29d46f38378eb5058aeab40397f5a44c494eb2/docs/CONFIGURATION.md) guides. Configure the single-worker deployment template and preview from the repository root:
+
+```bash
+bash scripts/eval.sh --set run.name=esi_preview --show-config
+```
+
+This resolves configuration without launching models, SSH or simulation. Follow `collect.sh` → `annotate.sh` → `data.sh` → `train.sh`, then explicitly pass the new checkpoint to the next collection round. Optional [prompt evolution](https://github.com/ZERITH-ZLab/ESI/blob/bc29d46f38378eb5058aeab40397f5a44c494eb2/hybrid_rollout/robodojo/prompt_evolution/README.md) publishes a reviewed bundle selected by hash for a later run; automatic updates are disabled by default. Appendix C distinguishes collection-suite evaluation from the transfer case study.
+
+**Requirements.** Bilingual README / Chinese deployment guides; Linux, Python 3.11, separate simulator and OpenPI environments, pinned RoboDojo / Isaac Sim 5.1.0 dependencies, assets, RTX rendering GPU, policy compute and model-account access. Deployment uses SSH even locally; multiple nodes need shared storage at matching paths. The [released model](https://huggingface.co/Embodied-Self-Improvement/ESI-pi05) is approximately 11.6 GiB. Training's 8/16-GPU templates are examples, not verified minima.
+
+<a id="recurir"></a>
+
+### [RecurIR: Learning When and How to Revise Restoration Policies](https://arxiv.org/abs/2611.18006)
+
+**Recursive improvement method · paper reading.** A learned revision operator changes tool selection, order, strength and image regions when degradation conditions shift. Accepted updates improve both the restoration policy and its revision mechanism, which guide the next round of hypothesis discovery and task generation. The restoration-tool library stays frozen; transfer and retention checks control acceptance.
+
+**Recommended entry.** Read [§§3.1–3.4 → §4.4 → §§7.3–7.4 and 8.2](https://arxiv.org/html/2611.18006v1). Follow a conditional rule through matched tool comparisons, targeted counterexamples, learned revision and acceptance. Separate the learned gate deciding whether to edit a plan from the validation gate deciding whether to retain a policy update. Reference images provide training supervision; inference estimates degradation conditions without those references.
+
+**Requirements and release status.** English; image restoration and policy-learning fundamentals; reading only. No official implementation or launch command was verified on **2026-11-16**. Section 7.3 refers to MAIR settings and a shared pretrained tool library; reproducing the loop additionally requires restoration datasets, controlled degradation generation and revision training. A tested environment or minimum hardware requirement is not established by this directory.
+
+<a id="g-cast"></a>
+
+### [G-CAST: Governed Continual Self-Training](https://arxiv.org/abs/2611.17814)
+
+**Related self-improvement mechanism · production training case study.** An accepted checkpoint generates trajectories that are routed to SFT, RL or regression monitoring. Contract changes and scoring errors trigger validated revisions of executable training rewards; accepted checkpoints and reward versions carry into later rounds. Product requirements and the promotion procedure remain externally specified, with human reward audits still part of the system.
+
+**Recommended entry.** Read [§3 / Table 1 → §4 → §5 / Tables 2–4](https://arxiv.org/html/2611.17814v1). Trace one rollout through routing, training and checkpoint admission. Distinguish the evolving training reward from the common frozen evaluation reward, then compare new-demand adaptation with retained performance on earlier periods. The cumulative evaluation slices also govern promotion; they are not a separately untouched final test.
+
+**Requirements.** English; SFT / RL and agent-evaluation fundamentals; paper reading. No official runnable implementation was verified in this review. The study uses Qwen3-4B-Thinking-2507, production queries, eight rollouts per query and versioned business tools; reading needs no compute, while reproduction requires the application data, reward rules and training infrastructure. No public minimum hardware configuration was verified.
 
 <a id="memory-skills"></a>
 
@@ -1079,3 +1136,13 @@ EVAL_ENV_TYPE=debug DEBUG_OBS_ENCODED=1 bash policy/JustRUA/eval.sh \
 This exercises WebSocket transport and a 20-step joint-hold loop without the simulator, model account or depth weights. It does not test robot task solving or improvement. Follow [policy.py](https://github.com/ZefanW/JustRUA/blob/7429b76ffc765b9feee95e2ffb4340f09163e930/policy/JustRUA/policy.py) into the 20-control motion cap before attempting the documented real task evaluation.
 
 **Requirements and interpretation.** English documentation / bilingual project page. The pinned [XPolicyLab package](https://github.com/XPolicyLab/XPolicyLab/blob/6baccd57ff958570d0db1588370289ee36c8bb70/pyproject.toml) requires Python ≥3.10. Real evaluation adds RoboDojo / Isaac, robot assets, the Cartesian planner, compatible GPU / PyTorch dependencies, Apple's Depth Pro weights and Codex **0.153.4** with access to the selected actor. Keep the coding Python environment separate as documented. The 111-episode subset differs from the official leaderboard protocol; the experience experiment uses tasks that are later scored. Compare its measured behavior and cost within that protocol, rather than crediting the static policy's score gain to RSI.
+
+<a id="trust-gate"></a>
+
+### [TRUST: Trustworthy Recursive Updates with Statistical Testing](https://arxiv.org/abs/2611.10787)
+
+**Evaluation tool · acceptance-method reading.** Study when to retain a proposed harness update. TRUST combines sequential evidence, a tolerated loss margin, correction for reused validation samples and an error budget allocated across rounds. An LLM uses past context to guide allocation; the statistical procedure itself stays fixed. This belongs to the [optional reliability branch](learning-guide.md#reliability-safety).
+
+**Recommended entry.** Read [§3 → §4 / Algorithm 1 → §5 / Assumption 1 → §6.1](https://arxiv.org/html/2611.10787v1), then Appendix G.1 for the shared protocol and Appendix I for validation-overfitting examples. Separate the expected proportion of harmful accepted updates from a guarantee that every update improves. The guarantee depends on a bound on reuse bias; the paper does not establish how to identify that bound from data.
+
+**Requirements.** English; probability, hypothesis testing and agent evaluation. Reading needs no API; no official runnable implementation was verified. The reported protocol uses HotpotQA, DROP and APPS, two model services, separate 200-item validation / 300-item test sets, and 30 rounds across five seeds. These describe the study, not a packaged reproduction or a minimum budget.
