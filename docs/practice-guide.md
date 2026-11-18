@@ -6,7 +6,7 @@
 
 This guide collects learning goals, source entry points, and running requirements for specific examples. Choose a project by topic; use the [learning guide](learning-guide.md#survey-project-map) to connect it to survey chapters. The [three resource labels](../README.md#resource-scope) describe the recommended entry point; topic groups are not RSI capability levels.
 
-These notes come from upstream documentation and selected source reviews on **2026-10-22–2026-11-16**. **No tutorials, model calls, or experiments were run.** See the [verification records](verification.md#verification) for each resource's review date and scope. API examples require model access and a call budget; training configurations are upstream examples, not minimum hardware requirements tested by this directory.
+These notes come from upstream documentation and selected source reviews on **2026-10-22–2026-11-18**. **No tutorials, model calls, or experiments were run.** See the [verification records](verification.md#verification) for each resource's review date and scope. API examples require model access and a call budget; training configurations are upstream examples, not minimum hardware requirements tested by this directory.
 
 ## Contents
 
@@ -325,6 +325,16 @@ CONFIG=self_teacher/verse_mh TAG=-r1 bash scripts/run_swe.sh
 `fresh` deletes existing agents, conversations and adapters for this checkout. Resume with `./examples/self-improving-agent/exo.sh --control` to keep state; the control wrapper restarts the REPL child when a guardian update requests it.
 
 **Requirements.** English; Docker, model API access and a Rust / Node / pnpm build environment. The reviewed [mise.toml](https://github.com/exoharness/exo/blob/d7fb6d2ee477dec48d272461b4c534152939ad22/mise.toml) pins Rust 1.95, Node 22.15.0, pnpm 10.26.2 and Python 3.11. The agent edits the mounted checkout; use an instance dedicated to this experiment. Build success is not a quality gate. [Self-control documentation](https://github.com/exoharness/exo/blob/d7fb6d2ee477dec48d272461b4c534152939ad22/examples/self-improving-agent/docs/SELF-CONTROL.md) describes separate validation / rollback primitives; cloning and a canary comparison path remain planned.
+
+<a id="elite"></a>
+
+### [ELITE · Evaluation-Free Recursive Self-Improvement for Coding Agents](https://arxiv.org/abs/2611.21056) — method reading
+
+**Related self-improvement mechanism.** ELITE implements several proposals from one parent, then reimplements a compatible subset as one descendant. A descendant that passes validity checks supplies the source and starting point for the next round. Model weights and the outer search procedure stay fixed.
+
+**Recommended entry.** Read §§4.1–4.2 and Appendix A.6 to trace the parent, exploratory implementations and integrated descendant. Appendix A.5.2 describes compilation, interface checks and smoke tests used to admit changes. Then read §§5.1–5.3 and Table 2 to compare selection feedback, final evaluation and search cost. [Paper v1](https://arxiv.org/html/2611.21056v1#S4)
+
+**Evidence and requirements.** The loop uses implementation inspection and deterministic validity checks. Downstream task outcomes are measured after evolution on 60 SWE-bench Pro tasks and 50 tasks each from SWE-bench Verified and Polyglot. Verified and Polyglot serve as transfer tests. Runtime comparisons use different search budgets and concurrency. The paper describes Docker sandboxes and DeepSeek or Qwen model access for the main experiments. No official runnable implementation was verified. [Experimental setup](https://arxiv.org/html/2611.21056v1#S5.SS1) · [Runtime settings](https://arxiv.org/html/2611.21056v1#A1.SS5)
 
 <a id="harness-optimization"></a>
 
@@ -814,6 +824,21 @@ Continue with the [skill builder's gates](https://github.com/ArcheOne-AI/RoboScr
 
 **Requirements.** English; reading only. No official runnable implementation or standalone reproduction entry was verified. Appendix D describes Linux / Python 3.12, Harbor task containers, several model / agent services and an embedding service; these are the study's configuration, not a verified minimum setup. Read its full-cost accounting before attempting a reproduction: table cost columns include only the writer on the memory side, while other memory operations also incur cost.
 
+<a id="wikitrace"></a>
+
+### [WikiTrace](https://github.com/yukyeongleee/wikitrace) · [paper](https://arxiv.org/abs/2611.14320)
+
+**Related self-improvement mechanism · evidence-linked memory.** A compiler extracts insights from training runs and links each insight to a summary and the original trajectory. During later tasks the agent can check the evidence and reconsider how a lesson applies. The corpus is built once and mounted read-only during testing, with the model and memory construction procedure fixed.
+
+**Recommended entry.** Read [§§3.1, 3.3–3.4 → §§4.1, 4.3 → Appendix B](https://arxiv.org/html/2611.14320v1). Follow an insight to the source outcome and tool observations, then trace the [memory layout](https://github.com/yukyeongleee/wikitrace/blob/dc06570f2fc69e20d36fede62128a806e35edfcd/src/wikitrace/memory/README.md) and [read-only mounting](https://github.com/yukyeongleee/wikitrace/blob/dc06570f2fc69e20d36fede62128a806e35edfcd/src/wikitrace/memory/mount.py). After [repository setup](https://github.com/yukyeongleee/wikitrace/blob/dc06570f2fc69e20d36fede62128a806e35edfcd/README.md#install) and the ALFWorld installer, follow the documented suite example from the repository root:
+
+```bash
+uv run wikitrace build --config configs/alfworld.yaml --benchmark alfworld --suite valid-seen --trial 0
+uv run wikitrace run --config configs/alfworld.yaml --benchmark alfworld --suite valid-seen --trial 0 --method wikitrace
+```
+
+**Requirements and evaluation.** English. Python ≥3.11, uv, Node 20, Docker, ALFWorld assets and OpenRouter access with call budget. The sample commands build one trial's corpus and evaluate a suite. The paper uses 50 training games and 101 test games for `valid-seen`. Start with the source walkthrough if you want to avoid model calls. The [analysis guide](https://github.com/yukyeongleee/wikitrace/blob/dc06570f2fc69e20d36fede62128a806e35edfcd/src/wikitrace/analysis/README.md) requires matched rows across methods and three no-memory trials for the reference majority. Compare newly solved tasks (Gain) and lost successes (Regression), then use additional no-memory reruns to estimate ordinary variation.
+
 <a id="coevolution-projects"></a>
 
 ## Co-Evolution
@@ -1146,3 +1171,44 @@ This exercises WebSocket transport and a 20-step joint-hold loop without the sim
 **Recommended entry.** Read [§3 → §4 / Algorithm 1 → §5 / Assumption 1 → §6.1](https://arxiv.org/html/2611.10787v1), then Appendix G.1 for the shared protocol and Appendix I for validation-overfitting examples. Separate the expected proportion of harmful accepted updates from a guarantee that every update improves. The guarantee depends on a bound on reuse bias; the paper does not establish how to identify that bound from data.
 
 **Requirements.** English; probability, hypothesis testing and agent evaluation. Reading needs no API; no official runnable implementation was verified. The reported protocol uses HotpotQA, DROP and APPS, two model services, separate 200-item validation / 300-item test sets, and 30 rounds across five seeds. These describe the study, not a packaged reproduction or a minimum budget.
+
+<a id="continual-arc"></a>
+
+### [Continual-ARC](https://github.com/unifyai/continual-arc) · [paper](https://arxiv.org/abs/2611.14505)
+
+**Evaluation tool · continual skill acquisition.** ARC tasks return after gaps with fresh instances. The benchmark charges for demonstrations and incorrect attempts, then compares the learner's final state with the same learner reset under the same model and Harness. The frozen seen test measures reuse of rules on new instances. The frozen held-out test measures transfer to tasks absent from the stream.
+
+**Recommended entry.** Read [§§2.1–2.4 → §§3–4](https://arxiv.org/html/2611.14505v3) and step through a returning task in the [public replay](https://continual-arc.unify.ai/runs). From the pinned checkout, install the core package and rescore the [archived run](https://github.com/unifyai/continual-arc/blob/513dd67f6e9b7bb1224a57d64c7f66c4e3828fea/runs/README.md#reading-them):
+
+```bash
+python -m pip install -e .
+continual-arc report runs/arc1/H-prime-agent-luna6-low-ws0
+continual-arc transfer runs/arc1/H-prime-agent-luna6-low-ws0/frozen/held-out/play \
+  runs/arc1/H0-prime-agent-luna6-low-fresh0/frozen/held-out-reference/play
+```
+
+Compare the memory and program-library controls before interpreting budget savings. The benchmark scores feedback usage and separately records model and compute costs. The public ARC-AGI-1 held-out tasks were withheld from the stream and may have appeared in model training.
+
+**Requirements.** English. The browser replay needs only a browser. Local rescoring uses Python ≥3.10 and the downloaded records without model calls. Fresh [baseline runs](https://github.com/unifyai/continual-arc/blob/513dd67f6e9b7bb1224a57d64c7f66c4e3828fea/baselines/README.md#install) add Python 3.12/3.13, uv, benchmark data, and the selected Harness and sandbox. Model-backed runs require provider access and budget. ARC-AGI-3 adds its pinned game engine and toolkit.
+
+<a id="rsi-pdebench"></a>
+
+### [RSI-PDEbench](https://arxiv.org/abs/2611.14949) · [project site](https://jeremylu916.github.io/RSI-PDE/)
+
+**Evaluation tool · protocol reading.** Study how an agent identifies an equation family, fits coefficients and builds a solver from samples. The harness retains solver code, policy text and memory after validation. The foundation model and executable supervisor stay fixed.
+
+**Recommended entry.** Read [§2.4 → §3.2 → §4 → §§5.4, 6](https://arxiv.org/html/2611.14949v1). Compare Full (210 test cases), Noisy (160) and Hard-OOD (278) with the 1,001-case inventory. Trace candidate-equation residuals into the shortlist, then compare public relative error and the final scoring protocol. Agents do not receive hidden-test feedback during runs, but the authors used benchmark results to inform design choices. Treat the reported comparisons as developmental evidence. Some dollar costs come from a retrospective stopping-rule replay paired with full-budget scores.
+
+**Requirements.** English. Numerical PDE and agent-evaluation fundamentals. The [upstream setup](https://jeremylu916.github.io/RSI-PDE/#start) describes a GPU node, bubblewrap and model access for a built-in entrant. The paper-linked GitHub repository and Hugging Face dataset API returned 404 and 401 respectively on November 18, so the verified entry is the paper and project site.
+
+<a id="repofactory"></a>
+
+### [RepoFactory](https://huggingface.co/datasets/IQuestLab/RepoFactory) · [paper](https://arxiv.org/abs/2611.21152)
+
+**Evaluation tool.** The public release packages 200 environments before evolution. Each asks the agent to reconstruct a software project from a specification and API guide. Its verifier scores a submitted implementation against tests, while the reference solution stays outside the solving workspace. [Release contents](https://huggingface.co/datasets/IQuestLab/RepoFactory/blob/efdcaa8f6ea1bfa55eed2263e39186b928c7da88/README.md#release-contents)
+
+**Recommended entry.** Download instance `000001` and load its supplied image using the official quickstart. Run the Harbor `oracle` and `nop` agents. The intended results are full reward for the reference implementation and zero reward for the unchanged workspace. Inspect verifier logs to confirm those outcomes. [Pinned quickstart](https://github.com/IQuestLab/RepoFactory/blob/133f7cd998a049c94f86d420491e462456478320/README.md#quickstart)
+
+**Method reading.** In §3.2, follow how a construction agent uses verifier output and code metrics to revise the specification, reference implementation and tests. §5.6 examines recovery of valid environments separately from the downstream training value of scope and coupling. The paper reports 10,159 environments. The public files support checking the initial tasks. The checked GitHub snapshot supplies documentation and figures. [Paper v2](https://arxiv.org/html/2611.21152v2#S3.SS2) · [Ablation](https://arxiv.org/html/2611.21152v2#S5.SS6)
+
+**Requirements.** Docker with Linux/amd64 support, Python ≥3.12 for Harbor 0.26.0 and `huggingface_hub`. The oracle and no-op checks require no model calls. The example image archive is about 720 MB and the task config assigns 2 CPUs, 8 GiB of RAM and 20 GiB of storage. A solving agent adds model access and call budget. [Instance files](https://huggingface.co/datasets/IQuestLab/RepoFactory/tree/efdcaa8f6ea1bfa55eed2263e39186b928c7da88/instances/000001) · [Harbor installation](https://docs.harborframework.com/getting-started/installation)

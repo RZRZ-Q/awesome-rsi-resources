@@ -92,7 +92,7 @@
 
 本表连接已收录的教程、实践项目和评测示例。表中横跨[三类资源](../README_zh.md#resource-scope)，阅读分支表示主题，不代表 RSI 能力等级。对应关系是本目录的学习建议；除非明确说明，不表示综述已引用该项目，部分项目晚于综述发布。先围绕学习目标尝试链接中的示例，再回到对应综述章节比较机制。
 
-项目入口依据 **2026-10-22–2026-11-16** 阅读的上游文档与代码整理，未运行示例。每行的实践说明集中记录环境、模型访问、运行门槛和具体命令；各资源的核验日期与范围见[核验档案](verification_zh.md#verification)。
+项目入口依据 **2026-10-22–2026-11-18** 阅读的上游文档与代码整理，未运行示例。每行的实践说明集中记录环境、模型访问、运行门槛和具体命令；各资源的核验日期与范围见[核验档案](verification_zh.md#verification)。
 
 | 阅读分支／对应综述 | 项目与上手入口 | 学习目标与范围 |
 | --- | --- | --- |
@@ -141,11 +141,15 @@
 | **经验：可复用的行为规格** — [Coding Agents §§3, 7–8](https://arxiv.org/html/2608.03392v4) | [SpecForge：§§2–3 → 生成测试 → 规格搜索 → §4.5](practice-guide_zh.md#specforge) | 跟踪测试失败如何转化为改进文档，再迁移到另一任务。确认搜索使用生成测试、最终评估使用独立真值测试；模型权重与搜索程序保持固定。 |
 | **经验：具身技能与记忆** — [Frontis §§2–4](https://github.com/FrontisAI/Awesome-Self-Improving-Agents/blob/main/Self_Improving_Agents.pdf) | [RoboScript：Mock → 技能构建器 → Task Memory／反思](practice-guide_zh.md#roboscript) | 追踪覆盖检查如何产生冻结技能，区分任务预演和保留的反思，与模型或改进 driver 的变化。 |
 | **经验：跨用户与 Agent 共享** — [Frontis §§2–4](https://github.com/FrontisAI/Awesome-Self-Improving-Agents/blob/main/Self_Improving_Agents.pdf)；[Co-Evolution §3](https://arxiv.org/html/2608.10299v1#S3) | [MixUA：记忆范围 → 证据路由 → 冻结记忆测试](practice-guide_zh.md#mixua) | 明确哪些对象可以复用经验，分别衡量任务成功、偏好保留和信息泄露探针结果。论文阅读，尚无已核验运行入口。 |
+| **可追溯来源的经验** — [Frontis §§2–4](https://github.com/FrontisAI/Awesome-Self-Improving-Agents/blob/main/Self_Improving_Agents.pdf) | [WikiTrace：经验 → 来源轨迹 → 匹配的记忆条件](practice-guide_zh.md#wikitrace) | 沿经验找到产生它的运行轨迹，对比冻结的证据语料与无记忆条件，同时统计新增成功和回退。 |
 | **经验：记忆组件评测** — [Self-Evolving Agents §7.2.1](https://arxiv.org/html/2507.21046v4#S7.SS2.SSS1)与 [§7.1.4](https://arxiv.org/html/2507.21046v4#S7.SS1.SSS4)，本目录的编辑配对 | [LongMemEval-V2 基线](https://github.com/xiaowu0162/LongMemEval-V2#reproducing-baselines)：无检索 → RAG；[实践说明](practice-guide_zh.md#longmemeval-v2)。 | 固定读者模型、问题、证据预算与裁判，对比答案准确率和记忆查询延迟。这里测量记忆组件，未覆盖 Agent 持续改进的完整轨迹。 |
 | **经验：跨会话评测** — [Frontis §§7–8](https://github.com/FrontisAI/Awesome-Self-Improving-Agents/blob/main/Self_Improving_Agents.pdf)；[Self-Evolving Agents §7.2.1](https://arxiv.org/html/2507.21046v4#S7.SS2.SSS1) | [PAST-Bench：偏好采纳任务族 → 经验保留对照](practice-guide_zh.md#past-bench)。 | 在新会话组成的任务序列中，对比保留与不保留经验；结合轨迹、保存产物与 `sequence_comparison.json`，将后续结果对应到经验的保存、检索与更新。 |
 | **经验：超越纠错案例的泛化** — [Self-Evolving Agents §7](https://arxiv.org/html/2507.21046v4) | [CLR-Bench：TR1 → 状态重放 → 未见取值](practice-guide_zh.md#clr-bench) | 比较冻结模型、原始历史与更新状态条件，用取值级诊断区分规则与清单。 |
 | **评测：泛化阶梯** — [Self-Evolving Agents §7](https://arxiv.org/html/2507.21046v4) | [SelfImprove-Bench：离线流程 → Farm／ACE](practice-guide_zh.md#selfimprove-bench) | 将重放与留出集对应到 G0–G4，区分固定动作适配器演示与真实改进实验。 |
 | **评测：可编辑改进器的消融** — [The Last AI §3.6](https://arxiv.org/html/2609.11873v3#S3.SS6)；[Coding Agents §§7–8](https://arxiv.org/html/2608.03392v4) | [Flex-RSI：协议 → 三种模式 → 单个任务](practice-guide_zh.md#flex-rsi) | 区分修改求解器和修改改进器自身的收益；使用独立测试分数与总预算，不只看最优验证分数。 |
+| **持续学习评测** — [Self-Evolving Agents §7](https://arxiv.org/html/2507.21046v4) | [Continual-ARC：回放 → 重置对照 → 冻结后迁移](practice-guide_zh.md#continual-arc) | 在同一模型与 Harness 下对比重置与保留工件，解读迁移成绩前先核对任务族的接触范围。 |
+| **科学求解器评测** — [Prism §5](https://github.com/Prism-Shadow/awesome-rsi/blob/main/site/public/papers/rsi-survey.pdf) | [RSI-PDEbench：公开验证 → 分布偏移划分 → 成本报告](practice-guide_zh.md#rsi-pdebench) | 追踪候选方程的筛选和求解器更新的保留，核对哪些结果参与了基准设计，哪些成本来自回放。 |
+| **生成式任务环境评测** — [Modern Agentic Systems §8](https://arxiv.org/html/2607.13104v1) | [RepoFactory：任务约定 → 正负对照](practice-guide_zh.md#repofactory) | 核对参考方案通过、未修改工作区失败，再读论文中新环境如何进入训练闭环。 |
 | **评测：静态 Harness 与技能演化对照** — [Frontis §§7–8](https://github.com/FrontisAI/Awesome-Self-Improving-Agents/blob/main/Self_Improving_Agents.pdf) | [JustRUA：构件消融 → debug 通信 → 机器人任务](practice-guide_zh.md#justrua) | 将历史与控制选择的作用同论文的技能演化闭环分开。已发布静态策略用于基线对照；通信检查不测量任务成功率。 |
 | **实验证据：AI 研发任务** — [Prism §5](https://github.com/Prism-Shadow/awesome-rsi/blob/main/site/public/papers/rsi-survey.pdf)；[The Path §§2.1–2.3、6](https://www.preprints.org/manuscript/202608.0051) | [Scale RSI Bench：nanoGPT 数据筛选任务 → 其他样例的任务约定](practice-guide_zh.md#scale-rsi-bench)。 | 对比数据筛选、自蒸馏、稳健性与 Agent swarm 任务的可修改组件、预算和评分。任务衡量研发操作的效果，单项得分本身不代表已形成递归改进闭环。 |
 | **评测：推荐系统研究** — [Modern Agentic Systems §8](https://arxiv.org/html/2607.13104v1) | [AutoRSE：HSTU → 启动预览 → 来源记录](practice-guide_zh.md#autorse) | 追踪每次实验改了什么，并依据公共验证集选优；启动预览或格式检查不等于隐藏测试结果。 |
@@ -153,6 +157,7 @@
 | **程序搜索：训练基础设施** — [Coding Agents §§7–8](https://arxiv.org/html/2608.03392v4) | [InfraRSI：CPU 教学示例 → 保留试验 → 下轮搜索初始化](practice-guide_zh.md#infrarsi) | 学习训练约束如何限制配置／代码搜索，以及保留证据如何指导后续提案。教学示例模拟测量；真实运行需匹配任务与完整预算。 |
 | **自主性：小型工程入口** — [The Last AI §§2.2–3](https://arxiv.org/html/2609.11873v3) | [learn-deepseek-harness L1](https://github.com/Prism-Shadow/learn-deepseek-harness/tree/main/basics/L01_agent_loop) → 按课程顺序 → [L10](https://github.com/Prism-Shadow/learn-deepseek-harness/tree/main/advanced/L10_self_modification)。 [实践说明](practice-guide_zh.md#learn-deepseek-harness)。 | 观察 Agent 能提出、注册哪些工具变化。L10 生成的工具只在当前进程中保留；对照综述辨认扩展为完整改进闭环所需的评估、接受与持久化机制。 |
 | **代码与自主性：研究实现** — [Coding Agents §§3、7–8](https://arxiv.org/html/2608.03392v4)；[The Last AI §3](https://arxiv.org/html/2609.11873v3) | [DGM 环境搭建](https://github.com/jennyzzt/dgm#setup) → [DGM_outer.py](https://github.com/jennyzzt/dgm/blob/main/DGM_outer.py) → [self_improve_step.py](https://github.com/jennyzzt/dgm/blob/main/self_improve_step.py)。 [实践说明](practice-guide_zh.md#dgm)。 | 跟踪编码 Agent 自身的修改、后代评估与档案复用；继承的 Agent 实现参与下一轮自修改。对比任务程序演化，记录 Agent 可以修改什么、外部评估控制什么。 |
+| **编码 Agent 与改进器代码** — [Coding Agents §§7–8](https://arxiv.org/html/2608.03392v4) | [ELITE：同父代修改 → 整合 → 迁移](practice-guide_zh.md#elite) | 比较机制整合与按基准得分选优，分别记录结构检查、下游评测和受运行配置影响的演化成本。 |
 | **协同演化：共享经验** — [Co-Evolution §3.2.1](https://arxiv.org/html/2608.10299v1#S3.SS2.SSS1) | [CORAL 圆堆积](https://github.com/Human-Agent-Society/CORAL/tree/main/examples/circle_packing)，配置两个 Agent；[实践说明](practice-guide_zh.md#coral)。 | 跟踪带分数的尝试怎样进入共享笔记／技能，再改变另一 Agent 的方案；对照独立搜索轨迹与经验共享。 |
 | **协同演化：团队组织** — [Co-Evolution §3](https://arxiv.org/html/2608.10299v1#S3)；[Coding Agents §§7–8](https://arxiv.org/html/2608.03392v4) | [EAT：§3.2 → §§4.2、4.5 → Skill 与监督者／启动器源码](practice-guide_zh.md#eat)。 | 跟踪保留的结果与轨迹如何变成新的团队角色、提示、执行阶段，继而产生程序修改。比较预算控制下的改进曲线与消融；可修改的团队组织和监督者的固定更新过程是不同对象。 |
 | **协同演化：训练 Refiner** — [Co-Evolution §5](https://arxiv.org/html/2608.10299v1) | [MAS-Loop：方法与匹配执行预算的实验](practice-guide_zh.md#mas-loop)；论文阅读，暂无已核验运行入口。 | 追踪成对执行如何分别更新 Orchestrator 与 Refiner；区分可学习的改进策略与训练它的固定 RL 规则。 |

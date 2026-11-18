@@ -4,7 +4,7 @@
 
 [资源目录](../README_zh.md) · [学习指南](learning-guide_zh.md) · [实践指南](practice-guide_zh.md)
 
-本档案记录 **2026-10-22 至 2026-11-16** 的来源核验。每个日期小节分别说明来源、版本与核验范围；后续新增不代表重新核验此前记录。
+本档案记录 **2026-10-22 至 2026-11-18** 的来源核验。每个日期小节分别说明来源、版本与核验范围；后续新增不代表重新核验此前记录。
 
 - [近期综述覆盖表](#survey-coverage)
 - [核验历史与扩展排漏](#review-log)
@@ -17,6 +17,7 @@
 - [2026-11-12：Agent 包教程、具身技能与改进总成本](#verification-2026-11-12)
 - [2026-11-14：优化经验、联合训练与评测基线](#verification-2026-11-14)
 - [2026-11-16：具身闭环、实验基础设施与综述更新](#verification-2026-11-16)
+- [2026-11-18：Agent 继承、训练环境与持续学习评测](#verification-2026-11-18)
 
 <a id="survey-coverage"></a>
 
@@ -447,3 +448,33 @@
 **发布状态观察。** [PASE 宣布的仓库](https://github.com/NEUIR/PASE)仍返回 404；已找到的 [SkillDuet 项目页快照 `52fddde`](https://github.com/stoney0062/SkillDuet/tree/52fddde400a9ab9828fe330bf2ce34486f7f5120)未变，没有发布研究实现。两项继续保留在观察中，不作为可运行项目新增。
 
 旧日期记录及其批次计数保持不变。本轮为一手论文、文档与源码核验，未安装上游项目、调用模型、运行模拟器／训练或复现报告收益。
+
+<a id="verification-2026-11-18"></a>
+
+### 2026-11-18：Agent 继承、训练环境与持续学习评测
+
+**核验于 11 月 18 日，Asia/Taipei。** 排重后新增六项，目录从 **113 增至 119** 项。论文日期采用 arXiv 首次提交的 UTC 日期，最新核验版本与仓库快照日期分别记录。
+
+| 资源 | 首次提交日期／最新核验版本 | 已核验入口与证据范围 | 受检索引中的覆盖 |
+| --- | --- | --- | --- |
+| [ELITE](https://arxiv.org/abs/2611.21056) | **2026-11-16 · v1** | 读 §§4.1–4.2／附录 A.6 → §§5.1–5.3／附录 A.5。确定性检查决定整合后的后代能否继续演化，任务成绩在演化后测量。60 道 Pro 任务用于 DGM／HGM 的搜索反馈，Verified 与 Polyglot 用于迁移评测。报告时间对应各方法的实测预算与并发配置。论文阅读，未核验到官方可运行实现。 | [Follow RSI 11 月 16 日刊](https://github.com/adongwanai/follow-rsi/blob/9f62739a91bc446ef8ed0be7e595955d09ea6093/daily/2026-11-16.md#L17)。 |
+| [RepoFactory](https://arxiv.org/abs/2611.21152) | **2026-11-16 → v2，2026-11-17** | [项目说明 `133f7cd`](https://github.com/IQuestLab/RepoFactory/tree/133f7cd998a049c94f86d420491e462456478320)及[数据发布 `efdcaa8`](https://huggingface.co/datasets/IQuestLab/RepoFactory/tree/efdcaa8f6ea1bfa55eed2263e39186b928c7da88)。读 §§3.2 与 5.6。公开发布含 200 个演化前环境与镜像，论文完整集合有 10,159 个环境。已检查 `000001` 的任务归档及镜像可用性。文档中的 Docker／Harbor oracle 和 no-op 检查无需模型。 | 下列十八个文件中未匹配到。 |
+| [WikiTrace](https://arxiv.org/abs/2611.14320) | **2026-11-10 · v1**（台北为 11 月 11 日） | [官方源码 `dc06570`](https://github.com/yukyeongleee/wikitrace/tree/dc06570f2fc69e20d36fede62128a806e35edfcd)。读 §§3–4。从训练轨迹构建带证据链接的经验，再检查只读记忆及配对 Gain／Regression 分析。ALFWorld 实验需 Python、Docker、环境数据与模型访问。结果基于一个模型系列与一种终端 Harness。 | 下列十八个文件中未匹配到。 |
+| [RSI-PDEbench](https://arxiv.org/abs/2611.14949) | **2026-11-11 · v1** | [项目网站](https://jeremylu916.github.io/RSI-PDE/)及 §§2.4、3.2、4、5.4、6。运行中的 Agent 看不到隐藏测试反馈。作者曾用基准结果辅助开发，部分美元成本来自事后按停止规则回放。所链接代码仓库与数据集 API 分别返回 404 和 401，论文及项目网站为已核验入口。 | [pinkbubble 方法条目](https://github.com/pinkbubblebubble/awesome-rsi/blob/3c96bfb50424d7c6a8e4791cfa166c20e51f0931/README.md#L257)、[评测条目](https://github.com/pinkbubblebubble/awesome-rsi/blob/3c96bfb50424d7c6a8e4791cfa166c20e51f0931/README.md#L483)及 [Follow RSI 11 月 11 日补刊](https://github.com/adongwanai/follow-rsi/blob/9f62739a91bc446ef8ed0be7e595955d09ea6093/daily/2026-11-11.md#L29)。 |
+| [Continual-ARC](https://arxiv.org/abs/2611.14505) | **2026-11-10 → v3，2026-11-15**（首次提交在台北为 11 月 11 日） | [官方源码 `513dd67`](https://github.com/unifyai/continual-arc/tree/513dd67f6e9b7bb1224a57d64c7f66c4e3828fea)及[公开回放](https://continual-arc.unify.ai/runs)。读 §§2.1–2.4 → §§3–4。已检查归档及 report／transfer 实现。冻结测试区分已见任务的新实例与任务流之外的任务。ARC-AGI-1 持出任务公开，评分使用反馈预算，另行记录推理及训练成本。 | [Follow RSI 11 月 16 日刊](https://github.com/adongwanai/follow-rsi/blob/9f62739a91bc446ef8ed0be7e595955d09ea6093/daily/2026-11-16.md#L38)。 |
+| [RSI Observatory](https://github.com/Fucheng1245/RSI-Observatory) | 仓库创建于 **2026-09-09**。评分卡标示 **2026-09-10** 审阅。 | [固定源码 `2444234`](https://github.com/Fucheng1245/RSI-Observatory/tree/244423414357d1ebaba09b8b12c40ee92ed9091f)。读 `START_HERE.md` → `SCORECARD.md` → `SOURCE_REVIEW.md` → `radar/LATEST.md`。雷达刊期标为 11 月 16 日，11 月 17 日的自动数据更新未改变 9 月 10 日的编辑审阅日期。新索引的[雷达](https://github.com/Fucheng1245/RSI-Observatory/blob/244423414357d1ebaba09b8b12c40ee92ed9091f/radar/LATEST.md#L35)有 RSI-PDEbench 线索。 | [pinkbubble 阅读清单](https://github.com/pinkbubblebubble/awesome-rsi/blob/3c96bfb50424d7c6a8e4791cfa166c20e51f0931/README.md#L842)。 |
+
+**覆盖范围。** 在下列五个已收录索引的十八个公开文件中匹配名称、标题、论文编号或仓库路径。覆盖仅指受检文件中的条目。新收录的 Observatory 单独核验。
+
+| 来源快照 | 受检文件 | 本批结果 |
+| --- | --- | --- |
+| [Prism `57787ad`](https://github.com/Prism-Shadow/awesome-rsi/tree/57787ad4211893d7319d9c926a73d804475316eb) | `README.md`、`site/src/data/{methods,papers,systems}.js`（四个） | 与 11 月 16 日一致，未找到新增六项的条目。 |
+| [pinkbubble `3c96bfb`](https://github.com/pinkbubblebubble/awesome-rsi/tree/3c96bfb50424d7c6a8e4791cfa166c20e51f0931) | `README.md`（一个） | 与 11 月 16 日一致，覆盖 RSI-PDEbench 和 RSI Observatory。 |
+| [lobehub `632ab50`](https://github.com/lobehub/awesome-rsi/tree/632ab5065bf579c7d1daa71bdaab801fdefd3698)及 [natnew `7152191`](https://github.com/natnew/awesome-recursive-self-improvement/tree/7152191ed372ecbc540cfab0601a1f61de2d0d82) | 各自的 `README.md`（两个） | 均与 11 月 16 日一致，未找到新增六项的条目。 |
+| [Follow RSI `9f62739`](https://github.com/adongwanai/follow-rsi/tree/9f62739a91bc446ef8ed0be7e595955d09ea6093) | `README.md`、`data/papers.yaml`、`site/papers.json`及 11 月 11–18 日的八份中文刊期（十一个） | 11 月 16 日刊覆盖 ELITE 和 Continual-ARC，11 月 11 日补刊覆盖 RSI-PDEbench。对应匹配来自刊期。 |
+
+**Follow RSI 状态。** 11 月 18 日的提交发布 11 月 16–18 日刊及历史补录。11 月 16 日刊包含 7 项，审核实际在 11 月 18 日完成。11 月 17 日和 [11 月 18 日](https://github.com/adongwanai/follow-rsi/blob/9f62739a91bc446ef8ed0be7e595955d09ea6093/daily/2026-11-18.md)简报各自记录当期收录 0 项。该快照记录 11 月 18 日 Hugging Face 榜单尚未就绪，Semantic Scholar 信源只实现部分覆盖。README 仍将订阅 Skill 标为即将推出。本段依据已提交内容。
+
+**发布观察。** [PASE 仓库](https://github.com/NEUIR/PASE)仍返回 404。[SkillDuet 项目页 `52fddde`](https://github.com/stoney0062/SkillDuet/tree/52fddde400a9ab9828fe330bf2ce34486f7f5120)和 [ACE-RL 论文仓库 `f2d04dc`](https://github.com/doyoungkim-ml/ehrl/tree/f2d04dc4c8be112db0456b423a8518903ab80fab)均与此前一致。本轮未核验到 RecurIR 的官方可运行实现。
+
+本轮检查一手论文、公开工件及所选源码。运行与回放命令按文档和源码核对，未执行上游实验。

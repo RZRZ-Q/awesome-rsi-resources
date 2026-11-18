@@ -4,7 +4,7 @@
 
 [Resource directory](../README.md) · [Learning guide](learning-guide.md) · [Practice guide](practice-guide.md)
 
-This archive records source checks from **2026-10-22 through 2026-11-16**. Each dated section specifies its own sources, versions and review scope; a later addition does not refresh earlier checks.
+This archive records source checks from **2026-10-22 through 2026-11-18**. Each dated section specifies its own sources, versions and review scope; a later addition does not refresh earlier checks.
 
 - [Recent survey coverage](#survey-coverage)
 - [Review history and expansion checks](#review-log)
@@ -17,6 +17,7 @@ This archive records source checks from **2026-10-22 through 2026-11-16**. Each 
 - [2026-11-12: Package tutorials, embodied skills and total improvement cost](#verification-2026-11-12)
 - [2026-11-14: Optimization experience, joint training and evaluation baselines](#verification-2026-11-14)
 - [2026-11-16: Embodied loops, experiment infrastructure and survey updates](#verification-2026-11-16)
+- [2026-11-18: Agent inheritance, training environments and continual evaluation](#verification-2026-11-18)
 
 <a id="survey-coverage"></a>
 
@@ -447,3 +448,33 @@ Earlier dated records, including their batch counts, remain unchanged. This revi
 **Release watch.** [PASE's announced repository](https://github.com/NEUIR/PASE) still returns 404. The located [SkillDuet project-page snapshot `52fddde`](https://github.com/stoney0062/SkillDuet/tree/52fddde400a9ab9828fe330bf2ce34486f7f5120) is unchanged and does not release the research implementation. These remain watch items rather than runnable-project additions.
 
 Earlier dated records and batch counts remain unchanged. This was a primary-paper, documentation and source review; no upstream installation, model calls, simulation, training or reproduction of reported gains was performed.
+
+<a id="verification-2026-11-18"></a>
+
+### 2026-11-18: Agent inheritance, training environments and continual evaluation
+
+**Reviewed November 18, Asia/Taipei.** Six deduplicated additions bring the catalog from **113 to 119** resources. Paper dates use the first arXiv submission in UTC. The latest checked revision and the date of any repository snapshot are listed separately.
+
+| Resource | First date / latest verified version | Verified entry and evidence scope | Coverage in checked indexes |
+| --- | --- | --- | --- |
+| [ELITE](https://arxiv.org/abs/2611.21056) | **2026-11-16 · v1** | Read §§4.1–4.2 / Appendix A.6 → §§5.1–5.3 / Appendix A.5. Deterministic checks decide whether a composed descendant can continue. Task outcomes are measured after evolution. The 60 Pro tasks provide search feedback to DGM/HGM, while Verified and Polyglot are transfer evaluations. Reported timing reflects each method's configured budget and concurrency. Paper reading with no official runnable implementation verified. | [Follow RSI November 16 edition](https://github.com/adongwanai/follow-rsi/blob/9f62739a91bc446ef8ed0be7e595955d09ea6093/daily/2026-11-16.md#L17). |
+| [RepoFactory](https://arxiv.org/abs/2611.21152) | **2026-11-16 → v2, 2026-11-17** | [Project instructions `133f7cd`](https://github.com/IQuestLab/RepoFactory/tree/133f7cd998a049c94f86d420491e462456478320) and [data release `efdcaa8`](https://huggingface.co/datasets/IQuestLab/RepoFactory/tree/efdcaa8f6ea1bfa55eed2263e39186b928c7da88). Read §§3.2 and 5.6. The public release contains 200 pre-evolution environments and images. The paper's full collection has 10,159 environments. The archive and image availability for task `000001` were checked. The documented Docker / Harbor oracle and no-op checks need no model. | No match in the eighteen files below. |
+| [WikiTrace](https://arxiv.org/abs/2611.14320) | **2026-11-10 · v1** (Taipei, November 11) | [Official source `dc06570`](https://github.com/yukyeongleee/wikitrace/tree/dc06570f2fc69e20d36fede62128a806e35edfcd). Read §§3–4. Build training lessons with links to evidence, then examine the read-only corpus and paired Gain / Regression analysis. The ALFWorld trial needs Python, Docker, a downloaded environment and model access. Results use one model family and a single terminal Harness. | No match in the eighteen files below. |
+| [RSI-PDEbench](https://arxiv.org/abs/2611.14949) | **2026-11-11 · v1** | [Project site](https://jeremylu916.github.io/RSI-PDE/) and §§2.4, 3.2, 4, 5.4 and 6. Hidden-test feedback is withheld during each agent run. The authors used benchmark results in development, and some dollar costs use retrospective stopping-rule replay. The linked code repository and dataset API returned 404 and 401 respectively at review. The verified reading entry is the paper and project site. | [pinkbubble method entry](https://github.com/pinkbubblebubble/awesome-rsi/blob/3c96bfb50424d7c6a8e4791cfa166c20e51f0931/README.md#L257), [benchmark entry](https://github.com/pinkbubblebubble/awesome-rsi/blob/3c96bfb50424d7c6a8e4791cfa166c20e51f0931/README.md#L483) and [Follow RSI November 11 supplement](https://github.com/adongwanai/follow-rsi/blob/9f62739a91bc446ef8ed0be7e595955d09ea6093/daily/2026-11-11.md#L29). |
+| [Continual-ARC](https://arxiv.org/abs/2611.14505) | **2026-11-10 → v3, 2026-11-15** (first submission November 11 in Taipei) | [Official source `513dd67`](https://github.com/unifyai/continual-arc/tree/513dd67f6e9b7bb1224a57d64c7f66c4e3828fea) and [public replay](https://continual-arc.unify.ai/runs). Read §§2.1–2.4 → §§3–4. Checked the archive and report / transfer implementation. Frozen tests distinguish new instances of known tasks from tasks outside the stream. The ARC-AGI-1 held-out tasks are public. Feedback budget is the score input, with inference and training costs tracked separately. | [Follow RSI November 16 edition](https://github.com/adongwanai/follow-rsi/blob/9f62739a91bc446ef8ed0be7e595955d09ea6093/daily/2026-11-16.md#L38). |
+| [RSI Observatory](https://github.com/Fucheng1245/RSI-Observatory) | Repository opened **2026-09-09**. Scorecard review **2026-09-10**. | [Pinned source `2444234`](https://github.com/Fucheng1245/RSI-Observatory/tree/244423414357d1ebaba09b8b12c40ee92ed9091f). Read `START_HERE.md` → `SCORECARD.md` → `SOURCE_REVIEW.md` → `radar/LATEST.md`. The radar edition is dated November 16. The November 17 automated data update leaves the editorial review dated September 10. The new index has an RSI-PDEbench lead in its [radar](https://github.com/Fucheng1245/RSI-Observatory/blob/244423414357d1ebaba09b8b12c40ee92ed9091f/radar/LATEST.md#L35). | [pinkbubble reading list](https://github.com/pinkbubblebubble/awesome-rsi/blob/3c96bfb50424d7c6a8e4791cfa166c20e51f0931/README.md#L842). |
+
+**Coverage scope.** Five existing indexes and eighteen public files were searched by name, title, paper ID or repository path. Matches below refer to entries in those files. The new Observatory is separate from this comparison.
+
+| Source snapshot | Files checked | Result for this batch |
+| --- | --- | --- |
+| [Prism `57787ad`](https://github.com/Prism-Shadow/awesome-rsi/tree/57787ad4211893d7319d9c926a73d804475316eb) | `README.md`, `site/src/data/{methods,papers,systems}.js` (four) | Unchanged since November 16. No entry for the six additions. |
+| [pinkbubble `3c96bfb`](https://github.com/pinkbubblebubble/awesome-rsi/tree/3c96bfb50424d7c6a8e4791cfa166c20e51f0931) | `README.md` (one) | Unchanged since November 16. Covers RSI-PDEbench and RSI Observatory. |
+| [lobehub `632ab50`](https://github.com/lobehub/awesome-rsi/tree/632ab5065bf579c7d1daa71bdaab801fdefd3698) and [natnew `7152191`](https://github.com/natnew/awesome-recursive-self-improvement/tree/7152191ed372ecbc540cfab0601a1f61de2d0d82) | Each `README.md` (two) | Both unchanged since November 16. No entry for the six additions. |
+| [Follow RSI `9f62739`](https://github.com/adongwanai/follow-rsi/tree/9f62739a91bc446ef8ed0be7e595955d09ea6093) | `README.md`, `data/papers.yaml`, `site/papers.json` and eight Chinese daily editions for November 11–18 (eleven) | ELITE and Continual-ARC in the November 16 edition. RSI-PDEbench in the November 11 supplement. These matches are in the daily editions. |
+
+**Follow RSI status.** The November 18 commit publishes the November 16–18 editions and historical supplements. The November 16 edition contains seven entries reviewed on November 18. The November 17 and [November 18](https://github.com/adongwanai/follow-rsi/blob/9f62739a91bc446ef8ed0be7e595955d09ea6093/daily/2026-11-18.md) bulletins report zero selections for their respective editions. The snapshot records the November 18 Hugging Face list as pending and partial Semantic Scholar coverage. The subscription Skill is still forthcoming in the README. This status is based on committed content.
+
+**Release watch.** The [PASE repository](https://github.com/NEUIR/PASE) still returns 404. The [SkillDuet project page `52fddde`](https://github.com/stoney0062/SkillDuet/tree/52fddde400a9ab9828fe330bf2ce34486f7f5120) and [ACE-RL paper repository `f2d04dc`](https://github.com/doyoungkim-ml/ehrl/tree/f2d04dc4c8be112db0456b423a8518903ab80fab) are unchanged. No official runnable RecurIR implementation was verified at this check.
+
+The review used primary papers, public artifacts and selected source files. The run and replay commands were checked against documentation and source, with no upstream experiment executed.

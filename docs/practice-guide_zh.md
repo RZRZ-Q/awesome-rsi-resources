@@ -6,7 +6,7 @@
 
 这里集中记录具体示例的学习目标、源码入口和运行条件。先按主题选择项目；综述章节与项目的对应关系见[学习指南](learning-guide_zh.md#survey-project-map)。条目的[三类标签](../README_zh.md#resource-scope)描述所推荐入口的范围，主题分组不表示 RSI 能力等级。
 
-以下说明来自 **2026-10-22–2026-11-16** 对上游文档与部分源码的核验，**未运行教程、调用模型或复现实验**；逐项日期与范围见[核验档案](verification_zh.md#verification)。API 示例需要相应模型权限与调用预算，训练配置是上游示例而非本目录实测的最低硬件要求。
+以下说明来自 **2026-10-22–2026-11-18** 对上游文档与部分源码的核验，**未运行教程、调用模型或复现实验**；逐项日期与范围见[核验档案](verification_zh.md#verification)。API 示例需要相应模型权限与调用预算，训练配置是上游示例而非本目录实测的最低硬件要求。
 
 ## 目录
 
@@ -325,6 +325,16 @@ CONFIG=self_teacher/verse_mh TAG=-r1 bash scripts/run_swe.sh
 `fresh` 会删除该 checkout 已有的 Agent、对话和 adapter。后续用 `./examples/self-improving-agent/exo.sh --control` 保留状态；guardian 更新发出请求后，control 包装层会重启 REPL 子进程。
 
 **条件。** 英文；Docker、模型 API 权限及 Rust／Node／pnpm 构建环境。核验的 [mise.toml](https://github.com/exoharness/exo/blob/d7fb6d2ee477dec48d272461b4c534152939ad22/mise.toml) 固定 Rust 1.95、Node 22.15.0、pnpm 10.26.2 和 Python 3.11。Agent 会编辑挂载的 checkout，应使用专供该实验的实例。构建成功不等于质量达标。[自控制说明](https://github.com/exoharness/exo/blob/d7fb6d2ee477dec48d272461b4c534152939ad22/examples/self-improving-agent/docs/SELF-CONTROL.md)提供分开的验证／回退原语；克隆与 canary 对照路径仍在计划中。
+
+<a id="elite"></a>
+
+### [ELITE · Evaluation-Free Recursive Self-Improvement for Coding Agents](https://arxiv.org/abs/2611.21056) — 方法阅读
+
+**相关自改进机制。** ELITE 基于同一父代分别实现多项提案，再将相容的改动重新实现为一个后继。通过有效性检查的后继提供下一轮的源码和起点。模型权重和外层搜索流程保持固定。
+
+**推荐入口。** 先读 §§4.1–4.2 与附录 A.6，追踪父代、探索实现和整合后的后继。附录 A.5.2 介绍用于准入的编译、接口检查和冒烟测试。再读 §§5.1–5.3 及表 2，对照选择反馈、最终评测和搜索成本。[论文 v1](https://arxiv.org/html/2611.21056v1#S4)
+
+**证据与运行条件。** 演化期间使用实现审查和确定性有效性检查。下游任务结果在演化后测量，涉及 60 道 SWE-bench Pro 任务及各 50 道 SWE-bench Verified、Polyglot 任务。Verified 和 Polyglot 用于迁移评测。运行时间对照的搜索预算和并发配置不同。论文主实验使用 Docker 沙箱与 DeepSeek 或 Qwen 模型访问。本轮未核验到官方可运行实现。[实验设置](https://arxiv.org/html/2611.21056v1#S5.SS1) · [运行配置](https://arxiv.org/html/2611.21056v1#A1.SS5)
 
 <a id="harness-optimization"></a>
 
@@ -815,6 +825,21 @@ uv run python -m quickstart_mock.run ../../tmp/quickstart
 
 **运行要求。** 英文；纯阅读，本轮未确认官方可运行实现或独立复现入口。附录 D 说明了 Linux／Python 3.12、Harbor 任务容器、多种模型／Agent 服务及 embedding 服务；这是论文实验配置，不是已核验的最低环境。准备复现前先看完整成本核算：结果表的记忆侧成本列只计 writer，其他记忆操作也会产生费用。
 
+<a id="wikitrace"></a>
+
+### [WikiTrace](https://github.com/yukyeongleee/wikitrace) · [论文](https://arxiv.org/abs/2611.14320)
+
+**相关自改进机制 · 带证据链接的记忆。** 编译器从训练运行中提炼经验，为每条经验保留指向摘要和原始轨迹的链接。Agent 在后续任务中可查回证据，重新判断经验怎样适用。语料一次构建，测试时只读挂载，模型与记忆构建流程固定。
+
+**推荐入口。** 阅读 [§§3.1、3.3–3.4 → §§4.1、4.3 → 附录 B](https://arxiv.org/html/2611.14320v1)。从一条经验追溯原始结果与工具观察，再结合[记忆布局](https://github.com/yukyeongleee/wikitrace/blob/dc06570f2fc69e20d36fede62128a806e35edfcd/src/wikitrace/memory/README.md)查看[只读挂载源码](https://github.com/yukyeongleee/wikitrace/blob/dc06570f2fc69e20d36fede62128a806e35edfcd/src/wikitrace/memory/mount.py)。按[仓库说明](https://github.com/yukyeongleee/wikitrace/blob/dc06570f2fc69e20d36fede62128a806e35edfcd/README.md#install)配置环境并安装 ALFWorld 后，从仓库根目录按官方示例运行：
+
+```bash
+uv run wikitrace build --config configs/alfworld.yaml --benchmark alfworld --suite valid-seen --trial 0
+uv run wikitrace run --config configs/alfworld.yaml --benchmark alfworld --suite valid-seen --trial 0 --method wikitrace
+```
+
+**门槛与评测。** 英文。需要 Python ≥3.11、uv、Node 20、Docker、ALFWorld 数据及 OpenRouter 访问和调用预算。示例为一轮构建语料及套件评测。论文的 `valid-seen` 使用 50 个训练游戏和 101 个测试游戏。只看源码即可了解流程，无需调用模型。[分析指南](https://github.com/yukyeongleee/wikitrace/blob/dc06570f2fc69e20d36fede62128a806e35edfcd/src/wikitrace/analysis/README.md)要求方法间配对样本，以三次无记忆运行的多数结果为参照。分别核对新增成功（Gain）与原有成功的损失（Regression），再以额外的无记忆重跑估计自然波动。
+
 <a id="coevolution-projects"></a>
 
 ## 协同演化
@@ -1147,3 +1172,44 @@ EVAL_ENV_TYPE=debug DEBUG_OBS_ENCODED=1 bash policy/JustRUA/eval.sh \
 **推荐入口。** 阅读[§3 → §4／算法 1 → §5／假设 1 → §6.1](https://arxiv.org/html/2611.10787v1)，再看附录 G.1 的共同协议和附录 I 的验证集过拟合案例。区分有害更新占已接受更新的期望比例，与每次更新都变好的保证；理论依赖复用偏差的上界，论文尚未给出从数据确定该上界的方法。
 
 **条件。** 英文；需概率、假设检验和 Agent 评测基础。阅读不需 API；本轮未确认官方可运行实现。报告协议使用 HotpotQA、DROP、APPS，两种模型服务，独立的 200 题验证集／300 题测试集，以及五个 seed、每次 30 轮。这些是研究配置，不是已打包的复现入口或最低预算。
+
+<a id="continual-arc"></a>
+
+### [Continual-ARC](https://github.com/unifyai/continual-arc) · [论文](https://arxiv.org/abs/2611.14505)
+
+**评测工具 · 持续技能习得。** ARC 任务隔一段时间以新实例重现。评测对请求示范和答错计费，再用相同模型和 Harness 对比保留最终状态与清空状态的同一学习器。冻结的已见任务测试衡量规则在新实例中的复用，冻结的持出测试衡量向任务流之外的任务迁移。
+
+**推荐入口。** 先读 [§§2.1–2.4 → §§3–4](https://arxiv.org/html/2611.14505v3)，再通过[公开回放](https://continual-arc.unify.ai/runs)追踪一次任务重现。在固定版本仓库中安装核心包并重算[归档运行](https://github.com/unifyai/continual-arc/blob/513dd67f6e9b7bb1224a57d64c7f66c4e3828fea/runs/README.md#reading-them)：
+
+```bash
+python -m pip install -e .
+continual-arc report runs/arc1/H-prime-agent-luna6-low-ws0
+continual-arc transfer runs/arc1/H-prime-agent-luna6-low-ws0/frozen/held-out/play \
+  runs/arc1/H0-prime-agent-luna6-low-fresh0/frozen/held-out-reference/play
+```
+
+先看记忆与程序库对照，再解释预算节省。评测将反馈用量计入分数，并单独记录模型与计算成本。ARC-AGI-1 的公开持出任务未进入任务流，可能已出现在模型训练中。
+
+**运行要求。** 英文。在线回放只需浏览器。本地重算需 Python ≥3.10 与已下载的记录，无需模型调用。执行新的[基线实验](https://github.com/unifyai/continual-arc/blob/513dd67f6e9b7bb1224a57d64c7f66c4e3828fea/baselines/README.md#install)另需 Python 3.12／3.13、uv、评测数据、对应 Harness 和沙箱。模型驱动的实验需要模型服务与预算。ARC-AGI-3 另需固定版本的游戏引擎及工具包。
+
+<a id="rsi-pdebench"></a>
+
+### [RSI-PDEbench](https://arxiv.org/abs/2611.14949) · [项目网站](https://jeremylu916.github.io/RSI-PDE/)
+
+**评测工具 · 协议阅读。** 学习 Agent 如何从样本识别方程类型、拟合系数并构建求解器。通过验证的求解器代码、策略文本与记忆会保留，基础模型和可执行监督器保持固定。
+
+**推荐入口。** 阅读[§2.4 → §3.2 → §4 → §§5.4、6](https://arxiv.org/html/2611.14949v1)。将 Full（210 个测试案例）、Noisy（160 个）和 Hard-OOD（278 个）与 1,001 个案例的总库区分开。追踪候选方程残差如何用于筛选，再看公开相对误差和最终评分协议。运行中的 Agent 看不到隐藏测试反馈，但作者参考基准结果作过设计取舍，因此将报告结果视作开发阶段证据。部分美元成本来自事后停止规则回放，对应表格仍列全预算得分。
+
+**条件。** 英文。需数值 PDE 与 Agent 评测基础。[上游环境说明](https://jeremylu916.github.io/RSI-PDE/#start)列出内置评测方案所需的 GPU 节点、bubblewrap 和模型访问。11 月 18 日，论文所链接的 GitHub 仓库和 Hugging Face 数据集 API 分别返回 404 与 401，本轮核验的入口为论文和项目网站。
+
+<a id="repofactory"></a>
+
+### [RepoFactory](https://huggingface.co/datasets/IQuestLab/RepoFactory) · [论文](https://arxiv.org/abs/2611.21152)
+
+**评测工具。** 公开发布包包含 200 个演化前环境。每道任务要求 Agent 根据规格和 API 指南重建软件项目。验证器根据测试给提交的实现评分，参考实现留在求解工作区之外。[发布内容](https://huggingface.co/datasets/IQuestLab/RepoFactory/blob/efdcaa8f6ea1bfa55eed2263e39186b928c7da88/README.md#release-contents)
+
+**推荐入口。** 按官方快速入门下载 `000001` 实例并载入配套镜像，运行 Harbor 的 `oracle` 和 `nop`。预期结果是参考实现得满分，原样工作区得零分。结合验证器日志检查结果。[固定版快速入门](https://github.com/IQuestLab/RepoFactory/blob/133f7cd998a049c94f86d420491e462456478320/README.md#quickstart)
+
+**方法阅读。** 在 §3.2 追踪构建 Agent 如何根据验证结果与代码指标修订规格、参考实现和测试。§5.6 分开考察有效环境的恢复，以及实现范围和结构耦合对后续训练的价值。论文报告 10,159 个环境。公开文件支持验收初始任务，已核验的 GitHub 快照提供文档和图表。[论文 v2](https://arxiv.org/html/2611.21152v2#S3.SS2) · [消融实验](https://arxiv.org/html/2611.21152v2#S5.SS6)
+
+**运行条件。** 需要支持 Linux/amd64 的 Docker、Python ≥3.12（Harbor 0.26.0） 以及 `huggingface_hub`。Oracle 与 no-op 检查无需模型调用。示例镜像归档约 720 MB，任务配置分配 2 CPU、8 GiB 内存与 20 GiB 存储。若运行求解 Agent，另需模型访问与调用预算。[实例文件](https://huggingface.co/datasets/IQuestLab/RepoFactory/tree/efdcaa8f6ea1bfa55eed2263e39186b928c7da88/instances/000001) · [Harbor 安装](https://docs.harborframework.com/getting-started/installation)
