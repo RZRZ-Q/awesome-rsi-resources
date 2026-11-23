@@ -4,7 +4,7 @@
 
 [Resource directory](../README.md) · [Learning guide](learning-guide.md) · [Practice guide](practice-guide.md)
 
-This archive records source checks from **2026-10-22 through 2026-11-18**. Each dated section specifies its own sources, versions and review scope; a later addition does not refresh earlier checks.
+This archive records source checks from **2026-10-22 through 2026-11-23**. Each dated section specifies its own sources, versions and review scope; a later addition does not refresh earlier checks.
 
 - [Recent survey coverage](#survey-coverage)
 - [Review history and expansion checks](#review-log)
@@ -18,6 +18,7 @@ This archive records source checks from **2026-10-22 through 2026-11-18**. Each 
 - [2026-11-14: Optimization experience, joint training and evaluation baselines](#verification-2026-11-14)
 - [2026-11-16: Embodied loops, experiment infrastructure and survey updates](#verification-2026-11-16)
 - [2026-11-18: Agent inheritance, training environments and continual evaluation](#verification-2026-11-18)
+- [2026-11-23: Modular harnesses, persistent skills and model editing](#verification-2026-11-23)
 
 <a id="survey-coverage"></a>
 
@@ -478,3 +479,33 @@ Earlier dated records and batch counts remain unchanged. This was a primary-pape
 **Release watch.** The [PASE repository](https://github.com/NEUIR/PASE) still returns 404. The [SkillDuet project page `52fddde`](https://github.com/stoney0062/SkillDuet/tree/52fddde400a9ab9828fe330bf2ce34486f7f5120) and [ACE-RL paper repository `f2d04dc`](https://github.com/doyoungkim-ml/ehrl/tree/f2d04dc4c8be112db0456b423a8518903ab80fab) are unchanged. No official runnable RecurIR implementation was verified at this check.
 
 The review used primary papers, public artifacts and selected source files. The run and replay commands were checked against documentation and source, with no upstream experiment executed.
+
+<a id="verification-2026-11-23"></a>
+
+### 2026-11-23: Modular harnesses, persistent skills and model editing
+
+**Reviewed November 23, Asia/Taipei.** Seven additions passed deduplication against the 119-resource catalog, bringing it to **126**. Paper dates are first submissions in UTC. The dates of release artifacts, engineering posts and index snapshots are recorded separately.
+
+| Resource | Date / latest checked version | Entry and evidence scope | Coverage in checked indexes |
+| --- | --- | --- | --- |
+| [BeforeRSI](https://github.com/Cherish0925/BeforeRSI) | RSI snapshot **2026-10-19**, bilingual edition **2026-10-20** | [Snapshot `f6f8d2f`](https://github.com/Cherish0925/BeforeRSI/tree/f6f8d2fbe397a102f80501deb38bd029edd86218). The November 9 commit adds a separate modern AI study map. The RSI catalog contains 141 records, including 118 method records, one screened record and 22 historical or contextual entries. Checked the single HTML file in the offline ZIP and the Model / LLM manual. Start with the three mechanism routes and Chapters 01 and 21–23. Experiment 003 is a proposed comparison of successors as improvers. | [LobeHub related lists](https://github.com/lobehub/awesome-rsi/blob/1ed3074bcac80673a3e30780a90cc78a2e5b590d/README.md#L492). |
+| [Harnesses That Improve Themselves](https://arxiv.org/abs/2611.22299) | **2026-11-17 · v1** | Read §§II–III → §IV → §VII / Table IV. An external optimizer proposes runtime edits. The SWE-bench Lite subset has 12 development, 8 validation and 40 test tasks. For the original model, modular edits solve 16/40 at 46.7k runtime tokens per task. Full rewrites solve 17/40 at 451.6k. Search costs and round counts differ. The paper is the verified learning entry. | [pinkbubble overview](https://github.com/pinkbubblebubble/awesome-rsi/blob/a1a573c71443056ce5c9dcc6eaa58f4372e6da0e/README.md#L74). |
+| [Perplexity: Self-improving skills](https://www.perplexity.ai/en-GB/hub/blog/self-improving-skills) | Author report **2026-11-18** | Read Figures 2, 4 and 5 for evidence, personal skill versions, paired replay and built-in skill approval. The eight-week randomized experiment and the offline study of 16 paired instances across nine task families support different claims. [SkillLearnBench `726e1f7`](https://github.com/cxcscmu/SkillLearnBench/tree/726e1f79b96b0cb3d729d0e55a1c847e0b5353ae) is a separate public benchmark for follow-up reading. The verified entry for the production system is the author report. | The report has no match. The linked benchmark has entries in [Prism README](https://github.com/Prism-Shadow/awesome-rsi/blob/f319302e21d6e5ab4f564519a6b8fce4e4a7293c/README.md#L530) and [paper data](https://github.com/Prism-Shadow/awesome-rsi/blob/f319302e21d6e5ab4f564519a6b8fce4e4a7293c/site/src/data/papers.js#L780). |
+| [GUARD](https://arxiv.org/abs/2611.23476) | **2026-11-17 · v1** (November 18 in Taipei) | Read §§4.1–4.4 / Algorithm 1 → §4.5 → §§6.2–6.4. Revised proposer prompts guide later rounds. Soft-HURT gates the playbook updates. The non-regression condition applies to the self-scored gate buffer. The reported 54.5% deployment token reduction applies to the 43-task hosted EvoHarnessBench slice. The appendix states that release of the reference harness is pending approval. | [pinkbubble method entry](https://github.com/pinkbubblebubble/awesome-rsi/blob/a1a573c71443056ce5c9dcc6eaa58f4372e6da0e/README.md#L267) and [Observatory feed](https://github.com/Fucheng1245/RSI-Observatory/blob/7fb326b0e271f50392835d69a9c8bc5a3c42f161/README.md#L172). |
+| [BaseRSI](https://arxiv.org/abs/2611.24578) | **2026-11-18 · v1** | [Official code `ecafed3`](https://github.com/beita6969/BaseRSI/tree/ecafed335b96298b46a864b8004af5f0c8a8bd55) (November 21) and model/data metadata checked. Read §§4.1–4.3 and Appendix D. Edited student responses inform subsequent internalization, with the baseline model supplying outer-loop proposals. The pipeline listing skips model loading. Full runs use the 27B checkpoint and the authors' GPU setup. Three reported seeds sample a shared edited checkpoint. | [pinkbubble method entry](https://github.com/pinkbubblebubble/awesome-rsi/blob/a1a573c71443056ce5c9dcc6eaa58f4372e6da0e/README.md#L264) and [Observatory feed](https://github.com/Fucheng1245/RSI-Observatory/blob/7fb326b0e271f50392835d69a9c8bc5a3c42f161/README.md#L166). |
+| [IBM: How Much Should an Agent Remember?](https://arxiv.org/abs/2611.26361) | **2026-11-19 · v1** (November 20 in Taipei) | [altk-evolve source `03f83be`](https://github.com/AgentToolkit/altk-evolve/tree/03f83be7480bf0be3f4aa6e868b832486e064718) (November 20). The [guidelines loop](https://github.com/AgentToolkit/altk-evolve/blob/03f83be7480bf0be3f4aa6e868b832486e064718/docs/tutorials/guidelines-loop.md) uses an arithmetic agent, Phoenix and model/embedding access. Read The System, Measurement Setting and Insights 1, 3, 5 and 6. Trace support-preserving consolidation and memory selection. The authors mined train/dev trajectories and compared memory configurations on test_normal. The fixed all-guidelines rule provides a separate comparison. | No match in the 21 files below. |
+| [SkillDiff](https://arxiv.org/abs/2611.25534) | **2026-11-19 · v1** | [Official source `db2cdbd`](https://github.com/LitaoGuo/How-Self-Evolution-Reshapes-Skills/tree/db2cdbde29e752ebc9cc81817f17400b64056c40). Read §§2–4 for rewriting, retention and marking knowledge outside the model's prior. Published CSV curves support local plotting without model calls. Fresh scoring needs separately sourced skill inputs, benchmark execution and model access. | No match in the 21 files below. |
+
+**Coverage scope.** Six existing indexes and 21 public files were searched by name, title, paper identifier or official repository path. Automated feeds and editorial entries are identified separately.
+
+| Source snapshot | Files checked | Result for this batch |
+| --- | --- | --- |
+| [Prism `f319302`](https://github.com/Prism-Shadow/awesome-rsi/tree/f319302e21d6e5ab4f564519a6b8fce4e4a7293c) | `README.md`, `site/src/data/{methods,papers,systems}.js` (four) | SkillLearnBench appears as follow-up reading. The latest commit adds MetaAct and EvoDisco. |
+| [pinkbubble `a1a573c`](https://github.com/pinkbubblebubble/awesome-rsi/tree/a1a573c71443056ce5c9dcc6eaa58f4372e6da0e) | `README.md` (one) | Editorial entries for the modular harness paper, GUARD and BaseRSI. The README records a November 19 review. |
+| [LobeHub `1ed3074`](https://github.com/lobehub/awesome-rsi/tree/1ed3074bcac80673a3e30780a90cc78a2e5b590d) and [natnew `7152191`](https://github.com/natnew/awesome-recursive-self-improvement/tree/7152191ed372ecbc540cfab0601a1f61de2d0d82) | Each `README.md` (two) | BeforeRSI is in LobeHub. The latest LobeHub commit updates CI, and natnew remains on the previous snapshot. |
+| [Follow RSI `9f62739`](https://github.com/adongwanai/follow-rsi/tree/9f62739a91bc446ef8ed0be7e595955d09ea6093) | `README.md`, `data/papers.yaml`, `site/papers.json` and November 11–18 daily editions (eleven) | The source snapshot is unchanged. No entry for the seven additions in these files. |
+| [RSI Observatory `7fb326b`](https://github.com/Fucheng1245/RSI-Observatory/tree/7fb326b0e271f50392835d69a9c8bc5a3c42f161) | `README.md`, `PAPERS.md`, `radar/LATEST.md` (three) | The automatically updated README paper feed lists GUARD and BaseRSI. |
+
+**Follow RSI status.** The [public daily index](https://adongwanai.github.io/follow-rsi/daily/index.html) and the pinned source both end at the [November 18 bulletin](https://github.com/adongwanai/follow-rsi/blob/9f62739a91bc446ef8ed0be7e595955d09ea6093/daily/2026-11-18.md). The five November 19–23 daily paths returned 404 at the checked commit and are outside the 21 successful reads. The README still describes the subscription Skill as forthcoming.
+
+This batch checks primary papers, artifacts and selected source files. Runtime notes describe the documented entries and requirements. Upstream experiments were not run.

@@ -6,7 +6,7 @@
 
 这里集中记录具体示例的学习目标、源码入口和运行条件。先按主题选择项目；综述章节与项目的对应关系见[学习指南](learning-guide_zh.md#survey-project-map)。条目的[三类标签](../README_zh.md#resource-scope)描述所推荐入口的范围，主题分组不表示 RSI 能力等级。
 
-以下说明来自 **2026-10-22–2026-11-18** 对上游文档与部分源码的核验，**未运行教程、调用模型或复现实验**；逐项日期与范围见[核验档案](verification_zh.md#verification)。API 示例需要相应模型权限与调用预算，训练配置是上游示例而非本目录实测的最低硬件要求。
+以下说明来自 **2026-10-22–2026-11-23** 对上游文档与部分源码的核验，**未运行教程、调用模型或复现实验**；逐项日期与范围见[核验档案](verification_zh.md#verification)。API 示例需要相应模型权限与调用预算，训练配置是上游示例而非本目录实测的最低硬件要求。
 
 ## 目录
 
@@ -592,6 +592,26 @@ scripts/run_one.sh configs/hotpotqa-8b.yaml
 
 **语言与运行条件。** 英文；阅读需要 Agent 与提示优化基础，无需 API 或 GPU。[核验时](verification_zh.md#verification-2026-10-29)尚未确认专属官方实现；本项作为论文阅读入口，暂无经过核验的复现命令。
 
+<a id="modular-gated-harness"></a>
+
+### [Harnesses That Improve Themselves · 模块化门控演化](https://arxiv.org/abs/2611.22299)
+
+**相关自改进机制 · 论文阅读。** 框架将 Harness 分为上下文与状态、Agent 控制、动作接口、验证与恢复。外部优化器一次提出一个模块的修改，准入依据包括改动路径是否实际执行、验证集表现和运行 token 上限。任务模型保持冻结。
+
+**推荐入口。** 读 §§II–III 了解可编辑组件及轨迹如何用于诊断，再读 §IV 的准入门控与 §VII 的表 IV。分别识别提出修改、筛选修改和测量迁移所用的数据。[论文 v1](https://arxiv.org/html/2611.22299v1)
+
+**证据与条件。** 英文。需 Agent 工程与软件评测基础。表 IV 使用 60 道 SWE-bench Lite 任务，开发 12 道、验证 8 道、最终测试 40 道。在原模型上，模块化演化解出 16/40，每题运行消耗 46.7k tokens；全量重写解出 17/40，每题 451.6k。两者的搜索分别用 100 与 24 条 rollout，最大轮数也不同，应分别核算搜索与部署成本。第二个模型使用冻结的 Harness 评测。未核验到官方可运行发布。
+
+<a id="guard"></a>
+
+### [GUARD](https://arxiv.org/abs/2611.23476) · 方法阅读
+
+**递归改进方法。** GUARD 通过配对轨迹检查，分辨新引入的退化与尚未解决的缺口。Soft-HURT 筛选候选手册更新。系统还对比最佳和最差候选，改写蒸馏器下一轮生成修改时使用的策略提示词。模型权重与更新算法保持固定。
+
+**推荐入口。** 读[§§4.1–4.4 与算法 1](https://arxiv.org/html/2611.23476v1#S4)，追踪一次修改从任务检查清单到候选评分、晋级和下一轮提案提示。再对照[§4.5](https://arxiv.org/html/2611.23476v1#S4.SS5)与[§§6.2–6.4](https://arxiv.org/html/2611.23476v1#S6.SS2)。门控约束的是缓冲区任务上观测到的自评分，持出表现另外测量。测试阶段冻结 Harness，每个任务只跑一条轨迹。
+
+**条件与证据。** 英文。适合已有 Agent 评测和持续学习基础的读者。报告的 54.5% 降幅来自托管版 EvoHarnessBench 的 43 个测试任务，是相对基础 Harness 的单任务部署 token 降幅，不包含适应、自评和候选评测开销。[附录 B.3](https://arxiv.org/html/2611.23476v1#A2.SS3)给出模型配置与提示词。作者计划在获得批准后公开参考 Harness，本轮未找到官方可执行发布。
+
 <a id="model-training"></a>
 
 ## 模型训练
@@ -722,6 +742,21 @@ bash scripts/eval.sh --set run.name=esi_preview --show-config
 
 **条件。** 英文；需 SFT／RL 与 Agent 评测基础；论文阅读。本轮未核验到官方可运行实现。研究使用 Qwen3-4B-Thinking-2507、生产查询、每题八条轨迹与版本化业务工具；阅读无需算力，复现则需要应用数据、奖励规则和训练设施。未确认公开的最低硬件配置。
 
+<a id="basersi"></a>
+
+### [BaseRSI](https://github.com/beita6969/BaseRSI) · [论文](https://arxiv.org/abs/2611.24578)
+
+**相关自改进机制 · Harness 内化。** 原始 Qwen3.8-27B 提出并验证 Harness 条目。内环借助前向计算和回归，把通过的条目写入图像 patch embedding 与选定的 MLP 权重。携带上轮编辑的学生模型生成后续拟合所用的回答，拟合流程固定。发布的外环使用原始权重生成提案，最终导出的模型直接处理原始输入。
+
+**推荐入口。** 读[§§4.1–4.3](https://arxiv.org/html/2611.24578v1#S4)，沿[流程配置](https://github.com/beita6969/BaseRSI/blob/ecafed335b96298b46a864b8004af5f0c8a8bd55/basersi/config/pipeline.yaml)从数据准备与条目准入追踪到[学生回答回放与重拟合](https://github.com/beita6969/BaseRSI/blob/ecafed335b96298b46a864b8004af5f0c8a8bd55/basersi/procedure_edit/rounds.py#L460)。安装固定版本后先浏览阶段列表：
+
+```bash
+python -m pip install .
+basersi pipeline --list
+```
+
+**条件与证据。** 英文。流程预览需 Python 3.12。安装数据源依赖并准备固定版本的基准文件后，[数据阶段](https://github.com/beita6969/BaseRSI/blob/ecafed335b96298b46a864b8004af5f0c8a8bd55/README.md#running)可在不加载模型的情况下整理 640 个开发样本。完整流程另需原始 27B 权重、GPU 依赖与文档所用的 80 GB 显存卡。作者报告改进过程耗费 45.5 H800 GPU 小时，外部 API token 开销为零。测试使用同一次改进得到的权重和三个采样种子，拟合和验证与 640 个 ID、640 个 OOD 测试样本分开。公开流程覆盖权重导出与开发集验收，[编辑后权重](https://huggingface.co/beita6969/BaseRSI-27B)及[测试集](https://huggingface.co/datasets/beita6969/BaseRSI-Dataset)另行发布。[附录 D](https://arxiv.org/html/2611.24578v1#A4)
+
 <a id="memory-skills"></a>
 
 ## 记忆与技能
@@ -839,6 +874,26 @@ uv run wikitrace run --config configs/alfworld.yaml --benchmark alfworld --suite
 ```
 
 **门槛与评测。** 英文。需要 Python ≥3.11、uv、Node 20、Docker、ALFWorld 数据及 OpenRouter 访问和调用预算。示例为一轮构建语料及套件评测。论文的 `valid-seen` 使用 50 个训练游戏和 101 个测试游戏。只看源码即可了解流程，无需调用模型。[分析指南](https://github.com/yukyeongleee/wikitrace/blob/dc06570f2fc69e20d36fede62128a806e35edfcd/src/wikitrace/analysis/README.md)要求方法间配对样本，以三次无记忆运行的多数结果为参照。分别核对新增成功（Gain）与原有成功的损失（Regression），再以额外的无记忆重跑估计自然波动。
+
+<a id="altk-evolve"></a>
+
+### [ALTK-Evolve](https://github.com/AgentToolkit/altk-evolve) · [部署研究](https://arxiv.org/abs/2611.26361)
+
+**相关自改进机制 · 可复用的程序性记忆。** 同一模型执行任务、从训练轨迹提炼经验，并合并等价建议。后续运行注入全部指南或筛选后的子集。模型权重和提炼、合并流程保持固定。
+
+**推荐入口。** 跟随[算术 Agent 教程](https://github.com/AgentToolkit/altk-evolve/blob/03f83be7480bf0be3f4aa6e868b832486e064718/docs/tutorials/guidelines-loop.md)，把运行轨迹记录到本地 Phoenix，同步到文件后端的命名空间，列出已存储的指南，再检查新一次运行实际收到哪些指南。这个小任务演示跨运行交接。要看效果，按[论文](https://arxiv.org/html/2611.26361v1)的 *The System* → *Measurement Setting* → *Insights 1、3、5、6* 阅读。
+
+**条件与证据。** 英文。教程需 Python ≥3.12、uv、本地 Phoenix、embedding 后端与模型访问。用文件系统存储，无需 AppWorld 数据。研究从 AppWorld 的 train/dev 提炼经验，同时报告预先固定的全量注入规则和在 `test_normal` 选出的配置。留意指南数量、重复运行波动与每题 token。在 ACE 对照中，无记忆基线采用不同 Scaffold，绝对分差包含 Scaffold 的影响。
+
+<a id="perplexity-skills"></a>
+
+### [Perplexity：自改进技能](https://www.perplexity.ai/en-GB/hub/blog/self-improving-skills)
+
+**相关自改进机制 · 生产案例。** Perplexity 的 Brain 根据会话轨迹提出流程技能修改。个人技能先核对资格与版本，再激活给后续会话使用。共享内置技能需要对失败场景和对照场景进行配对回放，再由工程师审批。后续会话复用的是保留下来的技能。
+
+**推荐入口。** 先看图 2、4、5，再读生产与离线实验结果。通过图 5 了解配对回放如何发现目标场景以外的回退。八周随机试验报告工具调用失败和用户不满等指标，独立的离线技能对照覆盖 9 个任务族、16 个配对实例。[作者报告](https://www.perplexity.ai/en-GB/hub/blog/self-improving-skills)
+
+**条件。** 英文，用浏览器即可阅读。报告介绍内部实现与实验。若想了解公开评测如何设计，可从作者引用的基准里选一道任务，查看其评测维度。[固定版 SkillLearnBench `726e1f7`](https://github.com/cxcscmu/SkillLearnBench/blob/726e1f79b96b0cb3d729d0e55a1c847e0b5353ae/README.md#2-evaluation-dimensions)
 
 <a id="coevolution-projects"></a>
 
@@ -1213,3 +1268,18 @@ continual-arc transfer runs/arc1/H-prime-agent-luna6-low-ws0/frozen/held-out/pla
 **方法阅读。** 在 §3.2 追踪构建 Agent 如何根据验证结果与代码指标修订规格、参考实现和测试。§5.6 分开考察有效环境的恢复，以及实现范围和结构耦合对后续训练的价值。论文报告 10,159 个环境。公开文件支持验收初始任务，已核验的 GitHub 快照提供文档和图表。[论文 v2](https://arxiv.org/html/2611.21152v2#S3.SS2) · [消融实验](https://arxiv.org/html/2611.21152v2#S5.SS6)
 
 **运行条件。** 需要支持 Linux/amd64 的 Docker、Python ≥3.12（Harbor 0.26.0） 以及 `huggingface_hub`。Oracle 与 no-op 检查无需模型调用。示例镜像归档约 720 MB，任务配置分配 2 CPU、8 GiB 内存与 20 GiB 存储。若运行求解 Agent，另需模型访问与调用预算。[实例文件](https://huggingface.co/datasets/IQuestLab/RepoFactory/tree/efdcaa8f6ea1bfa55eed2263e39186b928c7da88/instances/000001) · [Harbor 安装](https://docs.harborframework.com/getting-started/installation)
+
+<a id="skilldiff"></a>
+
+### [SkillDiff · How Feedback-Free Self-Evolution Reshapes Agent Skills](https://github.com/LitaoGuo/How-Self-Evolution-Reshapes-Skills) · [论文](https://arxiv.org/abs/2611.25534)
+
+**评测工具 · 技能改写诊断。** 对比原始专家技能和未获得任务结果反馈的多轮改写。同一模型负责改写和使用，配套脚本与参考资料保持固定。作者在 87 道 SkillsBench 任务、六种模型上报告 30 轮后平均下降 14.6 个百分点。SkillDiff 标记十份仅按主题生成的草稿都未覆盖的专家条目，引导 Agent 留意这些内容。
+
+**推荐入口。** 阅读[§§2.1–2.2 → §§3.2–3.3 → §4 与附录 C.4／E](https://arxiv.org/html/2611.25534v1)，先对照原始、改写和恢复条目的条件，再解读标记的效果。在指定版本的仓库根目录安装 `requirements.txt` 后，运行[作者的绘图命令](https://github.com/LitaoGuo/How-Self-Evolution-Reshapes-Skills/blob/db2cdbde29e752ebc9cc81817f17400b64056c40/README.md#evaluation)：
+
+```bash
+python3 -m experiments.evaluate performance
+python3 -m experiments.evaluate retention
+```
+
+**条件与证据。** 中英文文档。绘图需 Python ≥3.10，读取随仓库附带的聚合 CSV，无需模型调用或 GPU。新跑 SkillsBench 需要选定的原始技能、任务资产、BenchFlow、Docker 与对应 Harness、模型访问。论文配置中，为单个模型标记一项技能要预先调用模型 21 次（1 次主题、10 次草稿、10 次评审）。[发布包](https://github.com/LitaoGuo/How-Self-Evolution-Reshapes-Skills/blob/db2cdbde29e752ebc9cc81817f17400b64056c40/EXPERIMENTS.md#data)未附原始技能和逐运行输出。

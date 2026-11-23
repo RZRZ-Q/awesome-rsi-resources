@@ -6,7 +6,7 @@
 
 This guide collects learning goals, source entry points, and running requirements for specific examples. Choose a project by topic; use the [learning guide](learning-guide.md#survey-project-map) to connect it to survey chapters. The [three resource labels](../README.md#resource-scope) describe the recommended entry point; topic groups are not RSI capability levels.
 
-These notes come from upstream documentation and selected source reviews on **2026-10-22–2026-11-18**. **No tutorials, model calls, or experiments were run.** See the [verification records](verification.md#verification) for each resource's review date and scope. API examples require model access and a call budget; training configurations are upstream examples, not minimum hardware requirements tested by this directory.
+These notes come from upstream documentation and selected source reviews on **2026-10-22–2026-11-23**. **No tutorials, model calls, or experiments were run.** See the [verification records](verification.md#verification) for each resource's review date and scope. API examples require model access and a call budget; training configurations are upstream examples, not minimum hardware requirements tested by this directory.
 
 ## Contents
 
@@ -591,6 +591,26 @@ The launcher runs in the background. Follow `runs/hotpotqa-8b-seed0/run.log` unt
 
 **Language and running requirements.** English; reading needs agent and prompt-optimization fundamentals, without an API or GPU. No dedicated official implementation was confirmed at the [review date](verification.md#verification-2026-10-29); this is a paper-reading entry, with no verified reproduction command.
 
+<a id="modular-gated-harness"></a>
+
+### [Harnesses That Improve Themselves · Modular Gated Evolution](https://arxiv.org/abs/2611.22299)
+
+**Related self-improvement mechanism · paper reading.** The framework separates context and state, agent control, action interfaces, and verification and recovery. An external optimizer proposes one module edit at a time. Code-path execution, validation performance and a runtime token cap govern acceptance. The task model stays frozen.
+
+**Recommended entry.** Read §§II–III for the editable components and how traces are used to diagnose failures, §IV for the validation gate, then §VII and Table IV. Identify which data informs the proposal, which selects an edit, and which measures transfer. [Paper v1](https://arxiv.org/html/2611.22299v1)
+
+**Evidence and requirements.** English. Agent engineering and software evaluation fundamentals. Table IV uses 60 SWE-bench Lite issues, with 12 for development, 8 for validation and 40 for final testing. On the original model, modular evolution solves 16/40 at 46.7k runtime tokens per task. The full rewrite solves 17/40 at 451.6k. The search uses 100 versus 24 rollouts and the turn limits differ, so compare search and deployment costs separately. The second model is evaluated using frozen harnesses. No official runnable release was verified.
+
+<a id="guard"></a>
+
+### [GUARD](https://arxiv.org/abs/2611.23476) — method reading
+
+**Recursive improvement method.** GUARD separates new regressions from unresolved gaps using paired trajectory checks. Soft-HURT screens candidate playbook updates. Comparing the best and worst candidates also rewrites the strategy prompts that the distiller uses to propose edits in the next round. Model weights and the update algorithm stay fixed.
+
+**Recommended entry.** Read [§§4.1–4.4 and Algorithm 1](https://arxiv.org/html/2611.23476v1#S4) to trace one edit from a task checklist through candidate scoring, promotion and the next proposer prompts. Then compare [§4.5](https://arxiv.org/html/2611.23476v1#S4.SS5) with [§§6.2–6.4](https://arxiv.org/html/2611.23476v1#S6.SS2). The gate constrains observed self-review scores on its task buffer, while held-out performance is measured separately. Test-time evaluation uses a frozen harness and one rollout per task.
+
+**Requirements and evidence.** English. Agent evaluation and continual learning fundamentals. The reported 54.5% reduction is deployment tokens per task versus the base harness on hosted EvoHarnessBench (43 test tasks), excluding adaptation, review and candidate-evaluation cost. [Appendix B.3](https://arxiv.org/html/2611.23476v1#A2.SS3) describes the model configurations and prompts. The authors plan to release the reference harness subject to approval, and this review located no official executable release.
+
 <a id="model-training"></a>
 
 ## Model Training
@@ -721,6 +741,21 @@ This resolves configuration without launching models, SSH or simulation. Follow 
 
 **Requirements.** English; SFT / RL and agent-evaluation fundamentals; paper reading. No official runnable implementation was verified in this review. The study uses Qwen3-4B-Thinking-2507, production queries, eight rollouts per query and versioned business tools; reading needs no compute, while reproduction requires the application data, reward rules and training infrastructure. No public minimum hardware configuration was verified.
 
+<a id="basersi"></a>
+
+### [BaseRSI](https://github.com/beita6969/BaseRSI) · [paper](https://arxiv.org/abs/2611.24578)
+
+**Related self-improvement mechanism · harness internalization.** The stock Qwen3.8-27B proposes and evaluates harness entries. The inner loop compiles accepted entries into a patch embedding and selected MLP weights through forward passes and regression. A student with the previous edit generates responses for a later refit under a fixed procedure. The published pipeline uses the original checkpoint for outer-loop proposals and exports an edited checkpoint that answers with the original input.
+
+**Recommended entry.** Read [§§4.1–4.3](https://arxiv.org/html/2611.24578v1#S4) and trace [the pipeline](https://github.com/beita6969/BaseRSI/blob/ecafed335b96298b46a864b8004af5f0c8a8bd55/basersi/config/pipeline.yaml) from data preparation and entry acceptance to the [student replay and refits](https://github.com/beita6969/BaseRSI/blob/ecafed335b96298b46a864b8004af5f0c8a8bd55/basersi/procedure_edit/rounds.py#L460). Install the package from the pinned checkout to inspect the stage list:
+
+```bash
+python -m pip install .
+basersi pipeline --list
+```
+
+**Requirements and evidence.** English. Python 3.12 for the preview. With the source extra and the pinned benchmark files, the [data stage](https://github.com/beita6969/BaseRSI/blob/ecafed335b96298b46a864b8004af5f0c8a8bd55/README.md#running) can prepare the 640 development items without loading a model. The full pipeline adds the stock 27B checkpoint, the GPU extra and 80 GB cards in the documented setup. The authors report 45.5 H800 GPU-hours for the improvement run with zero external API tokens. They reuse one improved checkpoint for three test-sampling seeds and separate fitting and validation from 640 ID and 640 OOD test items. The released workflow ends with checkpoint export and acceptance on development data. The [edited weights](https://huggingface.co/beita6969/BaseRSI-27B) and [test data](https://huggingface.co/datasets/beita6969/BaseRSI-Dataset) are available separately. [Appendix D](https://arxiv.org/html/2611.24578v1#A4)
+
 <a id="memory-skills"></a>
 
 ## Memory and Skills
@@ -838,6 +873,26 @@ uv run wikitrace run --config configs/alfworld.yaml --benchmark alfworld --suite
 ```
 
 **Requirements and evaluation.** English. Python ≥3.11, uv, Node 20, Docker, ALFWorld assets and OpenRouter access with call budget. The sample commands build one trial's corpus and evaluate a suite. The paper uses 50 training games and 101 test games for `valid-seen`. Start with the source walkthrough if you want to avoid model calls. The [analysis guide](https://github.com/yukyeongleee/wikitrace/blob/dc06570f2fc69e20d36fede62128a806e35edfcd/src/wikitrace/analysis/README.md) requires matched rows across methods and three no-memory trials for the reference majority. Compare newly solved tasks (Gain) and lost successes (Regression), then use additional no-memory reruns to estimate ordinary variation.
+
+<a id="altk-evolve"></a>
+
+### [ALTK-Evolve](https://github.com/AgentToolkit/altk-evolve) · [deployment study](https://arxiv.org/abs/2611.26361)
+
+**Related self-improvement mechanism · reusable procedural memory.** The same model acts, extracts lessons from its training trajectories and merges equivalent advice. Later runs receive all guidelines or a selected subset. Model weights and the extraction and consolidation procedure stay fixed.
+
+**Recommended entry.** Follow the [arithmetic agent tutorial](https://github.com/AgentToolkit/altk-evolve/blob/03f83be7480bf0be3f4aa6e868b832486e064718/docs/tutorials/guidelines-loop.md). Trace a run into local Phoenix, sync it to a filesystem namespace, list the stored guideline entities, then inspect which guidelines a fresh run receives. The task demonstrates the handoff between runs. To study effectiveness, read *The System* → *Measurement Setting* → *Insights 1, 3, 5 and 6* in the [paper](https://arxiv.org/html/2611.26361v1).
+
+**Requirements and evidence.** English. The tutorial uses Python ≥3.12, uv, local Phoenix, an embedding backend and model access. It uses a filesystem store and needs no AppWorld data. The study mines from AppWorld train/dev and reports a fixed injection rule alongside configurations selected on `test_normal`. Check the chosen memory size, repeat variation and per-task tokens. In the ACE comparison, the no-memory baselines use different scaffolds, so the headline score gap includes scaffold effects.
+
+<a id="perplexity-skills"></a>
+
+### [Perplexity: Self-improving skills](https://www.perplexity.ai/en-GB/hub/blog/self-improving-skills)
+
+**Related self-improvement mechanism · production case study.** Perplexity's Brain uses session traces to propose procedural skill changes. Personal updates undergo eligibility and version checks before activation for later sessions. Shared built-in updates undergo paired replay against failure and control scenarios, followed by engineer approval. The retained asset is the skill used in subsequent sessions.
+
+**Recommended entry.** Read Figures 2, 4 and 5, then the production experiment and offline results. Use Figure 5 to see how replay can catch regressions outside the targeted scenario. The eight-week randomized test reports tool-failure and user-dissatisfaction outcomes. The separate offline skill comparison uses 16 paired instances across nine task families. [Author report](https://www.perplexity.ai/en-GB/hub/blog/self-improving-skills)
+
+**Requirements.** English. Reading needs only a browser. The post describes internal implementation and experiments. For a separate public evaluation exercise, inspect one task and its evaluation dimensions in the benchmark the authors reference. [SkillLearnBench at `726e1f7`](https://github.com/cxcscmu/SkillLearnBench/blob/726e1f79b96b0cb3d729d0e55a1c847e0b5353ae/README.md#2-evaluation-dimensions)
 
 <a id="coevolution-projects"></a>
 
@@ -1212,3 +1267,18 @@ Compare the memory and program-library controls before interpreting budget savin
 **Method reading.** In §3.2, follow how a construction agent uses verifier output and code metrics to revise the specification, reference implementation and tests. §5.6 examines recovery of valid environments separately from the downstream training value of scope and coupling. The paper reports 10,159 environments. The public files support checking the initial tasks. The checked GitHub snapshot supplies documentation and figures. [Paper v2](https://arxiv.org/html/2611.21152v2#S3.SS2) · [Ablation](https://arxiv.org/html/2611.21152v2#S5.SS6)
 
 **Requirements.** Docker with Linux/amd64 support, Python ≥3.12 for Harbor 0.26.0 and `huggingface_hub`. The oracle and no-op checks require no model calls. The example image archive is about 720 MB and the task config assigns 2 CPUs, 8 GiB of RAM and 20 GiB of storage. A solving agent adds model access and call budget. [Instance files](https://huggingface.co/datasets/IQuestLab/RepoFactory/tree/efdcaa8f6ea1bfa55eed2263e39186b928c7da88/instances/000001) · [Harbor installation](https://docs.harborframework.com/getting-started/installation)
+
+<a id="skilldiff"></a>
+
+### [SkillDiff · How Feedback-Free Self-Evolution Reshapes Agent Skills](https://github.com/LitaoGuo/How-Self-Evolution-Reshapes-Skills) · [paper](https://arxiv.org/abs/2611.25534)
+
+**Evaluation tool · skill rewrite diagnostics.** Compare the original expert skill with successive rewrites that receive no task results. The same model rewrites and uses each skill, and companion scripts and references stay fixed. In 87 SkillsBench tasks across six models, the authors report an average 14.6 percentage point drop after 30 rewrites. SkillDiff marks expert items absent from all ten topic-only drafts to focus the agent's attention on them.
+
+**Recommended entry.** Read [§§2.1–2.2 → §§3.2–3.3 → §4 and Appendices C.4 / E](https://arxiv.org/html/2611.25534v1). Compare original, rewritten and restored conditions before interpreting the marking result. Run the [published chart commands](https://github.com/LitaoGuo/How-Self-Evolution-Reshapes-Skills/blob/db2cdbde29e752ebc9cc81817f17400b64056c40/README.md#evaluation) from the pinned repository root after installing `requirements.txt`:
+
+```bash
+python3 -m experiments.evaluate performance
+python3 -m experiments.evaluate retention
+```
+
+**Requirements and evidence.** Chinese and English docs. The charts need Python ≥3.10 and use the bundled aggregate CSV without model calls or GPUs. New SkillsBench runs need the selected original skills, task assets, BenchFlow, Docker and the corresponding harness and model access. In the reported setup, marking a skill for one model costs 21 preparation calls (one topic, ten drafts and ten judgments). The original skills and per-run outputs are absent from the [release](https://github.com/LitaoGuo/How-Self-Evolution-Reshapes-Skills/blob/db2cdbde29e752ebc9cc81817f17400b64056c40/EXPERIMENTS.md#data).

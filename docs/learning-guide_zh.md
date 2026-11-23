@@ -21,6 +21,7 @@
 
 - **中文学习路线**：[Prism 导读](../README_zh.md#prism) → [Hello-Agents Reflection](practice-guide_zh.md#hello-agents) → 可选的 [WalkingLabs 前置 Notebook](practice-guide_zh.md#walkinglabs) → [李宏毅自我成长讲次](../README_zh.md#hung-yi-lee) → [RSI 研究札记](../README_zh.md#rsi-research-notes)与[原始综述](../README_zh.md#surveys)。
 - **概念入门**：[Prism 中文导读](../README_zh.md#prism) → [The RSI Book 第 1–2 章](practice-guide_zh.md#rsi-book) → [natnew 阅读路线](../README_zh.md#natnew)。
+- **离线图谱与机制手册：** [BeforeRSI](../README_zh.md#beforersi) → 选择 Model、Harness 或联合路线 → 用手册第 21–23 章对照更新对象与评测。
 - **Agent 工程**：[The RSI Book 的 Python 循环](practice-guide_zh.md#rsi-book) → [learn-deepseek-harness](practice-guide_zh.md#learn-deepseek-harness) → [Harness² 流程演示](practice-guide_zh.md#harness2)，再选 [Meta-Harness](practice-guide_zh.md#meta-harness) 或 [AHO](practice-guide_zh.md#aho) → selfimproving-agent 综述中的 scaffold 与评估章节。 若要把学到的修改部署给现有 Agent，再学 [Hermit 外置 adapter](practice-guide_zh.md#hermit)。
 - **Harness 收益与成本**：[Harness 专题综述](../README_zh.md#harness-rsi-survey) → [HarnessMM 本地机制演示](practice-guide_zh.md#harnessmm) → [Elicitation or Expansion 收益诊断](practice-guide_zh.md#elicitation-or-expansion)。区分减少重复推理、提高单次成功率与扩大可解任务范围，再用 [DGM／ADAS 基线对照](practice-guide_zh.md#textbook-baselines)学习工程控制与预算匹配。
 - **优化实践**：[GEPA / DSPy](practice-guide_zh.md#gepa) → [GEPA-Curator 方法阅读](practice-guide_zh.md#gepa-curator)，思考哪些反馈适合指导更新 → [ShinkaEvolve](practice-guide_zh.md#shinkaevolve) 或 [OpenEvolve](practice-guide_zh.md#openevolve) → 用 [DGM](practice-guide_zh.md#dgm) 进阶研究 Agent 代码演化。
@@ -92,7 +93,7 @@
 
 本表连接已收录的教程、实践项目和评测示例。表中横跨[三类资源](../README_zh.md#resource-scope)，阅读分支表示主题，不代表 RSI 能力等级。对应关系是本目录的学习建议；除非明确说明，不表示综述已引用该项目，部分项目晚于综述发布。先围绕学习目标尝试链接中的示例，再回到对应综述章节比较机制。
 
-项目入口依据 **2026-10-22–2026-11-18** 阅读的上游文档与代码整理，未运行示例。每行的实践说明集中记录环境、模型访问、运行门槛和具体命令；各资源的核验日期与范围见[核验档案](verification_zh.md#verification)。
+项目入口依据 **2026-10-22–2026-11-23** 阅读的上游文档与代码整理，未运行示例。每行的实践说明集中记录环境、模型访问、运行门槛和具体命令；各资源的核验日期与范围见[核验档案](verification_zh.md#verification)。
 
 | 阅读分支／对应综述 | 项目与上手入口 | 学习目标与范围 |
 | --- | --- | --- |
@@ -114,6 +115,8 @@
 | **Harness 优化：共享实验流程** — [Modern Agentic Systems §6](https://arxiv.org/html/2607.13104v1#S6)；[Coding Agents §§7–8](https://arxiv.org/html/2608.03392v4) | [FlashRSI：quickstart → 候选快照 → 留出评测结果](practice-guide_zh.md#flashrsi) | 找出可编辑资源和固定的方法逻辑，用独立切分与成本记录比较初始及选中候选。预检不会运行改进实验。 |
 | **Harness：证据与优化的贡献** — [Coding Agents §§7–8](https://arxiv.org/html/2608.03392v4) | [EmoHarness：§3 → §5.1 → 模拟流程 → 真实运行](practice-guide_zh.md#emoharness) | 对比仅视频、增加音频、人工脚手架与演化 Harness 四种条件，先识别收益来源，再讨论自改进贡献。 |
 | **Harness 优化：效果与成本** — [Modern Agentic Systems §6](https://arxiv.org/html/2607.13104v1#S6)；[Coding Agents §§7–8](https://arxiv.org/html/2608.03392v4) | [HarnessPro：论文 §§3–4 → 运行策略 → 单任务 TB2 评测](practice-guide_zh.md#harnesspro)。 | 对比 Lite／Medium／Heavy 怎样分配推理与工具调用，再将通过率、实测成本与 Pareto 选优联系起来。区分评测已发布的 Harness 与运行论文的演化流程。 |
+| **按模块优化 Harness** — [Coding Agents §§7–8](https://arxiv.org/html/2608.03392v4) | [模块化门控演化：诊断 → 准入门控 → 表 IV](practice-guide_zh.md#modular-gated-harness) | 同时用搜索成本和部署成本比较模块补丁与全量重写，核对任务划分和轮数上限。 |
+| **带持久提案策略的 Harness 优化** — [The Last AI §3.6](https://arxiv.org/html/2609.11873v3#S3.SS6) | [GUARD：配对检查 → 策略提示词 → 下一轮](practice-guide_zh.md#guard) | 追踪指导后续提案的提示词，比较保留修改在准入缓冲区和独立漂移任务流上的表现。 |
 | **Harness 成本：复用已确定的决策** — [Harness 专题综述 §§2.1、4.5–5](https://github.com/LucasXinYu/harness-rsi/blob/7c60e793f575e31e7ead79c933086c2ad1d07239/docs/paper/Harness_RSI_Preprint_2026-11-14.pdf)，本目录的学习配对 | [HarnessMM：控制器示例 → 集成说明](practice-guide_zh.md#harnessmm)。 | 追踪回执、动作守卫与回退条件，观察哪些慢模型回调可被替代。本地示例没有模型或真实 shell 执行；省 Token 和保持质量需完整任务测量。 |
 | **Harness 成本：使用已发现机制** — [Coding Agents §§7–8](https://arxiv.org/html/2608.03392v4) | [SoL-Pi：研究方法 → 显式启用扩展](practice-guide_zh.md#sol-pi) | 在相同任务与模型下比较效果与成本，区分发现流程与使用筛选出的扩展。 |
 | **Harness 收益：成功率与任务覆盖** — [Harness 专题综述 §§4.5–5](https://github.com/LucasXinYu/harness-rsi/blob/7c60e793f575e31e7ead79c933086c2ad1d07239/docs/paper/Harness_RSI_Preprint_2026-11-14.pdf)，本目录的学习配对 | [Elicitation or Expansion：论文分析 → 已发布候选 → HotpotQA 优化入口](practice-guide_zh.md#elicitation-or-expansion)。 | 用相同采样预算下的 pass@k 和可解任务覆盖比较单次成功率与任务范围；有限 k 不能证明能力上限，运行一次候选选优也不能替代这项分析。 |
@@ -133,6 +136,7 @@
 | **模型训练：变化中的生产需求** — [Modern Agentic Systems §§5、8](https://arxiv.org/html/2607.13104v1) | [G-CAST：分流 → 奖励修订 → 累积评测](practice-guide_zh.md#g-cast) | 追踪被接受的模型与奖励版本如何进入下一轮；区分训练奖励、共同评测口径，以及晋级数据与未参与选择的最终测试。论文阅读。 |
 | **模型训练：具身回放与策略更新** — [Physical AI §§III–IV](https://arxiv.org/html/2610.38266v1) | [ESI：配置预览 → 采集／标注 → 后继 checkpoint](practice-guide_zh.md#esi) | 追踪教师纠正与学生动作如何进入下一轮策略；区分已报告的固定指导训练轮次、可选提示包演化与迁移评测。 |
 | **模型训练：学习策略修订机制** — [LLM Overview §§4.3–4.4](https://arxiv.org/html/2603.25681v3) | [RecurIR：假设 → 反例 → 修订／保留](practice-guide_zh.md#recurir) | 追踪被接受的变化如何进入指导后续图像恢复更新的机制；区分是否修改计划的决策，与保留更新所需的验证。论文阅读。 |
+| **模型权重与 Harness 内化** — [LLM Overview §§4.3–4.4](https://arxiv.org/html/2603.25681v3) | [BaseRSI：计划 → 编辑后的学生模型 → 导出 checkpoint](practice-guide_zh.md#basersi) | 追踪提案与重拟合样本分别来自哪个模型，再核对冻结的基准划分和产生权重编辑的成本。 |
 | **经验、记忆与技能** — [Frontis §§2–4](https://github.com/FrontisAI/Awesome-Self-Improving-Agents/blob/main/Self_Improving_Agents.pdf) | [Hello Generic Agent 第 4 章](https://datawhalechina.github.io/hello-generic-agent/part1/chapter4/) → [第 12 章](https://datawhalechina.github.io/hello-generic-agent/part2/chapter12/)；安装其关联的 GenericAgent 实现。 [实践说明](practice-guide_zh.md#hello-generic-agent)。 | 将已完成任务整理成可复用 SOP／脚本，再观察后续会话如何检索。学习保留什么、何时复用；验证主要依靠提示约束，可能需要用户指导。 |
 | **应用记忆：准入与持久化** | [agent-qa 记忆源码路线](practice-guide_zh.md#agent-qa)：文档 → 候选晋升门控 → 持久记忆包文件。 | 追踪经核实的 QA 证据如何成为可复用应用知识及后续运行上下文；区分本地准入与 CI 提案。本源码路线不测量性能提升。 |
 | **经验：可复用上下文** — [Modern Agentic Systems §6.1.2](https://arxiv.org/html/2607.13104v1#S6.SS1.SSS2)明确讨论 ACE | [ACE Formula CLI](https://github.com/ace-agent/ace/blob/main/eval/finance/run.py) → 保存／重载 `best_playbook.txt`；[实践说明](practice-guide_zh.md#ace)。 | 跟踪反馈如何变成保留的经验条目，并进入后续样本。在模型权重固定时，对比适应前与重载选优手册后的持出集结果。 |
@@ -142,6 +146,8 @@
 | **经验：具身技能与记忆** — [Frontis §§2–4](https://github.com/FrontisAI/Awesome-Self-Improving-Agents/blob/main/Self_Improving_Agents.pdf) | [RoboScript：Mock → 技能构建器 → Task Memory／反思](practice-guide_zh.md#roboscript) | 追踪覆盖检查如何产生冻结技能，区分任务预演和保留的反思，与模型或改进 driver 的变化。 |
 | **经验：跨用户与 Agent 共享** — [Frontis §§2–4](https://github.com/FrontisAI/Awesome-Self-Improving-Agents/blob/main/Self_Improving_Agents.pdf)；[Co-Evolution §3](https://arxiv.org/html/2608.10299v1#S3) | [MixUA：记忆范围 → 证据路由 → 冻结记忆测试](practice-guide_zh.md#mixua) | 明确哪些对象可以复用经验，分别衡量任务成功、偏好保留和信息泄露探针结果。论文阅读，尚无已核验运行入口。 |
 | **可追溯来源的经验** — [Frontis §§2–4](https://github.com/FrontisAI/Awesome-Self-Improving-Agents/blob/main/Self_Improving_Agents.pdf) | [WikiTrace：经验 → 来源轨迹 → 匹配的记忆条件](practice-guide_zh.md#wikitrace) | 沿经验找到产生它的运行轨迹，对比冻结的证据语料与无记忆条件，同时统计新增成功和回退。 |
+| **将经验提炼成指南** — [Frontis §§2–4](https://github.com/FrontisAI/Awesome-Self-Improving-Agents/blob/main/Self_Improving_Agents.pdf) | [ALTK-Evolve：轨迹 → 保存指南 → 下一次运行](practice-guide_zh.md#altk-evolve) | 核对指南是否进入下一次会话，再读 AppWorld 对照，观察注入数量与模型之间的交互。 |
+| **生产环境的技能维护** — [Frontis §§2–4](https://github.com/FrontisAI/Awesome-Self-Improving-Agents/blob/main/Self_Improving_Agents.pdf) | [Perplexity：个人更新 → 配对回放 → 生产指标](practice-guide_zh.md#perplexity-skills) | 对比不同技能类型的版本检查与人工审批，按各自口径阅读生产试验与离线任务对照。 |
 | **经验：记忆组件评测** — [Self-Evolving Agents §7.2.1](https://arxiv.org/html/2507.21046v4#S7.SS2.SSS1)与 [§7.1.4](https://arxiv.org/html/2507.21046v4#S7.SS1.SSS4)，本目录的编辑配对 | [LongMemEval-V2 基线](https://github.com/xiaowu0162/LongMemEval-V2#reproducing-baselines)：无检索 → RAG；[实践说明](practice-guide_zh.md#longmemeval-v2)。 | 固定读者模型、问题、证据预算与裁判，对比答案准确率和记忆查询延迟。这里测量记忆组件，未覆盖 Agent 持续改进的完整轨迹。 |
 | **经验：跨会话评测** — [Frontis §§7–8](https://github.com/FrontisAI/Awesome-Self-Improving-Agents/blob/main/Self_Improving_Agents.pdf)；[Self-Evolving Agents §7.2.1](https://arxiv.org/html/2507.21046v4#S7.SS2.SSS1) | [PAST-Bench：偏好采纳任务族 → 经验保留对照](practice-guide_zh.md#past-bench)。 | 在新会话组成的任务序列中，对比保留与不保留经验；结合轨迹、保存产物与 `sequence_comparison.json`，将后续结果对应到经验的保存、检索与更新。 |
 | **经验：超越纠错案例的泛化** — [Self-Evolving Agents §7](https://arxiv.org/html/2507.21046v4) | [CLR-Bench：TR1 → 状态重放 → 未见取值](practice-guide_zh.md#clr-bench) | 比较冻结模型、原始历史与更新状态条件，用取值级诊断区分规则与清单。 |
@@ -150,6 +156,7 @@
 | **持续学习评测** — [Self-Evolving Agents §7](https://arxiv.org/html/2507.21046v4) | [Continual-ARC：回放 → 重置对照 → 冻结后迁移](practice-guide_zh.md#continual-arc) | 在同一模型与 Harness 下对比重置与保留工件，解读迁移成绩前先核对任务族的接触范围。 |
 | **科学求解器评测** — [Prism §5](https://github.com/Prism-Shadow/awesome-rsi/blob/main/site/public/papers/rsi-survey.pdf) | [RSI-PDEbench：公开验证 → 分布偏移划分 → 成本报告](practice-guide_zh.md#rsi-pdebench) | 追踪候选方程的筛选和求解器更新的保留，核对哪些结果参与了基准设计，哪些成本来自回放。 |
 | **生成式任务环境评测** — [Modern Agentic Systems §8](https://arxiv.org/html/2607.13104v1) | [RepoFactory：任务约定 → 正负对照](practice-guide_zh.md#repofactory) | 核对参考方案通过、未修改工作区失败，再读论文中新环境如何进入训练闭环。 |
+| **技能重写评测** — [Self-Evolving Agents §7](https://arxiv.org/html/2507.21046v4) | [SkillDiff：重画曲线 → 检查丢失细节 → 恢复对照](practice-guide_zh.md#skilldiff) | 从曲线检查重写是否保留了有用流程，再比较恢复细节和在原技能中标记细节。 |
 | **评测：静态 Harness 与技能演化对照** — [Frontis §§7–8](https://github.com/FrontisAI/Awesome-Self-Improving-Agents/blob/main/Self_Improving_Agents.pdf) | [JustRUA：构件消融 → debug 通信 → 机器人任务](practice-guide_zh.md#justrua) | 将历史与控制选择的作用同论文的技能演化闭环分开。已发布静态策略用于基线对照；通信检查不测量任务成功率。 |
 | **实验证据：AI 研发任务** — [Prism §5](https://github.com/Prism-Shadow/awesome-rsi/blob/main/site/public/papers/rsi-survey.pdf)；[The Path §§2.1–2.3、6](https://www.preprints.org/manuscript/202608.0051) | [Scale RSI Bench：nanoGPT 数据筛选任务 → 其他样例的任务约定](practice-guide_zh.md#scale-rsi-bench)。 | 对比数据筛选、自蒸馏、稳健性与 Agent swarm 任务的可修改组件、预算和评分。任务衡量研发操作的效果，单项得分本身不代表已形成递归改进闭环。 |
 | **评测：推荐系统研究** — [Modern Agentic Systems §8](https://arxiv.org/html/2607.13104v1) | [AutoRSE：HSTU → 启动预览 → 来源记录](practice-guide_zh.md#autorse) | 追踪每次实验改了什么，并依据公共验证集选优；启动预览或格式检查不等于隐藏测试结果。 |

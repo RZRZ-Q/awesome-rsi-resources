@@ -4,7 +4,7 @@
 
 [资源目录](../README_zh.md) · [学习指南](learning-guide_zh.md) · [实践指南](practice-guide_zh.md)
 
-本档案记录 **2026-10-22 至 2026-11-18** 的来源核验。每个日期小节分别说明来源、版本与核验范围；后续新增不代表重新核验此前记录。
+本档案记录 **2026-10-22 至 2026-11-23** 的来源核验。每个日期小节分别说明来源、版本与核验范围；后续新增不代表重新核验此前记录。
 
 - [近期综述覆盖表](#survey-coverage)
 - [核验历史与扩展排漏](#review-log)
@@ -18,6 +18,7 @@
 - [2026-11-14：优化经验、联合训练与评测基线](#verification-2026-11-14)
 - [2026-11-16：具身闭环、实验基础设施与综述更新](#verification-2026-11-16)
 - [2026-11-18：Agent 继承、训练环境与持续学习评测](#verification-2026-11-18)
+- [2026-11-23：模块化 Harness、持久技能与模型编辑](#verification-2026-11-23)
 
 <a id="survey-coverage"></a>
 
@@ -478,3 +479,33 @@
 **发布观察。** [PASE 仓库](https://github.com/NEUIR/PASE)仍返回 404。[SkillDuet 项目页 `52fddde`](https://github.com/stoney0062/SkillDuet/tree/52fddde400a9ab9828fe330bf2ce34486f7f5120)和 [ACE-RL 论文仓库 `f2d04dc`](https://github.com/doyoungkim-ml/ehrl/tree/f2d04dc4c8be112db0456b423a8518903ab80fab)均与此前一致。本轮未核验到 RecurIR 的官方可运行实现。
 
 本轮检查一手论文、公开工件及所选源码。运行与回放命令按文档和源码核对，未执行上游实验。
+
+<a id="verification-2026-11-23"></a>
+
+### 2026-11-23：模块化 Harness、持久技能与模型编辑
+
+**核验日期：11 月 23 日，Asia/Taipei。** 对现有 119 项排重后新增七项，总数增至 **126**。论文日期为 arXiv 首次提交的 UTC 日期，发布工件、工程报告与索引快照另记日期。
+
+| 资源 | 日期／本次核实的最新版本 | 核实的入口与证据范围 | 已检查索引的覆盖 |
+| --- | --- | --- | --- |
+| [BeforeRSI](https://github.com/Cherish0925/BeforeRSI) | RSI 快照 **2026-10-19**，双语整理版 **2026-10-20** | [固定快照 `f6f8d2f`](https://github.com/Cherish0925/BeforeRSI/tree/f6f8d2fbe397a102f80501deb38bd029edd86218)。11 月 9 日提交增加独立的现代 AI 研究谱系。RSI 目录的 141 条记录分为 118 条方法、1 条初筛和 22 条历史或背景。已核对离线 ZIP 中的单一 HTML 与 Model／LLM 手册。先从三条机制路线和手册第 01、21–23 章入手。实验 003 是检验后继系统改进能力的拟议对照。 | [LobeHub 相关目录](https://github.com/lobehub/awesome-rsi/blob/1ed3074bcac80673a3e30780a90cc78a2e5b590d/README.md#L492)。 |
+| [Harnesses That Improve Themselves](https://arxiv.org/abs/2611.22299) | **2026-11-17 · v1** | 读 §§II–III → §IV → §VII／表 IV。外部优化器提出运行时修改。SWE-bench Lite 子集含 12 道开发题、8 道验证题和 40 道测试题。用原模型时，模块化方案通过 16/40，平均每题运行消耗 46.7k tokens。全量重写通过 17/40，消耗 451.6k。两案的搜索成本和轮次不同。已核验的学习入口为论文。 | [pinkbubble 概览](https://github.com/pinkbubblebubble/awesome-rsi/blob/a1a573c71443056ce5c9dcc6eaa58f4372e6da0e/README.md#L74)。 |
+| [Perplexity：Self-improving skills](https://www.perplexity.ai/en-GB/hub/blog/self-improving-skills) | 作者报告 **2026-11-18** | 看图 2、4 和 5，分别追踪证据、个人技能版本、配对回放和内置技能审批。持续八周的随机实验与覆盖九类任务的 16 个配对实例离线实验支持不同主张。[SkillLearnBench `726e1f7`](https://github.com/cxcscmu/SkillLearnBench/tree/726e1f79b96b0cb3d729d0e55a1c847e0b5353ae) 是供延伸阅读的独立公开评测。该生产系统的已核验入口为作者报告。 | 报告未匹配。延伸评测见 [Prism README](https://github.com/Prism-Shadow/awesome-rsi/blob/f319302e21d6e5ab4f564519a6b8fce4e4a7293c/README.md#L530) 与[论文数据](https://github.com/Prism-Shadow/awesome-rsi/blob/f319302e21d6e5ab4f564519a6b8fce4e4a7293c/site/src/data/papers.js#L780)。 |
+| [GUARD](https://arxiv.org/abs/2611.23476) | **2026-11-17 · v1**（台北 11 月 18 日） | 读 §§4.1–4.4／算法 1 → §4.5 → §§6.2–6.4。修订后的提案提示词指导后续轮次，Soft-HURT 门控用于 playbook 更新。非回退条件适用于门控缓冲区的自评分。文中部署 token 减少 54.5% 对应托管 EvoHarnessBench 的 43 项子集。附录将参考 Harness 标为待批准发布。 | [pinkbubble 方法条目](https://github.com/pinkbubblebubble/awesome-rsi/blob/a1a573c71443056ce5c9dcc6eaa58f4372e6da0e/README.md#L267)和 [Observatory 论文流](https://github.com/Fucheng1245/RSI-Observatory/blob/7fb326b0e271f50392835d69a9c8bc5a3c42f161/README.md#L172)。 |
+| [BaseRSI](https://arxiv.org/abs/2611.24578) | **2026-11-18 · v1** | 核对[官方代码 `ecafed3`](https://github.com/beita6969/BaseRSI/tree/ecafed335b96298b46a864b8004af5f0c8a8bd55)（11 月 21 日）及模型、数据元信息。读 §§4.1–4.3 和附录 D。编辑后学生模型的回答进入后续内化，外环提案仍来自原始模型。列出流程时无需加载模型，完整实验使用 27B 权重和作者的 GPU 配置。报告中的三个种子均对同一个编辑后检查点采样。 | [pinkbubble 方法条目](https://github.com/pinkbubblebubble/awesome-rsi/blob/a1a573c71443056ce5c9dcc6eaa58f4372e6da0e/README.md#L264)和 [Observatory 论文流](https://github.com/Fucheng1245/RSI-Observatory/blob/7fb326b0e271f50392835d69a9c8bc5a3c42f161/README.md#L166)。 |
+| [IBM：How Much Should an Agent Remember?](https://arxiv.org/abs/2611.26361) | **2026-11-19 · v1**（台北 11 月 20 日） | [altk-evolve 源码 `03f83be`](https://github.com/AgentToolkit/altk-evolve/tree/03f83be7480bf0be3f4aa6e868b832486e064718)（11 月 20 日）。[指南闭环教程](https://github.com/AgentToolkit/altk-evolve/blob/03f83be7480bf0be3f4aa6e868b832486e064718/docs/tutorials/guidelines-loop.md)使用算术 Agent、Phoenix、模型和 embedding 服务。读 The System、Measurement Setting 与 Insights 1、3、5、6。追踪合并时来源计数守恒及记忆选择。作者从 train/dev 轨迹提取经验，并在 test_normal 对比记忆配置。固定全量指南规则提供另一组对照。 | 在下列 21 个文件中未匹配。 |
+| [SkillDiff](https://arxiv.org/abs/2611.25534) | **2026-11-19 · v1** | [官方源码 `db2cdbd`](https://github.com/LitaoGuo/How-Self-Evolution-Reshapes-Skills/tree/db2cdbde29e752ebc9cc81817f17400b64056c40)。读 §§2–4，分别看重写、保留与标注模型先验之外的知识。已发布曲线 CSV 可在本地无模型绘图。从头计分需要另备技能输入、运行基准并调用模型。 | 在下列 21 个文件中未匹配。 |
+
+**覆盖范围。** 对 6 个已收录索引的 21 个公开文件按名称、标题、论文编号或官方仓库路径匹配，区分自动论文流与编辑条目。
+
+| 来源快照 | 核验文件 | 本轮结果 |
+| --- | --- | --- |
+| [Prism `f319302`](https://github.com/Prism-Shadow/awesome-rsi/tree/f319302e21d6e5ab4f564519a6b8fce4e4a7293c) | `README.md`、`site/src/data/{methods,papers,systems}.js`（四个） | 有延伸阅读 SkillLearnBench。最新提交增加 MetaAct 和 EvoDisco。 |
+| [pinkbubble `a1a573c`](https://github.com/pinkbubblebubble/awesome-rsi/tree/a1a573c71443056ce5c9dcc6eaa58f4372e6da0e) | `README.md`（一个） | 有模块化 Harness 论文、GUARD 和 BaseRSI 的编辑条目。README 记载审阅日期为 11 月 19 日。 |
+| [LobeHub `1ed3074`](https://github.com/lobehub/awesome-rsi/tree/1ed3074bcac80673a3e30780a90cc78a2e5b590d) 与 [natnew `7152191`](https://github.com/natnew/awesome-recursive-self-improvement/tree/7152191ed372ecbc540cfab0601a1f61de2d0d82) | 各自 `README.md`（两个） | LobeHub 包含 BeforeRSI。LobeHub 最新提交更新 CI，natnew 保持上轮快照。 |
+| [Follow RSI `9f62739`](https://github.com/adongwanai/follow-rsi/tree/9f62739a91bc446ef8ed0be7e595955d09ea6093) | `README.md`、`data/papers.yaml`、`site/papers.json` 与 11 月 11–18 日各刊期（十一个） | 源码快照未变。所查文件无本轮七项的条目。 |
+| [RSI Observatory `7fb326b`](https://github.com/Fucheng1245/RSI-Observatory/tree/7fb326b0e271f50392835d69a9c8bc5a3c42f161) | `README.md`、`PAPERS.md`、`radar/LATEST.md`（三个） | 自动更新的 README 论文流列出 GUARD 与 BaseRSI。 |
+
+**Follow RSI 状态。** [线上日报索引](https://adongwanai.github.io/follow-rsi/daily/index.html)与固定源码均更新至[11 月 18 日简报](https://github.com/adongwanai/follow-rsi/blob/9f62739a91bc446ef8ed0be7e595955d09ea6093/daily/2026-11-18.md)。该提交中 11 月 19–23 日的五个刊期路径返回 404，未计入 21 个成功读取的文件。README 仍将订阅 Skill 标为即将推出。
+
+本轮核验原论文、公开工件及相关源码。运行说明对应文档所示的入口和依赖，上游实验未实跑。
