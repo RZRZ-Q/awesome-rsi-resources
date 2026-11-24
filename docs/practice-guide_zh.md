@@ -6,7 +6,7 @@
 
 这里集中记录具体示例的学习目标、源码入口和运行条件。先按主题选择项目；综述章节与项目的对应关系见[学习指南](learning-guide_zh.md#survey-project-map)。条目的[三类标签](../README_zh.md#resource-scope)描述所推荐入口的范围，主题分组不表示 RSI 能力等级。
 
-以下说明来自 **2026-10-22–2026-11-23** 对上游文档与部分源码的核验，**未运行教程、调用模型或复现实验**；逐项日期与范围见[核验档案](verification_zh.md#verification)。API 示例需要相应模型权限与调用预算，训练配置是上游示例而非本目录实测的最低硬件要求。
+以下说明来自 **2026-10-22–2026-11-24** 对上游文档与部分源码的核验。11 月 24 日实跑了 [JevRSI mock](#jevrsi) 与 [CoEvoBench 教学示例](#coevobench)。逐项范围见[核验档案](verification_zh.md#verification)。API 示例需要相应模型权限与调用预算，训练配置沿用作者公开设置。
 
 ## 目录
 
@@ -358,6 +358,18 @@ harness2-demo --output runs/demo --k 2
 
 **Harness²：跟踪被保留的状态。** 每个新任务从共同基础执行 Harness 开始；之前采纳的 Harness 与经验提供给改进器选择复用。对照[经验库持久化](https://github.com/google-research/harness2/blob/1cfe254e8d25b15f37048c3730134686abe60335/harness2/core/library.py#L106-L151)与[传给改进器的上下文](https://github.com/google-research/harness2/blob/1cfe254e8d25b15f37048c3730134686abe60335/harness2/core/context.py#L161-L164)。Demo 的[固定提案器](https://github.com/google-research/harness2/blob/1cfe254e8d25b15f37048c3730134686abe60335/harness2/demo.py#L120-L163)展示流程连接，不会从经验库学习其编辑。真实运行的默认路线使用 Google Cloud／Vertex AI 凭证；LAB 另需 Pandoc／Poppler，WorkBuddy-Bench 另需 Docker。
 
+<a id="sim"></a>
+
+### SIM · Self-Improvement Memory（[论文](https://arxiv.org/abs/2611.18856) · [作者讲解](https://lucasxinyu.github.io/sim/)）
+
+**递归改进方法 · 论文阅读。** SIM 保留历次 Harness 编辑的理由、预期和实测结果。切换到兼容的基准或策略模型后，提案器和选择器共同读取继承的记忆。选中修改后继续追加实测结果，包括未兑现的预期与退步，供后续轮次修订继承的改动。
+
+1. 先看[记忆记录示例](https://lucasxinyu.github.io/sim/#method)，追踪诊断如何进入编辑、如何用演化集选择改动，以及结果怎样追加。再读[§3](https://arxiv.org/html/2611.18856v1#S3)和附录 D，核对存储的字段和读取者。
+2. 读[§4.4 与表 3](https://arxiv.org/html/2611.18856v1#S4.SS4)。十个独立演化出的 Terminus-2 Harness 各自启动两次十轮 TB4 续跑，配对固定起始代码、策略以及轮数和候选预算。继承并更新 SIM 的平均终局分比只继承 Harness 高 2.36 点，十组里九组更高。
+3. 把附录 F 和 [Harness² 经验库路线](#harness2)对照，检查哪些理由能够迁移，哪些修改需要重审，以及提案器与选择器每轮读取完整记忆会增加多少上下文成本。
+
+**门槛。** 阅读项目讲解和论文无需模型或 GPU。讲解中的记录用于说明格式。本次未核验到可运行的作者实验发布。
+
 <a id="hermit"></a>
 
 ### [Hermit · CMU InfiniAI Lab](https://github.com/Infini-AI-Lab/hermit)
@@ -612,6 +624,16 @@ scripts/run_one.sh configs/hotpotqa-8b.yaml
 
 **条件与证据。** 英文。适合已有 Agent 评测和持续学习基础的读者。报告的 54.5% 降幅来自托管版 EvoHarnessBench 的 43 个测试任务，是相对基础 Harness 的单任务部署 token 降幅，不包含适应、自评和候选评测开销。[附录 B.3](https://arxiv.org/html/2611.23476v1#A2.SS3)给出模型配置与提示词。作者计划在获得批准后公开参考 Harness，本轮未找到官方可执行发布。
 
+<a id="jevrsi"></a>
+
+### [JevRSI](https://github.com/usail-hkust/JevRSI) · [论文](https://arxiv.org/abs/2611.22432)
+
+**相关自改进机制 · 异步决策 Harness。** 快速的 System-1 模型选择动作。异步运行的 System-2 LLM 根据交互反馈修订操作流程、状态记忆与动作效果预测程序。通过准入检查的修订供 System-1 后续决策使用，新决策又为下一次修订提供证据。两边的模型权重保持固定。
+
+**推荐入口。** 读[§3](https://arxiv.org/html/2611.22432v3#S3)，从[决策循环](https://github.com/usail-hkust/JevRSI/blob/825a4e83e6c6805c7b7255d514e62b3668a20a76/jevmaster/agent.py#L212)追踪一次低置信度动作，看它如何触发 [System-2 审查与发布](https://github.com/usail-hkust/JevRSI/blob/825a4e83e6c6805c7b7255d514e62b3668a20a76/jevmaster/system2/service.py#L614)，再回到模块库的重载。试跑使用两套确定性 stub 与模拟环境的[离线示例](https://github.com/usail-hkust/JevRSI/blob/825a4e83e6c6805c7b7255d514e62b3668a20a76/README.md#running)。我们核验了文档命令，它正常退出，运行了 1 个 episode，System-2 记录 1 次拒绝，发布 0 个模块。
+
+**条件与证据。** 英文。模拟运行需要 Python 与核心依赖，无需 GPU 或 API key。基准实验需要 S1/S2 模型服务以及对应环境依赖与资产。解读 ID/OOD 分数前先看[数据划分协议](https://github.com/usail-hkust/JevRSI/blob/825a4e83e6c6805c7b7255d514e62b3668a20a76/scripts/run_protocol.py#L234)。`official` 配置为两组评测分别复制同一份训练快照，默认仍可继续演化。[§4.3](https://arxiv.org/html/2611.22432v3#S4.SS3)分别报告 S1 模型调用延迟、评测 token 开销和训练期间 S2 的介入次数。
+
 <a id="model-training"></a>
 
 ## 模型训练
@@ -756,6 +778,16 @@ basersi pipeline --list
 ```
 
 **条件与证据。** 英文。流程预览需 Python 3.12。安装数据源依赖并准备固定版本的基准文件后，[数据阶段](https://github.com/beita6969/BaseRSI/blob/ecafed335b96298b46a864b8004af5f0c8a8bd55/README.md#running)可在不加载模型的情况下整理 640 个开发样本。完整流程另需原始 27B 权重、GPU 依赖与文档所用的 80 GB 显存卡。作者报告改进过程耗费 45.5 H800 GPU 小时，外部 API token 开销为零。测试使用同一次改进得到的权重和三个采样种子，拟合和验证与 640 个 ID、640 个 OOD 测试样本分开。公开流程覆盖权重导出与开发集验收，[编辑后权重](https://huggingface.co/beita6969/BaseRSI-27B)及[测试集](https://huggingface.co/datasets/beita6969/BaseRSI-Dataset)另行发布。[附录 D](https://arxiv.org/html/2611.24578v1#A4)
+
+<a id="automaster"></a>
+
+### [AutoMaster](https://github.com/RUCAIBox/AutoMaster) · [论文](https://arxiv.org/abs/2611.26510)
+
+**相关自改进机制 · 技能引导的后训练。** 研究 Agent 为固定的教师模型设计技能，在小规模 rollout 中试验，再选取轨迹做 SFT。学生的分数与轨迹反馈给下一轮的技能设计和数据筛选。每轮学生都从同一初始权重开始训练，评测时去掉生成的技能。
+
+**推荐入口。** 读[§§3.1–3.3 和 §5.2](https://arxiv.org/html/2611.26510v2)，结合[行为对照示例](https://github.com/RUCAIBox/AutoMaster/blob/116c295dfdb7729e8f8684d85dea867c5fd9806e/docs/method.md#behavioral-shaping-in-practice)，比较教师示范了什么、验证器又评了什么。追踪技能说明如何保留在 SFT 输入中，以及哪些助手输出用于监督。
+
+**条件与证据。** 英文。阅读示例无需模型。评测[公开学生权重](https://huggingface.co/collections/RUC-AIBOX/automaster)可参考 [Doc2Repo 推理配置](https://github.com/RUCAIBox/AutoMaster/blob/116c295dfdb7729e8f8684d85dea867c5fd9806e/recipes/inference/README.md)，需 Python 3.11+、固定版本的 AweAgent 子模块、OpenAI 兼容模型端点或本地 SGLang 部署，以及 Docker 和基准任务资产。公开版本提供技能与推理配置，研究控制器、教师轨迹生成服务与 SFT 调度尚未公开。[表 1](https://arxiv.org/html/2611.26510v2#S4.SS2)在六组基准与模型组合上报告了相对 Vanilla SFT 的 1.42–8.99 个百分点的均值提升。两组使用相同的教师、任务池、示范条数和 SFT 配置，AutoMaster 还通过多轮试验筛选干预方案。
 
 <a id="memory-skills"></a>
 
@@ -1283,3 +1315,27 @@ python3 -m experiments.evaluate retention
 ```
 
 **条件与证据。** 中英文文档。绘图需 Python ≥3.10，读取随仓库附带的聚合 CSV，无需模型调用或 GPU。新跑 SkillsBench 需要选定的原始技能、任务资产、BenchFlow、Docker 与对应 Harness、模型访问。论文配置中，为单个模型标记一项技能要预先调用模型 21 次（1 次主题、10 次草稿、10 次评审）。[发布包](https://github.com/LitaoGuo/How-Self-Evolution-Reshapes-Skills/blob/db2cdbde29e752ebc9cc81817f17400b64056c40/EXPERIMENTS.md#data)未附原始技能和逐运行输出。
+
+<a id="coevobench"></a>
+
+### [CoEvoBench](https://github.com/AlibabaResearch/CoEvoBench) · [论文](https://arxiv.org/abs/2611.27116)
+
+**评测工具 · 模型与 Harness 协同演化。** 学习研究 Agent 如何在同一预算下更新模型权重、修改 Harness，或同时改进两者。结合配对对照和 Visible、Selection、Test 的分工，区分首个可用候选带来的收益与后续反馈带来的收益。[论文 §§3.2–3.4、5.1–5.3](https://arxiv.org/html/2611.27116v1)
+
+**推荐入口。** 先读 §15.2 的 AppWorld 示例和 §19 的评测审计。要追踪开发阶段的评估器，参考[固定版快速入门](https://github.com/AlibabaResearch/CoEvoBench/blob/d39a924c8985806933c94777d8e969d6e756262c/README.md#quickstart-no-gpu-smoke-run)，在仓库根目录运行以下命令。
+
+```bash
+uv run --locked --no-dev ceb eval --bench toy --split visible
+```
+
+**条件与证据。** 中英文文档。Toy 需 Python ≥3.11、uv、本地 Docker 和 `python:3.11-slim` 镜像，无需模型凭据或 GPU。本地跑通两个脚本生成的平方和任务（`score=1.0000`、`n_bad=0`），验证了 Toy 的评分流程。参考协议每次运行配置四张 GPU、24 小时和 100 美元教师模型额度，每个研究 Agent 与评测基准组合独立运行三次。完整实验另需评测资产、模型访问和训练环境。固定版本记录了当前 Docker/GPU 验收和最终评估仍待补齐的环节。[快速入门及实现状态](https://github.com/AlibabaResearch/CoEvoBench/blob/d39a924c8985806933c94777d8e969d6e756262c/README.md)
+
+<a id="rsibench-infra"></a>
+
+### [RSIBench-Infra](https://rsibench-infra.github.io/) · [论文](https://arxiv.org/abs/2611.24395)
+
+**评测工具 · 基础设施优化。** 学习如何在 16 项推理和 4 项训练工作负载上，通过各任务的质量检查验证基础设施修改带来的吞吐提升。Lite Set 选取完整套件中同样测过的五项单 H20 推理任务。[论文 §§3–5](https://arxiv.org/pdf/2611.24395v1)
+
+**推荐入口。** 从 Qwen3.8-27B 开始，在[公开结果浏览器](https://rsibench-infra.github.io/#results)点开 Kimi K3 的运行。先对照验证后的加速比与分析估算的性能上界（SOL）归一化分数，再查看公开轨迹。到 §5 核对作者如何估算性能上界。比较汇总指标时留意分母，Claude Opus 5.5 在完整套件 20 项中有 10 项正式得分，在 Lite 的五项中有三项。[Lite Set](https://rsibench-infra.github.io/#lite-set) · [论文 §§4–5](https://arxiv.org/pdf/2611.24395v1)
+
+**条件与证据。** 英文论文和结果浏览器。读分数与轨迹只需浏览器。论文工作负载需要 1 至 32 个加速器。[固定版源码](https://github.com/rsibench-infra/rsibench-infra.github.io/tree/5bb554a6d622736a31cc9d711168ab8f041e3b30)公开了网站、结果数据和轨迹浏览器，[项目网站](https://rsibench-infra.github.io/#about)将评测运行器标注为即将发布。

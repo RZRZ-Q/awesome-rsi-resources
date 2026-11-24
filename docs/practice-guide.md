@@ -6,7 +6,7 @@
 
 This guide collects learning goals, source entry points, and running requirements for specific examples. Choose a project by topic; use the [learning guide](learning-guide.md#survey-project-map) to connect it to survey chapters. The [three resource labels](../README.md#resource-scope) describe the recommended entry point; topic groups are not RSI capability levels.
 
-These notes come from upstream documentation and selected source reviews on **2026-10-22–2026-11-23**. **No tutorials, model calls, or experiments were run.** See the [verification records](verification.md#verification) for each resource's review date and scope. API examples require model access and a call budget; training configurations are upstream examples, not minimum hardware requirements tested by this directory.
+These notes come from upstream documentation and selected source reviews on **2026-10-22–2026-11-24**. The November 24 run checks cover the [JevRSI mock](#jevrsi) and [CoEvoBench toy](#coevobench). See the [verification records](verification.md#verification) for each review's scope. API examples require model access and a call budget. Training configurations describe the authors' setups.
 
 ## Contents
 
@@ -358,6 +358,18 @@ Inspect `demo.json`, `INDEX.md`, and `EXPERIENCE.md`; trace [library context and
 
 **Harness²: follow the retained state.** Each new task starts from a common base execution harness; earlier adopted harnesses and lessons are available to the improver for selective reuse. Compare [library persistence](https://github.com/google-research/harness2/blob/1cfe254e8d25b15f37048c3730134686abe60335/harness2/core/library.py#L106-L151) with [the context supplied to the improver](https://github.com/google-research/harness2/blob/1cfe254e8d25b15f37048c3730134686abe60335/harness2/core/context.py#L161-L164). The demo's [scripted proposer](https://github.com/google-research/harness2/blob/1cfe254e8d25b15f37048c3730134686abe60335/harness2/demo.py#L120-L163) demonstrates the plumbing but does not learn its edits from that library. For real runs, the default route uses Google Cloud / Vertex AI credentials; LAB additionally needs Pandoc / Poppler, and WorkBuddy-Bench needs Docker.
 
+<a id="sim"></a>
+
+### SIM · Self-Improvement Memory ([paper](https://arxiv.org/abs/2611.18856) · [author explainer](https://lucasxinyu.github.io/sim/))
+
+**Recursive improvement method · paper reading.** SIM carries forward the reasons, predictions, and observed outcomes behind earlier harness edits. When a compatible benchmark or policy model changes, the proposer and selector read the carried memory. They append findings for selected edits, including missed predictions and regressions, so later rounds can revise how inherited edits are used.
+
+1. Start with [the illustrated memory record](https://lucasxinyu.github.io/sim/#method). Follow a diagnosis through an edit, selection on the evolve split, and an appended outcome. Then read [§3](https://arxiv.org/html/2611.18856v1#S3) and Appendix D for the stored fields and who reads them.
+2. Read [§4.4 and Table 3](https://arxiv.org/html/2611.18856v1#S4.SS4). Ten evolved Terminus-2 harnesses each seed two ten-round TB4 continuations with matched starting code, policy and round/candidate budgets. Carrying and updating SIM gives a mean final-score gain of 2.36 points over harness-only continuation. Nine of ten pairs favor SIM.
+3. Compare Appendix F with the [Harness² experience-library route](#harness2). Identify which earlier rationales transfer, which edits need revision, and why giving the proposer and selector the full memory adds context cost.
+
+**Requirements.** The author explainer and paper are readable without a model or GPU. The explainer's record illustrates the format. This review located no author-provided runnable release for the reported experiments.
+
 <a id="hermit"></a>
 
 ### [Hermit · CMU InfiniAI Lab](https://github.com/Infini-AI-Lab/hermit)
@@ -611,6 +623,16 @@ The launcher runs in the background. Follow `runs/hotpotqa-8b-seed0/run.log` unt
 
 **Requirements and evidence.** English. Agent evaluation and continual learning fundamentals. The reported 54.5% reduction is deployment tokens per task versus the base harness on hosted EvoHarnessBench (43 test tasks), excluding adaptation, review and candidate-evaluation cost. [Appendix B.3](https://arxiv.org/html/2611.23476v1#A2.SS3) describes the model configurations and prompts. The authors plan to release the reference harness subject to approval, and this review located no official executable release.
 
+<a id="jevrsi"></a>
+
+### [JevRSI](https://github.com/usail-hkust/JevRSI) · [paper](https://arxiv.org/abs/2611.22432)
+
+**Related self-improvement mechanism · asynchronous decision harness.** A fast System-1 model selects actions. An asynchronous System-2 LLM uses interaction feedback to revise procedures, state memory and action-effect predictors. Admitted revisions are available to System-1 on later decisions. Those decisions generate the evidence for the next revision, while both models' weights stay fixed.
+
+**Recommended entry.** Read [§3](https://arxiv.org/html/2611.22432v3#S3), then follow a low-confidence action from the [decision loop](https://github.com/usail-hkust/JevRSI/blob/825a4e83e6c6805c7b7255d514e62b3668a20a76/jevmaster/agent.py#L212) through [System-2 review and publication](https://github.com/usail-hkust/JevRSI/blob/825a4e83e6c6805c7b7255d514e62b3668a20a76/jevmaster/system2/service.py#L614) and back to a store reload. Try the [offline example](https://github.com/usail-hkust/JevRSI/blob/825a4e83e6c6805c7b7255d514e62b3668a20a76/README.md#running) with two deterministic stubs and a mock environment. The documented command exited successfully in our check, running one episode and recording one System-2 rejection and zero module publications.
+
+**Requirements and evidence.** English. The mock uses Python and core dependencies, with no GPU or API key. Benchmark runs need S1/S2 endpoints and the relevant environment dependencies and assets. Check [the split protocol](https://github.com/usail-hkust/JevRSI/blob/825a4e83e6c6805c7b7255d514e62b3668a20a76/scripts/run_protocol.py#L234) before interpreting ID/OOD scores. Under the official profile, each split starts from a copy of the same training snapshot and can continue evolving by default. [§4.3](https://arxiv.org/html/2611.22432v3#S4.SS3) reports S1 model-call latency, evaluation token expenditure and training-time S2 activity separately.
+
 <a id="model-training"></a>
 
 ## Model Training
@@ -755,6 +777,16 @@ basersi pipeline --list
 ```
 
 **Requirements and evidence.** English. Python 3.12 for the preview. With the source extra and the pinned benchmark files, the [data stage](https://github.com/beita6969/BaseRSI/blob/ecafed335b96298b46a864b8004af5f0c8a8bd55/README.md#running) can prepare the 640 development items without loading a model. The full pipeline adds the stock 27B checkpoint, the GPU extra and 80 GB cards in the documented setup. The authors report 45.5 H800 GPU-hours for the improvement run with zero external API tokens. They reuse one improved checkpoint for three test-sampling seeds and separate fitting and validation from 640 ID and 640 OOD test items. The released workflow ends with checkpoint export and acceptance on development data. The [edited weights](https://huggingface.co/beita6969/BaseRSI-27B) and [test data](https://huggingface.co/datasets/beita6969/BaseRSI-Dataset) are available separately. [Appendix D](https://arxiv.org/html/2611.24578v1#A4)
+
+<a id="automaster"></a>
+
+### [AutoMaster](https://github.com/RUCAIBox/AutoMaster) · [paper](https://arxiv.org/abs/2611.26510)
+
+**Related self-improvement mechanism · skill-guided post-training.** An LLM research agent designs skills for a fixed teacher, tests them in pilot rollouts and selects demonstrations for SFT. Student scores and trajectories guide the next round's skills and data selection. Every student starts from the same initial checkpoint and is evaluated without the generated skills.
+
+**Recommended entry.** Read [§§3.1–3.3 and §5.2](https://arxiv.org/html/2611.26510v2), then use the [behavioral examples](https://github.com/RUCAIBox/AutoMaster/blob/116c295dfdb7729e8f8684d85dea867c5fd9806e/docs/method.md#behavioral-shaping-in-practice) to compare what the teacher demonstrates with what the verifier scores. Trace how skill context is retained in SFT inputs while supervision stays on the assistant outputs.
+
+**Requirements and evidence.** English. Reading the examples requires no model. To evaluate a [released student checkpoint](https://huggingface.co/collections/RUC-AIBOX/automaster) with the [Doc2Repo recipe](https://github.com/RUCAIBox/AutoMaster/blob/116c295dfdb7729e8f8684d85dea867c5fd9806e/recipes/inference/README.md), use Python 3.11+, the pinned AweAgent submodule, an OpenAI-compatible endpoint or a local SGLang deployment, Docker and benchmark assets. The release covers skills and inference, while the research controller, teacher rollout service and SFT orchestration are outside the release. [Table 1](https://arxiv.org/html/2611.26510v2#S4.SS2) reports mean gains of 1.42–8.99 percentage points across six benchmark/model settings against Vanilla SFT, controlling for the teacher, task pool, demonstration count and SFT recipe. This comparison controls the SFT setup while AutoMaster additionally searches over teacher interventions across rounds.
 
 <a id="memory-skills"></a>
 
@@ -1282,3 +1314,27 @@ python3 -m experiments.evaluate retention
 ```
 
 **Requirements and evidence.** Chinese and English docs. The charts need Python ≥3.10 and use the bundled aggregate CSV without model calls or GPUs. New SkillsBench runs need the selected original skills, task assets, BenchFlow, Docker and the corresponding harness and model access. In the reported setup, marking a skill for one model costs 21 preparation calls (one topic, ten drafts and ten judgments). The original skills and per-run outputs are absent from the [release](https://github.com/LitaoGuo/How-Self-Evolution-Reshapes-Skills/blob/db2cdbde29e752ebc9cc81817f17400b64056c40/EXPERIMENTS.md#data).
+
+<a id="coevobench"></a>
+
+### [CoEvoBench](https://github.com/AlibabaResearch/CoEvoBench) · [paper](https://arxiv.org/abs/2611.27116)
+
+**Evaluation tool · model–harness co-evolution.** Follow how a researcher agent can revise model weights, the harness, or both under one budget. Compare the paired controls and the roles of Visible, Selection and Test to distinguish the first working candidate from gains produced by later feedback. [Paper §§3.2–3.4, 5.1–5.3](https://arxiv.org/html/2611.27116v1)
+
+**Recommended entry.** Read the AppWorld example in §15.2 and the evaluation audits in §19. To follow the development evaluator in code, use the [pinned quickstart](https://github.com/AlibabaResearch/CoEvoBench/blob/d39a924c8985806933c94777d8e969d6e756262c/README.md#quickstart-no-gpu-smoke-run) and run this from the checkout root.
+
+```bash
+uv run --locked --no-dev ceb eval --bench toy --split visible
+```
+
+**Requirements and evidence.** Chinese and English documentation. The toy uses Python ≥3.11, uv and local Docker with `python:3.11-slim`, with no model credentials or GPUs. Both scripted sum-of-squares tasks passed locally (`score=1.0000`, `n_bad=0`), verifying the toy scoring path. The reference protocol budgets four GPUs, 24 hours and a $100 teacher-model allowance per run, with three independent runs per researcher–benchmark pair. Full runs also need benchmark assets, model access and training infrastructure. The pinned checkout documents gaps in current Docker/GPU acceptance and final evaluation. [Quickstart and implementation status](https://github.com/AlibabaResearch/CoEvoBench/blob/d39a924c8985806933c94777d8e969d6e756262c/README.md)
+
+<a id="rsibench-infra"></a>
+
+### [RSIBench-Infra](https://rsibench-infra.github.io/) · [paper](https://arxiv.org/abs/2611.24395)
+
+**Evaluation tool · infrastructure optimization.** Study how task-specific quality checks qualify throughput gains from changing the infrastructure for 16 inference and four training workloads. The five-task Lite Set uses single-H20 inference workloads also measured in the full suite. [Paper §§3–5](https://arxiv.org/pdf/2611.24395v1)
+
+**Recommended entry.** Start with Qwen3.8-27B and open Kimi K3's run in the [public results explorer](https://rsibench-infra.github.io/#results). Compare validated speedup and the analytical speed-of-light (SOL) score, then inspect the published trajectory. In §5, check how the authors estimate the analytical reference. Claude Opus 5.5 has formal scores for 10 of 20 tasks and three of the five Lite tasks. Use those denominators when comparing aggregates. [Lite Set](https://rsibench-infra.github.io/#lite-set) · [Paper §§4–5](https://arxiv.org/pdf/2611.24395v1)
+
+**Requirements and evidence.** English paper and results explorer. Reviewing scores and traces only needs a browser. The paper describes workloads using one to 32 accelerators. The [pinned source](https://github.com/rsibench-infra/rsibench-infra.github.io/tree/5bb554a6d622736a31cc9d711168ab8f041e3b30) publishes the site, results data and trace viewer. The [project site](https://rsibench-infra.github.io/#about) lists the benchmark runner as forthcoming.

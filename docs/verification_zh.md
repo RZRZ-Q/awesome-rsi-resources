@@ -4,7 +4,7 @@
 
 [资源目录](../README_zh.md) · [学习指南](learning-guide_zh.md) · [实践指南](practice-guide_zh.md)
 
-本档案记录 **2026-10-22 至 2026-11-23** 的来源核验。每个日期小节分别说明来源、版本与核验范围；后续新增不代表重新核验此前记录。
+本档案记录 **2026-10-22 至 2026-11-24** 的来源核验。每个日期小节分别说明来源、版本与核验范围；后续新增不代表重新核验此前记录。
 
 - [近期综述覆盖表](#survey-coverage)
 - [核验历史与扩展排漏](#review-log)
@@ -19,6 +19,7 @@
 - [2026-11-16：具身闭环、实验基础设施与综述更新](#verification-2026-11-16)
 - [2026-11-18：Agent 继承、训练环境与持续学习评测](#verification-2026-11-18)
 - [2026-11-23：模块化 Harness、持久技能与模型编辑](#verification-2026-11-23)
+- [2026-11-24：决策 Harness、后训练与协同演化评测](#verification-2026-11-24)
 
 <a id="survey-coverage"></a>
 
@@ -509,3 +510,31 @@
 **Follow RSI 状态。** [线上日报索引](https://adongwanai.github.io/follow-rsi/daily/index.html)与固定源码均更新至[11 月 18 日简报](https://github.com/adongwanai/follow-rsi/blob/9f62739a91bc446ef8ed0be7e595955d09ea6093/daily/2026-11-18.md)。该提交中 11 月 19–23 日的五个刊期路径返回 404，未计入 21 个成功读取的文件。README 仍将订阅 Skill 标为即将推出。
 
 本轮核验原论文、公开工件及相关源码。运行说明对应文档所示的入口和依赖，上游实验未实跑。
+
+<a id="verification-2026-11-24"></a>
+
+### 2026-11-24：决策 Harness、后训练与协同演化评测
+
+**核验日期：11 月 24 日，Asia/Taipei。** 本轮新增五项，目录从 **126 增至 131**。排重检查了名称、别名、arXiv 记录、官方仓库与既有指南中的配套材料。SkillDiff 保留既有条目，SkillLearnBench 仍作为 Perplexity 的延伸阅读。RSIBench-Infra 跨任务评测基础设施优化，现有 InfraRSI 条目介绍具体优化器。下表日期按论文提交历史的 UTC 日期记录。
+
+| 资源 | 首次日期／本次核实的最新版本 | 核实的入口与证据范围 | 已检查索引的覆盖 |
+| --- | --- | --- | --- |
+| [JevRSI](https://arxiv.org/abs/2611.22432) | **2026-11-17 → v3，2026-11-19** | [官方源码 `825a4e8`](https://github.com/usail-hkust/JevRSI/tree/825a4e83e6c6805c7b7255d514e62b3668a20a76)。读 §§3.1–3.2 和 §4.3，追踪环境反馈如何写成可复用模块。离线 mock 无需模型，实跑完成一个回合和一次 System-2 审查，未发布新模块。真实运行需要模型访问与任务资产。默认评测仍可写入技能库，论文的推理延迟口径为 System-1 模型调用。 | [pinkbubble 方法条目](https://github.com/pinkbubblebubble/awesome-rsi/blob/a1a573c71443056ce5c9dcc6eaa58f4372e6da0e/README.md#L270)、[Follow RSI 11 月 19 日刊](https://github.com/adongwanai/follow-rsi/blob/818ffb7e86609780da093541af1ee281bea7fd3f/daily/2026-11-19.md#L31)。 |
+| [AutoMaster](https://arxiv.org/abs/2611.26510) | **2026-11-19 → v2，2026-11-20**（首版台北 11 月 20 日） | [官方源码 `116c295`](https://github.com/RUCAIBox/AutoMaster/tree/116c295dfdb7729e8f8684d85dea867c5fd9806e)。读 §§3.1–3.3 和 §§5.2–5.3。教师模型固定，在技能指导下生成轨迹，每轮 SFT 从同一学生检查点开始。公开版提供九套技能和推理评测配置，研究控制器、教师生成服务与 SFT 编排在本次发布范围之外。 | [Follow RSI 11 月 20 日刊](https://github.com/adongwanai/follow-rsi/blob/818ffb7e86609780da093541af1ee281bea7fd3f/daily/2026-11-20.md#L36)。 |
+| [CoEvoBench](https://arxiv.org/abs/2611.27116) | **2026-11-20 · v1** | [官方源码 `d39a924`](https://github.com/AlibabaResearch/CoEvoBench/tree/d39a924c8985806933c94777d8e969d6e756262c)。读 §§3.2–3.4 和 §§5.1–5.3，查看模型与 Harness 联合编辑和独立评测划分。本机以 Docker 运行 CPU 示例，两道可见算术题均完成（`n=2`、`score=1.0000`），无需模型或 GPU。论文研究设置为 24 小时预算、四张 GPU。所查版本仍将正式终评和结果对照标为实验功能。 | [Follow RSI 11 月 20 日刊](https://github.com/adongwanai/follow-rsi/blob/818ffb7e86609780da093541af1ee281bea7fd3f/daily/2026-11-20.md#L47)。 |
+| [RSIBench-Infra](https://arxiv.org/abs/2611.24395) | **2026-11-18 · v1** | [项目网站快照 `5bb554a`](https://github.com/rsibench-infra/rsibench-infra.github.io/tree/5bb554a6d622736a31cc9d711168ab8f041e3b30)。读 §§3–4 → §5，查看公开榜单的 20 个任务、五任务 Lite 子集及部分轨迹。评测协议在质量约束下度量加速。官网将评测运行器标为待发布，本轮核实的入口为论文和公开工件。 | [Prism 基准列表](https://github.com/Prism-Shadow/awesome-rsi/blob/0674413ab210a460c0c6c4080b0cf0f749d8aa98/README.md#L523)、[论文数据](https://github.com/Prism-Shadow/awesome-rsi/blob/0674413ab210a460c0c6c4080b0cf0f749d8aa98/site/src/data/papers.js#L4)、[pinkbubble 基准条目](https://github.com/pinkbubblebubble/awesome-rsi/blob/a1a573c71443056ce5c9dcc6eaa58f4372e6da0e/README.md#L508)、[Observatory 论文流](https://github.com/Fucheng1245/RSI-Observatory/blob/fb92cda01aa5b713f6b87c1f330f4bd887800f42/README.md#L167)和[雷达](https://github.com/Fucheng1245/RSI-Observatory/blob/fb92cda01aa5b713f6b87c1f330f4bd887800f42/radar/LATEST.md#L37)。 |
+| [Self-Improvement Memory（SIM）](https://arxiv.org/abs/2611.18856) | **2026-11-13 · v1**（台北 11 月 14 日） | 读 §§3.2–3.3 → §4.4 → 附录 D–F 和[作者讲解](https://lucasxinyu.github.io/sim/)。配对试验从同一个已演化 Harness 开始，对比携带修改历史与只携带 Harness 两种延续方式。编码实验十组配对的终局平均相差 +2.36 点，九组为正，一组为负。本轮核实为阅读入口。 | [Prism 方法列表](https://github.com/Prism-Shadow/awesome-rsi/blob/0674413ab210a460c0c6c4080b0cf0f749d8aa98/README.md#L116)和[方法数据](https://github.com/Prism-Shadow/awesome-rsi/blob/0674413ab210a460c0c6c4080b0cf0f749d8aa98/site/src/data/methods.js#L93)。 |
+
+**覆盖范围。** 按名称、标题、编号和官方路径在 6 个已收录索引的 26 个公开文件中匹配本轮条目。上游版本未变的文件沿用前一次核验结果。自动论文流与编辑条目分别注明。
+
+| 来源快照 | 核验文件 | 相对 11 月 23 日的变动 |
+| --- | --- | --- |
+| [Prism `0674413`](https://github.com/Prism-Shadow/awesome-rsi/tree/0674413ab210a460c0c6c4080b0cf0f749d8aa98) | `README.md`、`site/src/data/{methods,papers,systems}.js`（四个） | 新增 Embodied-Harness、SkillBridge、MULTILOOP 等条目。 |
+| [pinkbubble `a1a573c`](https://github.com/pinkbubblebubble/awesome-rsi/tree/a1a573c71443056ce5c9dcc6eaa58f4372e6da0e) 与 [natnew `7152191`](https://github.com/natnew/awesome-recursive-self-improvement/tree/7152191ed372ecbc540cfab0601a1f61de2d0d82) | 各自 `README.md`（两个） | 两个来源版本均未变。 |
+| [LobeHub `c7ae25e`](https://github.com/lobehub/awesome-rsi/tree/c7ae25edef882b9af5bcc8049d086b400b121d6a) | `README.md`（一个） | 更新已有 *First Steps Toward Automated AI Research* 条目的链接。 |
+| [Follow RSI `818ffb7`](https://github.com/adongwanai/follow-rsi/tree/818ffb7e86609780da093541af1ee281bea7fd3f) | `README.md`、`data/papers.yaml`、`site/papers.json` 与 11 月 11–23 日各刊期（十六个） | 发布 11 月 19–23 日各刊期，并更新此前材料。所查版本的 11 月 24 日刊期路径返回 404。 |
+| [RSI Observatory `fb92cda`](https://github.com/Fucheng1245/RSI-Observatory/tree/fb92cda01aa5b713f6b87c1f330f4bd887800f42) | `README.md`、`PAPERS.md`、`radar/LATEST.md`（三个） | 11 月 23 日周更刷新自动论文流及雷达。 |
+
+**Follow RSI 状态。** [线上日报索引](https://adongwanai.github.io/follow-rsi/daily/index.html)与固定源码均更新至 [11 月 23 日简报](https://github.com/adongwanai/follow-rsi/blob/818ffb7e86609780da093541af1ee281bea7fd3f/daily/2026-11-23.md)。简报记载当日无入选，并按先前刊期补录。README 仍将订阅 Skill 标为即将推出。[11 月 19 日刊的 SkillDiff 条目](https://github.com/adongwanai/follow-rsi/blob/818ffb7e86609780da093541af1ee281bea7fd3f/daily/2026-11-19.md#L47)为本目录既有条目补充了索引覆盖。
+
+运行核验覆盖 JevRSI mock 和 CoEvoBench 教学示例。五项条目均核对了原论文及可用的公开工件。

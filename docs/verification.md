@@ -4,7 +4,7 @@
 
 [Resource directory](../README.md) · [Learning guide](learning-guide.md) · [Practice guide](practice-guide.md)
 
-This archive records source checks from **2026-10-22 through 2026-11-23**. Each dated section specifies its own sources, versions and review scope; a later addition does not refresh earlier checks.
+This archive records source checks from **2026-10-22 through 2026-11-24**. Each dated section specifies its own sources, versions and review scope; a later addition does not refresh earlier checks.
 
 - [Recent survey coverage](#survey-coverage)
 - [Review history and expansion checks](#review-log)
@@ -19,6 +19,7 @@ This archive records source checks from **2026-10-22 through 2026-11-23**. Each 
 - [2026-11-16: Embodied loops, experiment infrastructure and survey updates](#verification-2026-11-16)
 - [2026-11-18: Agent inheritance, training environments and continual evaluation](#verification-2026-11-18)
 - [2026-11-23: Modular harnesses, persistent skills and model editing](#verification-2026-11-23)
+- [2026-11-24: Decision harnesses, post-training and co-evolution benchmarks](#verification-2026-11-24)
 
 <a id="survey-coverage"></a>
 
@@ -509,3 +510,31 @@ The review used primary papers, public artifacts and selected source files. The 
 **Follow RSI status.** The [public daily index](https://adongwanai.github.io/follow-rsi/daily/index.html) and the pinned source both end at the [November 18 bulletin](https://github.com/adongwanai/follow-rsi/blob/9f62739a91bc446ef8ed0be7e595955d09ea6093/daily/2026-11-18.md). The five November 19–23 daily paths returned 404 at the checked commit and are outside the 21 successful reads. The README still describes the subscription Skill as forthcoming.
 
 This batch checks primary papers, artifacts and selected source files. Runtime notes describe the documented entries and requirements. Upstream experiments were not run.
+
+<a id="verification-2026-11-24"></a>
+
+### 2026-11-24: Decision harnesses, post-training and co-evolution benchmarks
+
+**Reviewed November 24, Asia/Taipei.** Five additions bring the catalog from **126 to 131**. The check included titles, aliases, arXiv records, official repositories and companion material in the existing guides. SkillDiff remains an existing entry and SkillLearnBench stays linked from the Perplexity reading route. RSIBench-Infra evaluates infrastructure optimization across benchmark tasks, while the existing InfraRSI entry covers a specific optimizer. Paper dates below use UTC submission history.
+
+| Resource | First date / latest checked version | Entry and evidence scope | Coverage in checked indexes |
+| --- | --- | --- | --- |
+| [JevRSI](https://arxiv.org/abs/2611.22432) | **2026-11-17 → v3, 2026-11-19** | [Official source `825a4e8`](https://github.com/usail-hkust/JevRSI/tree/825a4e83e6c6805c7b7255d514e62b3668a20a76). Read §§3.1–3.2 and §4.3 for the handoff from environment feedback to reusable modules. The offline mock completed one episode and one System-2 review without model access. It published no new module. Live runs need model access and task assets. The default evaluation can continue writing to the skill store. Reported inference latency covers System-1 model calls. | [pinkbubble method entry](https://github.com/pinkbubblebubble/awesome-rsi/blob/a1a573c71443056ce5c9dcc6eaa58f4372e6da0e/README.md#L270), [Follow RSI November 19 edition](https://github.com/adongwanai/follow-rsi/blob/818ffb7e86609780da093541af1ee281bea7fd3f/daily/2026-11-19.md#L31). |
+| [AutoMaster](https://arxiv.org/abs/2611.26510) | **2026-11-19 → v2, 2026-11-20** (first submission November 20 in Taipei) | [Official source `116c295`](https://github.com/RUCAIBox/AutoMaster/tree/116c295dfdb7729e8f8684d85dea867c5fd9806e). Read §§3.1–3.3 and §§5.2–5.3. The fixed teacher generates skill-guided trajectories and each SFT trial starts from the same student checkpoint. The public release provides nine skills and inference evaluation recipes. The research controller, teacher-generation service and SFT orchestration are outside this release. | [Follow RSI November 20 edition](https://github.com/adongwanai/follow-rsi/blob/818ffb7e86609780da093541af1ee281bea7fd3f/daily/2026-11-20.md#L36). |
+| [CoEvoBench](https://arxiv.org/abs/2611.27116) | **2026-11-20 · v1** | [Official source `d39a924`](https://github.com/AlibabaResearch/CoEvoBench/tree/d39a924c8985806933c94777d8e969d6e756262c). Read §§3.2–3.4 and §§5.1–5.3 for joint model and harness editing with a separate evaluation split. The local Docker run of the CPU toy completed both visible arithmetic cases (`n=2`, `score=1.0000`) without model or GPU access. The paper's research setting uses a 24-hour budget and four GPUs. The checked release describes final evaluation and result comparison as experimental. | [Follow RSI November 20 edition](https://github.com/adongwanai/follow-rsi/blob/818ffb7e86609780da093541af1ee281bea7fd3f/daily/2026-11-20.md#L47). |
+| [RSIBench-Infra](https://arxiv.org/abs/2611.24395) | **2026-11-18 · v1** | [Site snapshot `5bb554a`](https://github.com/rsibench-infra/rsibench-infra.github.io/tree/5bb554a6d622736a31cc9d711168ab8f041e3b30). Read §§3–4 → §5 and inspect the public scoreboard for 20 tasks, the five-task Lite subset and selected trajectories. The protocol evaluates speedups subject to quality constraints. The website lists the evaluation runner as forthcoming, so the verified public route is paper and artifact review. | [Prism benchmark list](https://github.com/Prism-Shadow/awesome-rsi/blob/0674413ab210a460c0c6c4080b0cf0f749d8aa98/README.md#L523), [paper data](https://github.com/Prism-Shadow/awesome-rsi/blob/0674413ab210a460c0c6c4080b0cf0f749d8aa98/site/src/data/papers.js#L4), [pinkbubble benchmarks](https://github.com/pinkbubblebubble/awesome-rsi/blob/a1a573c71443056ce5c9dcc6eaa58f4372e6da0e/README.md#L508), [Observatory feed](https://github.com/Fucheng1245/RSI-Observatory/blob/fb92cda01aa5b713f6b87c1f330f4bd887800f42/README.md#L167) and [radar](https://github.com/Fucheng1245/RSI-Observatory/blob/fb92cda01aa5b713f6b87c1f330f4bd887800f42/radar/LATEST.md#L37). |
+| [Self-Improvement Memory (SIM)](https://arxiv.org/abs/2611.18856) | **2026-11-13 · v1** (November 14 in Taipei) | Read §§3.2–3.3 → §4.4 → Appendices D–F and the [author walkthrough](https://lucasxinyu.github.io/sim/). Paired continuations start from the same evolved harness and compare carrying its edit history with carrying the harness alone. The coding study reports a mean final difference of +2.36 points across ten paired continuations, nine positive and one negative. Verified as a reading entry. | [Prism method list](https://github.com/Prism-Shadow/awesome-rsi/blob/0674413ab210a460c0c6c4080b0cf0f749d8aa98/README.md#L116) and [method data](https://github.com/Prism-Shadow/awesome-rsi/blob/0674413ab210a460c0c6c4080b0cf0f749d8aa98/site/src/data/methods.js#L93). |
+
+**Coverage scope.** Checked 26 public files across six existing indexes against the names, titles, identifiers and official paths of the selected entries. The last verified files were reused where the upstream revision was unchanged. Matches in generated feeds are identified separately from editorial entries.
+
+| Source snapshot | Files checked | Change since November 23 |
+| --- | --- | --- |
+| [Prism `0674413`](https://github.com/Prism-Shadow/awesome-rsi/tree/0674413ab210a460c0c6c4080b0cf0f749d8aa98) | `README.md`, `site/src/data/{methods,papers,systems}.js` (four) | Added entries including Embodied-Harness, SkillBridge and MULTILOOP. |
+| [pinkbubble `a1a573c`](https://github.com/pinkbubblebubble/awesome-rsi/tree/a1a573c71443056ce5c9dcc6eaa58f4372e6da0e) and [natnew `7152191`](https://github.com/natnew/awesome-recursive-self-improvement/tree/7152191ed372ecbc540cfab0601a1f61de2d0d82) | Each `README.md` (two) | Both revisions unchanged. |
+| [LobeHub `c7ae25e`](https://github.com/lobehub/awesome-rsi/tree/c7ae25edef882b9af5bcc8049d086b400b121d6a) | `README.md` (one) | Updated the URL of the existing *First Steps Toward Automated AI Research* entry. |
+| [Follow RSI `818ffb7`](https://github.com/adongwanai/follow-rsi/tree/818ffb7e86609780da093541af1ee281bea7fd3f) | `README.md`, `data/papers.yaml`, `site/papers.json` and November 11–23 daily editions (sixteen) | Published November 19–23 editions and updated earlier material. The November 24 path returned 404 in this revision. |
+| [RSI Observatory `fb92cda`](https://github.com/Fucheng1245/RSI-Observatory/tree/fb92cda01aa5b713f6b87c1f330f4bd887800f42) | `README.md`, `PAPERS.md`, `radar/LATEST.md` (three) | The November 23 weekly update refreshed the automated feed and radar. |
+
+**Follow RSI status.** The [public index](https://adongwanai.github.io/follow-rsi/daily/index.html) and pinned source both end at the [November 23 bulletin](https://github.com/adongwanai/follow-rsi/blob/818ffb7e86609780da093541af1ee281bea7fd3f/daily/2026-11-23.md). The bulletin records zero selections for that day and backfills earlier publication windows. The README still describes the subscription Skill as forthcoming. A [November 19 entry for SkillDiff](https://github.com/adongwanai/follow-rsi/blob/818ffb7e86609780da093541af1ee281bea7fd3f/daily/2026-11-19.md#L47) extends index coverage for the existing catalog item.
+
+The run checks cover the JevRSI mock and CoEvoBench toy. The five entries were checked against primary papers and their available public artifacts.

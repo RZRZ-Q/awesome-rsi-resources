@@ -12,7 +12,7 @@
 </p>
 
 <p align="center">
-  <a href="#resource-scope"><img src="https://img.shields.io/badge/resources-126-69D8AD?style=flat-square&amp;labelColor=182522" alt="126 项资源"></a>
+  <a href="#resource-scope"><img src="https://img.shields.io/badge/resources-131-69D8AD?style=flat-square&amp;labelColor=182522" alt="131 项资源"></a>
   <a href="README.md"><img src="https://img.shields.io/badge/languages-EN%20%2F%20%E4%B8%AD%E6%96%87-69D8AD?style=flat-square&amp;labelColor=182522" alt="中文与英文"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-69D8AD?style=flat-square&amp;labelColor=182522" alt="MIT 许可"></a>
 </p>
@@ -24,7 +24,7 @@
   <a href="docs/verification_zh.md">核验档案</a>
 </p>
 
-**收录 126 项资源；最近一次来源核验：2026-11-23。** 同一项目的网站、代码和 Notebook 合并计数；各项日期与实际核验范围见[核验档案](docs/verification_zh.md)。
+**收录 131 项资源；最近一次来源核验：2026-11-24。** 同一项目的网站、代码和 Notebook 合并计数；各项日期与实际核验范围见[核验档案](docs/verification_zh.md)。
 
 <a id="resource-scope"></a>
 
@@ -266,9 +266,11 @@
 | 资源 | 特色与学习目标 | 推荐学习入口 | 语言与条件 |
 | --- | --- | --- | --- |
 | <a id="harness2"></a> [Harness² · Google Cloud AI Research／Northwestern](https://github.com/google-research/harness2) · [论文](https://arxiv.org/abs/2610.14224) | **递归改进方法。** 保留的改进经验指导后续 Harness 编辑；先看固定编辑逻辑的流程演示。 | [本地 Demo → 经验库源码](docs/practice-guide_zh.md#harness2) | 英文；Demo 需 Python 3.12/3.13 与 uv、无需模型凭证；真实改进需模型访问。 |
+| <a id="sim"></a> [SIM · Self-Improvement Memory](https://arxiv.org/abs/2611.18856) · [项目网站](https://lucasxinyu.github.io/sim/) | **递归改进方法 · 论文阅读。** 切换基准或模型后，把历次编辑的理由与实测结果带入后续 Harness 优化。 | [记忆示例 → 配对续跑 → 记录格式](docs/practice-guide_zh.md#sim) | 英文。需 Agent 评测基础，已核验的学习入口为作者网站与论文。 |
 | <a id="hermit"></a> [Hermit · CMU InfiniAI Lab](https://github.com/Infini-AI-Lab/hermit) · [文档](https://infini-ai-lab.github.io/hermit/docs/) | **相关自改进机制。** 保持基础模型和原 Harness 固定，训练并记录外置 adapter 的版本，通过统一训练与部署接口比较不同更新方法。 | [离线训练流程 → 小型 API 示例 → adapter 部署](docs/practice-guide_zh.md#hermit) | 英文；当前源码需 Python 3.12+ 与 Git。离线教学例子无需模型账号或 GPU；真实训练需方法依赖、模型访问和任务数据。 |
 | <a id="rsihub"></a> [RSIHub](https://github.com/simple-agent-lab/RSIHub) · [论文](https://arxiv.org/abs/2610.32253) | **相关自改进机制 · 实验框架。** 比较可组合的演化算子；沿 HyperAgents recipe 追踪改进器修改的继承。 | [第零代检查 → 算子继承 → 收益诊断](docs/practice-guide_zh.md#rsihub) | 双语文档；Python ≥3.12、uv 与 Git。真实演化另需 Docker、任务下载与模型访问；基线检查不调用模型。 |
 | <a id="modular-gated-harness"></a> [Harnesses That Improve Themselves](https://arxiv.org/abs/2611.22299) | **相关自改进机制 · 论文阅读。** 学习模块化运行时修改、验证准入与模型迁移。 | [四类组件 → 准入门控 → 表 IV](docs/practice-guide_zh.md#modular-gated-harness) | 英文。需 Agent 工程与评测基础，未核验到可运行发布。 |
+| <a id="jevrsi"></a> [JevRSI](https://github.com/usail-hkust/JevRSI) · [论文](https://arxiv.org/abs/2611.22432) | **相关自改进机制。** 由异步 LLM 利用反馈开发可复用决策模块，快速策略在运行时检索使用。 | [离线 mock → 模块检索 → 成本拆分](docs/practice-guide_zh.md#jevrsi) | 英文。离线 mock 无需模型凭证，真实模型运行需要 API 与任务环境。 |
 | <a id="guard"></a> [GUARD](https://arxiv.org/abs/2611.23476) | **递归改进方法 · 论文阅读。** 将 playbook 改动和修订后的提案提示词带入后续改进轮次。 | [方向性遗憾 → 策略更新 → 漂移评测](docs/practice-guide_zh.md#guard) | 英文。需 Agent 评测基础，论文说明发布仍待审批。 |
 | <a id="flashrsi"></a> [FlashRSI · RUC-NLPIR](https://github.com/RUC-NLPIR/FlashRSI) · [文档](https://ruc-nlpir.github.io/FlashRSI/) | **相关自改进机制 · 实验框架。** 通过版本化 Agent 资源、执行反馈和独立训练／开发／测试切分，比较所配置的优化方法。 | [小型 SearchQA 示例 → 快照与轨迹](docs/practice-guide_zh.md#flashrsi) | 中英文 README；Python ≥3.11、使用 Linux daemon 的 Docker，以及目标／工作模型 API；托管模型示例无需训练 GPU。 |
 | <a id="emoharness"></a> [EmoHarness](https://github.com/Emo-Harness/EmoHarness) · [论文](https://arxiv.org/abs/2611.11994) | **相关自改进机制。** 固定 Builder 修改冻结学生模型的提示、配置与验证代码，由验证集选出保留的 Harness。学习区分新增证据与演化本身的收益。 | [模拟流程 → 源码循环 → 真实评测](docs/practice-guide_zh.md#emoharness) | 英文；Python 3.10–3.12 和 Poetry。真实运行另需数据、GPU／vLLM、音频依赖和 Builder API 预算。 |
@@ -299,6 +301,7 @@
 | <a id="esi"></a> [ESI](https://github.com/ZERITH-ZLab/ESI) · [论文](https://arxiv.org/abs/2611.18176) | **相关自改进机制。** 将教师纠正与学生动作转成回放数据，用于下一轮机器人策略训练。 | [配置预览 → 采集／标注 → 后继 checkpoint](docs/practice-guide_zh.md#esi) | 双语 README／中文部署指南；Linux、Python 3.11。真实运行需模拟器／策略环境、渲染 GPU 与模型访问。 |
 | <a id="recurir"></a> [RecurIR](https://arxiv.org/abs/2611.18006) | **递归改进方法 · 论文阅读。** 学习何时、如何修订图像恢复策略；保留的修订也改进指导后续更新的机制。 | [假设 → 反例 → 学习修订与准入](docs/practice-guide_zh.md#recurir) | 英文；需图像恢复／策略学习基础。未核验到官方实现或可执行入口。 |
 | <a id="basersi"></a> [BaseRSI](https://github.com/beita6969/BaseRSI) · [论文](https://arxiv.org/abs/2611.24578) | **相关自改进机制。** 通过前向计算与回归，把视觉 Harness 的行为写入模型权重。 | [阶段预览 → 权重编辑 → 导出 checkpoint](docs/practice-guide_zh.md#basersi) | 英文。预览需 Python 3.12。完整流程需本地 27B 权重和基准数据，文档配置使用 80 GB 显存 GPU。 |
+| <a id="automaster"></a> [AutoMaster](https://github.com/RUCAIBox/AutoMaster) · [论文](https://arxiv.org/abs/2611.26510) | **相关自改进机制。** 更新引导固定教师的技能和数据筛选策略，再比较用相应轨迹训练的学生。 | [技能样例 → 训练对照 → checkpoint 推理](docs/practice-guide_zh.md#automaster) | 英文。读样例无需模型，推理需要 Python 和模型端点或本地推理服务。 |
 
 <a id="memory-skills"></a>
 
@@ -358,6 +361,8 @@
 | <a id="rsi-pdebench"></a> [RSI-PDEbench](https://arxiv.org/abs/2611.14949) · [项目网站](https://jeremylu916.github.io/RSI-PDE/) | **评测工具 · 协议阅读。** 对比保留的求解器、策略和记忆修改在干净、含噪与分布偏移 PDE 任务上的表现。 | [任务划分 → 验证循环 → 成本口径](docs/practice-guide_zh.md#rsi-pdebench) | 英文。需数值 PDE 基础。可读论文与官网，发布包访问未通过核验。 |
 | <a id="repofactory"></a> [RepoFactory](https://github.com/IQuestLab/RepoFactory) · [论文](https://arxiv.org/abs/2611.21152) | **评测工具。** 检查仓库级软件任务的约定、运行环境与正负对照。 | [公开任务 → Oracle／空操作对照 → 演化协议](docs/practice-guide_zh.md#repofactory) | 英文。单任务对照需要 Harbor 与 Docker，无需模型 API。公开样本含 200 个演化前环境。 |
 | <a id="skilldiff"></a> [SkillDiff](https://github.com/LitaoGuo/How-Self-Evolution-Reshapes-Skills) · [论文](https://arxiv.org/abs/2611.25534) | **评测工具。** 检查反复重写技能是否丢掉专家细节，以及恢复细节后分数如何变化。 | [已报告曲线 → 内容丢失 → 恢复对照](docs/practice-guide_zh.md#skilldiff) | 双语文档。已发布曲线可用 Python ≥3.10 和绘图依赖重画，无需模型 API 或 GPU。 |
+| <a id="coevobench"></a> [CoEvoBench](https://github.com/AlibabaResearch/CoEvoBench) · [论文](https://arxiv.org/abs/2611.27116) | **评测工具。** 在统一研究预算下比较模型更新、Harness 编辑和联合优化，并分别进行开发评测和最终计分。 | [CPU 教学示例 → 基准约定 → 分阶段计分](docs/practice-guide_zh.md#coevobench) | 双语文档。示例需要 Python、uv 和 Docker，无需模型凭证或 GPU。完整评测需要额外的训练与计分基础设施。 |
+| <a id="rsibench-infra"></a> [RSIBench-Infra](https://rsibench-infra.github.io/) · [论文](https://arxiv.org/abs/2611.24395) | **评测工具 · 结果与协议。** 将基础设施优化结果与实测参考值比较，并按任务检查正确性。 | [Lite 成绩 → 任务卡 → 轨迹与计分协议](docs/practice-guide_zh.md#rsibench-infra) | 英文。可在线阅读已发布的结果和部分轨迹，基准运行器标为即将发布。 |
 | <a id="justrua"></a> [JustRUA](https://github.com/ZefanW/JustRUA) · [论文](https://arxiv.org/abs/2611.16009) | **评测工具 · 受控基线。** 对照机器人 Harness 的各个构件及单独的技能演化实验；公开策略本身保持静态。 | [消融研究 → 无模型通信检查 → 机器人评测](docs/practice-guide_zh.md#justrua) | 英文文档／双语项目页；Python ≥3.10。真实评测需 RoboDojo／Isaac、GPU 感知、机器人资源和 Codex 模型访问。 |
 | <a id="scale-rsi-bench"></a> [Scale RSI Bench](https://github.com/scaleapi/rsi-benchmark) · [官网](https://www.rsi-benchmark.com) | **评测工具。** 阅读数据筛选、自蒸馏、鲁棒性与 Agent 群体优化等可执行 AI 研发任务的约束和评分规则。 | [nanoGPT 数据筛选任务 → 其他公开样例](docs/practice-guide_zh.md#scale-rsi-bench) | 英文；Python 3.12+、Harbor、Modal GPU 沙盒与 Agent 模型 API。 |
 | <a id="autorse"></a> [AutoRSE](https://github.com/Ray-Tiann/AutoRSE) · [论文](https://arxiv.org/abs/2610.37228) | **评测工具。** 六类推荐工程任务，区分依据验证集选优、隐藏测试评分，以及 Agent 实际修改内容的分析。 | [HSTU 任务 → 启动预览 → 预测与来源记录约定](docs/practice-guide_zh.md#autorse) | 英文；预览／格式检查使用 Python 3.12+。完整实验需 Linux、NVIDIA GPU、Docker 与模型访问；本轮未确认托管数据／评分服务可用性。 |
