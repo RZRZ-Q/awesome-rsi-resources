@@ -4,7 +4,7 @@
 
 [资源目录](../README_zh.md) · [学习指南](learning-guide_zh.md) · [实践指南](practice-guide_zh.md)
 
-本档案记录 **2026-10-22 至 2026-11-24** 的来源核验。每个日期小节分别说明来源、版本与核验范围；后续新增不代表重新核验此前记录。
+本档案记录 **2026-10-22 至 2026-11-25** 的来源核验。每个日期小节分别说明来源、版本与核验范围；后续新增不代表重新核验此前记录。
 
 - [近期综述覆盖表](#survey-coverage)
 - [核验历史与扩展排漏](#review-log)
@@ -20,6 +20,7 @@
 - [2026-11-18：Agent 继承、训练环境与持续学习评测](#verification-2026-11-18)
 - [2026-11-23：模块化 Harness、持久技能与模型编辑](#verification-2026-11-23)
 - [2026-11-24：决策 Harness、后训练与协同演化评测](#verification-2026-11-24)
+- [2026-11-25：运行时钩子、任务生成与评测证据](#verification-2026-11-25)
 
 <a id="survey-coverage"></a>
 
@@ -538,3 +539,29 @@
 **Follow RSI 状态。** [线上日报索引](https://adongwanai.github.io/follow-rsi/daily/index.html)与固定源码均更新至 [11 月 23 日简报](https://github.com/adongwanai/follow-rsi/blob/818ffb7e86609780da093541af1ee281bea7fd3f/daily/2026-11-23.md)。简报记载当日无入选，并按先前刊期补录。README 仍将订阅 Skill 标为即将推出。[11 月 19 日刊的 SkillDiff 条目](https://github.com/adongwanai/follow-rsi/blob/818ffb7e86609780da093541af1ee281bea7fd3f/daily/2026-11-19.md#L47)为本目录既有条目补充了索引覆盖。
 
 运行核验覆盖 JevRSI mock 和 CoEvoBench 教学示例。五项条目均核对了原论文及可用的公开工件。
+
+<a id="verification-2026-11-25"></a>
+
+### 2026-11-25：运行时钩子、任务生成与评测证据
+
+**核验日期为 11 月 25 日，Asia/Taipei。** 本轮新增五项，目录从 **131 增至 136**。按资源名、别名、arXiv 编号和官方链接与仓库已跟踪的 Markdown 排重，覆盖历史记录和配套链接。Embodied-Harness 与 MULTILOOP 已出现在 [11 月 24 日记录](#verification-2026-11-24)。FinEvo 与近名的 [FinEvo-Bench](https://arxiv.org/abs/2608.06144) 是两项独立工作。下表论文日期按提交历史的 UTC 日期记录。
+
+| 资源 | 首次日期／本次核实的最新版本 | 核实的入口与证据范围 | 已检查索引的覆盖 |
+| --- | --- | --- | --- |
+| [HookEvo](https://arxiv.org/abs/2611.27294) | **2026-11-20 · v1** | 读 §§3.1–3.3 与图 3。外部改进器修改可共享回合状态的钩子，固定控制器将获准代码带入下一轮。[11 月 24 日源码 `6322d74`](https://github.com/huangshengzebluesky/HookEvo/tree/6322d7448b297a1553b79b3532a429aacd9ade36)包含控制器和 ALFWorld、DBBench、WebShop 插件。论文报告的 OSBench narrow 配置随发布提供 80 条训练任务 ID。所查版本缺少 README 链接的复现指南。使用脚本化 provider 跑通官方合成练习的 A、B、C，A 保留基线，B/C 各晋级 `v01`。练习需要 Python 3.10–3.12 和 Node.js 22.19 或更新版本。 | 所查文件未匹配。 |
+| [FinEvo](https://arxiv.org/abs/2611.28239) | **2026-11-20 · v1**（台北 11 月 21 日） | 读 §§3.2–3.3、§§4.2–4.3 与图 1，了解如何从工作簿构造挑战并计算可执行奖励。[源码 `c94868d`](https://github.com/pcj-sudo/FinEvo/tree/c94868d3246047e4dbd04133a5e72ccc34831baa)提供 20 道示例。官方校验脚本在 Python 3.12 通过，检查任务包、文件哈希及训练配置，运行中没有重算工作簿或调用模型。论文评估一个生成—学习周期，88 个训练任务和 22 个留出任务来自 11 份源工作簿。真实电子表格任务需要 Python 3.12、Docker、LibreOffice 和模型端点。 | [pinkbubble 自改进条目](https://github.com/pinkbubblebubble/awesome-rsi/blob/f38e3a07368d856fa3852922f8c891b6daa2dc54/README.md#L346)。 |
+| [REAL Lab RSI Interactive Tutorial](https://real-lab-nu.github.io/rsi-interactive-tutorial/general/) | **2026-11-24 · 源码 `134733b`**（台北 11 月 25 日） | 打开通用双语课程，从社区活动教学推演及其十张文献卡入手。[源码快照 `134733b`](https://github.com/REAL-Lab-NU/rsi-interactive-tutorial/tree/134733b92427650c36b68cad9ae392d252db3212)提供课程和文献数据。推演使用固定教学逻辑，在浏览器内即可运行。线上通用课程返回 HTTP 200，固定版本的课程测试通过全部七项。 | 所查文件未匹配。 |
+| [ComputeWise](https://arxiv.org/abs/2611.31027) | **2026-11-23 · v1**（台北 11 月 24 日） | 读 §§4–5 和 §§7.2–8，了解模拟 GPU 时间、可比干预与比较的边界。[源码 `ed09795`](https://github.com/SalesforceAIResearch/computewise/tree/ed097953b307f5ef8a0bc28048b21641272d804f)和[公开数据 `9bdd145`](https://huggingface.co/datasets/Salesforce/computewise/tree/9bdd145383a7d823ca9d3125da69e04e5374e1dc)区分相对参考值的额外耗时与单次运行中的多余 GPU 工作。本轮离线查阅公开数据的 45 项任务、748 条运行记录。论文主实验使用九项任务。新模拟实验需要 Linux x86-64、Docker、特权环境配置、存储和模型访问。 | [pinkbubble 效率评测条目](https://github.com/pinkbubblebubble/awesome-rsi/blob/f38e3a07368d856fa3852922f8c891b6daa2dc54/README.md#L586)。 |
+| [Which Failure Does an Intervention Repair?](https://arxiv.org/abs/2611.29290) | **2026-11-22 · v1** | 读 §2 和 §§4–6。查看一次只变动一个因素的配对对照，再看反馈何时带来修复、冻结的技能何时迁移失败。[源码 `183fa2a`](https://github.com/Zihan-Zoe/same-skill-different-harness/tree/183fa2a0012e07f7e2678a3fba626bc882900454)和[数据 `e9b538f`](https://huggingface.co/datasets/Zihan-Zoe/same-skill-different-harness/tree/e9b538f93a16647ddd38dd1f9bb5cf6a139fb8d9)提供 718,848 条运行记录和 3,939 条失败队列记录。在本机用公开的 §6 小样本脚本回放固定的运行记录，无需模型或 GPU。20 题小样本配置重算结果为 57.39，始终使用 GPT-5.6-sol 的对照为 53.47。公开表格未附原始轨迹与原题。 | 所查文件未匹配。 |
+
+**覆盖范围。** 按名称、标题、编号和官方链接，在六个既有索引的 26 个公开文件中匹配条目。版本未变的文件沿用此前核验结果。
+
+| 来源快照 | 核验文件 | 相对 11 月 24 日的变动 |
+| --- | --- | --- |
+| [Prism `0674413`](https://github.com/Prism-Shadow/awesome-rsi/tree/0674413ab210a460c0c6c4080b0cf0f749d8aa98) | `README.md`、`site/src/data/{methods,papers,systems}.js`（四个） | 版本未变。 |
+| [pinkbubble `f38e3a0`](https://github.com/pinkbubblebubble/awesome-rsi/tree/f38e3a07368d856fa3852922f8c891b6daa2dc54) | `README.md`（一个） | 11 月 24 日更新加入 FinEvo 和 ComputeWise。 |
+| [LobeHub `c7ae25e`](https://github.com/lobehub/awesome-rsi/tree/c7ae25edef882b9af5bcc8049d086b400b121d6a) 与 [natnew `7152191`](https://github.com/natnew/awesome-recursive-self-improvement/tree/7152191ed372ecbc540cfab0601a1f61de2d0d82) | 各自 `README.md`（两个） | 两个版本均未变。 |
+| [Follow RSI `818ffb7`](https://github.com/adongwanai/follow-rsi/tree/818ffb7e86609780da093541af1ee281bea7fd3f) | `README.md`、`data/papers.yaml`、`site/papers.json` 与 11 月 11–23 日各刊期（十六个） | 版本未变。11 月 24 和 25 日的日刊路径均返回 404。 |
+| [RSI Observatory `3e6e55f`](https://github.com/Fucheng1245/RSI-Observatory/tree/3e6e55f3c8394a7fe7a5dd6bb4902b1a3d9b32f2) | `README.md`、`PAPERS.md`、`radar/LATEST.md`（三个） | 11 月 24 日自动更新了 README 中的仓库指标。论文列表和雷达文件未变。 |
+
+**Follow RSI 状态。** [线上日报索引](https://adongwanai.github.io/follow-rsi/daily/index.html)和固定源码当前都更新至 [11 月 23 日简报](https://github.com/adongwanai/follow-rsi/blob/818ffb7e86609780da093541af1ee281bea7fd3f/daily/2026-11-23.md)。README 仍将订阅 Skill 标为即将推出。

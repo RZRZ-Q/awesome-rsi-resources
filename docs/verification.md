@@ -4,7 +4,7 @@
 
 [Resource directory](../README.md) · [Learning guide](learning-guide.md) · [Practice guide](practice-guide.md)
 
-This archive records source checks from **2026-10-22 through 2026-11-24**. Each dated section specifies its own sources, versions and review scope; a later addition does not refresh earlier checks.
+This archive records source checks from **2026-10-22 through 2026-11-25**. Each dated section specifies its own sources, versions and review scope; a later addition does not refresh earlier checks.
 
 - [Recent survey coverage](#survey-coverage)
 - [Review history and expansion checks](#review-log)
@@ -20,6 +20,7 @@ This archive records source checks from **2026-10-22 through 2026-11-24**. Each 
 - [2026-11-18: Agent inheritance, training environments and continual evaluation](#verification-2026-11-18)
 - [2026-11-23: Modular harnesses, persistent skills and model editing](#verification-2026-11-23)
 - [2026-11-24: Decision harnesses, post-training and co-evolution benchmarks](#verification-2026-11-24)
+- [2026-11-25: Runtime hooks, task generation and evaluation evidence](#verification-2026-11-25)
 
 <a id="survey-coverage"></a>
 
@@ -538,3 +539,29 @@ This batch checks primary papers, artifacts and selected source files. Runtime n
 **Follow RSI status.** The [public index](https://adongwanai.github.io/follow-rsi/daily/index.html) and pinned source both end at the [November 23 bulletin](https://github.com/adongwanai/follow-rsi/blob/818ffb7e86609780da093541af1ee281bea7fd3f/daily/2026-11-23.md). The bulletin records zero selections for that day and backfills earlier publication windows. The README still describes the subscription Skill as forthcoming. A [November 19 entry for SkillDiff](https://github.com/adongwanai/follow-rsi/blob/818ffb7e86609780da093541af1ee281bea7fd3f/daily/2026-11-19.md#L47) extends index coverage for the existing catalog item.
 
 The run checks cover the JevRSI mock and CoEvoBench toy. The five entries were checked against primary papers and their available public artifacts.
+
+<a id="verification-2026-11-25"></a>
+
+### 2026-11-25: Runtime hooks, task generation and evaluation evidence
+
+**Reviewed November 25, Asia/Taipei.** Five additions bring the catalog from **131 to 136**. We checked resource names, aliases, arXiv IDs and official URLs against the repository's tracked Markdown, including earlier records and companion links. Embodied-Harness and MULTILOOP already appear in the [November 24 record](#verification-2026-11-24). FinEvo is distinct from the similarly named [FinEvo-Bench](https://arxiv.org/abs/2608.06144). Paper dates below use the UTC submission history.
+
+| Resource | First date / latest checked version | Entry and evidence scope | Coverage in checked indexes |
+| --- | --- | --- | --- |
+| [HookEvo](https://arxiv.org/abs/2611.27294) | **2026-11-20 · v1** | Read §§3.1–3.3 and Figure 3. An external improver edits handlers that can share episode state, and a fixed controller carries accepted code into the next round. The [November 24 source `6322d74`](https://github.com/huangshengzebluesky/HookEvo/tree/6322d7448b297a1553b79b3532a429aacd9ade36) includes the controller and ALFWorld, DBBench and WebShop plugins. For the reported OSBench narrow condition, the release provides 80 training task IDs. The documented reproduction guide is missing at this revision. The official synthetic exercise passed for A, B and C with a scripted provider. A retained the baseline and B/C each promoted `v01`. The exercise needs Python 3.10–3.12 and Node.js 22.19 or later. | No match in the checked files. |
+| [FinEvo](https://arxiv.org/abs/2611.28239) | **2026-11-20 · v1** (November 21 in Taipei) | Read §§3.2–3.3, §§4.2–4.3 and Figure 1 for workbook challenge construction and executable rewards. The [source `c94868d`](https://github.com/pcj-sudo/FinEvo/tree/c94868d3246047e4dbd04133a5e72ccc34831baa) supplies 20 examples. The official validator passed on Python 3.12, checking task packages, file hashes and training settings without recalculating workbooks or running a model. The paper evaluates a single generation–learning cycle, with 88 training tasks and 22 held-out tasks drawn from 11 workbook sources. Live spreadsheet runs require Python 3.12, Docker, LibreOffice and a model endpoint. | [pinkbubble self-improvement entry](https://github.com/pinkbubblebubble/awesome-rsi/blob/f38e3a07368d856fa3852922f8c891b6daa2dc54/README.md#L346). |
+| [REAL Lab RSI Interactive Tutorial](https://real-lab-nu.github.io/rsi-interactive-tutorial/general/) | **2026-11-24 · source `134733b`** (November 25 in Taipei) | Open the bilingual general course and start with the community-event walkthrough and its ten paper cards. The [source snapshot `134733b`](https://github.com/REAL-Lab-NU/rsi-interactive-tutorial/tree/134733b92427650c36b68cad9ae392d252db3212) supplies the lesson and literature data. The walkthrough uses fixed lesson logic and needs only a browser. The general course returned HTTP 200 and the pinned course test passed all seven checks. | No match in the checked files. |
+| [ComputeWise](https://arxiv.org/abs/2611.31027) | **2026-11-23 · v1** (November 24 in Taipei) | Read §§4–5 and §§7.2–8 for simulated GPU time, comparable interventions and the limits of the comparisons. The [source `ed09795`](https://github.com/SalesforceAIResearch/computewise/tree/ed097953b307f5ef8a0bc28048b21641272d804f) and [public data `9bdd145`](https://huggingface.co/datasets/Salesforce/computewise/tree/9bdd145383a7d823ca9d3125da69e04e5374e1dc) distinguish excess time against a reference from unnecessary GPU work within a run. We inspected 748 recorded runs across 45 dataset tasks offline. The paper's main experiment uses nine tasks. Fresh simulator runs require Linux x86-64, Docker, privileged setup, storage and model access. | [pinkbubble efficiency benchmark](https://github.com/pinkbubblebubble/awesome-rsi/blob/f38e3a07368d856fa3852922f8c891b6daa2dc54/README.md#L586). |
+| [Which Failure Does an Intervention Repair?](https://arxiv.org/abs/2611.29290) | **2026-11-22 · v1** | Read §2 and §§4–6 for paired comparisons that change one axis at a time, then check where feedback produces recovery and where frozen skills fail to transfer. The [source `183fa2a`](https://github.com/Zihan-Zoe/same-skill-different-harness/tree/183fa2a0012e07f7e2678a3fba626bc882900454) and [data `e9b538f`](https://huggingface.co/datasets/Zihan-Zoe/same-skill-different-harness/tree/e9b538f93a16647ddd38dd1f9bb5cf6a139fb8d9) provide 718,848 execution rows and a 3,939-row failure cohort. The published §6 pilot script replayed the fixed ledger locally without a model or GPU. The 20-task pilot configuration reproduced 57.39 versus 53.47 for always using GPT-5.6-sol. The public tables omit raw trajectories and original tasks. | No match in the checked files. |
+
+**Coverage scope.** Matched names, titles, identifiers and official URLs across 26 public files in the six existing indexes. Files at unchanged revisions were carried forward from the preceding checks.
+
+| Source snapshot | Files checked | Change since November 24 |
+| --- | --- | --- |
+| [Prism `0674413`](https://github.com/Prism-Shadow/awesome-rsi/tree/0674413ab210a460c0c6c4080b0cf0f749d8aa98) | `README.md`, `site/src/data/{methods,papers,systems}.js` (four) | Revision unchanged. |
+| [pinkbubble `f38e3a0`](https://github.com/pinkbubblebubble/awesome-rsi/tree/f38e3a07368d856fa3852922f8c891b6daa2dc54) | `README.md` (one) | The November 24 editorial update adds FinEvo and ComputeWise. |
+| [LobeHub `c7ae25e`](https://github.com/lobehub/awesome-rsi/tree/c7ae25edef882b9af5bcc8049d086b400b121d6a) and [natnew `7152191`](https://github.com/natnew/awesome-recursive-self-improvement/tree/7152191ed372ecbc540cfab0601a1f61de2d0d82) | Each `README.md` (two) | Both revisions unchanged. |
+| [Follow RSI `818ffb7`](https://github.com/adongwanai/follow-rsi/tree/818ffb7e86609780da093541af1ee281bea7fd3f) | `README.md`, `data/papers.yaml`, `site/papers.json` and November 11–23 daily editions (sixteen) | Revision unchanged. The November 24 and 25 daily paths returned 404. |
+| [RSI Observatory `3e6e55f`](https://github.com/Fucheng1245/RSI-Observatory/tree/3e6e55f3c8394a7fe7a5dd6bb4902b1a3d9b32f2) | `README.md`, `PAPERS.md`, `radar/LATEST.md` (three) | The November 24 automated update refreshes repository metrics in the README. The paper list and radar files are unchanged. |
+
+**Follow RSI status.** The [public daily index](https://adongwanai.github.io/follow-rsi/daily/index.html) and pinned source both end at the [November 23 bulletin](https://github.com/adongwanai/follow-rsi/blob/818ffb7e86609780da093541af1ee281bea7fd3f/daily/2026-11-23.md). The subscription Skill is still described as forthcoming in the README.

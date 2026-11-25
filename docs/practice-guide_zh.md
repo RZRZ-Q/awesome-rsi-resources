@@ -6,7 +6,7 @@
 
 这里集中记录具体示例的学习目标、源码入口和运行条件。先按主题选择项目；综述章节与项目的对应关系见[学习指南](learning-guide_zh.md#survey-project-map)。条目的[三类标签](../README_zh.md#resource-scope)描述所推荐入口的范围，主题分组不表示 RSI 能力等级。
 
-以下说明来自 **2026-10-22–2026-11-24** 对上游文档与部分源码的核验。11 月 24 日实跑了 [JevRSI mock](#jevrsi) 与 [CoEvoBench 教学示例](#coevobench)。逐项范围见[核验档案](verification_zh.md#verification)。API 示例需要相应模型权限与调用预算，训练配置沿用作者公开设置。
+以下说明来自 **2026-10-22–2026-11-25** 对上游文档与部分源码的核验。逐项核验范围及本地实跑记录见[核验档案](verification_zh.md#verification)。API 示例需要相应模型权限与调用预算，训练配置沿用作者公开设置。
 
 ## 目录
 
@@ -44,6 +44,18 @@
 **推荐入口。** [页面导航与启动说明](https://github.com/Roloria/rsi-learn#页面导航)，先看[学习路线内容](https://github.com/Roloria/rsi-learn/blob/main/src/data/path.ts)，启动后进入 `/#/path` 和 `/#/lab`。
 
 **语言与运行条件。** 中文；交互站需 Node.js / Vite。实验场是**规则驱动的前端模拟**，不调用真实 LLM。
+
+<a id="real-lab-rsi-tutorial"></a>
+
+### [RSI 交互教程 · REAL Lab](https://github.com/REAL-Lab-NU/rsi-interactive-tutorial)
+
+**交互入门。** 在社区开放日排班案例里，跟踪 Solver 给出的方案、验证器发现的冲突和 Improver 做出的修订。通用教程通过浏览器执行预设的推演逻辑。
+
+1. 打开 [基础 Agent](https://real-lab-nu.github.io/rsi-interactive-tutorial/general/#base-agent)，再看 [SI](https://real-lab-nu.github.io/rsi-interactive-tutorial/general/#si)。改变排班优先级或场地可用性，观察原方案哪里失败，以及 Solver 的哪项变化能沿用。
+2. 打开 [RSI](https://real-lab-nu.github.io/rsi-interactive-tutorial/general/#rsi)。比较固定预留时间和查共享资源实际准备时间两种做法，看对照结果怎样形成 Improver 可在后续任务中复用的规则。
+3. 用[论文图谱](https://real-lab-nu.github.io/rsi-interactive-tutorial/general/#atlas)比较十篇论文中 Solver 和 Improver 的角色。各卡片均指向一手证据。
+
+**门槛与证据。** 中文和英文。在线教程只需浏览器。[固定版本](https://github.com/REAL-Lab-NU/rsi-interactive-tutorial/tree/134733b92427650c36b68cad9ae392d252db3212)的七项上游 Node 检查通过，覆盖排班对照与论文图谱等内容。
 
 <a id="walkinglabs"></a>
 
@@ -634,6 +646,16 @@ scripts/run_one.sh configs/hotpotqa-8b.yaml
 
 **条件与证据。** 英文。模拟运行需要 Python 与核心依赖，无需 GPU 或 API key。基准实验需要 S1/S2 模型服务以及对应环境依赖与资产。解读 ID/OOD 分数前先看[数据划分协议](https://github.com/usail-hkust/JevRSI/blob/825a4e83e6c6805c7b7255d514e62b3668a20a76/scripts/run_protocol.py#L234)。`official` 配置为两组评测分别复制同一份训练快照，默认仍可继续演化。[§4.3](https://arxiv.org/html/2611.22432v3#S4.SS3)分别报告 S1 模型调用延迟、评测 token 开销和训练期间 S2 的介入次数。
 
+<a id="hookevo"></a>
+
+### [HookEvo](https://github.com/HuangShengZeBlueSky/HookEvo) · [论文](https://arxiv.org/abs/2611.27294)
+
+**相关自改进机制 · 运行时插件协同修改。** 独立改进器读取执行轨迹，提出针对冻结执行器的 Harness 修改。一次补丁可以让一个 hook 保存工具结果，另一个 hook 在后续动作中使用它。控制器在配对任务上比较候选与父代，保留的 Harness 和比较反馈供下一轮使用。
+
+**推荐入口。** 读[§3](https://arxiv.org/html/2611.27294v1#Sx3)和[算法 1](https://arxiv.org/html/2611.27294v1#Sx6.SSx3)，在[发布的插件](https://github.com/HuangShengZeBlueSky/HookEvo/blob/6322d7448b297a1553b79b3532a429aacd9ade36/artifacts/alfworld/plugins/action-hint.mjs)里，追踪一条 ALFWorld 工具回执如何进入单任务状态、影响后续动作检查。再读[搜索控制器](https://github.com/HuangShengZeBlueSky/HookEvo/blob/6322d7448b297a1553b79b3532a429aacd9ade36/evolution/src/dsh_evolve/abc.py#L243)，看它如何根据候选得分和 hook 输出变化决定晋级。
+
+**条件与证据。** 英文。[合成任务示例](https://github.com/HuangShengZeBlueSky/HookEvo/blob/6322d7448b297a1553b79b3532a429aacd9ade36/README.md#installation)在实际 DeepSeek Harness 运行时使用脚本执行器和玩具任务。需 Linux 或 macOS、Python 3.10–3.12、Node.js 22.19+ 与 npm，无需模型账户。实跑的 A/B/C 三种编辑范围均通过。固定版本提供控制器和 ALFWorld、DBBench、WebShop 的选定 Harness。报告中的 OSBench narrow 实验提供了 80 个训练任务 ID。README 所链接的复现指南在该提交中缺失。[表 2](https://arxiv.org/html/2611.27294v1#Sx4.T2)在 DBBench 的 300 个测试任务上报告三次执行的均值，HookEvo 为 70.56%，本地重跑的 Life-Harness 为 64.11%。作者选报观测到的测试均值最高的检查点。
+
 <a id="model-training"></a>
 
 ## 模型训练
@@ -788,6 +810,16 @@ basersi pipeline --list
 **推荐入口。** 读[§§3.1–3.3 和 §5.2](https://arxiv.org/html/2611.26510v2)，结合[行为对照示例](https://github.com/RUCAIBox/AutoMaster/blob/116c295dfdb7729e8f8684d85dea867c5fd9806e/docs/method.md#behavioral-shaping-in-practice)，比较教师示范了什么、验证器又评了什么。追踪技能说明如何保留在 SFT 输入中，以及哪些助手输出用于监督。
 
 **条件与证据。** 英文。阅读示例无需模型。评测[公开学生权重](https://huggingface.co/collections/RUC-AIBOX/automaster)可参考 [Doc2Repo 推理配置](https://github.com/RUCAIBox/AutoMaster/blob/116c295dfdb7729e8f8684d85dea867c5fd9806e/recipes/inference/README.md)，需 Python 3.11+、固定版本的 AweAgent 子模块、OpenAI 兼容模型端点或本地 SGLang 部署，以及 Docker 和基准任务资产。公开版本提供技能与推理配置，研究控制器、教师轨迹生成服务与 SFT 调度尚未公开。[表 1](https://arxiv.org/html/2611.26510v2#S4.SS2)在六组基准与模型组合上报告了相对 Vanilla SFT 的 1.42–8.99 个百分点的均值提升。两组使用相同的教师、任务池、示范条数和 SFT 配置，AutoMaster 还通过多轮试验筛选干预方案。
+
+<a id="finevo"></a>
+
+### [FinEvo](https://github.com/pcj-sudo/FinEvo) · [论文](https://arxiv.org/abs/2611.28239)
+
+**相关自改进机制 · 求解器引导的课程生成。** 用新一轮 Solver 的答题结果决定哪些电子表格任务需要加难或修订，再用可执行验证器核对目标单元格、给出二值奖励。FinEvo 从选中任务收集轨迹并做同步 GRPO。论文实测了一个从挑战生成到策略学习的周期。
+
+**推荐入口。** 先看[公开的 20 个示例](https://github.com/pcj-sudo/FinEvo/blob/c94868d3246047e4dbd04133a5e72ccc34831baa/examples/README.md)，各挑一个建模题和公式修复题，分清求解器可见的材料与验证器检查的目标。再读[§§3.2–3.3 与 §4.3](https://arxiv.org/html/2611.28239v1)，追踪任务选择、在线策略训练和留出计分。
+
+**门槛与证据。** 双语文档。官方[发布校验](https://github.com/pcj-sudo/FinEvo/blob/c94868d3246047e4dbd04133a5e72ccc34831baa/README.md#2-validate-the-example)在 Python 3.12 下通过，核对了 20 个任务包、文件哈希和同步训练配置。该检查无需重算工作簿或调用模型。运行求解需要 Docker、LibreOffice 和模型端点，[训练指南](https://github.com/pcj-sudo/FinEvo/blob/c94868d3246047e4dbd04133a5e72ccc34831baa/training/README.md)使用 6 台各配 8 张 GPU 的节点。论文的 88 个训练任务和 22 个留出任务来自 11 份源工作簿。公开包包含两份示例工作簿及其任务。
 
 <a id="memory-skills"></a>
 
@@ -1339,3 +1371,27 @@ uv run --locked --no-dev ceb eval --bench toy --split visible
 **推荐入口。** 从 Qwen3.8-27B 开始，在[公开结果浏览器](https://rsibench-infra.github.io/#results)点开 Kimi K3 的运行。先对照验证后的加速比与分析估算的性能上界（SOL）归一化分数，再查看公开轨迹。到 §5 核对作者如何估算性能上界。比较汇总指标时留意分母，Claude Opus 5.5 在完整套件 20 项中有 10 项正式得分，在 Lite 的五项中有三项。[Lite Set](https://rsibench-infra.github.io/#lite-set) · [论文 §§4–5](https://arxiv.org/pdf/2611.24395v1)
 
 **条件与证据。** 英文论文和结果浏览器。读分数与轨迹只需浏览器。论文工作负载需要 1 至 32 个加速器。[固定版源码](https://github.com/rsibench-infra/rsibench-infra.github.io/tree/5bb554a6d622736a31cc9d711168ab8f041e3b30)公开了网站、结果数据和轨迹浏览器，[项目网站](https://rsibench-infra.github.io/#about)将评测运行器标注为即将发布。
+
+<a id="computewise"></a>
+
+### [ComputeWise](https://github.com/SalesforceAIResearch/computewise) · [论文](https://arxiv.org/abs/2611.31027)
+
+**评测工具 · 实验算力效率。** 学习如何用模拟 GPU 回放已记录的作业，并在评分时区分回答所需作业、无用作业和闲置算力。固定调度 Harness 提供了衡量研究效率的对照。先读 §§4–5 的参考调度，再看 §§7.2–8 的对照结果与模拟器局限。[论文 v1](https://arxiv.org/html/2611.31027v1)
+
+**推荐入口。** 在[公开运行记录](https://huggingface.co/datasets/Salesforce/computewise/blob/9bdd145383a7d823ca9d3125da69e04e5374e1dc/data/runs/results.jsonl)中筛选 `pkg-filter-yield`、`sonnet`、`claude-code`、模拟器 `r7`，保留有效且有 `over_ref` 读数的运行。`L0`（无辅助）和 `A5`（发布版 Harness）各三次运行，耗时中位数分别是参考调度的 1.423 倍和 1.065 倍。可填充闲置比例的中位数分别为 28.2% 和 6.8%，两组的无用 GPU 时间都为零。结合[数据卡](https://huggingface.co/datasets/Salesforce/computewise/blob/9bdd145383a7d823ca9d3125da69e04e5374e1dc/README.md)核对指标定义，解释这个例子中哪些开销发生了变化。
+
+**条件与证据。** 英文。数据可用浏览器或 JSONL 阅读器查看，无需调用模型。归档含 45 项任务的 748 次带评分运行，包含论文九项任务之外的记录。论文部分对比的不同条件使用了不同的模拟器版本。新跑模拟实验需 Linux x86_64、支持 cgroup v2 的 Docker、`loop` 模块、Python ≥3.9、约 200 GB 可用空间及模型访问。上游命令需要 root，模拟器使用 CPU 资源。[固定版运行说明](https://github.com/SalesforceAIResearch/computewise/blob/ed097953b307f5ef8a0bc28048b21641272d804f/README.md#running-the-benchmark)
+
+<a id="intervention-failure"></a>
+
+### [Which Failure Does an Intervention Repair?](https://arxiv.org/abs/2611.29290) · [源码](https://github.com/Zihan-Zoe/same-skill-different-harness)
+
+**评测工具 · 干预配对对照。** 学习如何在同一批任务实例上，每次只调整模型、Skill、执行 Harness 或推理预算中的一项。读 §2 的配对设计，读 §§4–5 的失败标签和 Skill 跨模型迁移，再看 §6 如何用少量带标签的试验选择配置。[论文 v1](https://arxiv.org/html/2611.29290v1)
+
+**推荐入口。** 从[固定版数据集](https://huggingface.co/datasets/Zihan-Zoe/same-skill-different-harness/tree/e9b538f93a16647ddd38dd1f9bb5cf6a139fb8d9)下载 `ledger/executions.parquet`、`examples/pilot.py` 和 `examples/reproduce_pilot.py`，保留目录布局，在数据集根目录运行官方回放脚本。
+
+```bash
+python examples/reproduce_pilot.py
+```
+
+**条件与证据。** 英文。回放需要 Python、NumPy、pandas 与 PyArrow，读取 718,848 条公开执行记录，无需模型调用或 GPU。已在本地回放论文的五个评测基准子集，使用 20 个任务试选模型的得分为 57.39，始终使用 GPT-5.6-sol 的得分为 53.47。账本将本地 Qwen 推理计为零美元，未计硬件成本。发布包提供含 3,939 条记录的失败队列和冻结 Skill，未附原始运行轨迹或评测任务资产。新跑实验需要原始评测资产、模型服务或本地 vLLM，以及上游的 Python 3.10 环境。[固定版源码](https://github.com/Zihan-Zoe/same-skill-different-harness/tree/183fa2a0012e07f7e2678a3fba626bc882900454) · [数据卡](https://huggingface.co/datasets/Zihan-Zoe/same-skill-different-harness/blob/e9b538f93a16647ddd38dd1f9bb5cf6a139fb8d9/README.md)

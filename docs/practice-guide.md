@@ -6,7 +6,7 @@
 
 This guide collects learning goals, source entry points, and running requirements for specific examples. Choose a project by topic; use the [learning guide](learning-guide.md#survey-project-map) to connect it to survey chapters. The [three resource labels](../README.md#resource-scope) describe the recommended entry point; topic groups are not RSI capability levels.
 
-These notes come from upstream documentation and selected source reviews on **2026-10-22–2026-11-24**. The November 24 run checks cover the [JevRSI mock](#jevrsi) and [CoEvoBench toy](#coevobench). See the [verification records](verification.md#verification) for each review's scope. API examples require model access and a call budget. Training configurations describe the authors' setups.
+These notes come from upstream documentation and selected source reviews on **2026-10-22–2026-11-25**. The [verification records](verification.md#verification) give the scope of each review, including which local examples ran. API examples require model access and a call budget. Training configurations describe the authors' setups.
 
 ## Contents
 
@@ -44,6 +44,18 @@ These notes come from upstream documentation and selected source reviews on **20
 **Recommended entry.** See the [navigation and setup instructions](https://github.com/Roloria/rsi-learn#页面导航), read the [learning-path content](https://github.com/Roloria/rsi-learn/blob/main/src/data/path.ts), then visit `/#/path` and `/#/lab` after starting the site locally.
 
 **Language and running requirements.** Chinese; the interactive site requires Node.js / Vite. The playground is a **rule-based frontend simulation** and does not call a real LLM.
+
+<a id="real-lab-rsi-tutorial"></a>
+
+### [RSI Interactive Tutorial · REAL Lab](https://github.com/REAL-Lab-NU/rsi-interactive-tutorial)
+
+**Interactive introduction.** In an open-day scheduling example, follow a solver's proposed plan, a verifier's conflict report, and the improver's revision. The general course uses a scripted browser simulation.
+
+1. Open [Base Agent](https://real-lab-nu.github.io/rsi-interactive-tutorial/general/#base-agent), then [SI](https://real-lab-nu.github.io/rsi-interactive-tutorial/general/#si). Change the scheduling priority or room availability. Check which task fails and which change to the solver carries forward.
+2. Open [RSI](https://real-lab-nu.github.io/rsi-interactive-tutorial/general/#rsi). Compare a fixed setup buffer with looking up how long a shared resource needs. Follow the comparison into a rule the improver can reuse on later tasks.
+3. Use the [research atlas](https://real-lab-nu.github.io/rsi-interactive-tutorial/general/#atlas) to compare solver and improver roles across ten papers. Each card points to primary evidence.
+
+**Requirements and evidence.** Chinese and English. The online tutorial needs only a browser. At the [pinned revision](https://github.com/REAL-Lab-NU/rsi-interactive-tutorial/tree/134733b92427650c36b68cad9ae392d252db3212), seven upstream Node checks passed, including the scheduling controls and paper atlas coverage.
 
 <a id="walkinglabs"></a>
 
@@ -633,6 +645,16 @@ The launcher runs in the background. Follow `runs/hotpotqa-8b-seed0/run.log` unt
 
 **Requirements and evidence.** English. The mock uses Python and core dependencies, with no GPU or API key. Benchmark runs need S1/S2 endpoints and the relevant environment dependencies and assets. Check [the split protocol](https://github.com/usail-hkust/JevRSI/blob/825a4e83e6c6805c7b7255d514e62b3668a20a76/scripts/run_protocol.py#L234) before interpreting ID/OOD scores. Under the official profile, each split starts from a copy of the same training snapshot and can continue evolving by default. [§4.3](https://arxiv.org/html/2611.22432v3#S4.SS3) reports S1 model-call latency, evaluation token expenditure and training-time S2 activity separately.
 
+<a id="hookevo"></a>
+
+### [HookEvo](https://github.com/HuangShengZeBlueSky/HookEvo) · [paper](https://arxiv.org/abs/2611.27294)
+
+**Related self-improvement mechanism · coordinated runtime plugins.** A separate improver reads execution traces and proposes changes to a frozen executor's harness. A patch can coordinate how one hook records a tool result and how another uses it in a later action. The controller compares the candidate and parent on matched tasks. The retained harness and comparison feedback carry into the next round.
+
+**Recommended entry.** Read [§3](https://arxiv.org/html/2611.27294v1#Sx3) and [Algorithm 1](https://arxiv.org/html/2611.27294v1#Sx6.SSx3), then follow an ALFWorld receipt into the episode state and a later action check in the [released plugin](https://github.com/HuangShengZeBlueSky/HookEvo/blob/6322d7448b297a1553b79b3532a429aacd9ade36/artifacts/alfworld/plugins/action-hint.mjs). Read the [search controller](https://github.com/HuangShengZeBlueSky/HookEvo/blob/6322d7448b297a1553b79b3532a429aacd9ade36/evolution/src/dsh_evolve/abc.py#L243) to see where candidate scores and hook changes determine promotion.
+
+**Requirements and evidence.** English. The [synthetic smoke example](https://github.com/HuangShengZeBlueSky/HookEvo/blob/6322d7448b297a1553b79b3532a429aacd9ade36/README.md#installation) runs a scripted actor and toy task with the actual DeepSeek Harness runtime. It needs Linux or macOS, Python 3.10–3.12 and Node.js 22.19+ with npm. A model account is unnecessary. In our check, all three edit scopes (A/B/C) passed. The pinned release includes the controller and selected ALFWorld, DBBench and WebShop harnesses. For the reported OSBench narrow run it supplies 80 training task IDs. The README's linked reproduction guide was absent at this revision. [Table 2](https://arxiv.org/html/2611.27294v1#Sx4.T2) reports 70.56% versus 64.11% for the local Life-Harness rerun on DBBench, across 300 test tasks and three executions. The authors report the checkpoint with the highest observed test mean.
+
 <a id="model-training"></a>
 
 ## Model Training
@@ -787,6 +809,16 @@ basersi pipeline --list
 **Recommended entry.** Read [§§3.1–3.3 and §5.2](https://arxiv.org/html/2611.26510v2), then use the [behavioral examples](https://github.com/RUCAIBox/AutoMaster/blob/116c295dfdb7729e8f8684d85dea867c5fd9806e/docs/method.md#behavioral-shaping-in-practice) to compare what the teacher demonstrates with what the verifier scores. Trace how skill context is retained in SFT inputs while supervision stays on the assistant outputs.
 
 **Requirements and evidence.** English. Reading the examples requires no model. To evaluate a [released student checkpoint](https://huggingface.co/collections/RUC-AIBOX/automaster) with the [Doc2Repo recipe](https://github.com/RUCAIBox/AutoMaster/blob/116c295dfdb7729e8f8684d85dea867c5fd9806e/recipes/inference/README.md), use Python 3.11+, the pinned AweAgent submodule, an OpenAI-compatible endpoint or a local SGLang deployment, Docker and benchmark assets. The release covers skills and inference, while the research controller, teacher rollout service and SFT orchestration are outside the release. [Table 1](https://arxiv.org/html/2611.26510v2#S4.SS2) reports mean gains of 1.42–8.99 percentage points across six benchmark/model settings against Vanilla SFT, controlling for the teacher, task pool, demonstration count and SFT recipe. This comparison controls the SFT setup while AutoMaster additionally searches over teacher interventions across rounds.
+
+<a id="finevo"></a>
+
+### [FinEvo](https://github.com/pcj-sudo/FinEvo) · [paper](https://arxiv.org/abs/2611.28239)
+
+**Related self-improvement mechanism · solver-guided curriculum.** Use fresh solver attempts to decide which spreadsheet challenges to harden or repair. An executable verifier checks target cells and supplies a binary task reward. FinEvo then uses rollouts on the selected tasks for synchronous GRPO. The reported study evaluates one challenge-generation and policy-learning cycle.
+
+**Recommended entry.** Start with [the twenty released examples](https://github.com/pcj-sudo/FinEvo/blob/c94868d3246047e4dbd04133a5e72ccc34831baa/examples/README.md). Compare one modeling task and one formula-repair task. Identify what the solver sees and what the verifier checks. Then read [§§3.2–3.3 and §4.3](https://arxiv.org/html/2611.28239v1) for curriculum selection, on-policy training and held-out scoring.
+
+**Requirements and evidence.** Chinese and English docs. The official [release check](https://github.com/pcj-sudo/FinEvo/blob/c94868d3246047e4dbd04133a5e72ccc34831baa/README.md#2-validate-the-example) passed on Python 3.12, checking 20 task packages, file hashes and the synchronous training configuration. It validates artifacts without recalculating workbooks or calling a model. Solver runs need Docker, LibreOffice and a model endpoint. The [training guide](https://github.com/pcj-sudo/FinEvo/blob/c94868d3246047e4dbd04133a5e72ccc34831baa/training/README.md) uses six eight-GPU nodes. The paper's 88 training and 22 held-out tasks come from 11 source workbooks. The release contains two example workbooks and their tasks.
 
 <a id="memory-skills"></a>
 
@@ -1338,3 +1370,27 @@ uv run --locked --no-dev ceb eval --bench toy --split visible
 **Recommended entry.** Start with Qwen3.8-27B and open Kimi K3's run in the [public results explorer](https://rsibench-infra.github.io/#results). Compare validated speedup and the analytical speed-of-light (SOL) score, then inspect the published trajectory. In §5, check how the authors estimate the analytical reference. Claude Opus 5.5 has formal scores for 10 of 20 tasks and three of the five Lite tasks. Use those denominators when comparing aggregates. [Lite Set](https://rsibench-infra.github.io/#lite-set) · [Paper §§4–5](https://arxiv.org/pdf/2611.24395v1)
 
 **Requirements and evidence.** English paper and results explorer. Reviewing scores and traces only needs a browser. The paper describes workloads using one to 32 accelerators. The [pinned source](https://github.com/rsibench-infra/rsibench-infra.github.io/tree/5bb554a6d622736a31cc9d711168ab8f041e3b30) publishes the site, results data and trace viewer. The [project site](https://rsibench-infra.github.io/#about) lists the benchmark runner as forthcoming.
+
+<a id="computewise"></a>
+
+### [ComputeWise](https://github.com/SalesforceAIResearch/computewise) · [paper](https://arxiv.org/abs/2611.31027)
+
+**Evaluation tool · experimental compute efficiency.** Study how a simulated GPU replays recorded jobs and how the scoring distinguishes work needed for the answer, unneeded work and idle capacity. The fixed scheduling harness provides a control for measuring research efficiency. Read §§4–5 for the reference schedules and §§7.2–8 for the harness comparison and simulator limitations. [Paper v1](https://arxiv.org/html/2611.31027v1)
+
+**Recommended entry.** Filter the [public runs](https://huggingface.co/datasets/Salesforce/computewise/blob/9bdd145383a7d823ca9d3125da69e04e5374e1dc/data/runs/results.jsonl) to `pkg-filter-yield`, `sonnet`, `claude-code`, simulator `r7` and valid runs with an `over_ref` reading. For `L0` (no help) and `A5` (released harness), the three runs per arm give median times of 1.423× and 1.065× the reference. The median fillable-idle shares are 28.2% and 6.8%, with zero unneeded GPU time in both arms. Follow the definitions in the [data card](https://huggingface.co/datasets/Salesforce/computewise/blob/9bdd145383a7d823ca9d3125da69e04e5374e1dc/README.md) to see what changed in this example.
+
+**Requirements and evidence.** English. Reading the data uses a browser or a JSONL reader without model calls. The archive contains 748 scored runs across 45 tasks, which includes runs beyond the paper's nine-task suite. Some paper comparisons use different simulator builds across arms. New simulated runs need Linux x86_64, Docker with cgroup v2, the `loop` module, Python ≥3.9, roughly 200 GB of free space and model access. The upstream commands use root and the simulator uses CPU resources. [Pinned setup](https://github.com/SalesforceAIResearch/computewise/blob/ed097953b307f5ef8a0bc28048b21641272d804f/README.md#running-the-benchmark)
+
+<a id="intervention-failure"></a>
+
+### [Which Failure Does an Intervention Repair?](https://arxiv.org/abs/2611.29290) · [code](https://github.com/Zihan-Zoe/same-skill-different-harness)
+
+**Evaluation tool · matched intervention comparisons.** Study how to change one axis at a time across model, skill, execution harness and inference budget on the same task instances. Read §2 for the matched design, §§4–5 for failure labels and skill transfer across models, and §6 for how the authors use a labeled pilot to choose a configuration. [Paper v1](https://arxiv.org/html/2611.29290v1)
+
+**Recommended entry.** Download `ledger/executions.parquet`, `examples/pilot.py` and `examples/reproduce_pilot.py` from the [pinned dataset](https://huggingface.co/datasets/Zihan-Zoe/same-skill-different-harness/tree/e9b538f93a16647ddd38dd1f9bb5cf6a139fb8d9), keeping the directory layout. Run the published replay from its root.
+
+```bash
+python examples/reproduce_pilot.py
+```
+
+**Requirements and evidence.** English. The replay needs Python, NumPy, pandas and PyArrow. It uses the public ledger of 718,848 executions without model calls or GPUs. A local replay returned 57.39 for the 20-task pilot and 53.47 for always using GPT-5.6-sol on the paper's five-benchmark pilot subset. The ledger prices local Qwen inference at zero and omits hardware costs. The release includes a 3,939-row failure cohort and frozen skills, while raw trajectories and benchmark payloads are absent. New experiments need the source benchmarks, model endpoints or local vLLM, and the upstream Python 3.10 setup. [Pinned code](https://github.com/Zihan-Zoe/same-skill-different-harness/tree/183fa2a0012e07f7e2678a3fba626bc882900454) · [Dataset card](https://huggingface.co/datasets/Zihan-Zoe/same-skill-different-harness/blob/e9b538f93a16647ddd38dd1f9bb5cf6a139fb8d9/README.md)
