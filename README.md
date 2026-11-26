@@ -12,7 +12,7 @@
 </p>
 
 <p align="center">
-  <a href="#resource-scope"><img src="https://img.shields.io/badge/resources-136-69D8AD?style=flat-square&amp;labelColor=182522" alt="136 resources"></a>
+  <a href="#resource-scope"><img src="https://img.shields.io/badge/resources-138-69D8AD?style=flat-square&amp;labelColor=182522" alt="138 resources"></a>
   <a href="README_zh.md"><img src="https://img.shields.io/badge/languages-EN%20%2F%20%E4%B8%AD%E6%96%87-69D8AD?style=flat-square&amp;labelColor=182522" alt="English and Chinese"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-69D8AD?style=flat-square&amp;labelColor=182522" alt="MIT license"></a>
 </p>
@@ -24,7 +24,7 @@
   <a href="docs/verification.md">Source records</a>
 </p>
 
-**136 resources; latest source review: 2026-11-25.** A project’s website, code, and notebooks count as one resource. See the [verification archive](docs/verification.md) for individual dates and the scope of each review.
+**138 resources; latest source review: 2026-11-26.** A project’s website, code, and notebooks count as one resource. See the [verification archive](docs/verification.md) for individual dates and the scope of each review.
 
 <a id="resource-scope"></a>
 
@@ -336,6 +336,7 @@ Compare reusable improvement experience with harness search under a fixed optimi
 | <a id="r-zero"></a> [R-Zero](https://github.com/Chengsong-Huang/R-Zero) | **Related self-improvement mechanism.** Alternate task generation and solver learning, carrying both checkpoints into later rounds. | [Challenger–Solver loop](docs/practice-guide.md#r-zero) | English; Linux/CUDA, 8-GPU script configuration, HF/W&B and evaluation API. |
 | <a id="rsi-anything"></a> [RSI-Anything · Gen-Verse](https://github.com/Gen-Verse/RSI-Anything) · [paper](https://arxiv.org/abs/2610.13912) | **Related self-improvement mechanism.** Learn how GUI experience updates a policy and world model, with selected checkpoints reused in later rounds under fixed training rules. | [Update / retention protocol → GUI source → browser check](docs/practice-guide.md#rsi-anything) | Chinese / English overview; Python 3.10+ and Chromium for the model-free browser check. Full GUI learning needs Linux, CUDA and model weights; the default assigns three GPU roles. |
 | <a id="jaxued"></a> [JaxUED](https://github.com/DramaCow/jaxued) | **Related self-improvement mechanism.** Use policy performance to retain and mutate environments, then train on the resulting curriculum. | [Maze ACCEL → PAIRED](docs/practice-guide.md#jaxued) | English; JAX/Flax; no LLM API; full RL training requires substantial compute. |
+| <a id="roboevo2"></a> [RoboEvo²](https://github.com/kaiknower/RoboEvo2) · [paper](https://arxiv.org/abs/2611.34675) | **Recursive improvement method.** Robot-policy failures guide harness repairs, and verified trajectories train the policy used in the next round. | [Four-stage walkthrough → CPU configuration check → selection](docs/practice-guide.md#roboevo2) | English. Python ≥3.11 for the check. Native runs add simulation assets, weights, demonstrations and model access. |
 
 <a id="adversarial-self-play"></a>
 
@@ -368,6 +369,7 @@ Compare reusable improvement experience with harness search under a fixed optimi
 | <a id="rsibench-infra"></a> [RSIBench-Infra](https://rsibench-infra.github.io/) · [paper](https://arxiv.org/abs/2611.24395) | **Evaluation tool · results and protocol.** Compare infrastructure optimizations against measured references, with task-specific correctness checks. | [Lite scores → task cards → trace and scoring protocol](docs/practice-guide.md#rsibench-infra) | English. Published results and selected traces are readable online. The benchmark runner is listed as coming soon. |
 | <a id="computewise"></a> [ComputeWise](https://github.com/SalesforceAIResearch/computewise) · [paper](https://arxiv.org/abs/2611.31027) | **Evaluation tool.** Compare research-agent schedules with a reference and trace avoidable jobs, usable work and idle time. | [Public run ledger → one matched task → cost decomposition](docs/practice-guide.md#computewise) | English. Browse public data without a model or GPU. New simulator runs need Linux, Docker and model access. |
 | <a id="intervention-failure"></a> [Which Failure Does an Intervention Repair?](https://arxiv.org/abs/2611.29290) · [code](https://github.com/Zihan-Zoe/same-skill-different-harness) | **Evaluation tool.** Compare changing the model, harness, skill or retry rule one at a time and inspect which failure categories move. | [Matched comparisons → failure labels → ledger replay](docs/practice-guide.md#intervention-failure) | English. The replay uses public Parquet data and Python data libraries, with no model credentials or GPU. |
+| <a id="evolink-bench"></a> [EvoLink-Bench](https://github.com/BUAA-Self-Evolving/EvoLink-Bench) · [paper](https://arxiv.org/abs/2611.34400) | **Evaluation tool.** Compare immediate recovery, retained state and its reuse in later dependent tasks. | [Two-turn file example → Reset / Frozen / Evolving](docs/practice-guide.md#evolink-bench) | Bilingual docs. Python ≥3.11 for the offline example. Native runs need task and grading assets, Docker and model access. |
 | <a id="justrua"></a> [JustRUA](https://github.com/ZefanW/JustRUA) · [paper](https://arxiv.org/abs/2611.16009) | **Evaluation tool · controlled baseline.** Compare robot-harness components and a separate skill-evolution experiment; the released policy is static. | [Ablations → model-free transport check → robot evaluation](docs/practice-guide.md#justrua) | English docs / bilingual project page; Python ≥3.10. Real evaluation needs RoboDojo / Isaac, GPU perception, robot assets and Codex model access. |
 | <a id="scale-rsi-bench"></a> [Scale RSI Bench](https://github.com/scaleapi/rsi-benchmark) · [website](https://www.rsi-benchmark.com) | **Evaluation tool.** Read executable AI R&D task contracts for data curation, self-distillation, robustness, and agent swarms. | [nanoGPT data-curation task → other public samples](docs/practice-guide.md#scale-rsi-bench) | English; Python 3.12+, Harbor, Modal GPU sandboxes and agent model API. |
 | <a id="autorse"></a> [AutoRSE](https://github.com/Ray-Tiann/AutoRSE) · [paper](https://arxiv.org/abs/2610.37228) | **Evaluation tool.** Six recommendation-engineering tasks separate validation-based model selection, hidden-test scoring and analysis of what the agent changed. | [HSTU task → launch preview → prediction / provenance contract](docs/practice-guide.md#autorse) | English; preview / format checks use Python 3.12+. Full trials need Linux, NVIDIA GPU, Docker and model access; hosted data / scoring availability was not confirmed. |

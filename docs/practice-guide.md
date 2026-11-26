@@ -6,7 +6,7 @@
 
 This guide collects learning goals, source entry points, and running requirements for specific examples. Choose a project by topic; use the [learning guide](learning-guide.md#survey-project-map) to connect it to survey chapters. The [three resource labels](../README.md#resource-scope) describe the recommended entry point; topic groups are not RSI capability levels.
 
-These notes come from upstream documentation and selected source reviews on **2026-10-22–2026-11-25**. The [verification records](verification.md#verification) give the scope of each review, including which local examples ran. API examples require model access and a call budget. Training configurations describe the authors' setups.
+These notes come from upstream documentation and selected source reviews on **2026-10-22–2026-11-26**. The [verification records](verification.md#verification) give the scope of each review, including which local examples ran. API examples require model access and a call budget. Training configurations describe the authors' setups.
 
 ## Contents
 
@@ -1059,6 +1059,22 @@ This executes rule-controlled checkbox actions in Chromium, with no model creden
 
 **Language and running requirements.** English; Python / PPO / JAX background. Package declares Python **≥3.9**; match JAX / Flax and the example dependencies to your platform using [JAX installation guidance](https://docs.jax.dev/en/latest/installation.html). No LLM API; the command disables W&B. CPU development is possible, but default ACCEL training is about **246 million environment steps**; full runs need suitable RL compute. No minimum VRAM or runtime was established.
 
+<a id="roboevo2"></a>
+
+### [RoboEvo²](https://github.com/kaiknower/RoboEvo2) · [paper](https://arxiv.org/abs/2611.34675)
+
+**Recursive improvement method · robot policy and harness co-evolution.** Follow failures from the current robot policy into a search for repairs. Verified repairs yield skills and trajectory supervision. The driver compares candidate policies alone on matched development cases, then compares harnesses using the selected policy. The retained pair starts the next round.
+
+**Recommended entry.** Open [the four-stage walkthrough](https://kaiknower.github.io/RoboEvo2/#method), then read [§§3.1–3.4 → §4.1 → Appendix D](https://arxiv.org/html/2611.34675v1). Compare the three repair routes and see how evidence from the same initial state is used for policy training. In Figure 3, distinguish standalone policy performance from hybrid recovery with the harness. The LIBERO-PRO results use 800 held-out episodes.
+
+From the [pinned checkout](https://github.com/kaiknower/RoboEvo2/tree/cd0a8ee12dd9e4616d8804ef5ffed537d4f5d63d), the documented configuration check uses the Python standard library:
+
+```bash
+python -m evolution.run evolution/config.example.json --workspace runs/quickstart --check
+```
+
+**Requirements and evidence.** English, Python ≥3.11 for the configuration check. The check passed with Python 3.12 and the initial skill listing returned five entries. This checks the configuration and round-zero artifacts without a simulator, model or GPU. A native run additionally needs a compatible simulator stack, assets, policy weights, demonstrations and a model client for the planner. The [runtime guide](https://github.com/kaiknower/RoboEvo2/blob/cd0a8ee12dd9e4616d8804ef5ffed537d4f5d63d/README.md#evaluation) uses placeholder locations for the companion LIBERO-PRO runtime and v8 baseline. Access to the [released weights](https://huggingface.co/Liukaikai/RoboEvo2) requires approval from the authors.
+
 <a id="adversarial-self-play"></a>
 
 ## Adversarial Self-Play
@@ -1224,6 +1240,8 @@ python -m benchmark configs/main/farm_ace.json
 ```
 
 **Requirements.** English; real methods require their backend credentials / CLI and model budget. Farm's main configuration has 20 adaptation tasks plus 60 holdouts and replay; it is not a one-call example. HyperAgents adds Docker; AHE needs Linux bubblewrap and unprivileged user namespaces; Minecraft / Astray add GameWorld and Chromium. Trajectory analysis also calls a model. No model-training GPU is required for the fixed-action example; inspect each backend before a full run.
+
+For the bundled AHE backend, start with the [authors' implementation](https://github.com/china-qijizhifeng/agentic-harness-engineering/tree/182ea06e578df7b1d503eca537503c1e4c5a8a58) and [paper v5, §3](https://arxiv.org/html/2604.25850v5#S3). Use the [sample trace analysis](https://github.com/china-qijizhifeng/agentic-harness-engineering/blob/182ea06e578df7b1d503eca537503c1e4c5a8a58/skills/agentic-harness-engineering/references/examples/trace-sample/analysis-overview.md) and [change manifest example](https://github.com/china-qijizhifeng/agentic-harness-engineering/blob/182ea06e578df7b1d503eca537503c1e4c5a8a58/skills/agentic-harness-engineering/references/examples/minimal-workspace/manifests/example_manifest.json) to see how a failure report informs an edit and how the edit records predictions. Both examples can be read without model access.
 
 <a id="flex-rsi"></a>
 
@@ -1394,3 +1412,18 @@ python examples/reproduce_pilot.py
 ```
 
 **Requirements and evidence.** English. The replay needs Python, NumPy, pandas and PyArrow. It uses the public ledger of 718,848 executions without model calls or GPUs. A local replay returned 57.39 for the 20-task pilot and 53.47 for always using GPT-5.6-sol on the paper's five-benchmark pilot subset. The ledger prices local Qwen inference at zero and omits hardware costs. The release includes a 3,939-row failure cohort and frozen skills, while raw trajectories and benchmark payloads are absent. New experiments need the source benchmarks, model endpoints or local vLLM, and the upstream Python 3.10 setup. [Pinned code](https://github.com/Zihan-Zoe/same-skill-different-harness/tree/183fa2a0012e07f7e2678a3fba626bc882900454) · [Dataset card](https://huggingface.co/datasets/Zihan-Zoe/same-skill-different-harness/blob/e9b538f93a16647ddd38dd1f9bb5cf6a139fb8d9/README.md)
+
+<a id="evolink-bench"></a>
+
+### [EvoLink-Bench](https://github.com/BUAA-Self-Evolving/EvoLink-Bench) · [paper](https://arxiv.org/abs/2611.34400)
+
+**Evaluation tool · learning across interdependent tasks.** Read §4 and §§5.1, 5.3–5.5 to compare L1 knowledge and L2 task capability. Reset clears permitted state between turns, Frozen carries it forward without explicit post-turn updates, and Evolving enables those updates where the adapter supports them. Check within-task recovery, saved state and later probe scores separately. The paper's 19,635 scored slots cover selected cohorts across settings. The authors interpret the differences descriptively because runtime revisions and budgets differ. [Paper v1](https://arxiv.org/html/2611.34400v1) · [Protocol](https://github.com/BUAA-Self-Evolving/EvoLink-Bench/blob/110adacd7339040a12ecacd8da795d9fcbd0d21f/docs/protocol.md)
+
+**Recommended entry.** In a virtual environment, install the [pinned checkout](https://github.com/BUAA-Self-Evolving/EvoLink-Bench/blob/110adacd7339040a12ecacd8da795d9fcbd0d21f/README.md#offline-smoke-test) and run its scripted example. Read `runs/smoke/smoke-flow-001/summary.json` for the first turn's failed submission and successful retry. Then inspect the workspace checkpoints to see that the corrected report carries into the second turn.
+
+```bash
+python -m pip install -e .
+evolink-bench --spec examples/smoke.json --output runs/smoke
+```
+
+**Requirements and evidence.** English and Chinese documentation. The example requires Python ≥3.11 and runs locally without Docker, a GPU or model credentials. Both scripted turns passed in three interactions with zero model calls, verifying retry and workspace persistence. Native agent evaluation uses Linux and Docker, model access and the corresponding task and grading packages. The README links a dataset download, and the source checkout lacks the versioned paper package and complete historical configurations needed to regenerate the paper tables. [Running guide](https://github.com/BUAA-Self-Evolving/EvoLink-Bench/blob/110adacd7339040a12ecacd8da795d9fcbd0d21f/docs/running.md) · [Reproduction scope](https://github.com/BUAA-Self-Evolving/EvoLink-Bench/blob/110adacd7339040a12ecacd8da795d9fcbd0d21f/docs/reproduction.md)

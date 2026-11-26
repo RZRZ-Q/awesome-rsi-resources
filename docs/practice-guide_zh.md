@@ -6,7 +6,7 @@
 
 这里集中记录具体示例的学习目标、源码入口和运行条件。先按主题选择项目；综述章节与项目的对应关系见[学习指南](learning-guide_zh.md#survey-project-map)。条目的[三类标签](../README_zh.md#resource-scope)描述所推荐入口的范围，主题分组不表示 RSI 能力等级。
 
-以下说明来自 **2026-10-22–2026-11-25** 对上游文档与部分源码的核验。逐项核验范围及本地实跑记录见[核验档案](verification_zh.md#verification)。API 示例需要相应模型权限与调用预算，训练配置沿用作者公开设置。
+以下说明来自 **2026-10-22–2026-11-26** 对上游文档与部分源码的核验。逐项核验范围及本地实跑记录见[核验档案](verification_zh.md#verification)。API 示例需要相应模型权限与调用预算，训练配置沿用作者公开设置。
 
 ## 目录
 
@@ -1060,6 +1060,22 @@ python3.10 -m venv .venv-gui
 
 **语言与运行条件。** 英文；Python / PPO / JAX 基础。包声明 Python **≥3.9**；按 [JAX 安装说明](https://docs.jax.dev/en/latest/installation.html)匹配平台与 JAX / Flax、examples 依赖。无需 LLM API，命令中关闭了 W&B。可在 CPU 上开发，但默认 ACCEL 训练约 **2.46 亿环境步**，完整运行应准备适合 RL 的计算资源；未核实最低显存与耗时。
 
+<a id="roboevo2"></a>
+
+### [RoboEvo²](https://github.com/kaiknower/RoboEvo2) · [论文](https://arxiv.org/abs/2611.34675)
+
+**递归改进方法 · 机器人策略与 Harness 协同演化。** 从当前策略的失败出发搜索修复，经过验证的修复成为技能和策略训练轨迹。控制器先在匹配的开发任务上比较候选策略的独立表现，再用入选策略比较 Harness。保留的策略与 Harness 共同进入下一轮。
+
+**推荐入口。** 先看[四阶段讲解](https://kaiknower.github.io/RoboEvo2/#method)，再读[§§3.1–3.4 → §4.1 → 附录 D](https://arxiv.org/html/2611.34675v1)。比较三条修复路线，观察来自同一起始状态的证据如何用于策略训练。读图 3 时分别看策略独立运行与 Harness 参与恢复的成绩。LIBERO-PRO 的论文结果使用 800 个留出回合。
+
+在[固定源码版本](https://github.com/kaiknower/RoboEvo2/tree/cd0a8ee12dd9e4616d8804ef5ffed537d4f5d63d)根目录，官方配置检查只需 Python 标准库：
+
+```bash
+python -m evolution.run evolution/config.example.json --workspace runs/quickstart --check
+```
+
+**门槛与证据。** 英文，配置检查需 Python ≥3.11。实测 Python 3.12 配置检查通过，初始技能列表有 5 项。这两项检查只读取配置和第零轮工件，无需模拟器、模型或 GPU。原生运行另需兼容的模拟环境、任务资产、策略权重、示范和供规划器调用的模型客户端。[运行指南](https://github.com/kaiknower/RoboEvo2/blob/cd0a8ee12dd9e4616d8804ef5ffed537d4f5d63d/README.md#evaluation)中的配套 LIBERO-PRO 运行环境和 v8 基线地址仍是占位符。[已发布权重](https://huggingface.co/Liukaikai/RoboEvo2)需经作者审核才能访问。
+
 <a id="adversarial-self-play"></a>
 
 ## 对抗式自博弈
@@ -1225,6 +1241,8 @@ python -m benchmark configs/main/farm_ace.json
 ```
 
 **条件。** 英文；真实方法需要对应后端凭证／CLI 与模型预算。Farm 主配置包含 20 个适应任务、60 个留出任务和重放，不是单次调用示例。HyperAgents 另需 Docker；AHE 需要 Linux bubblewrap 与非特权用户命名空间；Minecraft／Astray 另需 GameWorld 和 Chromium。轨迹分析也会调用模型。固定动作示例不需模型训练 GPU；完整运行前需检查各后端。
+
+想了解随基准提供的 AHE 后端，可从[作者实现](https://github.com/china-qijizhifeng/agentic-harness-engineering/tree/182ea06e578df7b1d503eca537503c1e4c5a8a58)和[论文 v5 的 §3](https://arxiv.org/html/2604.25850v5#S3)入手。对照[轨迹分析示例](https://github.com/china-qijizhifeng/agentic-harness-engineering/blob/182ea06e578df7b1d503eca537503c1e4c5a8a58/skills/agentic-harness-engineering/references/examples/trace-sample/analysis-overview.md)和[变更清单示例](https://github.com/china-qijizhifeng/agentic-harness-engineering/blob/182ea06e578df7b1d503eca537503c1e4c5a8a58/skills/agentic-harness-engineering/references/examples/minimal-workspace/manifests/example_manifest.json)，看失败报告如何引出修改，以及清单如何记录对修改效果的预测。阅读这两个示例无需模型权限。
 
 <a id="flex-rsi"></a>
 
@@ -1395,3 +1413,18 @@ python examples/reproduce_pilot.py
 ```
 
 **条件与证据。** 英文。回放需要 Python、NumPy、pandas 与 PyArrow，读取 718,848 条公开执行记录，无需模型调用或 GPU。已在本地回放论文的五个评测基准子集，使用 20 个任务试选模型的得分为 57.39，始终使用 GPT-5.6-sol 的得分为 53.47。账本将本地 Qwen 推理计为零美元，未计硬件成本。发布包提供含 3,939 条记录的失败队列和冻结 Skill，未附原始运行轨迹或评测任务资产。新跑实验需要原始评测资产、模型服务或本地 vLLM，以及上游的 Python 3.10 环境。[固定版源码](https://github.com/Zihan-Zoe/same-skill-different-harness/tree/183fa2a0012e07f7e2678a3fba626bc882900454) · [数据卡](https://huggingface.co/datasets/Zihan-Zoe/same-skill-different-harness/blob/e9b538f93a16647ddd38dd1f9bb5cf6a139fb8d9/README.md)
+
+<a id="evolink-bench"></a>
+
+### [EvoLink-Bench](https://github.com/BUAA-Self-Evolving/EvoLink-Bench) · [论文](https://arxiv.org/abs/2611.34400)
+
+**评测工具 · 关联任务中的跨轮学习。** 阅读 §4 和 §§5.1、5.3–5.5，对照 L1 知识与 L2 任务能力。Reset 在轮次间清除允许保留的状态，Frozen 保留状态但关闭显式轮后更新，Evolving 在适配器支持时启用更新。分开查看任务内恢复、已保存状态和后续探测任务得分。论文的 19,635 个计分位置来自不同设置下选取的评测批次。运行时版本和预算存在差异，作者将比较作为描述性结果。[论文 v1](https://arxiv.org/html/2611.34400v1) · [评测协议](https://github.com/BUAA-Self-Evolving/EvoLink-Bench/blob/110adacd7339040a12ecacd8da795d9fcbd0d21f/docs/protocol.md)
+
+**推荐入口。** 在虚拟环境中安装[固定版源码](https://github.com/BUAA-Self-Evolving/EvoLink-Bench/blob/110adacd7339040a12ecacd8da795d9fcbd0d21f/README.md#offline-smoke-test)，运行脚本示例。打开 `runs/smoke/smoke-flow-001/summary.json`，查看首轮首次提交失败后如何重试通过，再检查工作区检查点中修正后的报告是否保留到了第二轮。
+
+```bash
+python -m pip install -e .
+evolink-bench --spec examples/smoke.json --output runs/smoke
+```
+
+**条件与证据。** 中英文文档。示例需要 Python ≥3.11，无需 Docker、GPU 或模型凭据。本地两个脚本任务共交互三次、全部通过，模型调用为零，验证了重试和工作区持久化。运行原生 Agent 评测需 Linux、Docker、模型访问及对应任务和评分包。README 链接了数据下载，源码本身缺少复算论文结果表所需的版本化数据包和完整历史运行配置。[运行指南](https://github.com/BUAA-Self-Evolving/EvoLink-Bench/blob/110adacd7339040a12ecacd8da795d9fcbd0d21f/docs/running.md) · [复现范围](https://github.com/BUAA-Self-Evolving/EvoLink-Bench/blob/110adacd7339040a12ecacd8da795d9fcbd0d21f/docs/reproduction.md)

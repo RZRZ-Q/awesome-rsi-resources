@@ -12,7 +12,7 @@
 </p>
 
 <p align="center">
-  <a href="#resource-scope"><img src="https://img.shields.io/badge/resources-136-69D8AD?style=flat-square&amp;labelColor=182522" alt="136 项资源"></a>
+  <a href="#resource-scope"><img src="https://img.shields.io/badge/resources-138-69D8AD?style=flat-square&amp;labelColor=182522" alt="138 项资源"></a>
   <a href="README.md"><img src="https://img.shields.io/badge/languages-EN%20%2F%20%E4%B8%AD%E6%96%87-69D8AD?style=flat-square&amp;labelColor=182522" alt="中文与英文"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-69D8AD?style=flat-square&amp;labelColor=182522" alt="MIT 许可"></a>
 </p>
@@ -24,7 +24,7 @@
   <a href="docs/verification_zh.md">核验档案</a>
 </p>
 
-**收录 136 项资源；最近一次来源核验：2026-11-25。** 同一项目的网站、代码和 Notebook 合并计数；各项日期与实际核验范围见[核验档案](docs/verification_zh.md)。
+**收录 138 项资源；最近一次来源核验：2026-11-26。** 同一项目的网站、代码和 Notebook 合并计数；各项日期与实际核验范围见[核验档案](docs/verification_zh.md)。
 
 <a id="resource-scope"></a>
 
@@ -336,6 +336,7 @@
 | <a id="r-zero"></a> [R-Zero](https://github.com/Chengsong-Huang/R-Zero) | **相关自改进机制。** 交替生成任务与训练 Solver，两个检查点进入后续轮次。 | [Challenger–Solver 交替循环](docs/practice-guide_zh.md#r-zero) | 英文；Linux/CUDA、8 GPU 脚本配置、HF/W&B 与评估 API。 |
 | <a id="rsi-anything"></a> [RSI-Anything · Gen-Verse](https://github.com/Gen-Verse/RSI-Anything) · [论文](https://arxiv.org/abs/2610.13912) | **相关自改进机制。** 学习 GUI 交互经验如何更新策略与世界模型，并在固定训练规则下选优、保留 checkpoint，供后续轮次复用。 | [更新／保留协议 → GUI 源码 → 浏览器检查](docs/practice-guide_zh.md#rsi-anything) | 中英文概览；无模型浏览器检查需 Python 3.10+ 与 Chromium。完整 GUI 学习需 Linux、CUDA 和模型权重，默认分配三个 GPU 角色。 |
 | <a id="jaxued"></a> [JaxUED](https://github.com/DramaCow/jaxued) | **相关自改进机制。** 按策略表现保留、变异环境，再用形成的课程训练策略。 | [Maze ACCEL → PAIRED](docs/practice-guide_zh.md#jaxued) | 英文；JAX/Flax；无需 LLM API；完整 RL 训练需要较多算力。 |
+| <a id="roboevo2"></a> [RoboEvo²](https://github.com/kaiknower/RoboEvo2) · [论文](https://arxiv.org/abs/2611.34675) | **递归改进方法。** 机器人策略的失败引导 Harness 修复，验证通过的轨迹用于训练下一轮的策略。 | [四阶段讲解 → CPU 配置检查 → 选版](docs/practice-guide_zh.md#roboevo2) | 英文。配置检查需 Python ≥3.11，原生运行另需仿真资产、权重、示范和模型访问。 |
 
 <a id="adversarial-self-play"></a>
 
@@ -368,6 +369,7 @@
 | <a id="rsibench-infra"></a> [RSIBench-Infra](https://rsibench-infra.github.io/) · [论文](https://arxiv.org/abs/2611.24395) | **评测工具 · 结果与协议。** 将基础设施优化结果与实测参考值比较，并按任务检查正确性。 | [Lite 成绩 → 任务卡 → 轨迹与计分协议](docs/practice-guide_zh.md#rsibench-infra) | 英文。可在线阅读已发布的结果和部分轨迹，基准运行器标为即将发布。 |
 | <a id="computewise"></a> [ComputeWise](https://github.com/SalesforceAIResearch/computewise) · [论文](https://arxiv.org/abs/2611.31027) | **评测工具。** 把研究 Agent 的调度与参考方案对照，查看可省去的作业、有效工作和空闲时间。 | [公开运行数据 → 匹配单任务 → 成本拆分](docs/practice-guide_zh.md#computewise) | 英文。读公开数据无需模型或 GPU。新模拟实验需要 Linux、Docker 和模型访问。 |
 | <a id="intervention-failure"></a> [Which Failure Does an Intervention Repair?](https://arxiv.org/abs/2611.29290) · [代码](https://github.com/Zihan-Zoe/same-skill-different-harness) | **评测工具。** 每次只改模型、Harness、技能或重试规则中的一项，核对变化对应哪些失败类型。 | [匹配对照 → 失败标签 → 记录回放](docs/practice-guide_zh.md#intervention-failure) | 英文。回放需公开 Parquet 数据和 Python 数据处理依赖，无需模型凭证或 GPU。 |
+| <a id="evolink-bench"></a> [EvoLink-Bench](https://github.com/BUAA-Self-Evolving/EvoLink-Bench) · [论文](https://arxiv.org/abs/2611.34400) | **评测工具。** 分别评估当轮恢复、状态保留和后续依赖任务中的复用。 | [两轮文件示例 → Reset／Frozen／Evolving](docs/practice-guide_zh.md#evolink-bench) | 双语文档。离线示例需 Python ≥3.11，原生运行另需任务和评分资产、Docker 与模型访问。 |
 | <a id="justrua"></a> [JustRUA](https://github.com/ZefanW/JustRUA) · [论文](https://arxiv.org/abs/2611.16009) | **评测工具 · 受控基线。** 对照机器人 Harness 的各个构件及单独的技能演化实验；公开策略本身保持静态。 | [消融研究 → 无模型通信检查 → 机器人评测](docs/practice-guide_zh.md#justrua) | 英文文档／双语项目页；Python ≥3.10。真实评测需 RoboDojo／Isaac、GPU 感知、机器人资源和 Codex 模型访问。 |
 | <a id="scale-rsi-bench"></a> [Scale RSI Bench](https://github.com/scaleapi/rsi-benchmark) · [官网](https://www.rsi-benchmark.com) | **评测工具。** 阅读数据筛选、自蒸馏、鲁棒性与 Agent 群体优化等可执行 AI 研发任务的约束和评分规则。 | [nanoGPT 数据筛选任务 → 其他公开样例](docs/practice-guide_zh.md#scale-rsi-bench) | 英文；Python 3.12+、Harbor、Modal GPU 沙盒与 Agent 模型 API。 |
 | <a id="autorse"></a> [AutoRSE](https://github.com/Ray-Tiann/AutoRSE) · [论文](https://arxiv.org/abs/2610.37228) | **评测工具。** 六类推荐工程任务，区分依据验证集选优、隐藏测试评分，以及 Agent 实际修改内容的分析。 | [HSTU 任务 → 启动预览 → 预测与来源记录约定](docs/practice-guide_zh.md#autorse) | 英文；预览／格式检查使用 Python 3.12+。完整实验需 Linux、NVIDIA GPU、Docker 与模型访问；本轮未确认托管数据／评分服务可用性。 |

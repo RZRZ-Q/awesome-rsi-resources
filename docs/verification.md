@@ -4,7 +4,7 @@
 
 [Resource directory](../README.md) · [Learning guide](learning-guide.md) · [Practice guide](practice-guide.md)
 
-This archive records source checks from **2026-10-22 through 2026-11-25**. Each dated section specifies its own sources, versions and review scope; a later addition does not refresh earlier checks.
+This archive records source checks from **2026-10-22 through 2026-11-26**. Each dated section specifies its own sources, versions and review scope; a later addition does not refresh earlier checks.
 
 - [Recent survey coverage](#survey-coverage)
 - [Review history and expansion checks](#review-log)
@@ -21,6 +21,7 @@ This archive records source checks from **2026-10-22 through 2026-11-25**. Each 
 - [2026-11-23: Modular harnesses, persistent skills and model editing](#verification-2026-11-23)
 - [2026-11-24: Decision harnesses, post-training and co-evolution benchmarks](#verification-2026-11-24)
 - [2026-11-25: Runtime hooks, task generation and evaluation evidence](#verification-2026-11-25)
+- [2026-11-26: Robot co-evolution and longitudinal evaluation](#verification-2026-11-26)
 
 <a id="survey-coverage"></a>
 
@@ -565,3 +566,28 @@ The run checks cover the JevRSI mock and CoEvoBench toy. The five entries were c
 | [RSI Observatory `3e6e55f`](https://github.com/Fucheng1245/RSI-Observatory/tree/3e6e55f3c8394a7fe7a5dd6bb4902b1a3d9b32f2) | `README.md`, `PAPERS.md`, `radar/LATEST.md` (three) | The November 24 automated update refreshes repository metrics in the README. The paper list and radar files are unchanged. |
 
 **Follow RSI status.** The [public daily index](https://adongwanai.github.io/follow-rsi/daily/index.html) and pinned source both end at the [November 23 bulletin](https://github.com/adongwanai/follow-rsi/blob/818ffb7e86609780da093541af1ee281bea7fd3f/daily/2026-11-23.md). The subscription Skill is still described as forthcoming in the README.
+
+<a id="verification-2026-11-26"></a>
+
+### 2026-11-26: Robot co-evolution and longitudinal evaluation
+
+**Reviewed November 26, Asia/Taipei.** Two additions bring the catalog from **136 to 138**. Before selecting them, we matched names, aliases, arXiv IDs and official URLs against all Markdown tracked at the previous catalog revision, including companion links and review records. Paper dates below use the UTC submission history.
+
+| Resource | First date / latest checked version | Entry and evidence scope | Coverage in checked indexes |
+| --- | --- | --- | --- |
+| [RoboEvo²](https://arxiv.org/abs/2611.34675) | **2026-11-25 · v1** (November 26 in Taipei) | Read §§3.1–3.4 → §4.1 and Figure 3 → Appendix D for the reciprocal update. Policy failures direct harness search, and successful corrective trajectories supervise the next policy. The [source `cd0a8ee`](https://github.com/kaiknower/RoboEvo2/tree/cd0a8ee12dd9e4616d8804ef5ffed537d4f5d63d) provides evolution and hybrid evaluation entry points. The official configuration check passed on Python 3.12 and the catalog command listed five initial skills, without a simulator, model or GPU. Full simulation requires the LIBERO-PRO runtime, policy checkpoints and a planner model. The companion runtime address is a placeholder and the [author weights](https://huggingface.co/Liukaikai/RoboEvo2) require approval. | No match in the checked files. |
+| [EvoLink-Bench](https://arxiv.org/abs/2611.34400) | **2026-11-25 · v1** | Read §§4–5.5 and the [protocol](https://github.com/BUAA-Self-Evolving/EvoLink-Bench/blob/110adacd7339040a12ecacd8da795d9fcbd0d21f/docs/protocol.md) and trace Reset, Frozen and Evolving across dependent tasks. The [source `110adac`](https://github.com/BUAA-Self-Evolving/EvoLink-Bench/tree/110adacd7339040a12ecacd8da795d9fcbd0d21f) includes an offline scripted example. On Python 3.12 it completed both turns with three interactions and zero model calls, passing a retry and retaining a file across turns. The paper's 19,635 scored slots count evaluation events. The pinned source lacks versioned task packages, historical configs and grading assets for a full replay. | No match in the checked files. |
+
+[AHE](https://arxiv.org/abs/2604.25850v5) was first submitted on April 28 and reached v5 on November 22 UTC. AHE already appears as a backend for [SelfImprove-Bench/Farm](practice-guide.md#selfimprove-bench). The guide now links the paper and [official implementation `182ea06`](https://github.com/china-qijizhifeng/agentic-harness-engineering/tree/182ea06e578df7b1d503eca537503c1e4c5a8a58) and points to example analysis and a change manifest for reading. AHE is indexed by [Prism](https://github.com/Prism-Shadow/awesome-rsi/blob/0674413ab210a460c0c6c4080b0cf0f749d8aa98/README.md#L171), [pinkbubble](https://github.com/pinkbubblebubble/awesome-rsi/blob/f38e3a07368d856fa3852922f8c891b6daa2dc54/README.md#L749), [LobeHub](https://github.com/lobehub/awesome-rsi/blob/07e735c48efe02305bd8e8d40f631f4988e2af8a/README.md#L198), [Follow RSI](https://github.com/adongwanai/follow-rsi/blob/818ffb7e86609780da093541af1ee281bea7fd3f/README.md#L88) and [RSI Observatory](https://github.com/Fucheng1245/RSI-Observatory/blob/a6fdac54ef85ee2cc5fc86c28d35a3b6fffe3e24/PAPERS.md#L135).
+
+**Coverage scope.** Checked 27 public files across six existing indexes. Files at unchanged revisions were carried forward.
+
+| Source snapshot | Files checked | Change since November 25 |
+| --- | --- | --- |
+| [Prism `0674413`](https://github.com/Prism-Shadow/awesome-rsi/tree/0674413ab210a460c0c6c4080b0cf0f749d8aa98) | `README.md`, `site/src/data/{methods,papers,systems}.js` (four) | Revision unchanged. |
+| [pinkbubble `f38e3a0`](https://github.com/pinkbubblebubble/awesome-rsi/tree/f38e3a07368d856fa3852922f8c891b6daa2dc54) and [natnew `7152191`](https://github.com/natnew/awesome-recursive-self-improvement/tree/7152191ed372ecbc540cfab0601a1f61de2d0d82) | Each `README.md` (two) | Both revisions unchanged. |
+| [LobeHub `07e735c`](https://github.com/lobehub/awesome-rsi/tree/07e735c48efe02305bd8e8d40f631f4988e2af8a) | `README.md`, `docs/evidence-comparison.md` (two) | The November 26 update adds a [six-study evidence comparison](https://github.com/lobehub/awesome-rsi/blob/07e735c48efe02305bd8e8d40f631f4988e2af8a/docs/evidence-comparison.md) to the existing index. It identifies what carries into the next round and what each baseline supports. Its README also adds index coverage for existing entries, including SkillDiff and Continual-ARC. |
+| [Follow RSI `818ffb7`](https://github.com/adongwanai/follow-rsi/tree/818ffb7e86609780da093541af1ee281bea7fd3f) | `README.md`, `data/papers.yaml`, `site/papers.json` and November 11–23 daily editions (sixteen) | Revision unchanged. The November 24–26 daily paths returned 404. |
+| [RSI Observatory `a6fdac5`](https://github.com/Fucheng1245/RSI-Observatory/tree/a6fdac54ef85ee2cc5fc86c28d35a3b6fffe3e24) | `README.md`, `PAPERS.md`, `radar/LATEST.md` (three) | November 25 refreshes repository metrics and the automated paper feed in the README. The curated paper list and radar remain at the previous content. |
+
+**Follow RSI status.** The [public daily index](https://adongwanai.github.io/follow-rsi/daily/index.html) and pinned source both end at the [November 23 bulletin](https://github.com/adongwanai/follow-rsi/blob/818ffb7e86609780da093541af1ee281bea7fd3f/daily/2026-11-23.md). The README describes the subscription Skill as forthcoming.

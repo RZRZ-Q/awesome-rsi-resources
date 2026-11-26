@@ -4,7 +4,7 @@
 
 [资源目录](../README_zh.md) · [学习指南](learning-guide_zh.md) · [实践指南](practice-guide_zh.md)
 
-本档案记录 **2026-10-22 至 2026-11-25** 的来源核验。每个日期小节分别说明来源、版本与核验范围；后续新增不代表重新核验此前记录。
+本档案记录 **2026-10-22 至 2026-11-26** 的来源核验。每个日期小节分别说明来源、版本与核验范围；后续新增不代表重新核验此前记录。
 
 - [近期综述覆盖表](#survey-coverage)
 - [核验历史与扩展排漏](#review-log)
@@ -21,6 +21,7 @@
 - [2026-11-23：模块化 Harness、持久技能与模型编辑](#verification-2026-11-23)
 - [2026-11-24：决策 Harness、后训练与协同演化评测](#verification-2026-11-24)
 - [2026-11-25：运行时钩子、任务生成与评测证据](#verification-2026-11-25)
+- [2026-11-26：机器人协同演化与纵向评测](#verification-2026-11-26)
 
 <a id="survey-coverage"></a>
 
@@ -565,3 +566,28 @@
 | [RSI Observatory `3e6e55f`](https://github.com/Fucheng1245/RSI-Observatory/tree/3e6e55f3c8394a7fe7a5dd6bb4902b1a3d9b32f2) | `README.md`、`PAPERS.md`、`radar/LATEST.md`（三个） | 11 月 24 日自动更新了 README 中的仓库指标。论文列表和雷达文件未变。 |
 
 **Follow RSI 状态。** [线上日报索引](https://adongwanai.github.io/follow-rsi/daily/index.html)和固定源码当前都更新至 [11 月 23 日简报](https://github.com/adongwanai/follow-rsi/blob/818ffb7e86609780da093541af1ee281bea7fd3f/daily/2026-11-23.md)。README 仍将订阅 Skill 标为即将推出。
+
+<a id="verification-2026-11-26"></a>
+
+### 2026-11-26：机器人协同演化与纵向评测
+
+**核验日期为 11 月 26 日，Asia/Taipei。** 本轮新增两项，目录从 **136 增至 138**。按名称、别名、arXiv 编号与官方链接，在上一版目录全部已跟踪的 Markdown 中排重，涵盖配套链接和历史核验记录。下表论文日期按提交历史的 UTC 日期记录。
+
+| 资源 | 首次日期／本次核实的最新版本 | 核实的入口与证据范围 | 已检查索引的覆盖 |
+| --- | --- | --- | --- |
+| [RoboEvo²](https://arxiv.org/abs/2611.34675) | **2026-11-25 · v1**（台北 11 月 26 日） | 按 §§3.1–3.4 → §4.1 与图 3 → 附录 D 阅读，了解策略与 Harness 如何相互更新。策略失败引导 Harness 搜索，成功的纠错轨迹监督下一轮策略。[源码 `cd0a8ee`](https://github.com/kaiknower/RoboEvo2/tree/cd0a8ee12dd9e4616d8804ef5ffed537d4f5d63d)提供演化与混合评测入口。在 Python 3.12 上通过官方配置校验，并用自带命令列出了五个初始技能，无需模拟器、模型或 GPU。完整仿真实验需要 LIBERO-PRO 运行时、策略检查点和规划模型。配套运行时地址仍为占位符，[作者权重](https://huggingface.co/Liukaikai/RoboEvo2)需通过审批获取。 | 所查文件未匹配。 |
+| [EvoLink-Bench](https://arxiv.org/abs/2611.34400) | **2026-11-25 · v1** | 读 §§4–5.5 和[评测协议](https://github.com/BUAA-Self-Evolving/EvoLink-Bench/blob/110adacd7339040a12ecacd8da795d9fcbd0d21f/docs/protocol.md)，沿有依赖关系的任务追踪 Reset、Frozen 和 Evolving 三种条件。[源码 `110adac`](https://github.com/BUAA-Self-Evolving/EvoLink-Bench/tree/110adacd7339040a12ecacd8da795d9fcbd0d21f)附离线脚本示例。用 Python 3.12 实跑完成两个回合、三次交互和零次模型调用，覆盖重试通过及跨轮保留文件。论文的 19,635 个评分位置按评测事件计数。所查源码缺少完整重放所需的版本化任务包、历史配置和评分资产。 | 所查文件未匹配。 |
+
+[AHE](https://arxiv.org/abs/2604.25850v5)于 4 月 28 日提交首版，11 月 22 日更新至 v5，均为 UTC 日期。AHE 已作为 [SelfImprove-Bench/Farm](practice-guide_zh.md#selfimprove-bench) 的后端出现，本轮在该处补充论文与[官方实现 `182ea06`](https://github.com/china-qijizhifeng/agentic-harness-engineering/tree/182ea06e578df7b1d503eca537503c1e4c5a8a58)，并指向示例分析和变更清单供阅读。AHE 已收录于 [Prism](https://github.com/Prism-Shadow/awesome-rsi/blob/0674413ab210a460c0c6c4080b0cf0f749d8aa98/README.md#L171)、[pinkbubble](https://github.com/pinkbubblebubble/awesome-rsi/blob/f38e3a07368d856fa3852922f8c891b6daa2dc54/README.md#L749)、[LobeHub](https://github.com/lobehub/awesome-rsi/blob/07e735c48efe02305bd8e8d40f631f4988e2af8a/README.md#L198)、[Follow RSI](https://github.com/adongwanai/follow-rsi/blob/818ffb7e86609780da093541af1ee281bea7fd3f/README.md#L88)与 [RSI Observatory](https://github.com/Fucheng1245/RSI-Observatory/blob/a6fdac54ef85ee2cc5fc86c28d35a3b6fffe3e24/PAPERS.md#L135)。
+
+**覆盖范围。** 核查六个已收录索引的 27 个公开文件。上游版本未变的文件沿用此前结果。
+
+| 来源快照 | 核验文件 | 相对 11 月 25 日的变动 |
+| --- | --- | --- |
+| [Prism `0674413`](https://github.com/Prism-Shadow/awesome-rsi/tree/0674413ab210a460c0c6c4080b0cf0f749d8aa98) | `README.md`、`site/src/data/{methods,papers,systems}.js`（四个） | 版本未变。 |
+| [pinkbubble `f38e3a0`](https://github.com/pinkbubblebubble/awesome-rsi/tree/f38e3a07368d856fa3852922f8c891b6daa2dc54) 与 [natnew `7152191`](https://github.com/natnew/awesome-recursive-self-improvement/tree/7152191ed372ecbc540cfab0601a1f61de2d0d82) | 各自 `README.md`（两个） | 两个版本均未变。 |
+| [LobeHub `07e735c`](https://github.com/lobehub/awesome-rsi/tree/07e735c48efe02305bd8e8d40f631f4988e2af8a) | `README.md`、`docs/evidence-comparison.md`（两个） | 11 月 26 日在现有索引中增加[六项研究的证据对照](https://github.com/lobehub/awesome-rsi/blob/07e735c48efe02305bd8e8d40f631f4988e2af8a/docs/evidence-comparison.md)，梳理每项研究有哪些内容传到下一轮、基线对照可以说明什么。README 也为 SkillDiff、Continual-ARC 等既有条目补充了索引覆盖。 |
+| [Follow RSI `818ffb7`](https://github.com/adongwanai/follow-rsi/tree/818ffb7e86609780da093541af1ee281bea7fd3f) | `README.md`、`data/papers.yaml`、`site/papers.json` 与 11 月 11–23 日各刊期（十六个） | 版本未变。11 月 24–26 日的日刊路径均返回 404。 |
+| [RSI Observatory `a6fdac5`](https://github.com/Fucheng1245/RSI-Observatory/tree/a6fdac54ef85ee2cc5fc86c28d35a3b6fffe3e24) | `README.md`、`PAPERS.md`、`radar/LATEST.md`（三个） | 11 月 25 日更新 README 仓库指标和自动论文流，人工整理的论文表与雷达文件内容未变。 |
+
+**Follow RSI 状态。** [线上日报索引](https://adongwanai.github.io/follow-rsi/daily/index.html)和固定源码都更新至 [11 月 23 日简报](https://github.com/adongwanai/follow-rsi/blob/818ffb7e86609780da093541af1ee281bea7fd3f/daily/2026-11-23.md)。README 仍将订阅 Skill 标为即将推出。
